@@ -1,14 +1,12 @@
 ---
-title: Building a Personal Blog
-date: "2019-06-26T19:46:10.000Z"
-description: ""
+title: Why I've Stopped Writing Snapshots Tests in Jest
+subtitle: And Why I Think You Should Stop Too
+date: "2019-06-18T20:00:00.000Z"
+description: "I've stopped using them as I find no use maintaining useless tests. Enlighten me if you can!"
+published: true
 ---
 
-# Why I've Stopped Writing Snapshots Tests in Jest
-
-> And why I think you should stop too
-
-I'm developing a frontend application for quite a while now, and my team and I have a strict standard regarding unittesting out features - every new feature must be thoroughly tested with unit tests ([Jest](https://jestjs.io/) + [Enzyme](https://airbnb.io/enzyme/) for our client, which I'll be talking about in this article).
+I'm developing a frontend application for quite a while now, and my team and I have a strict standard regarding unit testing our features - every new feature must be thoroughly tested with unit tests ([Jest](https://jestjs.io/) + [Enzyme](https://airbnb.io/enzyme/) for our client, which I'll be talking about in this article).
 
 It took us a while to find the right path for us, all while learning how to use the tools we've chosen to the full extent, but through trial and error we've found a paradigm that works for us.
 

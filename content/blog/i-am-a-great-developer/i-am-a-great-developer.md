@@ -1,10 +1,9 @@
 ---
-title: Building a Personal Blog
-date: "2019-06-26T19:46:00.000Z"
-description: ""
+title: I am a Great Developer
+date: "2019-05-15T20:00:00.000Z"
+description: "Just kidding, I'm not. But I believe there are a few key elements that anyone can master to level up their game."
+published: true
 ---
-
-### My thoughts and opinions on how one can become a better software developer.
 
 Well, I’m not THAT much a narcissist as the title implies. In fact, I’m not nearly as good as I wish I was. I only have a few years of experience under my sleeve, but I have gathered some helpful insights that help me get better everyday.
 

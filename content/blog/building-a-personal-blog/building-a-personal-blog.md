@@ -1,7 +1,7 @@
 ---
 title: Building a Personal Blog
 date: "2019-06-26T19:46:00.000Z"
-description: ""
+description: "A journey toward a professional-ish blog for my articles and thoughts."
 published: false
 ---
 
