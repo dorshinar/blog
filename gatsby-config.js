@@ -3,6 +3,7 @@ module.exports = {
     title: `Dor Shinar`,
     author: `Dor Shinar`,
     description: `My Personal blog for thoughts.`,
+    siteUrl: "https://github.com",
     social: {
       github: `dorshinar`
     }

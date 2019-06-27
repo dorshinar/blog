@@ -16,7 +16,14 @@ const Bio = () => {
     query BioQuery {
       avatar: file(absolutePath: { regex: "/profile-pic.jpg/" }) {
         childImageSharp {
-          fixed(width: 50, height: 50) {
+          fixed(width: 200, height: 200) {
+            ...GatsbyImageSharpFixed
+          }
+        }
+      }
+      github: file(absolutePath: { regex: "/GitHub-Mark-120px-plus.png/" }) {
+        childImageSharp {
+          fixed(width: 25, height: 25) {
             ...GatsbyImageSharpFixed
           }
         }
@@ -37,6 +44,8 @@ const Bio = () => {
     <div
       style={{
         display: `flex`,
+        flexDirection: "column",
+        alignItems: "center",
         marginBottom: rhythm(2.5)
       }}
     >
@@ -53,12 +62,41 @@ const Bio = () => {
           borderRadius: `50%`
         }}
       />
-      <p>
+      <p
+        style={{
+          marginBottom: rhythm(0.5)
+        }}
+      >
         I'm <strong>{author}</strong>. I am a web developer, who also likes to
         write articles. This is my blog!
-        {` `}
-        <a href={`https://github.com/${social.github}`}>Find me on GitHub.</a>
       </p>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "start",
+          margin: 0,
+          width: "100%"
+        }}
+      >
+        <a
+          href={`https://github.com/${social.github}`}
+          style={{ backgroundImage: "initial" }}
+        >
+          <Image
+            fixed={data.github.childImageSharp.fixed}
+            alt={author}
+            style={{
+              marginRight: rhythm(1 / 2),
+              marginBottom: 0,
+              minWidth: 25,
+              borderRadius: `100%`
+            }}
+            imgStyle={{
+              borderRadius: `50%`
+            }}
+          />
+        </a>
+      </div>
     </div>
   );
 };
