@@ -5,7 +5,8 @@ module.exports = {
     description: `My Personal blog for thoughts.`,
     siteUrl: "https://github.com",
     social: {
-      github: `dorshinar`
+      github: `dorshinar`,
+      linkedin: "dor-shinar-82b00b144"
     }
   },
   plugins: [

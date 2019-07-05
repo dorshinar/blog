@@ -34,11 +34,19 @@ const Bio = () => {
           }
         }
       }
+      linkedin: file(absolutePath: { regex: "/LI-In-Bug.png/" }) {
+        childImageSharp {
+          fixed(width: 25, height: 25) {
+            ...GatsbyImageSharpFixed
+          }
+        }
+      }
       site {
         siteMetadata {
           author
           social {
             github
+            linkedin
           }
         }
       }
@@ -64,9 +72,12 @@ const Bio = () => {
           <ContactImage
             fixed={data.github.childImageSharp.fixed}
             alt={author}
-            imgStyle={{
-              borderRadius: `50%`
-            }}
+          />
+        </PersonalLink>
+        <PersonalLink href={`https://www.linkedin.com/in/${social.linkedin}`}>
+          <ContactImage
+            fixed={data.linkedin.childImageSharp.fixed}
+            alt={author}
           />
         </PersonalLink>
       </ContactMe>
