@@ -1,5 +1,8 @@
 import Typography from "typography";
+import CodePlugin from "typography-plugin-code";
 import fairyGateTheme from "typography-theme-fairy-gates";
+
+fairyGateTheme.plugins = [new CodePlugin()];
 
 const typography = new Typography(fairyGateTheme);
 

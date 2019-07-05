@@ -74,6 +74,13 @@ module.exports = {
       options: {
         pathToConfigModule: `src/utils/typography`
       }
+    },
+    `gatsby-plugin-styled-components`,
+    {
+      resolve: "gatsby-plugin-nprogress",
+      options: {
+        color: "#1ca086"
+      }
     }
   ]
 };
