@@ -9,6 +9,12 @@
   },
   "dependencies": {
     "babel-plugin-styled-components": "^1.10.2",
+    "eslint-config-prettier": "^6.0.0",
+    "eslint-config-react": "^1.1.7",
+    "eslint-config-react-app": "^4.0.1",
+    "eslint-plugin-import": "^2.18.0",
+    "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-react-hooks": "^1.6.1",
     "gatsby": "^2.10.4",
     "gatsby-image": "^2.2.3",
     "gatsby-plugin-feed": "^2.3.1",
@@ -29,6 +35,8 @@
     "gatsby-source-filesystem": "^2.1.0",
     "gatsby-transformer-remark": "^2.5.0",
     "gatsby-transformer-sharp": "^2.2.0",
+    "husky": "^3.0.0",
+    "lint-staged": "^9.0.2",
     "prismjs": "^1.16.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
@@ -59,8 +67,20 @@
     "build": "gatsby build",
     "develop": "gatsby develop",
     "format": "prettier --write src/**/*.{js,jsx}",
+    "lint": "eslint src/**/*.{js,jsx} --fix",
     "start": "npm run develop",
     "serve": "gatsby serve",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\""
+  },
+  "husky": {
+    "scripts": {
+      "pre-commit": "npm run lint"
+    }
+  },
+  "lint-staged": {
+    ".js*": [
+      "eslint --fix",
+      "git add"
+    ]
   }
 }

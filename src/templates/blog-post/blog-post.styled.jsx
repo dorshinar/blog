@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { Link } from "gatsby";
 import { rhythm, scale } from "../../utils/typography";
 
 export const Header = styled.h1`
