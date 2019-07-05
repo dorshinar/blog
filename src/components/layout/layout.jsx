@@ -17,9 +17,15 @@ class Layout extends React.Component {
 
     header =
       location.pathname === rootPath ? (
-        <PrimaryHeader>{link}</PrimaryHeader>
+        <PrimaryHeader>
+          {link}
+          <div>Hi!</div>
+        </PrimaryHeader>
       ) : (
-        <SecondaryHeader>{link}</SecondaryHeader>
+        <SecondaryHeader>
+          {link}
+          <div>Hi!</div>
+        </SecondaryHeader>
       );
 
     return (
