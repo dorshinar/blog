@@ -9,7 +9,7 @@ import {
 
 export default ({ node, title }) => {
   return (
-    <Wrapper key={node.fields.slug}>
+    <Wrapper>
       <Header>
         <PostLink to={node.fields.slug}>{title}</PostLink>
       </Header>

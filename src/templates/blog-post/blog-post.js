@@ -12,6 +12,7 @@ import {
   NearByPosts,
   PostLink
 } from "./blog-post.styled";
+import { ScrollIndicator } from "../../components/scroll-indicator";
 
 class BlogPostTemplate extends React.Component {
   render() {
@@ -20,36 +21,39 @@ class BlogPostTemplate extends React.Component {
     const { previous, next } = this.props.pageContext;
 
     return (
-      <Layout location={this.props.location} title={siteTitle}>
-        <SEO
-          title={post.frontmatter.title}
-          description={post.frontmatter.description || post.excerpt}
-        />
-        <Header>{post.frontmatter.title}</Header>
-        <SubHeader>
-          {`${post.frontmatter.date}, ${post.fields.readingTime.text}`}
-        </SubHeader>
-        <Post dangerouslySetInnerHTML={{ __html: post.html }} />
-        <Divider />
-        <Bio />
+      <>
+        <ScrollIndicator />
+        <Layout location={this.props.location} title={siteTitle}>
+          <SEO
+            title={post.frontmatter.title}
+            description={post.frontmatter.description || post.excerpt}
+          />
+          <Header>{post.frontmatter.title}</Header>
+          <SubHeader>
+            {`${post.frontmatter.date}, ${post.fields.readingTime.text}`}
+          </SubHeader>
+          <Post dangerouslySetInnerHTML={{ __html: post.html }} />
+          <Divider />
+          <Bio />
 
-        <NearByPosts>
-          <PostLink>
-            {previous && (
-              <Link to={previous.fields.slug} rel="prev">
-                ← {previous.frontmatter.title}
-              </Link>
-            )}
-          </PostLink>
-          <PostLink>
-            {next && (
-              <Link to={next.fields.slug} rel="next">
-                {next.frontmatter.title} →
-              </Link>
-            )}
-          </PostLink>
-        </NearByPosts>
-      </Layout>
+          <NearByPosts>
+            <PostLink>
+              {previous && (
+                <Link to={previous.fields.slug} rel="prev">
+                  ← {previous.frontmatter.title}
+                </Link>
+              )}
+            </PostLink>
+            <PostLink>
+              {next && (
+                <Link to={next.fields.slug} rel="next">
+                  {next.frontmatter.title} →
+                </Link>
+              )}
+            </PostLink>
+          </NearByPosts>
+        </Layout>
+      </>
     );
   }
 }
