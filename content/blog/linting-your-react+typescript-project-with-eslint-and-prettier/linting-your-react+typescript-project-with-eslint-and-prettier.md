@@ -4,6 +4,7 @@ date: "2019-01-21T20:00:00.000Z"
 description: "ESlint and Prettier are a bless for the JS world, and up until now there was no proper solution to
 achieving the same greatness with typescript. In this guide I'll walk you through how you can drink the cool kids juice as well."
 published: true
+slug: /linting-your-react+typescript-project-with-eslint-and-prettier
 ---
 
 Lately we started a new project at work, written in React + Typescript. Of course, like any other project we wanted it to be automatically linted and style checked, so we don’t have to worry about that ourselves.

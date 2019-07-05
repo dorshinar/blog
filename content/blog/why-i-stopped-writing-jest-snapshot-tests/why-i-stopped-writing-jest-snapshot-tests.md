@@ -4,6 +4,7 @@ subtitle: And Why I Think You Should Stop Too
 date: "2019-06-18T20:00:00.000Z"
 description: "I've stopped using them as I find no use maintaining useless tests. Enlighten me if you can!"
 published: true
+slug: /why-i-stopped-writing-jest-snapshot-tests
 ---
 
 I'm developing a frontend application for quite a while now, and my team and I have a strict standard regarding unit testing our features - every new feature must be thoroughly tested with unit tests ([Jest](https://jestjs.io/) + [Enzyme](https://airbnb.io/enzyme/) for our client, which I'll be talking about in this article).

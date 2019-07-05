@@ -1,7 +1,5 @@
 import styled from "styled-components";
-import { rhythm, options } from "../../utils/typography";
-
-console.log(options);
+import { rhythm } from "../../utils/typography";
 
 export const Container = styled.div`
   position: fixed;
