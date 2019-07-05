@@ -73,7 +73,7 @@
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\""
   },
   "husky": {
-    "scripts": {
+    "hooks": {
       "pre-commit": "npm run lint"
     }
   },
