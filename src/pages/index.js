@@ -5,6 +5,14 @@ import { Bio } from "../components/bio";
 import { Layout } from "../components/layout";
 import SEO from "../components/seo";
 import { BlogPostPreviews } from "../components/blog-post-previews";
+import { createGlobalStyle } from "styled-components";
+
+const GlobalStyled = createGlobalStyle`
+  body {
+    @import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+    font-family: 'Montserrat', sans-serif;
+  }
+`;
 
 class BlogIndex extends React.Component {
   render() {
@@ -14,6 +22,7 @@ class BlogIndex extends React.Component {
 
     return (
       <Layout location={this.props.location} title={siteTitle}>
+        <GlobalStyled />
         <SEO title="All posts" />
         <Bio />
         <BlogPostPreviews posts={posts} />
