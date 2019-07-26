@@ -1,13 +1,6 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { rhythm } from "../../utils/typography";
 import { Link } from "gatsby";
-
-export const headerProps = css`
-  margin-top: 0;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-`;
 
 export const LinkHome = styled(Link)`
   box-shadow: none;
@@ -17,6 +10,7 @@ export const LinkHome = styled(Link)`
 
 export const Wrapper = styled.div`
   padding-bottom: ${rhythm(1.5)};
+  background-color: ${({ theme: { color } }) => color};
 `;
 
 export const ContentWrapper = styled.div`

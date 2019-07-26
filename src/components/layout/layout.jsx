@@ -3,6 +3,7 @@ import React from "react";
 import { Wrapper, ContentWrapper } from "./layout.styled";
 import { Header } from "./header";
 import { createGlobalStyle } from "styled-components";
+import { Themer } from "../themer";
 
 const GlobalStyled = createGlobalStyle`
   body {
@@ -16,18 +17,20 @@ class Layout extends React.Component {
     const { children } = this.props;
 
     return (
-      <Wrapper>
-        <Header />
-        <ContentWrapper>
-          <main>{children}</main>
-          <footer>
-            © {new Date().getFullYear()}, Built with
-            {` `}
-            <a href="https://www.gatsbyjs.org">Gatsby</a>
-          </footer>
-        </ContentWrapper>
-        <GlobalStyled />
-      </Wrapper>
+      <Themer>
+        <Wrapper>
+          <Header />
+          <ContentWrapper>
+            <main>{children}</main>
+            <footer>
+              © {new Date().getFullYear()}, Built with
+              {` `}
+              <a href="https://www.gatsbyjs.org">Gatsby</a>
+            </footer>
+          </ContentWrapper>
+          <GlobalStyled />
+        </Wrapper>
+      </Themer>
     );
   }
 }

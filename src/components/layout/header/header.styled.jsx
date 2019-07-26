@@ -6,7 +6,7 @@ export const Wrapper = styled.header`
   justify-content: center;
   align-items: center;
   height: ${rhythm(3)};
-  background-color: #e1e1e1;
+  background-color: #f6f6f6;
 `;
 
 export const Content = styled.span`
