@@ -9,7 +9,8 @@ export const Header = styled.h3`
 `;
 
 export const PostLink = styled(Link)`
-  box-shadow: none;
+  color: black;
+  text-decoration: none;
 `;
 
 export const PostInfo = styled.small``;
