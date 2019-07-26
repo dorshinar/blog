@@ -6,6 +6,14 @@ import {
   SecondaryHeader,
   Wrapper
 } from "./layout.styled";
+import { createGlobalStyle } from "styled-components";
+
+const GlobalStyled = createGlobalStyle`
+  body {
+    @import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+    font-family: 'Montserrat', sans-serif;
+  }
+`;
 
 class Layout extends React.Component {
   render() {
@@ -31,6 +39,7 @@ class Layout extends React.Component {
           {` `}
           <a href="https://www.gatsbyjs.org">Gatsby</a>
         </footer>
+        <GlobalStyled />
       </Wrapper>
     );
   }
