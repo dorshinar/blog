@@ -14,7 +14,8 @@ import {
   AboutMe,
   ContactMe,
   PersonalLink,
-  ContactImage
+  ContactImage,
+  ContactDevBadge
 } from "./bio.styled";
 
 const Bio = () => {
@@ -47,6 +48,7 @@ const Bio = () => {
           social {
             github
             linkedin
+            dev
           }
         }
       }
@@ -79,6 +81,9 @@ const Bio = () => {
             fixed={data.linkedin.childImageSharp.fixed}
             alt={author}
           />
+        </PersonalLink>
+        <PersonalLink href={`https://dev.to/${social.dev}`}>
+          <ContactDevBadge alt={author} />
         </PersonalLink>
       </ContactMe>
     </Wrapper>

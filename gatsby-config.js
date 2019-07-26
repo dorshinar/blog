@@ -6,7 +6,8 @@ module.exports = {
     siteUrl: "https://github.com",
     social: {
       github: `dorshinar`,
-      linkedin: "dor-shinar-82b00b144"
+      linkedin: "dor-shinar-82b00b144",
+      dev: "dorshinar"
     }
   },
   plugins: [
@@ -81,6 +82,14 @@ module.exports = {
       resolve: "gatsby-plugin-nprogress",
       options: {
         color: "#1ca086"
+      }
+    },
+    {
+      resolve: "gatsby-plugin-react-svg",
+      options: {
+        rule: {
+          include: /assets/
+        }
       }
     }
   ]

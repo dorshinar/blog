@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { rhythm } from "../../utils/typography";
 import Image from "gatsby-image";
+import DevBadge from "../../../content/assets/dev-badge.svg";
 
 export const Wrapper = styled.div`
   display: flex;
@@ -34,6 +35,13 @@ export const PersonalLink = styled.a`
 export const ContactImage = styled(Image)`
   margin-right: ${rhythm(1 / 2)};
   margin-bottom: 0;
-  min-width: 25;
-  /* border-radius: 100%; */
+  width: 25px;
+  height: 25px;
+`;
+
+export const ContactDevBadge = styled(DevBadge)`
+  margin-right: ${rhythm(1 / 2)};
+  margin-bottom: 0;
+  width: 25px;
+  height: 25px;
 `;
