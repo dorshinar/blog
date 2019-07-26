@@ -11,6 +11,7 @@ export const LinkHome = styled(Link)`
 export const Wrapper = styled.div`
   padding-bottom: ${rhythm(1.5)};
   background-color: ${({ theme: { color } }) => color};
+  color: ${props => props.theme.textColor};
 `;
 
 export const ContentWrapper = styled.div`

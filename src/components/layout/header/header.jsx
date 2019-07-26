@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Wrapper, Content, Title } from "./header.styled";
+import { Wrapper, Content, Title, HomeLink } from "./header.styled";
 import { ThemeSelectorContext } from "../../themer";
 
 export default () => {
@@ -8,7 +8,9 @@ export default () => {
   return (
     <Wrapper>
       <Content>
-        <Title>Dor Shinar</Title>
+        <HomeLink>
+          <Title>Dor Shinar</Title>
+        </HomeLink>
         <button onClick={toggleTheme}>Toggle theme</button>
       </Content>
     </Wrapper>

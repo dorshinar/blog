@@ -1,12 +1,13 @@
 import styled from "styled-components";
 import { rhythm } from "../../../utils/typography";
+import { Link } from "gatsby";
 
 export const Wrapper = styled.header`
   display: flex;
   justify-content: center;
   align-items: center;
   height: ${rhythm(3)};
-  background-color: #f6f6f6;
+  background-color: ${props => props.theme.headerBackgroundColor};
 `;
 
 export const Content = styled.span`
@@ -18,4 +19,9 @@ export const Content = styled.span`
 
 export const Title = styled.h1`
   margin-bottom: 0;
+  color: ${props => props.theme.textColor};
+`;
+
+export const HomeLink = styled(Link)`
+  text-decoration: none;
 `;

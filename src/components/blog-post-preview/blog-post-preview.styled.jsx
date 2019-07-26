@@ -9,7 +9,7 @@ export const Header = styled.h3`
 `;
 
 export const PostLink = styled(Link)`
-  color: black;
+  color: ${props => props.theme.textColor};
   text-decoration: none;
 `;
 

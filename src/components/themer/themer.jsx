@@ -3,10 +3,14 @@ import { ThemeProvider } from "styled-components";
 
 const themes = {
   dark: {
-    color: "white"
+    textColor: "white",
+    color: "black",
+    headerBackgroundColor: "#353535"
   },
   light: {
-    color: "white"
+    textColor: "black",
+    color: "white",
+    headerBackgroundColor: "#f6f6f6"
   }
 };
 
