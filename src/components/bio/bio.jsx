@@ -47,7 +47,14 @@ const Bio = () => {
           }
         }
       }
-      linkedin: file(absolutePath: { regex: "/LI-In-Bug.png/" }) {
+      linkedinLight: file(absolutePath: { regex: "/LI-In-Bug - Light.png/" }) {
+        childImageSharp {
+          fixed(width: 25, height: 25) {
+            ...GatsbyImageSharpFixed
+          }
+        }
+      }
+      linkedinDark: file(absolutePath: { regex: "/LI-In-Bug - Dark.png/" }) {
         childImageSharp {
           fixed(width: 25, height: 25) {
             ...GatsbyImageSharpFixed
@@ -70,8 +77,11 @@ const Bio = () => {
   const { author, social } = data.site.siteMetadata;
 
   const themeContext = useContext(ThemeSelectorContext);
-  const githubIcon = useMemo(
-    () => (themeContext.themeName === "dark" ? "githubLight" : "githubDark"),
+  const [githubIcon, linkedinIcon] = useMemo(
+    () =>
+      themeContext.themeName === "dark"
+        ? ["githubLight", "linkedinLight"]
+        : ["githubDark", "linkedinDark"],
     [themeContext.themeName]
   );
   return (
@@ -96,7 +106,7 @@ const Bio = () => {
         </PersonalLink>
         <PersonalLink href={`https://www.linkedin.com/in/${social.linkedin}`}>
           <ContactImage
-            fixed={data.linkedin.childImageSharp.fixed}
+            fixed={data[linkedinIcon].childImageSharp.fixed}
             alt={author}
           />
         </PersonalLink>
