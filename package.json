@@ -44,7 +44,7 @@
     "react-dom": "^16.8.6",
     "react-helmet": "^5.2.1",
     "react-typography": "^0.16.19",
-    "styled-components": "^4.3.2",
+    "styled-components": "^5.0.0-beta.8",
     "typography": "^0.16.19"
   },
   "devDependencies": {

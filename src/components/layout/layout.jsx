@@ -1,16 +1,10 @@
 import React from "react";
 
-import { Wrapper, ContentWrapper } from "./layout.styled";
+import { Wrapper, ContentWrapper, Footer } from "./layout.styled";
 import { Header } from "./header";
-import { createGlobalStyle } from "styled-components";
 import { Themer } from "../themer";
 
-const GlobalStyled = createGlobalStyle`
-  body {
-    @import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
-    font-family: 'Montserrat', sans-serif;
-  }
-`;
+import "./layout.css";
 
 class Layout extends React.Component {
   render() {
@@ -22,13 +16,12 @@ class Layout extends React.Component {
           <Header />
           <ContentWrapper>
             <main>{children}</main>
-            <footer>
+            <Footer>
               © {new Date().getFullYear()}, Built with
               {` `}
               <a href="https://www.gatsbyjs.org">Gatsby</a>
-            </footer>
+            </Footer>
           </ContentWrapper>
-          <GlobalStyled />
         </Wrapper>
       </Themer>
     );

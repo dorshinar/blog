@@ -5,7 +5,7 @@
  * See: https://www.gatsbyjs.org/docs/use-static-query/
  */
 
-import React from "react";
+import React, { useContext, useMemo } from "react";
 import { useStaticQuery, graphql } from "gatsby";
 
 import {
@@ -17,6 +17,7 @@ import {
   ContactImage,
   ContactDevBadge
 } from "./bio.styled";
+import { ThemeSelectorContext } from "../themer/themer";
 
 const Bio = () => {
   const data = useStaticQuery(graphql`
@@ -28,7 +29,18 @@ const Bio = () => {
           }
         }
       }
-      github: file(absolutePath: { regex: "/GitHub-Mark-120px-plus.png/" }) {
+      githubDark: file(
+        absolutePath: { regex: "/GitHub-Mark-120px-plus.png/" }
+      ) {
+        childImageSharp {
+          fixed(width: 25, height: 25) {
+            ...GatsbyImageSharpFixed
+          }
+        }
+      }
+      githubLight: file(
+        absolutePath: { regex: "/GitHub-Mark-Light-120px-plus.png/" }
+      ) {
         childImageSharp {
           fixed(width: 25, height: 25) {
             ...GatsbyImageSharpFixed
@@ -56,6 +68,12 @@ const Bio = () => {
   `);
 
   const { author, social } = data.site.siteMetadata;
+
+  const themeContext = useContext(ThemeSelectorContext);
+  const githubIcon = useMemo(
+    () => (themeContext.themeName === "dark" ? "githubLight" : "githubDark"),
+    [themeContext.themeName]
+  );
   return (
     <Wrapper>
       <ProfileImage
@@ -72,7 +90,7 @@ const Bio = () => {
       <ContactMe>
         <PersonalLink href={`https://github.com/${social.github}`}>
           <ContactImage
-            fixed={data.github.childImageSharp.fixed}
+            fixed={data[githubIcon].childImageSharp.fixed}
             alt={author}
           />
         </PersonalLink>
@@ -83,7 +101,7 @@ const Bio = () => {
           />
         </PersonalLink>
         <PersonalLink href={`https://dev.to/${social.dev}`}>
-          <ContactDevBadge alt={author} />
+          <ContactDevBadge alt={author} theme={themeContext.themeName} />
         </PersonalLink>
       </ContactMe>
     </Wrapper>

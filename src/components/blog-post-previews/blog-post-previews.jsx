@@ -1,5 +1,6 @@
 import React from "react";
 import { BlogPostPreview } from "../blog-post-preview";
+import { Separator } from "./blog-post-previews.styled";
 
 export default ({ posts }) =>
   posts.map(({ node }, index, array) => {
@@ -7,7 +8,7 @@ export default ({ posts }) =>
     return (
       <>
         <BlogPostPreview key={node.fields.slug} node={node} title={title} />
-        {index !== array.length - 1 && <hr />}
+        {index !== array.length - 1 && <Separator />}
       </>
     );
   });

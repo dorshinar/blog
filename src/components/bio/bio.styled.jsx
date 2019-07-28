@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { rhythm } from "../../utils/typography";
 import Image from "gatsby-image";
 import DevBadge from "../../../content/assets/dev-badge.svg";
@@ -44,4 +44,12 @@ export const ContactDevBadge = styled(DevBadge)`
   margin-bottom: 0;
   width: 25px;
   height: 25px;
+
+  ${props => {
+    if (props.theme === "dark") {
+      return css`
+        filter: invert(95%);
+      `;
+    }
+  }}
 `;

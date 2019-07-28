@@ -10,7 +10,7 @@ export const LinkHome = styled(Link)`
 
 export const Wrapper = styled.div`
   padding-bottom: ${rhythm(1.5)};
-  background-color: ${({ theme: { color } }) => color};
+  background-color: ${({ theme: { backgroundColor } }) => backgroundColor};
   color: ${props => props.theme.textColor};
 `;
 
@@ -19,4 +19,8 @@ export const ContentWrapper = styled.div`
   margin-right: auto;
   margin-top: ${rhythm(1)};
   max-width: ${rhythm(24)};
+`;
+
+export const Footer = styled.footer`
+  margin-top: ${rhythm(1)};
 `;

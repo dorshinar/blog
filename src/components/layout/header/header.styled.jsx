@@ -19,7 +19,7 @@ export const Content = styled.span`
 
 export const Title = styled.h1`
   margin-bottom: 0;
-  color: ${props => props.theme.textColor};
+  color: ${props => props.theme.primary};
 `;
 
 export const HomeLink = styled(Link)`
