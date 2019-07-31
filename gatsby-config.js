@@ -7,7 +7,8 @@ module.exports = {
     social: {
       github: `dorshinar`,
       linkedin: "dor-shinar-82b00b144",
-      dev: "dorshinar"
+      dev: "dorshinar",
+      stackoverflow: "3822311/dor-shinar"
     }
   },
   plugins: [

@@ -2,6 +2,7 @@ import styled, { css } from "styled-components";
 import { rhythm } from "../../utils/typography";
 import Image from "gatsby-image";
 import DevBadge from "../../../content/assets/dev-badge.svg";
+import SOBadge from "../../../content/assets/so-icon.svg";
 
 export const Wrapper = styled.div`
   display: flex;
@@ -32,18 +33,19 @@ export const PersonalLink = styled.a`
   background-image: initial;
 `;
 
-export const ContactImage = styled(Image)`
-  margin-right: ${rhythm(1 / 2)};
+const ContactCSS = css`
+  margin-right: ${rhythm(1)};
   margin-bottom: 0;
   width: 25px;
   height: 25px;
 `;
 
+export const ContactImage = styled(Image)`
+  ${ContactCSS}
+`;
+
 export const ContactDevBadge = styled(DevBadge)`
-  margin-right: ${rhythm(1 / 2)};
-  margin-bottom: 0;
-  width: 25px;
-  height: 25px;
+  ${ContactCSS}
 
   ${props => {
     if (props.theme === "dark") {
@@ -52,4 +54,11 @@ export const ContactDevBadge = styled(DevBadge)`
       `;
     }
   }}
+`;
+
+export const ContactSOBadge = styled(SOBadge)`
+  ${ContactCSS}
+  & path {
+    fill: white;
+  }
 `;

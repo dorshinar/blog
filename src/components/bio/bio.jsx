@@ -5,7 +5,7 @@
  * See: https://www.gatsbyjs.org/docs/use-static-query/
  */
 
-import React, { useContext, useMemo } from "react";
+import React, { useContext, useMemo, memo } from "react";
 import { useStaticQuery, graphql } from "gatsby";
 
 import {
@@ -15,7 +15,8 @@ import {
   ContactMe,
   PersonalLink,
   ContactImage,
-  ContactDevBadge
+  ContactDevBadge,
+  ContactSOBadge
 } from "./bio.styled";
 import { ThemeSelectorContext } from "../themer/themer";
 
@@ -68,6 +69,7 @@ const Bio = () => {
             github
             linkedin
             dev
+            stackoverflow
           }
         }
       }
@@ -113,9 +115,14 @@ const Bio = () => {
         <PersonalLink href={`https://dev.to/${social.dev}`}>
           <ContactDevBadge alt={author} theme={themeContext.themeName} />
         </PersonalLink>
+        <PersonalLink
+          href={`https://stackoverflow.com/users/${social.stackoverflow}`}
+        >
+          <ContactSOBadge alt={author} />
+        </PersonalLink>
       </ContactMe>
     </Wrapper>
   );
 };
 
-export default Bio;
+export default memo(Bio);
