@@ -113,12 +113,12 @@ const Bio = () => {
           />
         </PersonalLink>
         <PersonalLink href={`https://dev.to/${social.dev}`}>
-          <ContactDevBadge alt={author} theme={themeContext.themeName} />
+          <ContactDevBadge alt={author} themeName={themeContext.themeName} />
         </PersonalLink>
         <PersonalLink
           href={`https://stackoverflow.com/users/${social.stackoverflow}`}
         >
-          <ContactSOBadge alt={author} />
+          <ContactSOBadge alt={author} themeName={themeContext.themeName} />
         </PersonalLink>
       </ContactMe>
     </Wrapper>

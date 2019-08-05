@@ -1,3 +1,4 @@
+import React from "react";
 import styled, { css } from "styled-components";
 import { rhythm } from "../../utils/typography";
 import Image from "gatsby-image";
@@ -8,7 +9,8 @@ export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: ${rhythm(2.5)};
+  margin-bottom: ${rhythm(1)};
+  padding: ${rhythm(0.5)};
 `;
 
 export const ProfileImage = styled(Image)`
@@ -47,8 +49,9 @@ export const ContactImage = styled(Image)`
 export const ContactDevBadge = styled(DevBadge)`
   ${ContactCSS}
 
-  ${props => {
-    if (props.theme === "dark") {
+  ${({ themeName }) => {
+    console.log({ themeName });
+    if (themeName === "dark") {
       return css`
         filter: invert(95%);
       `;
@@ -56,9 +59,16 @@ export const ContactDevBadge = styled(DevBadge)`
   }}
 `;
 
-export const ContactSOBadge = styled(SOBadge)`
+export const ContactSOBadge = styled(({ themeName, ...rest }) => (
+  <SOBadge {...rest} />
+))`
   ${ContactCSS}
   & path {
-    fill: white;
+    fill: ${({ themeName }) => {
+      if (themeName === "dark") {
+        return "white";
+      }
+      return "#121212";
+    }};
   }
 `;

@@ -3,7 +3,7 @@ import { rhythm } from "../../utils/typography";
 import { Link } from "gatsby";
 
 export const Wrapper = styled.div`
-  background-color: ${props => props.theme.headerBackgroundColor};
+  /* background-color: ${props => props.theme.headerBackgroundColor}; */
   border-radius: 25px;
   padding: ${rhythm(0.5)};
 `;

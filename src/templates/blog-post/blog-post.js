@@ -9,7 +9,8 @@ import {
   Post,
   Divider,
   NearByPosts,
-  PostLink
+  PostLink,
+  Wrapper
 } from "./blog-post.styled";
 import { ScrollIndicator } from "../../components/scroll-indicator";
 
@@ -25,30 +26,32 @@ class BlogPostTemplate extends React.Component {
           title={post.frontmatter.title}
           description={post.frontmatter.description || post.excerpt}
         />
-        <Header>{post.frontmatter.title}</Header>
-        <SubHeader>
-          {`${post.frontmatter.date}, ${post.fields.readingTime.text}`}
-        </SubHeader>
-        <Post dangerouslySetInnerHTML={{ __html: post.html }} />
-        <Divider />
-        <Bio />
+        <Wrapper>
+          <Header>{post.frontmatter.title}</Header>
+          <SubHeader>
+            {`${post.frontmatter.date}, ${post.fields.readingTime.text}`}
+          </SubHeader>
+          <Post dangerouslySetInnerHTML={{ __html: post.html }} />
+          <Divider />
+          <Bio />
 
-        <NearByPosts>
-          <PostLink>
-            {previous && (
-              <Link to={previous.fields.slug} rel="prev">
-                ← {previous.frontmatter.title}
-              </Link>
-            )}
-          </PostLink>
-          <PostLink>
-            {next && (
-              <Link to={next.fields.slug} rel="next">
-                {next.frontmatter.title} →
-              </Link>
-            )}
-          </PostLink>
-        </NearByPosts>
+          <NearByPosts>
+            <PostLink>
+              {previous && (
+                <Link to={previous.fields.slug} rel="prev">
+                  ← {previous.frontmatter.title}
+                </Link>
+              )}
+            </PostLink>
+            <PostLink>
+              {next && (
+                <Link to={next.fields.slug} rel="next">
+                  {next.frontmatter.title} →
+                </Link>
+              )}
+            </PostLink>
+          </NearByPosts>
+        </Wrapper>
       </>
     );
   }

@@ -9,7 +9,6 @@ export const LinkHome = styled(Link)`
 `;
 
 export const Wrapper = styled.div`
-  padding-bottom: ${rhythm(1.5)};
   background-color: ${({ theme: { backgroundColor } }) => backgroundColor};
   color: ${props => props.theme.textColor};
 `;
@@ -23,4 +22,5 @@ export const ContentWrapper = styled.div`
 
 export const Footer = styled.footer`
   margin-top: ${rhythm(1)};
+  padding: ${rhythm(0.5)};
 `;

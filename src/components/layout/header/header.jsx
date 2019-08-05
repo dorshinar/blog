@@ -8,7 +8,7 @@ export default () => {
   return (
     <Wrapper>
       <Content>
-        <HomeLink>
+        <HomeLink to="/">
           <Title>Dor Shinar</Title>
         </HomeLink>
         <button onClick={toggleTheme}>Toggle theme</button>

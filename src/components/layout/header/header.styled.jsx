@@ -8,6 +8,7 @@ export const Wrapper = styled.header`
   align-items: center;
   height: ${rhythm(3)};
   background-color: ${props => props.theme.headerBackgroundColor};
+  padding: ${rhythm(0.5)};
 `;
 
 export const Content = styled.span`
