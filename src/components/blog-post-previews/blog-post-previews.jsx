@@ -6,9 +6,9 @@ export default ({ posts }) =>
   posts.map(({ node }, index, array) => {
     const title = node.frontmatter.title || node.fields.slug;
     return (
-      <>
-        <BlogPostPreview key={node.fields.slug} node={node} title={title} />
+      <React.Fragment key={node.fields.slug}>
+        <BlogPostPreview node={node} title={title} />
         {index !== array.length - 1 && <Separator />}
-      </>
+      </React.Fragment>
     );
   });
