@@ -46,17 +46,17 @@ export const ContactImage = styled(Image)`
   ${ContactCSS}
 `;
 
-export const ContactDevBadge = styled(DevBadge)`
+export const ContactDevBadge = styled(({ themeName, ...rest }) => (
+  <DevBadge {...rest} />
+))`
   ${ContactCSS}
 
-  ${({ themeName }) => {
-    console.log({ themeName });
-    if (themeName === "dark") {
-      return css`
-        filter: invert(95%);
-      `;
-    }
-  }}
+  ${({ themeName }) =>
+    themeName === "dark"
+      ? css`
+          filter: invert(95%);
+        `
+      : undefined}
 `;
 
 export const ContactSOBadge = styled(({ themeName, ...rest }) => (
@@ -64,11 +64,6 @@ export const ContactSOBadge = styled(({ themeName, ...rest }) => (
 ))`
   ${ContactCSS}
   & path {
-    fill: ${({ themeName }) => {
-      if (themeName === "dark") {
-        return "white";
-      }
-      return "#121212";
-    }};
+    fill: ${({ themeName }) => (themeName === "dark" ? "white" : "#121212")};
   }
 `;
