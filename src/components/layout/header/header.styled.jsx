@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { rhythm } from "../../../utils/typography";
 import { Link } from "gatsby";
+import Toggle from "react-toggle";
 
 export const Wrapper = styled.header`
   display: flex;
@@ -15,7 +16,7 @@ export const Content = styled.span`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width: ${rhythm(24)};
+  width: ${({ theme }) => theme.contentWidth};
 `;
 
 export const Title = styled.h1`
@@ -25,4 +26,10 @@ export const Title = styled.h1`
 
 export const HomeLink = styled(Link)`
   text-decoration: none;
+`;
+
+export const StyledToggle = styled(Toggle)`
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 `;

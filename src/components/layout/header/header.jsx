@@ -1,9 +1,18 @@
 import React, { useContext } from "react";
-import { Wrapper, Content, Title, HomeLink } from "./header.styled";
+import {
+  Wrapper,
+  Content,
+  Title,
+  HomeLink,
+  StyledToggle
+} from "./header.styled";
 import { ThemeSelectorContext } from "../../themer";
 
+import "react-toggle/style.css";
+import "./header.css";
+
 export default () => {
-  const { toggleTheme } = useContext(ThemeSelectorContext);
+  const { toggleTheme, themeName } = useContext(ThemeSelectorContext);
 
   return (
     <Wrapper>
@@ -11,7 +20,10 @@ export default () => {
         <HomeLink to="/">
           <Title>Dor Shinar</Title>
         </HomeLink>
-        <button onClick={toggleTheme}>Toggle theme</button>
+        <StyledToggle
+          defaultChecked={themeName === "dark"}
+          onClick={toggleTheme}
+        />
       </Content>
     </Wrapper>
   );

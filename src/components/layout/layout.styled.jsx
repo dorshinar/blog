@@ -11,6 +11,7 @@ export const LinkHome = styled(Link)`
 export const Wrapper = styled.div`
   background-color: ${({ theme: { backgroundColor } }) => backgroundColor};
   color: ${props => props.theme.textColor};
+  min-height: 100vh;
 
   & a {
     color: ${({ theme }) => theme.primary};
@@ -22,6 +23,9 @@ export const ContentWrapper = styled.div`
   margin-right: auto;
   margin-top: ${rhythm(1)};
   max-width: ${rhythm(24)};
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `;
 
 export const Footer = styled.footer`

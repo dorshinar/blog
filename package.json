@@ -43,6 +43,7 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-helmet": "^5.2.1",
+    "react-toggle": "^4.0.2",
     "react-typography": "^0.16.19",
     "styled-components": "^5.0.0-beta.8",
     "typography": "^0.16.19"
@@ -63,6 +64,7 @@
   "scripts": {
     "build": "gatsby build",
     "develop": "gatsby develop",
+    "develop:mobile": "gatsby develop -H 0.0.0.0",
     "format": "prettier --write src/**/*.{js,jsx}",
     "lint": "eslint src/**/*.{js,jsx} --fix",
     "start": "npm run develop",

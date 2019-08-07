@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from "react";
 import { ThemeProvider } from "styled-components";
+import { rhythm } from "../../utils/typography";
 
 const colorPalette = {
   primary: "#1ca086",
@@ -7,9 +8,14 @@ const colorPalette = {
   dark: "#007159"
 };
 
+const sizes = {
+  contentWidth: rhythm(24)
+};
+
 const themes = {
   dark: {
     ...colorPalette,
+    ...sizes,
     separatorColor: "rgba(255,255,255,0.20)",
     textColor: "white",
     backgroundColor: "#121212",
@@ -17,6 +23,7 @@ const themes = {
   },
   light: {
     ...colorPalette,
+    ...sizes,
     separatorColor: "rgba(0,0,0,0.08)",
     textColor: "black",
     backgroundColor: "white",
@@ -25,7 +32,7 @@ const themes = {
 };
 
 export const ThemeSelectorContext = React.createContext({
-  theme: themes.dark,
+  themeName: "dark",
   toggleTheme: () => {}
 });
 
