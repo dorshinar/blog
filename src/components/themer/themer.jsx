@@ -13,7 +13,7 @@ const themes = {
     separatorColor: "rgba(255,255,255,0.20)",
     textColor: "white",
     backgroundColor: "#121212",
-    headerBackgroundColor: "rgba(255,255,255,0.20)"
+    headerBackgroundColor: "rgba(255,255,255,0.05)"
   },
   light: {
     ...colorPalette,

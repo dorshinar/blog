@@ -11,6 +11,10 @@ export const LinkHome = styled(Link)`
 export const Wrapper = styled.div`
   background-color: ${({ theme: { backgroundColor } }) => backgroundColor};
   color: ${props => props.theme.textColor};
+
+  & a {
+    color: ${({ theme }) => theme.primary};
+  }
 `;
 
 export const ContentWrapper = styled.div`
