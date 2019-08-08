@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { rhythm } from "../../../utils/typography";
 import { Link } from "gatsby";
 import Toggle from "react-toggle";
+import Image from "gatsby-image";
 
 export const Wrapper = styled.header`
   display: flex;
@@ -32,4 +33,14 @@ export const StyledToggle = styled(Toggle)`
   display: flex;
   justify-content: space-around;
   align-items: center;
+`;
+
+export const StyledSun = styled(Image)`
+  top: -50%;
+  left: -30%;
+`;
+
+export const StyledMoon = styled(Image)`
+  top: -50%;
+  left: -15%;
 `;

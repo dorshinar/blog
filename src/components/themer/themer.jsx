@@ -36,16 +36,26 @@ export const ThemeSelectorContext = React.createContext({
   toggleTheme: () => {}
 });
 
+const setCSSVariables = theme => {
+  for (const value in theme) {
+    document.documentElement.style.setProperty(`--${value}`, theme[value]);
+  }
+};
+
 export default ({ children }) => {
   const [themeName, setThemeName] = useState("dark");
   const [theme, setTheme] = useState(themes[themeName]);
+  setCSSVariables(theme);
+
   const toggleTheme = useCallback(() => {
     if (theme === themes.dark) {
       setTheme(themes.light);
       setThemeName("light");
+      setCSSVariables(themes.light);
     } else {
       setTheme(themes.dark);
       setThemeName("dark");
+      setCSSVariables(themes.dark);
     }
   }, [theme, setTheme, setThemeName]);
 

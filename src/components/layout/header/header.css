@@ -1,3 +1,18 @@
 .react-toggle-thumb {
   top: initial;
 }
+
+.react-toggle--checked .react-toggle-track,
+.react-toggle--checked:hover:not(.react-toggle-disabled) .react-toggle-track,
+.react-toggle .react-toggle-track,
+.react-toggle:hover:not(.react-toggle-disabled) .react-toggle-track {
+  background-color: var(--backgroundColor);
+}
+
+.react-toggle-thumb,
+.react-toggle--focus .react-toggle-thumb,
+.react-toggle--active .react-toggle-thumb,
+.react-toggle:active:not(.react-toggle--disabled) .react-toggle-thumb {
+  border-color: var(--primary);
+  box-shadow: none;
+}
