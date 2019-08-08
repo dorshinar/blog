@@ -3,7 +3,7 @@ module.exports = {
     title: `Dor Shinar`,
     author: `Dor Shinar`,
     description: `My Personal blog for thoughts.`,
-    siteUrl: "https://github.com",
+    siteUrl: "http://10.0.0.27:8000",
     social: {
       github: `dorshinar`,
       linkedin: "dor-shinar-82b00b144",
@@ -61,13 +61,34 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `Gatsby Starter Blog`,
-        short_name: `GatsbyJS`,
+        name: `Dor Shinar's Blog`,
+        short_name: `Dor Shinar`,
         start_url: `/`,
-        background_color: `#ffffff`,
-        theme_color: `#663399`,
+        background_color: `#1ca086`,
+        theme_color: `#1ca086`,
         display: `minimal-ui`,
-        icon: `content/assets/gatsby-icon.png`
+        icons: [
+          {
+            src: "static/android-chrome-192x192.png",
+            sizes: "192x192",
+            type: "image/png"
+          },
+          {
+            src: "static/android-chrome-512x512.png",
+            sizes: "512x512",
+            type: "image/png"
+          },
+          {
+            src: "static/android-chrome-16x16.png",
+            sizes: "16x16",
+            type: "image/png"
+          },
+          {
+            src: "static/android-chrome-32x32.png",
+            sizes: "32x32",
+            type: "image/png"
+          }
+        ]
       }
     },
     `gatsby-plugin-offline`,

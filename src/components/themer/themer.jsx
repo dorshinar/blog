@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { ThemeProvider } from "styled-components";
 import { rhythm } from "../../utils/typography";
 
@@ -45,17 +45,18 @@ const setCSSVariables = theme => {
 export default ({ children }) => {
   const [themeName, setThemeName] = useState("dark");
   const [theme, setTheme] = useState(themes[themeName]);
-  setCSSVariables(theme);
+
+  useEffect(() => {
+    setCSSVariables(theme);
+  });
 
   const toggleTheme = useCallback(() => {
     if (theme === themes.dark) {
       setTheme(themes.light);
       setThemeName("light");
-      setCSSVariables(themes.light);
     } else {
       setTheme(themes.dark);
       setThemeName("dark");
-      setCSSVariables(themes.dark);
     }
   }, [theme, setTheme, setThemeName]);
 
