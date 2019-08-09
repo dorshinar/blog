@@ -24,7 +24,11 @@ export const SubHeader = styled.p`
   margin-bottom: ${rhythm(1)};
 `;
 
-export const Post = styled.div``;
+export const Post = styled.div`
+  & > p > img {
+    margin-bottom: 0;
+  }
+`;
 
 export const Divider = styled.hr`
   margin-bottom: ${rhythm(1)};
