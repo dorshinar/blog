@@ -1,6 +1,7 @@
 import styled from "styled-components";
-import { rhythm } from "../../utils/typography";
 import { Link } from "gatsby";
+
+import { rhythm } from "../../utils/typography";
 
 export const LinkHome = styled(Link)`
   box-shadow: none;
@@ -26,9 +27,4 @@ export const ContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-`;
-
-export const Footer = styled.footer`
-  margin-top: ${rhythm(1)};
-  padding: ${rhythm(0.5)};
 `;

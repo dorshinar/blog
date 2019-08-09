@@ -1,8 +1,10 @@
 import React from "react";
 
-import { Wrapper, ContentWrapper, Footer } from "./layout.styled";
-import { Header } from "./header";
 import { Themer } from "../themer";
+
+import { Header } from "./header";
+import { Footer } from "./footer";
+import { Wrapper, ContentWrapper } from "./layout.styled";
 
 import "./layout.css";
 
@@ -16,11 +18,7 @@ class Layout extends React.Component {
           <Header />
           <ContentWrapper>
             <main>{children}</main>
-            <Footer>
-              © {new Date().getFullYear()}, Built with
-              {` `}
-              <a href="https://www.gatsbyjs.org">Gatsby</a>
-            </Footer>
+            <Footer />
           </ContentWrapper>
         </Wrapper>
       </Themer>
