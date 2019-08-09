@@ -9,9 +9,10 @@ export const Wrapper = styled.header`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: ${rhythm(3)};
-  background-color: ${props => props.theme.headerBackgroundColor};
   padding: ${rhythm(0.5)};
+  height: ${rhythm(3)};
+  background-color: ${({ theme }) => theme.headerBackgroundColor};
+  transition: background-color 0.25s ease;
 `;
 
 export const Content = styled.span`
@@ -23,7 +24,7 @@ export const Content = styled.span`
 
 export const Title = styled.h1`
   margin-bottom: 0;
-  color: ${props => props.theme.primary};
+  color: ${({ theme }) => theme.primary};
 `;
 
 export const HomeLink = styled(Link)`

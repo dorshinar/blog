@@ -11,7 +11,9 @@ export const LinkHome = styled(Link)`
 
 export const Wrapper = styled.div`
   background-color: ${({ theme: { backgroundColor } }) => backgroundColor};
-  color: ${props => props.theme.textColor};
+  color: ${({ theme }) => theme.textColor};
+  transition: background-color 0.25s ease, color 0.25s ease;
+
   min-height: 100vh;
 
   & a {
