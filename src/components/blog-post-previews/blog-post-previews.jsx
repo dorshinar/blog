@@ -1,5 +1,7 @@
 import React from "react";
+
 import { BlogPostPreview } from "../blog-post-preview";
+
 import { Separator } from "./blog-post-previews.styled";
 
 export default ({ posts }) =>

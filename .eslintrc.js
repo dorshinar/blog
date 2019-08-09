@@ -17,7 +17,8 @@ module.exports = {
     node: true
   },
   rules: {
-    "react/prop-types": 0
+    "react/prop-types": 0,
+    "import/order": ["error", { "newlines-between": "always" }]
   },
   settings: {
     "import/resolver": {

@@ -1,6 +1,7 @@
 import styled from "styled-components";
-import { rhythm } from "../../utils/typography";
 import { Link } from "gatsby";
+
+import { rhythm } from "../../utils/typography";
 
 export const Wrapper = styled.div`
   border-radius: 25px;

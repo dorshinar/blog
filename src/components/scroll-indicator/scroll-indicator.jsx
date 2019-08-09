@@ -1,4 +1,5 @@
 import React from "react";
+
 import { Container, Indicator } from "./scroll-indicator.styled";
 
 export default class ScrollIndicator extends React.Component {

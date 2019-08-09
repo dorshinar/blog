@@ -3,6 +3,8 @@ import { Link, graphql } from "gatsby";
 
 import { Bio } from "../../components/bio";
 import SEO from "../../components/seo";
+import { ScrollIndicator } from "../../components/scroll-indicator";
+
 import {
   Header,
   SubHeader,
@@ -12,7 +14,6 @@ import {
   PostLink,
   Wrapper
 } from "./blog-post.styled";
-import { ScrollIndicator } from "../../components/scroll-indicator";
 
 class BlogPostTemplate extends React.Component {
   render() {

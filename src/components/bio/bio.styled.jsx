@@ -1,7 +1,8 @@
 import React from "react";
 import styled, { css } from "styled-components";
-import { rhythm } from "../../utils/typography";
 import Image from "gatsby-image";
+
+import { rhythm } from "../../utils/typography";
 import DevBadge from "../../../content/assets/dev-badge.svg";
 import SOBadge from "../../../content/assets/so-icon.svg";
 

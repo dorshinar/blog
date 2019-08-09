@@ -1,8 +1,9 @@
 import styled from "styled-components";
-import { rhythm } from "../../../utils/typography";
 import { Link } from "gatsby";
 import Toggle from "react-toggle";
 import Image from "gatsby-image";
+
+import { rhythm } from "../../../utils/typography";
 
 export const Wrapper = styled.header`
   display: flex;

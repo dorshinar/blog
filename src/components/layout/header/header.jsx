@@ -1,4 +1,8 @@
 import React, { useContext } from "react";
+import { useStaticQuery, graphql } from "gatsby";
+
+import { ThemeSelectorContext } from "../../themer";
+
 import {
   Wrapper,
   Content,
@@ -8,8 +12,6 @@ import {
   StyledSun,
   StyledMoon
 } from "./header.styled";
-import { ThemeSelectorContext } from "../../themer";
-import { useStaticQuery, graphql } from "gatsby";
 
 import "react-toggle/style.css";
 import "./header.css";

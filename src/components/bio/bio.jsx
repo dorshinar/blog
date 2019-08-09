@@ -8,6 +8,8 @@
 import React, { useContext, useMemo, memo } from "react";
 import { useStaticQuery, graphql } from "gatsby";
 
+import { ThemeSelectorContext } from "../themer/themer";
+
 import {
   Wrapper,
   ProfileImage,
@@ -18,7 +20,6 @@ import {
   ContactDevBadge,
   ContactSOBadge
 } from "./bio.styled";
-import { ThemeSelectorContext } from "../themer/themer";
 
 const Bio = () => {
   const data = useStaticQuery(graphql`

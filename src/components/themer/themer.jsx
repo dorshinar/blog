@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { ThemeProvider } from "styled-components";
+
 import { rhythm } from "../../utils/typography";
 
 const colorPalette = {
