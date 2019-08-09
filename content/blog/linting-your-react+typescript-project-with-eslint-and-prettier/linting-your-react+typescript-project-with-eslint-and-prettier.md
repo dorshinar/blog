@@ -1,8 +1,7 @@
 ---
 title: Linting Your React+Typescript Project With ESlint and Prettier
 date: "2019-01-21T20:00:00.000Z"
-description: "ESlint and Prettier are a bless for the JS world, and up until now there was no proper solution to
-achieving the same greatness with typescript. In this guide I'll walk you through how you can drink the cool kids juice as well."
+description: "ESlint and Prettier are a bless for the JS world, and up until now there was no proper solution to achieving the same greatness with typescript. In this guide I'll walk you through how you can drink the cool kids juice as well."
 published: true
 slug: /linting-your-react+typescript-project-with-eslint-and-prettier
 ---
@@ -20,21 +19,25 @@ The rest of the article talks about a new [repository](https://github.com/typesc
 After some further testing and comparisons, I believe that ESLint is in fact the right tool for the job (not only because I trust the Typescript’s team 😉).
 
 Update - May 10th:
-[Create React App v3](https://github.com/facebook/create-react-app/releases/tag/v3.0.0) started linting TypeScript projects with @typescript/eslint as well, so I firmly believe I've made the right choice.
+[Create React App v3](https://github.com/facebook/create-react-app/releases/tag/v3.0.0) started linting TypeScript projects with `@typescript/eslint` as well, so I firmly believe I've made the right choice.
 
-![](https://cdn-images-1.medium.com/max/2834/1*zpFPwbBffYcKQA_ovMFyWQ.png)
+!["Featured Image"](featured-image.png)
 
 Wow, this was a long introduction. Let’s get coding!
 
 First things first, we need to create a new project. For this article I’ll be using `create-react-app`, but whichever boilerplate you choose (or create on your own) will do just fine.
 
-`npx create-react-app eslint-react-intro --typescript`
+```bash
+npx create-react-app eslint-react-intro --typescript
+```
 
-For those who are not familiar, `npx` is a tool first introduced with `node@5.2.0`. In a sentence, it allows us to run binaries of npm packages with ease without global installation. It actually does a little more than that, you’re encouraged to read more in [this](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b) great article.
+For those who are not familiar, `npx` is a tool first introduced with `npm@5.2.0`. In a sentence, it allows us to run binaries of npm packages with ease without global installation. It actually does a little more than that, you’re encouraged to read more in [this](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b) great article.
 
 Now we have a basic react app, but we’re here for the linting, so let’s install a few dependencies:
 
-`npm i -D eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin`
+```bash
+npm i -D eslint @typescript-eslint/parser typescript-eslint/eslint-plugin
+```
 
 `eslint` is an obvious dependency, but what are `@typescript-eslint/parser` and `@typescript-eslint/eslint-plugin`?
 
@@ -44,33 +47,69 @@ So we have our basic dependencies, lets configure ESLint.
 
 ESLint has a nice interactive tool that you can run:
 
-`eslint --init`
+```bash
+eslint --init
+```
 
 It will ask you a series of questions to help you configure it. I prefer defining the configuration on my own, so I’ll create the configuration file — `.eslintrc.js` (ESLint supports JSON and YAML as well). with the following content:
 
-{% gist https://gist.github.com/dorshinar/adfd5ddc1dd64251861c061a2fe963e0 %}
+```javascript
+module.exports = {
+  parser: {},
+  extends: [],
+  plugins: [],
+  rules: {}
+};
+```
 
 Now we’ll make sure ESLint will work with the packages we’ve installed. We need to configure the parser, make sure the plugin is configured and the rule set applied is extended by the ones we’ve downloaded. Modify the file to look like so:
 
-{% gist https://gist.github.com/dorshinar/2be7ba56e26952006ddd1149e28f6952 %}
+```js
+module.exports = {
+  parser: "@typescript-eslint/parser",
+  extends: ["plugin:@typescript-eslint/recommended"],
+  plugins: ["@typescript-eslint"],
+  rules: {}
+};
+```
 
 We’ve told ESLint to parse out Typescript code properly, and to use a recommended set of rules (under the ‘extends’ field, this part is optional) from an installed plugin.
 
 Next we’ll add basic rules for React, courtesy of the Create React App development team. Add them to the file like so:
 
-{% gist https://gist.github.com/dorshinar/12afa25fac5508e1cbb71600a6382e19 %}
+```js
+module.exports = {
+  parser: "@typescript-eslint/parser",
+  extends: ["plugin:@typescript-eslint/recommended", "react-app"],
+  plugins: ["@typescript-eslint", "react"],
+  rules: {}
+};
+```
 
 So we have linting for both Typescript and React, let’s add a code formatter. [Prettier](https://prettier.io/) is my weapon of choice, as it does a great job at detecting and fixing style errors, and has superb ESLint integration.
 
 To add Prettier support, we need to install a few dependencies:
 
-`npm i -D prettier eslint-config-prettier eslint-plugin-prettier`
+```bash
+npm i -D prettier eslint-config-prettier eslint-plugin-prettier
+```
 
 [eslint-config-prettier](https://github.com/prettier/eslint-config-prettier) will disable any linting rule that might interfere with an existing Prettier rule, and [eslint-plugin-prettier](https://github.com/prettier/eslint-plugin-prettier) will run Prettier analysis as part of ESLint.
 
 Let’s add them to our ESLint config:
 
-{% gist https://gist.github.com/dorshinar/3306da607400555888568bc5ca0e1fd3 %}
+```js
+module.exports = {
+  parser: "@typescript-eslint/parser",
+  extends: [
+    "plugin:@typescript-eslint/recommended",
+    "react-app",
+    "plugin:prettier/recommended"
+  ],
+  plugins: ["@typescript-eslint", "react"],
+  rules: {}
+};
+```
 
 Go ahead, write poorly formatted code and you’ll see how Prettier is yelling at you. You are welcome to add your own custom Prettier configuration!
 
@@ -84,17 +123,29 @@ A little bonus for those who stuck around and work with the all-mighty [Visual S
 
 First, install the ESLint and Prettier VSCode extensions:
 
-`ext install esbenp.prettier-vscode dbaeumer.vscode-eslint`
+```bash
+ext install esbenp.prettier-vscode dbaeumer.vscode-eslint
+```
 
 Both come with various configuration options to play with, but their defaults are pretty good. The only thing we need to change is ESLint’s default behavior to only inspect _.JS and _.JSX files. Add this configuration option to your settings:
 
-{% gist https://gist.github.com/dorshinar/98f9815d169b499e368140ee591087c4 %}
+```json
+"eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    {
+      "language": "typescript",
+      "autoFix": true
+    },
+    {
+      "language": "typescriptreact",
+      "autoFix": true
+    }
+]
+```
 
 the autoFix key speaks for itself I believe, ESLint will try to fix all the errors it can (some are impossible to fix automatically). You can of course disable it if you prefer fixing the errors yourself. Now you’ll see all of the errors right in your IDE, so no one can miss them. I recommend combining ESLint with [Husky](https://github.com/typicode/husky) to make linting a must for every commit, but that’s up to you and your team.
 
 Thank you for reading!
 
 This article is a result of a quite frustrating personal experience trying to configure ESLint with no proper guide to help me through (except for the packages’ documentations). After struggling for several hours for something that felt like it should have taken five minutes, I decided to write this article so other developers won’t face the same struggle.
-
-This is my first dev.to article, be gentle with me 😄 I welcome constructive criticism and general comments.
-This article was published [here](https://medium.com/@dors718/linting-your-react-typescript-project-with-eslint-and-prettier-2423170c3d42) as well.
