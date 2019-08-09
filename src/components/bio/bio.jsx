@@ -6,7 +6,7 @@
  */
 
 import React, { useContext, useMemo, memo } from "react";
-import { useStaticQuery, graphql } from "gatsby";
+import { useStaticQuery, graphql, Link } from "gatsby";
 
 import { ThemeSelectorContext } from "../themer/themer";
 
@@ -63,6 +63,20 @@ const Bio = () => {
           }
         }
       }
+      rssLight: file(absolutePath: { regex: "/rss-512-light/" }) {
+        childImageSharp {
+          fixed(width: 25, height: 25) {
+            ...GatsbyImageSharpFixed
+          }
+        }
+      }
+      rssDark: file(absolutePath: { regex: "/rss-512-dark/" }) {
+        childImageSharp {
+          fixed(width: 25, height: 25) {
+            ...GatsbyImageSharpFixed
+          }
+        }
+      }
       site {
         siteMetadata {
           author
@@ -80,13 +94,15 @@ const Bio = () => {
   const { author, social } = data.site.siteMetadata;
 
   const themeContext = useContext(ThemeSelectorContext);
-  const [githubIcon, linkedinIcon] = useMemo(
+
+  const [githubIcon, linkedinIcon, rssIcon] = useMemo(
     () =>
       themeContext.themeName === "dark"
-        ? ["githubLight", "linkedinLight"]
-        : ["githubDark", "linkedinDark"],
+        ? ["githubLight", "linkedinLight", "rssLight"]
+        : ["githubDark", "linkedinDark", "rssDark"],
     [themeContext.themeName]
   );
+
   return (
     <Wrapper>
       <ProfileImage
@@ -121,6 +137,12 @@ const Bio = () => {
         >
           <ContactSOBadge alt={author} themeName={themeContext.themeName} />
         </PersonalLink>
+        <Link to="/rss.xml">
+          <ContactImage
+            fixed={data[rssIcon].childImageSharp.fixed}
+            alt={"RSS Feed"}
+          />
+        </Link>
       </ContactMe>
     </Wrapper>
   );
