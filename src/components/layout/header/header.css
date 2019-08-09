@@ -15,4 +15,5 @@
 .react-toggle:active:not(.react-toggle--disabled) .react-toggle-thumb {
   border-color: var(--primary);
   box-shadow: none;
+  background-color: var(--headerBackgroundColor);
 }
