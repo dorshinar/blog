@@ -51,7 +51,7 @@
   "devDependencies": {
     "prettier": "^1.18.2"
   },
-  "homepage": "https://github.com/dorshinar/blog#readme",
+  "homepage": "https://dorshinar.me",
   "keywords": [
     "gatsby"
   ],

@@ -3,7 +3,7 @@ module.exports = {
     title: `Dor Shinar`,
     author: `Dor Shinar`,
     description: `My Personal blog for thoughts.`,
-    siteUrl: "http://10.0.0.27:8000",
+    siteUrl: "https://dorshinar.me",
     social: {
       github: `dorshinar`,
       linkedin: "dor-shinar-82b00b144",
