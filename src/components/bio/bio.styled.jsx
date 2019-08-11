@@ -1,6 +1,7 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import Image from "gatsby-image";
+import { OutboundLink } from "gatsby-plugin-google-analytics";
 
 import { rhythm } from "../../utils/typography";
 import DevBadge from "../../../content/assets/dev-badge.svg";
@@ -32,7 +33,7 @@ export const ContactMe = styled.div`
   width: 100%;
 `;
 
-export const PersonalLink = styled.a`
+export const PersonalLink = styled(OutboundLink)`
   background-image: initial;
   margin-right: ${rhythm(1)};
 `;
