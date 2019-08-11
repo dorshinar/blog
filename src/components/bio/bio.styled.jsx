@@ -34,10 +34,10 @@ export const ContactMe = styled.div`
 
 export const PersonalLink = styled.a`
   background-image: initial;
+  margin-right: ${rhythm(1)};
 `;
 
 const ContactCSS = css`
-  margin-right: ${rhythm(1)};
   margin-bottom: 0;
   width: 25px;
   height: 25px;
