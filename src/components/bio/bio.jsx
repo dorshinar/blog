@@ -117,23 +117,33 @@ const Bio = () => {
         write articles. This is my blog!
       </AboutMe>
       <ContactMe>
-        <PersonalLink href={`https://github.com/${social.github}`}>
+        <PersonalLink
+          href={`https://github.com/${social.github}`}
+          aria-label={"Github"}
+        >
           <ContactImage
             fixed={data[githubIcon].childImageSharp.fixed}
             alt={author}
           />
         </PersonalLink>
-        <PersonalLink href={`https://www.linkedin.com/in/${social.linkedin}`}>
+        <PersonalLink
+          href={`https://www.linkedin.com/in/${social.linkedin}`}
+          aria-label={"Linkedin"}
+        >
           <ContactImage
             fixed={data[linkedinIcon].childImageSharp.fixed}
             alt={author}
           />
         </PersonalLink>
-        <PersonalLink href={`https://dev.to/${social.dev}`}>
+        <PersonalLink
+          href={`https://dev.to/${social.dev}`}
+          aria-label={"Dev.to"}
+        >
           <ContactDevBadge alt={author} themeName={themeContext.themeName} />
         </PersonalLink>
         <PersonalLink
           href={`https://stackoverflow.com/users/${social.stackoverflow}`}
+          aria-label={"StackOverflow"}
         >
           <ContactSOBadge alt={author} themeName={themeContext.themeName} />
         </PersonalLink>

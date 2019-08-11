@@ -46,6 +46,7 @@ export default () => {
         <StyledToggle
           defaultChecked={themeName === "dark"}
           onClick={toggleTheme}
+          aria-label={"Toggle Theme"}
           icons={{
             checked: (
               <StyledMoon
