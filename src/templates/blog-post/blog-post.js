@@ -4,13 +4,12 @@ import { Link, graphql } from "gatsby";
 import { Bio } from "../../components/bio";
 import SEO from "../../components/seo";
 import { ScrollIndicator } from "../../components/scroll-indicator";
-
 import { Separator } from "../../utils/styled/separator";
+
 import {
   Header,
   SubHeader,
   Post,
-  Divider,
   NearByPosts,
   PostLink,
   Wrapper
