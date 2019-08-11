@@ -13,18 +13,56 @@ It took us a while to find the right path for us, all while learning how to use 
 
 One of the first things you learn when reading `Jest`'s documentation is how to write [Snapshot Tests](https://jestjs.io/docs/en/snapshot-testing). They are meant to be the ultimate testing utility, and they interact beautifully with `React` components. You can "render" a component in your test under some condition, save it to a snapshot, and if in any future test the output of the component changes the test will fail and tell you that you've changed something you probably shouldn't have, and if you did it on purpose, you simply update the snapshot to reflect the new state of the component. For the purpose of this article I will explain the snapshot process briefly, but this is not an educational article - I strongly recommend the documentation of `Jest` for that.
 
-In practice, it goes something like this - let's create a super simple component that look something like this:  
-{% codesandbox c5q50 %}
+In practice, it goes something like this - let's create a super simple component that look something like this:
 
-A simple test for it might be something along the lines of:  
-{% gist https://gist.github.com/dorshinar/87eaba850ce21170cceba93d241f5d3d %}
+<iframe src="https://codesandbox.io/embed/why-i-stopped-writing-jest-snapshot-tests-c5q50?fontsize=14" title="why-i-stopped-writing-jest-snapshot-tests" allow="geolocation; microphone; camera; midi; vr; accelerometer; gyroscope; payment; ambient-light-sensor; encrypted-media" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe>
 
-When we first run the test, it passes and creates a new snapshot. The snapshot looks like that:  
-{% gist https://gist.github.com/dorshinar/5cf060a4faa9a3bc339a2233abaab4c0 %}  
+A simple test for it might be something along the lines of:
+
+```js
+import { mount, shallow } from "enzyme";
+import { App } from "./app";
+import React from "react";
+
+describe("<App />", () => {
+  it("matches snapshot with color blue", () => {
+    const wrapper = shallow(<App color="blue" />);
+    expect(wrapper).toMatchSnapshot();
+  });
+});
+```
+
+When we first run the test, it passes and creates a new snapshot. The snapshot looks like that:
+
+```js
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<App /> matches snapshot with color blue 1`] = `
+<div
+  className="outer"
+>
+  <div
+    style={
+      Object {
+        "backgroundColor": "blue",
+        "borderRadius": "50%",
+        "height": "10px",
+        "margin": "auto",
+        "marginTop": "auto",
+        "width": "10px",
+      }
+    }
+  />
+</div>
+`;
+```
+
 Not too complicated as it is a super simple component I wrote in 2 minutes.
 
-Let's say time passes and the component changes. It now looks like this:  
-{% codesandbox 3rpk3 %}  
+Let's say time passes and the component changes. It now looks like this:
+
+<iframe src="https://codesandbox.io/embed/why-i-stopped-writing-jest-snapshot-tests-2-3rpk3?fontsize=14" title="why-i-stopped-writing-jest-snapshot-tests-2" allow="geolocation; microphone; camera; midi; vr; accelerometer; gyroscope; payment; ambient-light-sensor; encrypted-media" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe>
+
 My component obviously changed (I'm the one who changed it). Running the test now would result in a failed test, as the snapshots don't match, so I'm forced to update the snapshot to reflect the new state - basically forcing my test to pass.
 
 Now that we have a basic understanding of snapshot testing I can make some bold claims as to why I have stopped using them entirely, and why I think you should too.
