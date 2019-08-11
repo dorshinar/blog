@@ -30,10 +30,6 @@ export const Post = styled.div`
   }
 `;
 
-export const Divider = styled.hr`
-  margin-bottom: ${rhythm(1)};
-`;
-
 export const NearByPosts = styled.ul`
   display: flex;
   flex-wrap: wrap;

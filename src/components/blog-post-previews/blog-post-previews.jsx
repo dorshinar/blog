@@ -1,8 +1,7 @@
 import React from "react";
 
 import { BlogPostPreview } from "../blog-post-preview";
-
-import { Separator } from "./blog-post-previews.styled";
+import { Separator } from "../../utils/styled/separator";
 
 export default ({ posts }) =>
   posts.map(({ node }, index, array) => {

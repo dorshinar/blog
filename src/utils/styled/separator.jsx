@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { rhythm } from "../../utils/typography";
+import { rhythm } from "../typography";
 
 export const Separator = styled.hr`
   margin: ${rhythm(1)} 0;
