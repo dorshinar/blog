@@ -137,12 +137,12 @@ const Bio = () => {
         >
           <ContactSOBadge alt={author} themeName={themeContext.themeName} />
         </PersonalLink>
-        <Link to="/rss.xml">
+        <a href="/rss.xml" target="_blank" rel="noopener noreferrer">
           <ContactImage
             fixed={data[rssIcon].childImageSharp.fixed}
             alt={"RSS Feed"}
           />
-        </Link>
+        </a>
       </ContactMe>
     </Wrapper>
   );
