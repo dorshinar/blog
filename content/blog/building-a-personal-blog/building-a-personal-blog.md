@@ -13,7 +13,7 @@ Time moved on and I've written a couple more (even though neither of them got th
 I was thinking to myself - Why shouldn't I have one? You could say it's not really worth the hassle, as I don't have a clear vision as to how many articles I plan to write, and I certainly don't have the time to write every week or so, but I thought it would be a fun project, and I hoped to learn something from it.
 
 Hint - that's the end result:
-![My Blog](dorshinar_me.png "My Blog")
+![My Blog](dorshinar_me_land.png "My Blog")
 
 I have a decent experience with web development, mostly in [React](https://reactjs.org/) and I was thinking I could make a use of it in my blog. Around that time I stumbled upon [this post](https://mike.biful.co/gatsby-dev-to-cross-poster-brainstorm), where the author suggested using [Gatsby.js](https://www.gatsbyjs.org/) for such things. I've never worked with Gatsby before, and most of my experience in web development comes from the component age (quite a noob, I know), but after a quick look through the documentation (which is superb!) I figured it would be a perfect solution for my blog.
 
