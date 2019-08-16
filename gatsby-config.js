@@ -107,6 +107,7 @@ module.exports = {
       options: {
         component: require.resolve(`./src/components/layout/layout.jsx`)
       }
-    }
+    },
+    `gatsby-plugin-sitemap`
   ]
 };
