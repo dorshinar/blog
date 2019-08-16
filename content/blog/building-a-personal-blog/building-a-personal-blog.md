@@ -52,6 +52,8 @@ So I failed in that until now, but I was eager to change that. Using Google Chro
 
 In an effort to make the site ready for going live, I've added a link to the RSS feed, that was generated (the starter I am using took care of that).
 
+### Deploy Like You Just Don't Care
+
 Now I really felt confident I could upload it to the cloud for the world to see. Knowing there will be no traffic at the beginning, I knew I can experiment after setting it up, so I left some things for later. The cloud provider I chose was [Now](https://zeit.co/now), as I saw a [post on dev.to](https://dev.to/crumb1e/heroku-now-sh-netlify-what-are-you-using-and-why-14m4) where quite a lot of people recommended it, so I figured I'd take a look at their offers. My blog is strictly a hobby, and I don't plan on monetizing it, so I was looking for something with a free tier that would fit my needs, and after comparing the offerings of [Netlify](https://www.netlify.com) and Now, I've decided to go with Now.
 
 ![Now vs. Netlify](now-netlify.png "Now vs Netlify")
