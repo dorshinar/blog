@@ -8,7 +8,8 @@ module.exports = {
       github: `dorshinar`,
       linkedin: "dor-shinar-82b00b144",
       dev: "dorshinar",
-      stackoverflow: "3822311/dor-shinar"
+      stackoverflow: "3822311/dor-shinar",
+      twitter: "DorShinar"
     }
   },
   plugins: [

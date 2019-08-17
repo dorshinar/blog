@@ -6,6 +6,7 @@ import { OutboundLink } from "gatsby-plugin-google-analytics";
 import { rhythm } from "../../utils/typography";
 import DevBadge from "../../../content/assets/dev-badge.svg";
 import SOBadge from "../../../content/assets/so-icon.svg";
+import TwitterBadge from "../../../content/assets/Twitter_Logo_Blue.svg";
 
 export const Wrapper = styled.div`
   display: flex;
@@ -65,6 +66,19 @@ export const ContactSOBadge = styled(({ themeName, ...rest }) => (
   <SOBadge {...rest} />
 ))`
   ${ContactCSS}
+  & path {
+    fill: ${({ themeName }) => (themeName === "dark" ? "white" : "#121212")};
+  }
+`;
+
+export const ContactTwitterBadge = styled(({ themeName, ...rest }) => (
+  <TwitterBadge {...rest} />
+))`
+  ${ContactCSS}
+
+  width: 30px;
+  height: 30px;
+  margin-top: -2.5px;
   & path {
     fill: ${({ themeName }) => (themeName === "dark" ? "white" : "#121212")};
   }

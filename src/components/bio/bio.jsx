@@ -18,7 +18,8 @@ import {
   PersonalLink,
   ContactImage,
   ContactDevBadge,
-  ContactSOBadge
+  ContactSOBadge,
+  ContactTwitterBadge
 } from "./bio.styled";
 
 const Bio = () => {
@@ -85,6 +86,7 @@ const Bio = () => {
             linkedin
             dev
             stackoverflow
+            twitter
           }
         }
       }
@@ -124,6 +126,15 @@ const Bio = () => {
           <ContactImage
             fixed={data[githubIcon].childImageSharp.fixed}
             alt={author}
+          />
+        </PersonalLink>
+        <PersonalLink
+          href={`https://twitter.com/${social.twitter}`}
+          aria-label={"Twitter"}
+        >
+          <ContactTwitterBadge
+            alt={author}
+            themeName={themeContext.themeName}
           />
         </PersonalLink>
         <PersonalLink
