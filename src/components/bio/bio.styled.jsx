@@ -2,11 +2,17 @@ import React from "react";
 import styled, { css } from "styled-components";
 import Image from "gatsby-image";
 import { OutboundLink } from "gatsby-plugin-google-analytics";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faGithub,
+  faDev,
+  faStackOverflow,
+  faTwitter,
+  faLinkedin
+} from "@fortawesome/free-brands-svg-icons";
+import { faRss } from "@fortawesome/free-solid-svg-icons";
 
 import { rhythm } from "../../utils/typography";
-import DevBadge from "../../../content/assets/dev-badge.svg";
-import SOBadge from "../../../content/assets/so-icon.svg";
-import TwitterBadge from "../../../content/assets/Twitter_Logo_Blue.svg";
 
 export const Wrapper = styled.div`
   display: flex;
@@ -27,7 +33,7 @@ export const AboutMe = styled.p`
   margin-bottom: ${rhythm(0.5)};
 `;
 
-export const ContactMe = styled.div`
+export const Contact = styled.div`
   display: flex;
   justify-content: start;
   margin: 0;
@@ -37,49 +43,35 @@ export const ContactMe = styled.div`
 export const PersonalLink = styled(OutboundLink)`
   background-image: initial;
   margin-right: ${rhythm(1)};
+
+  color: unset;
 `;
 
-const ContactCSS = css`
+const getStyledIcon = (icon, hoverColor) => styled(({ ...rest }) => (
+  <FontAwesomeIcon icon={icon} {...rest} />
+))`
   margin-bottom: 0;
-  width: 25px;
-  height: 25px;
-`;
+  font-size: 150%;
 
-export const ContactImage = styled(Image)`
-  ${ContactCSS}
-`;
-
-export const ContactDevBadge = styled(({ themeName, ...rest }) => (
-  <DevBadge {...rest} />
-))`
-  ${ContactCSS}
-
-  ${({ themeName }) =>
-    themeName === "dark"
-      ? css`
-          filter: invert(95%);
-        `
-      : undefined}
-`;
-
-export const ContactSOBadge = styled(({ themeName, ...rest }) => (
-  <SOBadge {...rest} />
-))`
-  ${ContactCSS}
   & path {
-    fill: ${({ themeName }) => (themeName === "dark" ? "white" : "#121212")};
+    fill: ${({ theme: { icon } }) => icon};
+
+    transition: fill 0.3s ease;
+  }
+
+  &:hover {
+    & path {
+      fill: ${hoverColor};
+    }
   }
 `;
 
-export const ContactTwitterBadge = styled(({ themeName, ...rest }) => (
-  <TwitterBadge {...rest} />
-))`
-  ${ContactCSS}
-
-  width: 30px;
-  height: 30px;
-  margin-top: -2.5px;
-  & path {
-    fill: ${({ themeName }) => (themeName === "dark" ? "white" : "#121212")};
-  }
-`;
+export const ContactGithubBadge = getStyledIcon(faGithub, "rgb(173, 155, 198)");
+export const ContactTwitterBadge = getStyledIcon(
+  faTwitter,
+  "rgb(29, 161, 242)"
+);
+export const ContactLinkedinBadge = getStyledIcon(faLinkedin, "#0077B5");
+export const ContactDevBadge = getStyledIcon(faDev, "#f783ac");
+export const ContactSOBadge = getStyledIcon(faStackOverflow, "#F48024");
+export const ContactRSSBadge = getStyledIcon(faRss, "#fd7e14");

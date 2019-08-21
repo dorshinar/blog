@@ -21,7 +21,8 @@ const themes = {
     textColor: "white",
     backgroundColor: "#121212",
     headerBackgroundColor: "rgba(255,255,255,0.05)",
-    blockquoteColor: "rgba(255,255,255,0.20)"
+    blockquoteColor: "rgba(255,255,255,0.20)",
+    icon: "white"
   },
   light: {
     ...colorPalette,
@@ -30,7 +31,8 @@ const themes = {
     textColor: "black",
     backgroundColor: "white",
     headerBackgroundColor: "#f6f6f6",
-    blockquoteColor: "rgba(0,0,0,0.80)"
+    blockquoteColor: "rgba(0,0,0,0.80)",
+    icon: "#121212"
   }
 };
 
