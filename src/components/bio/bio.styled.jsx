@@ -1,16 +1,7 @@
-import React from "react";
 import styled, { css } from "styled-components";
 import Image from "gatsby-image";
 import { OutboundLink } from "gatsby-plugin-google-analytics";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faGithub,
-  faDev,
-  faStackOverflow,
-  faTwitter,
-  faLinkedin
-} from "@fortawesome/free-brands-svg-icons";
-import { faRss } from "@fortawesome/free-solid-svg-icons";
 
 import { rhythm } from "../../utils/typography";
 
@@ -47,9 +38,7 @@ export const PersonalLink = styled(OutboundLink)`
   color: unset;
 `;
 
-const getStyledIcon = (icon, hoverColor) => styled(({ ...rest }) => (
-  <FontAwesomeIcon icon={icon} {...rest} />
-))`
+export const ContactGithubBadge = styled(FontAwesomeIcon)`
   margin-bottom: 0;
   font-size: 150%;
 
@@ -61,17 +50,87 @@ const getStyledIcon = (icon, hoverColor) => styled(({ ...rest }) => (
 
   &:hover {
     & path {
-      fill: ${hoverColor};
+      fill: ${"rgb(173, 155, 198)"};
     }
   }
 `;
+export const ContactTwitterBadge = styled(FontAwesomeIcon)`
+  margin-bottom: 0;
+  font-size: 150%;
 
-export const ContactGithubBadge = getStyledIcon(faGithub, "rgb(173, 155, 198)");
-export const ContactTwitterBadge = getStyledIcon(
-  faTwitter,
-  "rgb(29, 161, 242)"
-);
-export const ContactLinkedinBadge = getStyledIcon(faLinkedin, "#0077B5");
-export const ContactDevBadge = getStyledIcon(faDev, "#f783ac");
-export const ContactSOBadge = getStyledIcon(faStackOverflow, "#F48024");
-export const ContactRSSBadge = getStyledIcon(faRss, "#fd7e14");
+  & path {
+    fill: ${({ theme: { icon } }) => icon};
+
+    transition: fill 0.3s ease;
+  }
+
+  &:hover {
+    & path {
+      fill: ${"rgb(29, 161, 242)"};
+    }
+  }
+`;
+export const ContactLinkedinBadge = styled(FontAwesomeIcon)`
+  margin-bottom: 0;
+  font-size: 150%;
+
+  & path {
+    fill: ${({ theme: { icon } }) => icon};
+
+    transition: fill 0.3s ease;
+  }
+
+  &:hover {
+    & path {
+      fill: ${"#0077B5"};
+    }
+  }
+`;
+export const ContactDevBadge = styled(FontAwesomeIcon)`
+  margin-bottom: 0;
+  font-size: 150%;
+
+  & path {
+    fill: ${({ theme: { icon } }) => icon};
+
+    transition: fill 0.3s ease;
+  }
+
+  &:hover {
+    & path {
+      fill: ${"#f783ac"};
+    }
+  }
+`;
+export const ContactSOBadge = styled(FontAwesomeIcon)`
+  margin-bottom: 0;
+  font-size: 150%;
+
+  & path {
+    fill: ${({ theme: { icon } }) => icon};
+
+    transition: fill 0.3s ease;
+  }
+
+  &:hover {
+    & path {
+      fill: ${"#F48024"};
+    }
+  }
+`;
+export const ContactRSSBadge = styled(FontAwesomeIcon)`
+  margin-bottom: 0;
+  font-size: 150%;
+
+  & path {
+    fill: ${({ theme: { icon } }) => icon};
+
+    transition: fill 0.3s ease;
+  }
+
+  &:hover {
+    & path {
+      fill: ${"#fd7e14"};
+    }
+  }
+`;

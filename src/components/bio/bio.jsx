@@ -5,10 +5,16 @@
  * See: https://www.gatsbyjs.org/docs/use-static-query/
  */
 
-import React, { useContext, memo } from "react";
+import React, { memo } from "react";
 import { useStaticQuery, graphql } from "gatsby";
-
-import { ThemeSelectorContext } from "../themer/themer";
+import {
+  faGithub,
+  faDev,
+  faStackOverflow,
+  faTwitter,
+  faLinkedin
+} from "@fortawesome/free-brands-svg-icons";
+import { faRss } from "@fortawesome/free-solid-svg-icons";
 
 import {
   Wrapper,
@@ -69,34 +75,34 @@ const Bio = () => {
           href={`https://github.com/${social.github}`}
           aria-label={"Github"}
         >
-          <ContactGithubBadge alt={author} />
+          <ContactGithubBadge alt={author} icon={faGithub} />
         </PersonalLink>
         <PersonalLink
           href={`https://twitter.com/${social.twitter}`}
           aria-label={"Twitter"}
         >
-          <ContactTwitterBadge alt={author} />
+          <ContactTwitterBadge alt={author} icon={faTwitter} />
         </PersonalLink>
         <PersonalLink
           href={`https://www.linkedin.com/in/${social.linkedin}`}
           aria-label={"Linkedin"}
         >
-          <ContactLinkedinBadge alt={author} />
+          <ContactLinkedinBadge alt={author} icon={faLinkedin} />
         </PersonalLink>
         <PersonalLink
           href={`https://dev.to/${social.dev}`}
           aria-label={"Dev.to"}
         >
-          <ContactDevBadge alt={author} />
+          <ContactDevBadge alt={author} icon={faDev} />
         </PersonalLink>
         <PersonalLink
           href={`https://stackoverflow.com/users/${social.stackoverflow}`}
           aria-label={"StackOverflow"}
         >
-          <ContactSOBadge alt={author} />
+          <ContactSOBadge alt={author} icon={faStackOverflow} />
         </PersonalLink>
         <a href="/rss.xml" target="_blank" rel="noopener noreferrer">
-          <ContactRSSBadge alt={author} />
+          <ContactRSSBadge alt={author} icon={faRss} />
         </a>
       </Contact>
     </Wrapper>
