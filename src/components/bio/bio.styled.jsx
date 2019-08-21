@@ -1,16 +1,7 @@
-import React from "react";
 import styled, { css } from "styled-components";
 import Image from "gatsby-image";
 import { OutboundLink } from "gatsby-plugin-google-analytics";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faGithub,
-  faDev,
-  faStackOverflow,
-  faTwitter,
-  faLinkedin
-} from "@fortawesome/free-brands-svg-icons";
-import { faRss } from "@fortawesome/free-solid-svg-icons";
 
 import { rhythm } from "../../utils/typography";
 
@@ -47,9 +38,7 @@ export const PersonalLink = styled(OutboundLink)`
   color: unset;
 `;
 
-const getStyledIcon = (icon, hoverColor) => styled(({ ...rest }) => (
-  <FontAwesomeIcon icon={icon} {...rest} />
-))`
+const StyledFontAwesome = styled(FontAwesomeIcon)`
   margin-bottom: 0;
   font-size: 150%;
 
@@ -58,7 +47,9 @@ const getStyledIcon = (icon, hoverColor) => styled(({ ...rest }) => (
 
     transition: fill 0.3s ease;
   }
+`;
 
+const hoverCSS = hoverColor => css`
   &:hover {
     & path {
       fill: ${hoverColor};
@@ -66,12 +57,49 @@ const getStyledIcon = (icon, hoverColor) => styled(({ ...rest }) => (
   }
 `;
 
-export const ContactGithubBadge = getStyledIcon(faGithub, "rgb(173, 155, 198)");
-export const ContactTwitterBadge = getStyledIcon(
-  faTwitter,
-  "rgb(29, 161, 242)"
-);
-export const ContactLinkedinBadge = getStyledIcon(faLinkedin, "#0077B5");
-export const ContactDevBadge = getStyledIcon(faDev, "#f783ac");
-export const ContactSOBadge = getStyledIcon(faStackOverflow, "#F48024");
-export const ContactRSSBadge = getStyledIcon(faRss, "#fd7e14");
+// const getStyledIcon = (icon, hoverColor) => styled(({ ...rest }) => (
+//   <FontAwesomeIcon icon={icon} {...rest} />
+// ))`
+//   margin-bottom: 0;
+//   font-size: 150%;
+
+//   & path {
+//     fill: ${({ theme: { icon } }) => icon};
+
+//     transition: fill 0.3s ease;
+//   }
+
+//   &:hover {
+//     & path {
+//       fill: ${hoverColor};
+//     }
+//   }
+// `;
+
+export const ContactGithubBadge = styled(StyledFontAwesome)`
+  ${hoverCSS("rgb(173, 155, 198)")}
+`;
+export const ContactTwitterBadge = styled(StyledFontAwesome)`
+  ${hoverCSS("rgb(173, 155, 198)")}
+`;
+export const ContactLinkedinBadge = styled(StyledFontAwesome)`
+  ${hoverCSS("rgb(173, 155, 198)")}
+`;
+export const ContactDevBadge = styled(StyledFontAwesome)`
+  ${hoverCSS("rgb(173, 155, 198)")}
+`;
+export const ContactSOBadge = styled(StyledFontAwesome)`
+  ${hoverCSS("rgb(173, 155, 198)")}
+`;
+export const ContactRSSBadge = styled(StyledFontAwesome)`
+  ${hoverCSS("rgb(173, 155, 198)")}
+`;
+// export const ContactGithubBadge = getStyledIcon(faGithub, "rgb(173, 155, 198)");
+// export const ContactTwitterBadge = getStyledIcon(
+//   faTwitter,
+//   "rgb(29, 161, 242)"
+// );
+// export const ContactLinkedinBadge = getStyledIcon(faLinkedin, "#0077B5");
+// export const ContactDevBadge = getStyledIcon(faDev, "#f783ac");
+// export const ContactSOBadge = getStyledIcon(faStackOverflow, "#F48024");
+// export const ContactRSSBadge = getStyledIcon(faRss, "#fd7e14");
