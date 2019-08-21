@@ -47,12 +47,6 @@ export const ContactGithubBadge = styled(FontAwesomeIcon)`
 
     transition: fill 0.3s ease;
   }
-
-  &:hover {
-    & path {
-      fill: ${"rgb(173, 155, 198)"};
-    }
-  }
 `;
 export const ContactTwitterBadge = styled(FontAwesomeIcon)`
   margin-bottom: 0;
