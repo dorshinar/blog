@@ -3,24 +3,3 @@
 body {
   font-family: "Montserrat", sans-serif;
 }
-
-.command-line-prompt {
-  border-right: 0 !important;
-  margin-right: 0 !important;
-}
-
-:not(pre) > code[class*="language-"],
-pre[class*="language-"] {
-  border-radius: 0.3em;
-}
-
-/* Prompt for all users */
-.command-line-prompt > span:before {
-  content: "$" !important;
-}
-
-blockquote {
-  margin-left: -1.45rem;
-  border-left: 0.4rem solid var(--blockquoteColor);
-  padding: 1rem;
-}

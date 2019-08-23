@@ -28,6 +28,39 @@ export const Post = styled.div`
   & > p > img {
     margin-bottom: 0;
   }
+
+  & .gatsby-resp-image-wrapper {
+    margin-right: -${rhythm(1)} !important;
+    margin-left: -${rhythm(1)} !important;
+  }
+
+  ${media.medium`
+    & .gatsby-resp-image-wrapper {
+      margin-right: auto !important;
+      margin-left: auto !important;
+    }
+  `}
+
+  & .command-line-prompt {
+    border-right: 0;
+    margin-right: 0;
+  }
+
+  & :not(pre) > code[class*="language-"],
+  pre[class*="language-"] {
+    border-radius: 0.3em;
+  }
+
+  /* Prompt for all users */
+  & .command-line-prompt > span:before {
+    content: "$";
+  }
+
+  & blockquote {
+    margin-left: -${rhythm(1)};
+    border-left: 0.4rem solid var(--blockquoteColor);
+    padding: 1rem;
+  }
 `;
 
 export const NearByPosts = styled.ul`
