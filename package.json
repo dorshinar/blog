@@ -42,7 +42,7 @@
     "gatsby-remark-smartypants": "^2.1.5",
     "gatsby-source-filesystem": "^2.1.18",
     "gatsby-transformer-remark": "^2.6.19",
-    "gatsby-transformer-sharp": "^2.2.6",
+    "gatsby-transformer-sharp": "^2.2.12",
     "husky": "^3.0.4",
     "lint-staged": "^9.2.4",
     "prismjs": "^1.17.1",
