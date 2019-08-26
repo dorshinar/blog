@@ -51,7 +51,7 @@
     "react-helmet": "^5.2.1",
     "react-toggle": "^4.0.2",
     "react-typography": "^0.16.19",
-    "styled-components": "^5.0.0-beta.6-ej4",
+    "styled-components": "^5.0.0-5.canary-sheet",
     "typography": "^0.16.19"
   },
   "devDependencies": {
