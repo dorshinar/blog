@@ -34,10 +34,23 @@ export const Post = styled.div`
     margin-left: -${rhythm(1)} !important;
   }
 
+  & pre[class*="language-"] {
+    margin-right: -${rhythm(1)};
+    margin-left: -${rhythm(1)};
+
+    padding-right: ${rhythm(1)};
+    padding-left: ${rhythm(1)};
+  }
+
   ${media.medium`
     & .gatsby-resp-image-wrapper {
       margin-right: auto !important;
       margin-left: auto !important;
+    }
+    
+    & pre[class*="language-"] {
+      margin-right: auto;
+      margin-left: auto;
     }
   `}
 
@@ -46,8 +59,7 @@ export const Post = styled.div`
     margin-right: 0;
   }
 
-  & :not(pre) > code[class*="language-"],
-  pre[class*="language-"] {
+  & :not(pre) > code[class*="language-"] {
     border-radius: 0.3em;
   }
 
