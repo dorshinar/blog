@@ -47,7 +47,7 @@
     "typography": "^0.16.19"
   },
   "devDependencies": {
-    "eslint-config-prettier": "^6.1.0",
+    "eslint-config-prettier": "^6.2.0",
     "eslint-config-react": "^1.1.7",
     "eslint-config-react-app": "^4.0.1",
     "eslint-plugin-import": "^2.18.2",
