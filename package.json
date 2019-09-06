@@ -14,7 +14,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.10.2",
     "@fortawesome/react-fontawesome": "^0.1.4",
     "babel-plugin-styled-components": "^1.10.6",
-    "gatsby": "^2.14.4",
+    "gatsby": "^2.15.9",
     "gatsby-image": "^2.2.14",
     "gatsby-plugin-feed": "^2.3.9",
     "gatsby-plugin-google-analytics": "^2.1.11",
