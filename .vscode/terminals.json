@@ -1,7 +1,6 @@
 {
   "autorun": true,
   "autokill": true,
-  "env": { "name": "value" },
   "terminals": [
     {
       "name": "Gatsby Develop",
