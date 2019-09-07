@@ -5,16 +5,29 @@
  * See: https://www.gatsbyjs.org/docs/use-static-query/
  */
 
-import React from "react";
+import React, { memo } from "react";
 import { useStaticQuery, graphql } from "gatsby";
+import {
+  faGithub,
+  faDev,
+  faStackOverflow,
+  faTwitter,
+  faLinkedin
+} from "@fortawesome/free-brands-svg-icons";
+import { faRss } from "@fortawesome/free-solid-svg-icons";
 
 import {
   Wrapper,
   ProfileImage,
   AboutMe,
-  ContactMe,
+  Contact,
   PersonalLink,
-  ContactImage
+  ContactDevBadge,
+  ContactSOBadge,
+  ContactTwitterBadge,
+  ContactGithubBadge,
+  ContactLinkedinBadge,
+  ContactRSSBadge
 } from "./bio.styled";
 
 const Bio = () => {
@@ -27,26 +40,15 @@ const Bio = () => {
           }
         }
       }
-      github: file(absolutePath: { regex: "/GitHub-Mark-120px-plus.png/" }) {
-        childImageSharp {
-          fixed(width: 25, height: 25) {
-            ...GatsbyImageSharpFixed
-          }
-        }
-      }
-      linkedin: file(absolutePath: { regex: "/LI-In-Bug.png/" }) {
-        childImageSharp {
-          fixed(width: 25, height: 25) {
-            ...GatsbyImageSharpFixed
-          }
-        }
-      }
       site {
         siteMetadata {
           author
           social {
             github
             linkedin
+            dev
+            stackoverflow
+            twitter
           }
         }
       }
@@ -54,6 +56,7 @@ const Bio = () => {
   `);
 
   const { author, social } = data.site.siteMetadata;
+
   return (
     <Wrapper>
       <ProfileImage
@@ -67,22 +70,43 @@ const Bio = () => {
         I'm <strong>{author}</strong>. I am a web developer, who also likes to
         write articles. This is my blog!
       </AboutMe>
-      <ContactMe>
-        <PersonalLink href={`https://github.com/${social.github}`}>
-          <ContactImage
-            fixed={data.github.childImageSharp.fixed}
-            alt={author}
-          />
+      <Contact>
+        <PersonalLink
+          href={`https://github.com/${social.github}`}
+          aria-label={"Github"}
+        >
+          <ContactGithubBadge alt={author} icon={faGithub} />
         </PersonalLink>
-        <PersonalLink href={`https://www.linkedin.com/in/${social.linkedin}`}>
-          <ContactImage
-            fixed={data.linkedin.childImageSharp.fixed}
-            alt={author}
-          />
+        <PersonalLink
+          href={`https://twitter.com/${social.twitter}`}
+          aria-label={"Twitter"}
+        >
+          <ContactTwitterBadge alt={author} icon={faTwitter} />
         </PersonalLink>
-      </ContactMe>
+        <PersonalLink
+          href={`https://www.linkedin.com/in/${social.linkedin}`}
+          aria-label={"Linkedin"}
+        >
+          <ContactLinkedinBadge alt={author} icon={faLinkedin} />
+        </PersonalLink>
+        <PersonalLink
+          href={`https://dev.to/${social.dev}`}
+          aria-label={"Dev.to"}
+        >
+          <ContactDevBadge alt={author} icon={faDev} />
+        </PersonalLink>
+        <PersonalLink
+          href={`https://stackoverflow.com/users/${social.stackoverflow}`}
+          aria-label={"StackOverflow"}
+        >
+          <ContactSOBadge alt={author} icon={faStackOverflow} />
+        </PersonalLink>
+        <a href="/rss.xml" target="_blank" rel="noopener noreferrer">
+          <ContactRSSBadge alt={author} icon={faRss} />
+        </a>
+      </Contact>
     </Wrapper>
   );
 };
 
-export default Bio;
+export default memo(Bio);

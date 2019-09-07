@@ -3,10 +3,13 @@ module.exports = {
     title: `Dor Shinar`,
     author: `Dor Shinar`,
     description: `My Personal blog for thoughts.`,
-    siteUrl: "https://github.com",
+    siteUrl: "https://dorshinar.me",
     social: {
       github: `dorshinar`,
-      linkedin: "dor-shinar-82b00b144"
+      linkedin: "dor-shinar-82b00b144",
+      dev: "dorshinar",
+      stackoverflow: "3822311/dor-shinar",
+      twitter: "DorShinar"
     }
   },
   plugins: [
@@ -40,10 +43,18 @@ module.exports = {
               wrapperStyle: `margin-bottom: 1.0725rem`
             }
           },
-          `gatsby-remark-prismjs`,
+          {
+            resolve: `gatsby-remark-prismjs`,
+            options: {
+              prompt: {
+                user: "root",
+                host: "localhost",
+                global: true
+              }
+            }
+          },
           `gatsby-remark-copy-linked-files`,
-          `gatsby-remark-smartypants`,
-          `gatsby-remark-reading-time`
+          `gatsby-remark-smartypants`
         ]
       }
     },
@@ -52,20 +63,20 @@ module.exports = {
     {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
-        //trackingId: `ADD YOUR TRACKING ID HERE`,
+        trackingId: `UA-145374862-1`
       }
     },
     `gatsby-plugin-feed`,
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `Gatsby Starter Blog`,
-        short_name: `GatsbyJS`,
+        name: `Dor Shinar's Blog`,
+        short_name: `Dor Shinar`,
         start_url: `/`,
-        background_color: `#ffffff`,
-        theme_color: `#663399`,
+        background_color: `#1ca086`,
+        theme_color: `#1ca086`,
         display: `minimal-ui`,
-        icon: `content/assets/gatsby-icon.png`
+        icon: `static/favicon.png`
       }
     },
     `gatsby-plugin-offline`,
@@ -82,6 +93,21 @@ module.exports = {
       options: {
         color: "#1ca086"
       }
-    }
+    },
+    {
+      resolve: "gatsby-plugin-react-svg",
+      options: {
+        rule: {
+          include: /assets/
+        }
+      }
+    },
+    {
+      resolve: `gatsby-plugin-layout`,
+      options: {
+        component: require.resolve(`./src/components/layout/layout.jsx`)
+      }
+    },
+    `gatsby-plugin-sitemap`
   ]
 };

@@ -1,4 +1,5 @@
 const path = require(`path`);
+const readingTime = require("reading-time");
 
 exports.createPages = ({ graphql, actions }) => {
   const { createPage } = actions;
@@ -61,6 +62,11 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
       name: `slug`,
       node,
       value
+    });
+    createNodeField({
+      node,
+      name: `readingTime`,
+      value: readingTime(node.rawMarkdownBody)
     });
   }
 };

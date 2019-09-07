@@ -10,7 +10,7 @@ import PropTypes from "prop-types";
 import Helmet from "react-helmet";
 import { useStaticQuery, graphql } from "gatsby";
 
-function SEO({ description, lang, meta, title }) {
+function SEO({ description, lang, meta, title, slug }) {
   const { site } = useStaticQuery(
     graphql`
       query {
@@ -18,6 +18,7 @@ function SEO({ description, lang, meta, title }) {
           siteMetadata {
             title
             description
+            siteUrl
             author
           }
         }
@@ -26,6 +27,7 @@ function SEO({ description, lang, meta, title }) {
   );
 
   const metaDescription = description || site.siteMetadata.description;
+  const url = `${site.siteMetadata.siteUrl}${slug}/`;
 
   return (
     <Helmet
@@ -34,55 +36,47 @@ function SEO({ description, lang, meta, title }) {
       }}
       title={title}
       titleTemplate={`%s | ${site.siteMetadata.title}`}
-      meta={[
-        {
-          name: `description`,
-          content: metaDescription
-        },
-        {
-          property: `og:title`,
-          content: title
-        },
-        {
-          property: `og:description`,
-          content: metaDescription
-        },
-        {
-          property: `og:type`,
-          content: `website`
-        },
-        {
-          name: `twitter:card`,
-          content: `summary`
-        },
-        {
-          name: `twitter:creator`,
-          content: site.siteMetadata.author
-        },
-        {
-          name: `twitter:title`,
-          content: title
-        },
-        {
-          name: `twitter:description`,
-          content: metaDescription
-        }
-      ].concat(meta)}
-    />
+      meta={meta}
+    >
+      {/* General Tags */}
+      <meta name="description" content={metaDescription} />
+
+      {/* OpenGraph Tags */}
+      <meta property="og:title" content={title} />
+      <meta property="og:description" content={metaDescription} />
+      <meta property="og:url" content={url} />
+      <meta property="og:type" content={"website"} />
+
+      {/* Twitter Card Tags */}
+      <meta name="twitter:card" content={"summary"} />
+      <meta name="twitter:creator" content={site.siteMetadata.author} />
+      <meta name="twitter:title" content={title} />
+      <meta name="twitter:description" content={description} />
+
+      {/* Google Search Tags */}
+      <meta
+        name="google-site-verification"
+        content="Y0r9c_KfP6Wl0eYoavd1q6mHA60nmGZKbRuQ3e43Cb8"
+      />
+
+      {meta}
+    </Helmet>
   );
 }
 
 SEO.defaultProps = {
   lang: `en`,
   meta: [],
-  description: ``
+  description: ``,
+  slug: ""
 };
 
 SEO.propTypes = {
   description: PropTypes.string,
   lang: PropTypes.string,
   meta: PropTypes.arrayOf(PropTypes.object),
-  title: PropTypes.string.isRequired
+  title: PropTypes.string.isRequired,
+  slug: PropTypes.string
 };
 
 export default SEO;

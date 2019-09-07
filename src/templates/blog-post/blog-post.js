@@ -2,38 +2,39 @@ import React from "react";
 import { Link, graphql } from "gatsby";
 
 import { Bio } from "../../components/bio";
-import { Layout } from "../../components/layout";
 import SEO from "../../components/seo";
+import { ScrollIndicator } from "../../components/scroll-indicator";
+import { Separator } from "../../utils/styled/separator";
+
 import {
   Header,
   SubHeader,
   Post,
-  Divider,
   NearByPosts,
-  PostLink
+  PostLink,
+  Wrapper
 } from "./blog-post.styled";
-import { ScrollIndicator } from "../../components/scroll-indicator";
 
 class BlogPostTemplate extends React.Component {
   render() {
     const post = this.props.data.markdownRemark;
-    const siteTitle = this.props.data.site.siteMetadata.title;
     const { previous, next } = this.props.pageContext;
 
     return (
       <>
         <ScrollIndicator />
-        <Layout location={this.props.location} title={siteTitle}>
-          <SEO
-            title={post.frontmatter.title}
-            description={post.frontmatter.description || post.excerpt}
-          />
+        <SEO
+          title={post.frontmatter.title}
+          description={post.frontmatter.description || post.excerpt}
+          slug={post.fields.slug}
+        />
+        <Wrapper>
           <Header>{post.frontmatter.title}</Header>
           <SubHeader>
             {`${post.frontmatter.date}, ${post.fields.readingTime.text}`}
           </SubHeader>
           <Post dangerouslySetInnerHTML={{ __html: post.html }} />
-          <Divider />
+          <Separator />
           <Bio />
 
           <NearByPosts>
@@ -52,7 +53,7 @@ class BlogPostTemplate extends React.Component {
               )}
             </PostLink>
           </NearByPosts>
-        </Layout>
+        </Wrapper>
       </>
     );
   }

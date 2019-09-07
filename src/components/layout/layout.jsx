@@ -1,43 +1,25 @@
 import React from "react";
 
-import {
-  PrimaryHeader,
-  LinkHome,
-  SecondaryHeader,
-  Wrapper
-} from "./layout.styled";
+import { Themer } from "../themer";
+
+import { Header } from "./header";
+import { Footer } from "./footer";
+import { Wrapper, ContentWrapper } from "./layout.styled";
 
 class Layout extends React.Component {
   render() {
-    const { location, title, children } = this.props;
-    const rootPath = `${__PATH_PREFIX__}/`;
-    let header;
-
-    const link = <LinkHome to={`/`}>{title}</LinkHome>;
-
-    header =
-      location.pathname === rootPath ? (
-        <PrimaryHeader>
-          {link}
-          <div>Hi!</div>
-        </PrimaryHeader>
-      ) : (
-        <SecondaryHeader>
-          {link}
-          <div>Hi!</div>
-        </SecondaryHeader>
-      );
+    const { children } = this.props;
 
     return (
-      <Wrapper>
-        <header>{header}</header>
-        <main>{children}</main>
-        <footer>
-          © {new Date().getFullYear()}, Built with
-          {` `}
-          <a href="https://www.gatsbyjs.org">Gatsby</a>
-        </footer>
-      </Wrapper>
+      <Themer>
+        <Wrapper>
+          <Header />
+          <ContentWrapper>
+            <main>{children}</main>
+            <Footer />
+          </ContentWrapper>
+        </Wrapper>
+      </Themer>
     );
   }
 }

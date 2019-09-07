@@ -14,7 +14,8 @@ I believe that if you follow them you can definitely step up your game. It doesn
 
 Try to think of the last time you’ve actually done something you learned from. Something that made you better than the day before.
 
-![](https://cdn-images-1.medium.com/max/1024/0*2iYm5KRXw23XUUOJ)<figcaption>Photo by <a href="https://unsplash.com/@oowgnuj?utm_source=medium&amp;utm_medium=referral">Jungwoo Hong</a> on <a href="https://unsplash.com?utm_source=medium&amp;utm_medium=referral">Unsplash</a></figcaption>
+![Day-to-day improvement](jungwoo-hong-cYUMaCqMYvI-unsplash.jpg)
+Photo by [Jungwoo Hong](https://unsplash.com/@oowgnuj) on [Unsplash](https://unsplash.com)
 
 If you can’t recall the last time you’ve read something interesting, or done something out of the ordinary you should be worried. I believe that if you are here, reading my article then you are the type that loves to better themselves, even if not on a daily basis.
 
@@ -52,13 +53,13 @@ You don’t have to master every aspect of your system, nor should you be a jack
 
 > We read code a lot more than we write. Period.
 
-![](https://cdn-images-1.medium.com/max/1024/0*EliCF41W8Rh5a8fH)<figcaption>Photo by <a href="https://unsplash.com/@pankajpatel?utm_source=medium&amp;utm_medium=referral">Pankaj Patel</a> on <a href="https://unsplash.com?utm_source=medium&amp;utm_medium=referral">Unsplash</a></figcaption>
+![Other people's code](pankaj-patel-kNfP4Z2eq7w-unsplash.jpg)Photo by [Pankaj Patel](https://unsplash.com/@pankajpatel) on [Unsplash](https://unsplash.com)
 
 Usually this line opens a paragraph (or an article) about writing clean code or using some documentation format. While those things are very important, and no application would succeed without close attention to them, I would like to put an emphasis on the reading part, rather than the writing part. Reading other people’s code can do wonders for you — it can open your mind to creative ways to achieve a certain goal or a feature, you can find weak spots in the code base (ones you’d like to fix later, or simply inform your team) and make you a better developer in general.
 
 You should also aspire to review people’s code as often as possible (I know it can be a hassle for some people, but trust me it’s worth it).
 
-At work I was in charge (along with other brilliant people) of the bootcamp for new recruits. Over the course of 4 months I was tasked with A LOT of code reviews, meant to make sure that their code meets the standards of the company. Looking at the recruits from the beginning to the end surely showed a massive improvement in their abilities (otherwise it would be a colossal waste of time🙃), but as a side effect I felt like I was getting better as well, even thought I barely had a chance to write code.
+At work I was in charge (along with other brilliant people) of the boot camp for new recruits. Over the course of 4 months I was tasked with A LOT of code reviews, meant to make sure that their code meets the standards of the company. Looking at the recruits from the beginning to the end surely showed a massive improvement in their abilities (otherwise it would be a colossal waste of time🙃), but as a side effect I felt like I was getting better as well, even thought I barely had a chance to write code.
 
 I think the main takeaway here is that you shouldn’t be afraid of foreign code. It will exist where ever you choose to work. Embrace it, learn from it, and improve it from time to time.
 
@@ -68,6 +69,5 @@ To sum up, here’s the gist:
 - Don’t focus only on “your code”
 - Don’t fear reading other people’s code
 
-Those are my two cents on how to be a better software developer. I hope you liked it (only my second article on Medium!). You are more than welcome to comment your opinion (I love a good discussion).
-
+Those are my two cents on how to be a better software developer.  
 Thank you for reading!

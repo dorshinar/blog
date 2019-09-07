@@ -1,0 +1,13 @@
+{
+  "autorun": true,
+  "autokill": true,
+  "terminals": [
+    {
+      "name": "Gatsby Develop",
+      "description": "Run Gatsby in developer mode",
+      "icon": "code",
+      "command": "gatsby develop",
+      "envInherit": true
+    }
+  ]
+}

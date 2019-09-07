@@ -1,19 +1,7 @@
-import styled, { css } from "styled-components";
-import { rhythm, scale } from "../../utils/typography";
+import styled from "styled-components";
 import { Link } from "gatsby";
 
-export const headerProps = css`
-  margin-top: 0;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-`;
-
-export const PrimaryHeader = styled.h1`
-  ${() => scale(1.5)};
-  margin-bottom: ${rhythm(1.5)};
-  ${headerProps}
-`;
+import { rhythm } from "../../utils/typography";
 
 export const LinkHome = styled(Link)`
   box-shadow: none;
@@ -21,13 +9,24 @@ export const LinkHome = styled(Link)`
   color: inherit;
 `;
 
-export const SecondaryHeader = styled.h3`
-  ${headerProps}
+export const Wrapper = styled.div`
+  background-color: ${({ theme: { backgroundColor } }) => backgroundColor};
+  color: ${({ theme }) => theme.textColor};
+  transition: background-color 0.25s ease, color 0.25s ease;
+
+  min-height: 100vh;
+
+  & a {
+    color: ${({ theme }) => theme.primary};
+  }
 `;
 
-export const Wrapper = styled.div`
+export const ContentWrapper = styled.div`
   margin-left: auto;
   margin-right: auto;
+  margin-top: ${rhythm(1)};
   max-width: ${rhythm(24)};
-  padding: ${rhythm(1.5)} ${rhythm(3 / 4)};
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `;
