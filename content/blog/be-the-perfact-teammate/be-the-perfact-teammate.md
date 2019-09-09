@@ -1,6 +1,6 @@
 ---
 title: Be The Perfect Teammate!
-date: "2019-07-13T19:48:00.000Z"
+date: "2019-09-10"
 description: "Being a good teammate is sometimes more important than being a good developer."
 published: false
 slug: /be-the-perfect-teammate
