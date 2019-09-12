@@ -58,6 +58,11 @@ function SEO({ description, lang, meta, title, slug }) {
         name="google-site-verification"
         content="Y0r9c_KfP6Wl0eYoavd1q6mHA60nmGZKbRuQ3e43Cb8"
       />
+      <link
+        rel="dns-prefetch"
+        key="dns-prefetch-google-marketing"
+        href="https://marketingplatform.google.com"
+      />
 
       {meta}
     </Helmet>
