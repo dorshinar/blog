@@ -6,16 +6,16 @@ published: false
 slug: /be-the-perfect-teammate
 ---
 
-I bet your all have had a teammate in the past you could not stand. Each with his/her own reasons, maybe you didn't like their professional capabilities, the way their breath smelled in the morning or the inappropriate jokes they made during serious meetings. On the other I bet you've had people in your teams who you've felt like they're such a positive addition to the team. you can't remember being without them. I'll try to list some things here that I think can make someone a better teammate.
+I bet your all have had a teammate in the past you could not stand. Each with his/her own reasons, maybe you didn't like their professional capabilities, the way their breath smelled in the morning or the inappropriate jokes they made during serious meetings. On the other hand I bet you've had people in your teams who you've felt like they're such a positive addition to the team, that you can't remember being without them. I'll try to list some things here that I think can make someone a better teammate.
 
 ## Learn To Listen
 
 ![Listen](mohammad-metri-1oKxSKSOowE-unsplash.jpg)
 Photo by [Mohammad Metri](https://unsplash.com/@mohammadmetri) on [Unsplash](https://unsplash.com/)
 
-Being a good listener is the first thing I'd think of when I think of a good teammate. No one likes stubborn people who are sure of their ways. You might be the most experienced developer by a lot on the team. It does not mean you know everything. You can't know everything.
+Being a good listener is the first thing I'd think of when I think of a good teammate. No one likes stubborn people who are always so sure of their ways. You might be the most experienced developer by a lot on the team. It does not mean you know everything. You can't know everything.
 
-In some scenarios you are obligated to listen to someone else' opinion, whether it's you team lead, upper management or the product department, but those are not the times when you listening skills are being judged. You are judged in front of your peers, employees, or anyone else who's in the same position as you or beneath you.
+In some scenarios you are obligated to listen to someone else' opinion, whether it's your team lead, upper management or the product department, but those are not the times your listening skills are being judged. You are judged in front of your peers, employees, or anyone else who's in the same position as you or beneath you.
 
 This definition applies both for senior, seasoned and experienced engineers you work with, or juniors in the beginning of your career. Being a junior, it sure feels nice when a senior listens to what you have to say, and even more when they accept your opinion.
 
@@ -26,7 +26,7 @@ Photo by [NESA by Makers](https://unsplash.com/@nesabymakers) on [Unsplash](http
 
 I know it's fun to laugh at the newby who suggests a complete refactor on the first day at the job. He obviously does not know the struggles you've been through trying to get the code up and running. He did not wake up at night while being on-call, and he never nearly broke a chair after an elusive bug you couldn't solve.
 
-All those experiences you've had ultimately led you to create the product you have today. That is nothing to ridicule, belittle or insult. However, somethings are easier to day with a fresh pair of eyes, things you've overlooked, got used to or simply don't prioritize. New people, new insights, so even if they speak balderdash, it should be worth hearing, at the very least.
+All those experiences you've had ultimately led you to create the product you have today. That is nothing to ridicule, belittle or insult. However, somethings are easier to see with a fresh pair of eyes, things you've overlooked, got used to or simply never prioritized. New people, new insights, so even if they speak balderdash, it should be worth hearing, at the very least.
 
 ## Incapable Teammates Can Wreak Havoc
 
@@ -46,7 +46,7 @@ If you feel like you're on the opposite side, being the senior engineer and have
 ![Test](chris-liverani-ViEBSoZH6M4-unsplash.jpg)
 Photo by [Chris Liverani](https://unsplash.com/@chrisliverani) on [Unsplash](https://unsplash.com)
 
-It's OK if you're not the sharpest tool in the shed. There will usually be that one person who's forever in the company, knows every bit of code in the system and can identify problems before you even get a chance to look at the logs. It OK. Most companies will guide you and mentor you, so you can always be better than yesterday.
+It's OK if you're not the sharpest tool in the shed. There will usually be that one person who's forever in the company, knows every bit of code in the system and can identify problems before you even get a chance to look at the logs. It's OK. Most companies will guide you and mentor you, so you can always be better than yesterday. I'd even go as far to say that if you are in a position where you don't feel progress, get up and leave. We're blessed to work in a very desirable field, and job opening are quite easy to find.
 
 My main point is that you shouldn't be scared or worried about your status. Becoming a senior engineer takes time and practice, so don't rush things and just focus on your personal growth.
 
@@ -57,12 +57,14 @@ Being in the middle is actually quite a good place to be. You can learn from tho
 ![Graph](isaac-smith-6EnTPvPPL6I-unsplash.jpg)
 Photo by [Isaac Smith](https://unsplash.com/@isaacmsmith) on [Unsplash](https://unsplash.com)
 
-You first day often seems the most important one, a day that will mark the rest of your time in the company. On this day people will see you for the first time, talk to you and judge you. This day can be very nerve wracking. You want to misspeak, so people won't think your a fool, or that you are not professional, or can spill coffee on your shirt and look like the office dork.
+You first day often seems the most important one, a day that will mark the rest of your time in the company. On this day people will see you for the first time, talk to you and judge you. This day can be very nerve wracking. You don't want to misspeak, so people won't think you are a fool, or that you are not professional. You also don't want to spill coffee on your shirt and look like the office dork.
 
-I say - that's wrong. If, on average, an engineer stays in his position for about 3 years (give or take), that means that you will have about 365*3=1095 days to make amends for the first impression. Don't fret, it's OK to make mistakes, those mishaps will become something to joke about with your peers later on, when they get to know the real you.
+I say - that's wrong. If, on average, an engineer stays in his position for about 3 years (give or take), that means that you will have about 365*3-1=1094 days to make amends for the first impression. Don't fret, it's OK to make mistakes, those mishaps will become something to joke about with your peers later on, when they get to know the real you.
 
 Of course, and I hope this goes without saying, a bad second impression (and third, fourth and so on) can completely ruin a good first impression, so watch out for that too. As I've said, no one likes a co-worker with a stinky breath, or one that makes rude comments.
 
 ## Summing Up
 
-Those were my thoughts on what would make a good teammate. Thank you for reading, I hope you liked it!
+Those were my thoughts on what would make a good teammate. I think a good teammate must have good listening skills and willingness, and you must know that everyone can and will teach you something. A good teammate also doesn't have to be the best ninja out there, and doesn't have to make the best first impression, but you will have to make up for a lousy one.
+
+Thank you for reading, I hope you liked it!
