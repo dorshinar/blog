@@ -101,7 +101,12 @@ const Bio = () => {
         >
           <ContactSOBadge alt={author} icon={faStackOverflow} />
         </PersonalLink>
-        <a href="/rss.xml" target="_blank" rel="noopener noreferrer">
+        <a
+          href="/rss.xml"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={"RSS feed"}
+        >
           <ContactRSSBadge alt={author} icon={faRss} />
         </a>
       </Contact>
