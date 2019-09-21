@@ -43,7 +43,7 @@ export const ContactGithubBadge = styled(FontAwesomeIcon)`
   font-size: 150%;
 
   & path {
-    fill: ${({ theme: { icon } }) => icon};
+    fill: var(--icon);
 
     transition: fill 0.3s ease;
   }
@@ -64,7 +64,7 @@ export const ContactTwitterBadge = styled(FontAwesomeIcon)`
   font-size: 150%;
 
   & path {
-    fill: ${({ theme: { icon } }) => icon};
+    fill: var(--icon);
 
     transition: fill 0.3s ease;
   }
@@ -80,7 +80,7 @@ export const ContactLinkedinBadge = styled(FontAwesomeIcon)`
   font-size: 150%;
 
   & path {
-    fill: ${({ theme: { icon } }) => icon};
+    fill: var(--icon);
 
     transition: fill 0.3s ease;
   }
@@ -96,7 +96,7 @@ export const ContactDevBadge = styled(FontAwesomeIcon)`
   font-size: 150%;
 
   & path {
-    fill: ${({ theme: { icon } }) => icon};
+    fill: var(--icon);
 
     transition: fill 0.3s ease;
   }
@@ -112,7 +112,7 @@ export const ContactSOBadge = styled(FontAwesomeIcon)`
   font-size: 150%;
 
   & path {
-    fill: ${({ theme: { icon } }) => icon};
+    fill: var(--icon);
 
     transition: fill 0.3s ease;
   }
@@ -128,7 +128,7 @@ export const ContactRSSBadge = styled(FontAwesomeIcon)`
   font-size: 150%;
 
   & path {
-    fill: ${({ theme: { icon } }) => icon};
+    fill: var(--icon);
 
     transition: fill 0.3s ease;
   }

@@ -13,7 +13,7 @@ export const Header = styled.h3`
 `;
 
 export const PostLink = styled(Link)`
-  color: ${props => props.theme.primary};
+  color: var(--primary);
   text-decoration: none;
 `;
 

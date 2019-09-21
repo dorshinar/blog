@@ -4,6 +4,6 @@ import { rhythm } from "../typography";
 
 export const Separator = styled.hr`
   margin: ${rhythm(1)} 0;
-  background-color: ${({ theme }) => theme.separatorColor};
+  background-color: var(--separatorColor);
   transition: background-color 0.25s ease;
 `;

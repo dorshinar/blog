@@ -11,7 +11,7 @@ export const Wrapper = styled.header`
   align-items: center;
   padding: ${rhythm(0.5)};
   height: ${rhythm(3)};
-  background-color: ${({ theme }) => theme.headerBackgroundColor};
+  background-color: var(--headerBackgroundColor);
   transition: background-color 0.25s ease;
 `;
 
@@ -19,12 +19,12 @@ export const Content = styled.span`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width: ${({ theme }) => theme.contentWidth};
+  width: var(--contentWidth);
 `;
 
 export const Title = styled.h1`
   margin-bottom: 0;
-  color: ${({ theme }) => theme.primary};
+  color: var(--primary);
 `;
 
 export const HomeLink = styled(Link)`

@@ -1,5 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
-import { ThemeProvider } from "styled-components";
+import React, { useState, useEffect } from "react";
 
 import { rhythm } from "../../utils/typography";
 
@@ -55,7 +54,7 @@ export default ({ children }) => {
     setCSSVariables(theme);
   });
 
-  const toggleTheme = useCallback(() => {
+  const toggleTheme = () => {
     if (theme === themes.dark) {
       setTheme(themes.light);
       setThemeName("light");
@@ -63,11 +62,11 @@ export default ({ children }) => {
       setTheme(themes.dark);
       setThemeName("dark");
     }
-  }, [theme, setTheme, setThemeName]);
+  };
 
   return (
     <ThemeSelectorContext.Provider value={{ toggleTheme, themeName }}>
-      <ThemeProvider theme={theme}>{children}</ThemeProvider>
+      {children}
     </ThemeSelectorContext.Provider>
   );
 };
