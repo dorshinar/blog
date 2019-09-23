@@ -51,6 +51,7 @@ export const Post = styled.div`
     & pre[class*="language-"] {
       margin-right: auto;
       margin-left: auto;
+      border-radius: 5px;
     }
   `}
 
