@@ -302,4 +302,4 @@ For this example I'm using the `Toggle` component from `react-toggle`, but any t
 
 That's it! That's all you need to do to create a super simple, super clean theme engine for your application. If you want to see a real live example, you can check out the [source code](https://github.com/dorshinar/blog/blob/master/src/components/themer/themer.jsx) of my blog.
 
-Thank you for reading, I hope you enjoyed it and maybe learned something.
+Thank you for reading and I hope you enjoyed it!
