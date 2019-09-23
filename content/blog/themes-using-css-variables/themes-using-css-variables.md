@@ -13,15 +13,7 @@ So first of all, I'd like to explain briefly what CSS variables (or in their for
 
 CSS variables are a way for us to defined variables, that will be applied throughout our application. The syntax is as follows:
 
-```css
-:root {
-  --primary: #1ca086;
-}
-
-.primary {
-  color: var(--primary);
-}
-```
+![CSS Variables](cover.png)
 
 What happens here?  
 Using the `--{varName}` notation we can tell our browser to store a unique variable called `varName` (or in the example above, `primary`), and then we can use it with the `var(--{varName})` notation anywhere in our `css` files.
