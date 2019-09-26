@@ -16,7 +16,7 @@ CSS variables are a way for us to defined variables, that will be applied throug
 ![CSS Variables](cover.png)
 
 What happens here?  
-Using the `--{varName}` notation we can tell our browser to store a unique variable called `varName` (or in the example above, `primary`), and then we can use it with the `var(--{varName})` notation anywhere in our `css` files.
+Using the `--{varName}` notation we can tell our browser to store a unique variable called `varName` (or in the example above, `primary`), and then we can use it with the `var(--{varName})` notation anywhere in our `.css` files.
 
 Seems really simple? Because it is. There's not much to it. According to [caniuse.com](https://caniuse.com/#feat=css-variables) over 92% of users world wide use a browser that supports css variables (unless you really need IE support, in which case you're out of luck), so for the most part they're completely safe to use.
 
@@ -24,7 +24,7 @@ If you want to read more, you can find more information in the [MDN page](https:
 
 ## Setting CSS Variables from Javascript
 
-Setting and using CSS variables from CSS code is easy, and setting and using them in javascript code is just as easy. To get a value defined on an element:
+Setting and using CSS variables from javascript is just as easy as setting and using them in css. To get a value defined on an element:
 
 ```js
 const primary = getComputedStyle(element).getPropertyValue("--primary");
@@ -63,11 +63,11 @@ export const ThemeSelectorContext = React.createContext({
 The parameters passed to the `React.createContext` function are the default parameters of the context. Now that we have a context object, we can use it to "inject" props to our indirect descendants:
 
 ```jsx
-export default ({ children }) => {
+export default ({ children }) => (
   <ThemeSelectorContext.Provider value={{ themeName: "dark" }}>
     {children}
-  </ThemeSelectorContext.Provider>;
-};
+  </ThemeSelectorContext.Provider>
+);
 ```
 
 And now anyone who wants to read the values in our context can do it:
@@ -115,11 +115,11 @@ export const () => {
 };
 ```
 
-That's enough for our needs, but if you want to can further read on the [Official React Context Documentation](https://reactjs.org/docs/context.html).
+That's enough for our needs, but if you want you can further read on the [Official React Context Documentation](https://reactjs.org/docs/context.html).
 
 ## Putting Everything Together
 
-Now that we know how to set css custom properties from javascript, and we can pass props down our component tree, we can make a really nice and simple "theme engine" for out application. first up we'll define our themes:
+Now that we know how to set css custom properties from javascript, and we can pass props down our component tree, we can make a really nice and simple "theme engine" for out application. First up we'll define our themes:
 
 ```js
 const themes = {
@@ -144,8 +144,7 @@ const themes = {
 };
 ```
 
-(This just happens to be the color pallette I use for my blog).
-The sky is the limit when it comes to themes, so feel free to experiment.
+This just happens to be the color pallette I use for my blog, but really the sky is the limit when it comes to themes, so feel free to experiment.
 
 Now we create our `ThemeSelectorContext`:
 
@@ -193,7 +192,7 @@ const setCSSVariables = theme => {
 };
 ```
 
-Now for each value in our `theme` object we can access a css property with the same name (prefixed with `--` of course). The last thing we need is to run the `setCSSVariables` function every time the theme is toggled, so in our `Themer` component we can use the `useEffect` hook like so:
+Now for each value in our `theme` object we can access a css property with the same name (prefixed with `--` of course). The last thing we need is to run the `setCSSVariables` function every time the theme is toggled, so in our `Theme` component we can use the `useEffect` hook like so:
 
 ```jsx
 export default ({ children }) => {
@@ -207,68 +206,7 @@ export default ({ children }) => {
 };
 ```
 
-Here is the full component:
-
-```jsx
-import React, { useState, useEffect } from "react";
-
-const themes = {
-  dark: {
-    primary: "#1ca086",
-    separatorColor: "rgba(255,255,255,0.20)",
-    textColor: "white",
-    backgroundColor: "#121212",
-    headerBackgroundColor: "rgba(255,255,255,0.05)",
-    blockquoteColor: "rgba(255,255,255,0.20)",
-    icon: "white"
-  },
-  light: {
-    primary: "#1ca086",
-    separatorColor: "rgba(0,0,0,0.08)",
-    textColor: "black",
-    backgroundColor: "white",
-    headerBackgroundColor: "#f6f6f6",
-    blockquoteColor: "rgba(0,0,0,0.80)",
-    icon: "#121212"
-  }
-};
-
-export const ThemeSelectorContext = React.createContext({
-  themeName: "dark",
-  toggleTheme: () => {}
-});
-
-const setCSSVariables = theme => {
-  for (const value in theme) {
-    document.documentElement.style.setProperty(`--${value}`, theme[value]);
-  }
-};
-
-export default ({ children }) => {
-  const [themeName, setThemeName] = useState("dark");
-  const [theme, setTheme] = useState(themes[themeName]);
-
-  useEffect(() => {
-    setCSSVariables(theme);
-  });
-
-  const toggleTheme = () => {
-    if (theme === themes.dark) {
-      setTheme(themes.light);
-      setThemeName("light");
-    } else {
-      setTheme(themes.dark);
-      setThemeName("dark");
-    }
-  };
-
-  return (
-    <ThemeSelectorContext.Provider value={{ toggleTheme, themeName }}>
-      {children}
-    </ThemeSelectorContext.Provider>
-  );
-};
-```
+The full source can be found [on github](https://github.com/dorshinar/blog/blob/master/src/components/themer/themer.jsx).
 
 Using our theme is super convenient:
 
