@@ -10,7 +10,7 @@ export const LinkHome = styled(Link)`
 `;
 
 export const Wrapper = styled.div`
-  background-color: var(--backgroundColor);
+  background-color: var(--backgroundColor, "#121212");
   color: var(--textColor);
   transition: background-color 0.25s ease, color 0.25s ease;
 
