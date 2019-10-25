@@ -3,3 +3,18 @@
 body {
   font-family: "Montserrat", sans-serif;
 }
+
+:root {
+  --primary: "#1ca086";
+  --light: "#5cd2b6";
+  --dark: "#007159";
+
+  --contentWidth: 34.8rem;
+
+  --separatorColor: "rgba(255,255,255,0.20)";
+  --textColor: "white";
+  --backgroundColor: "#121212";
+  --headerBackgroundColor: "rgba(255,255,255,0.05)";
+  --blockquoteColor: "rgba(255,255,255,0.20)";
+  --icon: "white";
+}
