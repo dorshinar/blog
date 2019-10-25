@@ -11,7 +11,7 @@ CSS variables are really cool. You can use them for a lot of things, one of whic
 
 So first of all, I'd like to explain briefly what CSS variables (or in their formal name - CSS custom properties) are, and how to use them.
 
-CSS variables are a way for us to defined variables, that will be applied throughout our application. The syntax is as follows:
+CSS variables are a way for us to define variables, that will be applied throughout our application. The syntax is as follows:
 
 ![CSS Variables](cover.png)
 
