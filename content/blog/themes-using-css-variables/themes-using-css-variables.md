@@ -1,6 +1,6 @@
 ---
 title: Themes Using CSS Variables and React Context
-date: "2019-09-23"
+date: "2019-10-25"
 description: "CSS variables are awesome! We can integrate them beautifully with React Context for a super easy way to theme our application."
 slug: /themes-using-css-variables-and-react-context
 ---
