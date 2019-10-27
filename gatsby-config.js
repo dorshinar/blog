@@ -9,7 +9,8 @@ module.exports = {
       linkedin: "dor-shinar-82b00b144",
       dev: "dorshinar",
       stackoverflow: "3822311/dor-shinar",
-      twitter: "DorShinar"
+      twitter: "DorShinar",
+      koFi: "https://ko-fi.com/L3L116P44"
     }
   },
   plugins: [
