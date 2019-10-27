@@ -5,6 +5,7 @@ import { Bio } from "../../components/bio";
 import SEO from "../../components/seo";
 import { ScrollIndicator } from "../../components/scroll-indicator";
 import { Separator } from "../../utils/styled/separator";
+import { BuyMeACoffee } from "../../components/buy-me-a-coffee/buy-me-a-coffee";
 
 import {
   Header,
@@ -34,9 +35,9 @@ class BlogPostTemplate extends React.Component {
             {`${post.frontmatter.date}, ${post.fields.readingTime.text}`}
           </SubHeader>
           <Post dangerouslySetInnerHTML={{ __html: post.html }} />
+          <BuyMeACoffee />
           <Separator />
           <Bio />
-
           <NearByPosts>
             <PostLink>
               {previous && (
