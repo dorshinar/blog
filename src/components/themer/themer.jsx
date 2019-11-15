@@ -41,9 +41,11 @@ export const ThemeSelectorContext = React.createContext({
 });
 
 const setCSSVariables = theme => {
+  console.log(document.documentElement.style);
   for (const value in theme) {
     document.documentElement.style.setProperty(`--${value}`, theme[value]);
   }
+  console.log(document.documentElement.style);
 };
 
 export default ({ children }) => {
