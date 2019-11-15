@@ -3,6 +3,8 @@ import { Link } from "gatsby";
 
 import { rhythm } from "../../utils/typography";
 
+import "./index.css";
+
 export const LinkHome = styled(Link)`
   box-shadow: none;
   text-decoration: none;
@@ -10,8 +12,8 @@ export const LinkHome = styled(Link)`
 `;
 
 export const Wrapper = styled.div`
-  background-color: var(--backgroundColor, "#121212");
-  color: var(--textColor);
+  background-color: var(--backgroundColor);
+  color: var(--textColor, "red");
   transition: background-color 0.25s ease, color 0.25s ease;
 
   min-height: 100vh;
