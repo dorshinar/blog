@@ -35,7 +35,8 @@ export default () => {
       }
     }
   `);
-  const { toggleTheme, themeName } = useContext(ThemeSelectorContext);
+
+  const { themeName } = useContext(ThemeSelectorContext);
 
   return (
     <Wrapper>
@@ -44,8 +45,10 @@ export default () => {
           <Title>Dor Shinar</Title>
         </HomeLink>
         <StyledToggle
-          defaultChecked={themeName === "dark"}
-          onClick={toggleTheme}
+          checked={themeName === "dark"}
+          onChange={e =>
+            window.__setPreferredTheme(e.target.checked ? "dark" : "light")
+          }
           aria-label={"Toggle Theme"}
           icons={{
             checked: (

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 export const ThemeSelectorContext = React.createContext({
   themeName: "dark",
@@ -8,14 +8,16 @@ export const ThemeSelectorContext = React.createContext({
 export default ({ children }) => {
   const [themeName, setThemeName] = useState("dark");
 
-  const toggleTheme = () => {
-    const newTheme = themeName === "dark" ? "light" : "dark";
-    setThemeName(newTheme);
-    document.body.className = newTheme;
-  };
+  useEffect(() => {
+    setThemeName(window.__theme);
+
+    window.__onThemeChange = () => {
+      setThemeName(window.__theme);
+    };
+  }, []);
 
   return (
-    <ThemeSelectorContext.Provider value={{ toggleTheme, themeName }}>
+    <ThemeSelectorContext.Provider value={{ themeName }}>
       {children}
     </ThemeSelectorContext.Provider>
   );
