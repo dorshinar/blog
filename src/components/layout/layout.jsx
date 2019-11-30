@@ -10,10 +10,6 @@ class Layout extends React.Component {
   render() {
     const { children } = this.props;
 
-    if (!document.body.className) {
-      document.body.className = "dark";
-    }
-
     return (
       <Themer>
         <Wrapper>
