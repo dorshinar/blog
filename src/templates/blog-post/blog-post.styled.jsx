@@ -85,9 +85,3 @@ export const NearByPosts = styled.ul`
 `;
 
 export const PostLink = styled.li``;
-
-export const Separator = styled.hr`
-  margin: ${rhythm(1)} 0;
-  background-color: var(--separatorColor);
-  transition: background-color 0.25s ease;
-`;
