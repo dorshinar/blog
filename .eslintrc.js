@@ -25,7 +25,8 @@ module.exports = {
   },
   rules: {
     "react/prop-types": 0,
-    "import/order": ["error", { "newlines-between": "always" }]
+    "import/order": ["error", { "newlines-between": "always" }],
+    "max-nested-callbacks": 0
   },
   settings: {
     "import/resolver": {

@@ -58,4 +58,37 @@ describe("Smoke test site", () => {
       "https://stackoverflow.com/users/3822311/dor-shinar"
     );
   });
+
+  it("navigates to post page", async () => {
+    await page.click(
+      '[href="/linting-your-react+typescript-project-with-eslint-and-prettier"]'
+    );
+    await page.waitForSelector('[data-p="home-link"]');
+
+    // Ensure the title is set properly
+    expect(await page.title()).toBe(
+      "Linting Your React+Typescript Project With ESlint and Prettier | Dor Shinar"
+    );
+
+    // Ensure buy me a coffee link is shown
+    expect(await page.$('[data-p="koFi"]')).not.toBeNull();
+
+    // Ensure next link shows
+    const next = await page.evaluate(() =>
+      document.querySelector('[rel~="next"]').getAttribute("href")
+    );
+    expect(next).toBe("/i-am-a-great-developer");
+
+    // Ensure contact links are available
+    expect(await page.$('[data-p="contact"]')).not.toBeNull();
+  });
+
+  it("loads the rss.xml", async () => {
+    const rss = await page.evaluate(async () => {
+      const response = await fetch("/rss.xml");
+      const text = await response.text();
+      return text;
+    });
+    expect(rss).toInclude('<?xml version="1.0" encoding="UTF-8"?>');
+  });
 });

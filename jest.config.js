@@ -1,4 +1,5 @@
 module.exports = {
   preset: "jest-puppeteer",
-  roots: ["src"]
+  roots: ["src"],
+  setupFilesAfterEnv: ["jest-extended"]
 };

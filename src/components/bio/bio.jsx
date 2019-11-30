@@ -70,7 +70,7 @@ const Bio = () => {
         I'm <strong>{author}</strong>. I am a web developer, who also likes to
         write articles. This is my blog!
       </AboutMe>
-      <Contact>
+      <Contact data-p="contact">
         <PersonalLink
           href={`https://github.com/${social.github}`}
           aria-label={"Github"}
@@ -111,6 +111,7 @@ const Bio = () => {
           target="_blank"
           rel="noopener noreferrer"
           aria-label={"RSS feed"}
+          data-p="rss"
         >
           <ContactRSSBadge alt={author} icon={faRss} />
         </a>
