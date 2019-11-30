@@ -4,6 +4,7 @@ import { Link, graphql } from "gatsby";
 import { Bio } from "../../components/bio";
 import SEO from "../../components/seo";
 import { ScrollIndicator } from "../../components/scroll-indicator";
+import { Separator } from "../../utils/styled/separator";
 import { BuyMeACoffee } from "../../components/buy-me-a-coffee/buy-me-a-coffee";
 
 import {
@@ -12,8 +13,7 @@ import {
   Post,
   NearByPosts,
   PostLink,
-  Wrapper,
-  Separator
+  Wrapper
 } from "./blog-post.styled";
 
 class BlogPostTemplate extends React.Component {
