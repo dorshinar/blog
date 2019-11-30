@@ -40,7 +40,7 @@ export default () => {
   return (
     <Wrapper>
       <Content>
-        <HomeLink to="/">
+        <HomeLink to="/" data-p="home-link">
           <Title>Dor Shinar</Title>
         </HomeLink>
         <StyledToggle
@@ -61,6 +61,7 @@ export default () => {
               />
             )
           }}
+          data-p="theme-switcher"
         />
       </Content>
     </Wrapper>

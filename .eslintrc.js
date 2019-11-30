@@ -1,5 +1,11 @@
 module.exports = {
-  globals: { __PATH_PREFIX__: true },
+  globals: {
+    page: true,
+    browser: true,
+    context: true,
+    jestPuppeteer: true,
+    __PATH_PREFIX__: true
+  },
   extends: [
     "eslint:recommended",
     "react",
@@ -14,7 +20,8 @@ module.exports = {
   },
   env: {
     es6: true,
-    node: true
+    node: true,
+    jest: true
   },
   rules: {
     "react/prop-types": 0,
