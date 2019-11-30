@@ -6,6 +6,7 @@ import SEO from "../../components/seo";
 import { ScrollIndicator } from "../../components/scroll-indicator";
 import { Separator } from "../../utils/styled/separator";
 import { BuyMeACoffee } from "../../components/buy-me-a-coffee/buy-me-a-coffee";
+import Layout from "../../components/layout/layout";
 
 import {
   Header,
@@ -22,7 +23,7 @@ class BlogPostTemplate extends React.Component {
     const { previous, next } = this.props.pageContext;
 
     return (
-      <>
+      <Layout>
         <ScrollIndicator />
         <SEO
           title={post.frontmatter.title}
@@ -55,7 +56,7 @@ class BlogPostTemplate extends React.Component {
             </PostLink>
           </NearByPosts>
         </Wrapper>
-      </>
+      </Layout>
     );
   }
 }
