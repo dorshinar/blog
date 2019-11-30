@@ -74,30 +74,35 @@ const Bio = () => {
         <PersonalLink
           href={`https://github.com/${social.github}`}
           aria-label={"Github"}
+          data-p="github"
         >
           <ContactGithubBadge alt={author} icon={faGithub} />
         </PersonalLink>
         <PersonalLink
           href={`https://twitter.com/${social.twitter}`}
           aria-label={"Twitter"}
+          data-p="twitter"
         >
           <ContactTwitterBadge alt={author} icon={faTwitter} />
         </PersonalLink>
         <PersonalLink
           href={`https://www.linkedin.com/in/${social.linkedin}`}
           aria-label={"Linkedin"}
+          data-p="linkedin"
         >
           <ContactLinkedinBadge alt={author} icon={faLinkedin} />
         </PersonalLink>
         <PersonalLink
           href={`https://dev.to/${social.dev}`}
           aria-label={"Dev.to"}
+          data-p="dev"
         >
           <ContactDevBadge alt={author} icon={faDev} />
         </PersonalLink>
         <PersonalLink
           href={`https://stackoverflow.com/users/${social.stackoverflow}`}
           aria-label={"StackOverflow"}
+          data-p="stack-overflow"
         >
           <ContactSOBadge alt={author} icon={faStackOverflow} />
         </PersonalLink>
