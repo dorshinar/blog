@@ -16,11 +16,19 @@ describe("Smoke test site", () => {
   it("switches themes", async () => {
     await page.goto("http://localhost:8000/");
 
+    await page.evaluate(() => window.__setPreferredTheme("dark"));
     const theme = await page.evaluate(() => window.__theme);
-    await page.evaluate(() =>
-      document.querySelector(".react-toggle-track").click()
-    );
+
+    await page.evaluate(() => window.__setPreferredTheme("light"));
     const newTheme = await page.evaluate(() => window.__theme);
+
     expect(theme).not.toBe(newTheme);
+  });
+
+  xit("shows title", async () => {
+    await page.goto("http://localhost:8000/");
+
+    const title = await page.title();
+    expect(title).toBe("All posts | Dor Shinar");
   });
 });
