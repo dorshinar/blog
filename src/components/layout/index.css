@@ -22,7 +22,7 @@ body.light {
   --separatorColor: rgba(0,0,0,0.08);
   --textColor: black;
   --backgroundColor: white;
-  --headerBackgroundColor: rgba(255, 255, 255, 0.05);
+  --headerBackgroundColor: #f6f6f6;
   --blockquoteColor: rgba(0,0,0,0.80);
   --icon: #121212;
 }
