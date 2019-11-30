@@ -4,6 +4,7 @@ import { graphql } from "gatsby";
 import { Bio } from "../components/bio";
 import SEO from "../components/seo";
 import { BlogPostPreviews } from "../components/blog-post-previews";
+import Layout from "../components/layout/layout";
 
 class BlogIndex extends React.Component {
   render() {
@@ -11,11 +12,11 @@ class BlogIndex extends React.Component {
     const posts = data.allMarkdownRemark.edges;
 
     return (
-      <>
+      <Layout>
         <SEO title="All posts" />
         <Bio />
         <BlogPostPreviews posts={posts} />
-      </>
+      </Layout>
     );
   }
 }
