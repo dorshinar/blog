@@ -22,6 +22,7 @@ const BuyMeACoffee = () => {
         href={data.site.siteMetadata.social.koFi}
         rel="noopener noreferrer"
         target="_blank"
+        data-p="koFi"
       >
         <img
           height="36"

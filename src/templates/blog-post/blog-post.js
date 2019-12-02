@@ -31,7 +31,7 @@ class BlogPostTemplate extends React.Component {
           slug={post.fields.slug}
         />
         <Wrapper>
-          <Header>{post.frontmatter.title}</Header>
+          <Header data-p="post-title">{post.frontmatter.title}</Header>
           <SubHeader>
             {`${post.frontmatter.date}, ${post.fields.readingTime.text}`}
           </SubHeader>

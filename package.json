@@ -14,6 +14,13 @@
     "@fortawesome/free-solid-svg-icons": "^5.10.2",
     "@fortawesome/react-fontawesome": "^0.1.4",
     "babel-plugin-styled-components": "^1.10.6",
+    "eslint-config-prettier": "^6.7.0",
+    "eslint-config-react": "^1.1.7",
+    "eslint-config-react-app": "^5.0.2",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-prettier": "^3.1.1",
+    "eslint-plugin-react-app": "^6.0.3",
+    "eslint-plugin-react-hooks": "^2.3.0",
     "gatsby": "^2.15.14",
     "gatsby-image": "^2.2.17",
     "gatsby-plugin-feed": "^2.3.12",
@@ -35,7 +42,12 @@
     "gatsby-source-filesystem": "^2.1.21",
     "gatsby-transformer-remark": "^2.6.21",
     "gatsby-transformer-sharp": "^2.2.14",
+    "jest": "^24.9.0",
+    "jest-extended": "^0.11.2",
+    "jest-puppeteer": "^4.3.0",
+    "prettier": "^1.19.1",
     "prismjs": "^1.17.1",
+    "puppeteer": "^2.0.0",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-helmet": "^5.2.1",
@@ -46,16 +58,11 @@
     "typography": "^0.16.19"
   },
   "devDependencies": {
-    "eslint-config-prettier": "^6.3.0",
-    "eslint-config-react": "^1.1.7",
-    "eslint-config-react-app": "^5.0.1",
-    "eslint-plugin-import": "^2.18.2",
-    "eslint-plugin-prettier": "^3.1.0",
-    "eslint-plugin-react-app": "^6.0.2",
-    "eslint-plugin-react-hooks": "^2.0.1",
+    "@types/jest": "^24.0.23",
+    "@types/puppeteer": "^2.0.0",
     "husky": "^3.0.5",
     "lint-staged": "^9.2.5",
-    "prettier": "^1.18.2"
+    "typescript": "^3.7.2"
   },
   "homepage": "https://dorshinar.me",
   "keywords": [
@@ -75,8 +82,8 @@
     "lint": "eslint src/**/*.{js,jsx} --fix",
     "start": "npm run develop",
     "serve": "gatsby serve",
-    "prod": "gatsby clean && npm run build && npm run serve",
-    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\""
+    "prod": "npm run build && npm run serve",
+    "test:e2e": "jest --forceExit"
   },
   "husky": {
     "hooks": {

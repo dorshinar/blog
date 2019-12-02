@@ -70,34 +70,39 @@ const Bio = () => {
         I'm <strong>{author}</strong>. I am a web developer, who also likes to
         write articles. This is my blog!
       </AboutMe>
-      <Contact>
+      <Contact data-p="contact">
         <PersonalLink
           href={`https://github.com/${social.github}`}
           aria-label={"Github"}
+          data-p="github"
         >
           <ContactGithubBadge alt={author} icon={faGithub} />
         </PersonalLink>
         <PersonalLink
           href={`https://twitter.com/${social.twitter}`}
           aria-label={"Twitter"}
+          data-p="twitter"
         >
           <ContactTwitterBadge alt={author} icon={faTwitter} />
         </PersonalLink>
         <PersonalLink
           href={`https://www.linkedin.com/in/${social.linkedin}`}
           aria-label={"Linkedin"}
+          data-p="linkedin"
         >
           <ContactLinkedinBadge alt={author} icon={faLinkedin} />
         </PersonalLink>
         <PersonalLink
           href={`https://dev.to/${social.dev}`}
           aria-label={"Dev.to"}
+          data-p="dev"
         >
           <ContactDevBadge alt={author} icon={faDev} />
         </PersonalLink>
         <PersonalLink
           href={`https://stackoverflow.com/users/${social.stackoverflow}`}
           aria-label={"StackOverflow"}
+          data-p="stack-overflow"
         >
           <ContactSOBadge alt={author} icon={faStackOverflow} />
         </PersonalLink>
@@ -106,6 +111,7 @@ const Bio = () => {
           target="_blank"
           rel="noopener noreferrer"
           aria-label={"RSS feed"}
+          data-p="rss"
         >
           <ContactRSSBadge alt={author} icon={faRss} />
         </a>
