@@ -95,6 +95,7 @@ const Bio = () => {
         <PersonalLink
           href={`https://dev.to/${social.dev}`}
           aria-label={"Dev.to"}
+          data-p="dev"
         >
           <ContactDevBadge alt={author} icon={faDev} />
         </PersonalLink>
