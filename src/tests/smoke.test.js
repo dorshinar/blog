@@ -32,28 +32,32 @@ describe("Smoke test site", () => {
     expect(title).toBe("All posts | Dor Shinar");
   });
 
+  async function navigateWithWait(selector) {
+    return Promise.all([page.waitForNavigation(), await page.click(selector)]);
+  }
+
   it("navigates to github", async () => {
-    await page.click('[data-p="github"]');
+    await navigateWithWait('[data-p="github"]');
     expect(page.url()).toBe("https://github.com/dorshinar");
   });
 
   it("navigates to twitter", async () => {
-    await page.click('[data-p="twitter"]');
+    await navigateWithWait('[data-p="twitter"]');
     expect(page.url()).toBe("https://twitter.com/DorShinar");
   });
 
   it("navigates to linkedin", async () => {
-    await page.click('[data-p="linkedin"]');
+    await navigateWithWait('[data-p="linkedin"]');
     expect(page.url()).toBe("https://www.linkedin.com/in/dor-shinar-82b00b144");
   });
 
   it("navigates to dev", async () => {
-    await page.click('[data-p="dev"]');
+    await navigateWithWait('[data-p="dev"]');
     expect(page.url()).toBe("https://dev.to/dorshinar");
   });
 
   it("navigates to stack overflow", async () => {
-    await page.click('[data-p="stack-overflow"]');
+    await navigateWithWait('[data-p="stack-overflow"]');
     expect(page.url()).toBe(
       "https://stackoverflow.com/users/3822311/dor-shinar"
     );
