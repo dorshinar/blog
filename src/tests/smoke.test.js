@@ -4,7 +4,7 @@ describe("Smoke test site", () => {
   });
 
   beforeEach(async () => {
-    await page.goto("http://localhost:8000/");
+    await page.goto(`http://localhost:${process.env.CI ? 9000 : 8000}/`);
     await page.waitForSelector('[data-p="home-link"]');
   });
 
@@ -89,6 +89,47 @@ describe("Smoke test site", () => {
       const text = await response.text();
       return text;
     });
+
+    // Ensure rss feed is set up correctly
     expect(rss).toInclude('<?xml version="1.0" encoding="UTF-8"?>');
+    expect(rss).toInclude(
+      "<title><![CDATA[Linting Your React+Typescript Project With ESlint and Prettier]]></title>"
+    );
+    expect(rss).toInclude(
+      "<description><![CDATA[Lately we started a new project at work, written in React + Typescript. Of course, like any other project we wanted it to be automatically…]]></description>"
+    );
+    expect(rss).toInclude(
+      "<link>https://dorshinar.me/linting-your-react+typescript-project-with-eslint-and-prettier</link>"
+    );
+    expect(rss).toInclude(
+      '<guid isPermaLink="false">https://dorshinar.me/linting-your-react+typescript-project-with-eslint-and-prettier</guid>'
+    );
+    expect(rss).toInclude("<pubDate>Mon, 21 Jan 2019 20:00:00 GMT</pubDate>");
+  });
+
+  it("loads the sitemap.xml", async () => {
+    const map = await page.evaluate(async () => {
+      const response = await fetch("/sitemap.xml");
+      const text = await response.text();
+      return text;
+    });
+
+    expect(map).toInclude('<?xml version="1.0" encoding="UTF-8"?>');
+    expect(map).toInclude("<urlset");
+    expect(map).toInclude("</urlset>");
+    expect(map).toInclude("<loc>https://dorshinar.me/</loc>");
+    expect(map).toInclude(
+      "<loc>https://dorshinar.me/themes-using-css-variables-and-react-context</loc>"
+    );
+  });
+
+  it("has google site verification code", async () => {
+    const content = await page.evaluate(() => {
+      return document
+        .querySelector('meta[name="google-site-verification"]')
+        .getAttribute("content");
+    });
+
+    expect(content).toBe("Y0r9c_KfP6Wl0eYoavd1q6mHA60nmGZKbRuQ3e43Cb8");
   });
 });

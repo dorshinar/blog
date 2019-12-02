@@ -1,6 +1,6 @@
 module.exports = {
   launch: {
-    headless: false,
+    headless: process.env.CI === "true",
     ignoreDefaultArgs: ["--disable-extensions"],
     args: ["--no-sandbox"],
     executablePath: "chrome.exe"

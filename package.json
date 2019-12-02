@@ -83,7 +83,7 @@
     "start": "npm run develop",
     "serve": "gatsby serve",
     "prod": "npm run build && npm run serve",
-    "test:e2e": "jest --runInBand --detectOpenHandles"
+    "test:e2e": "jest --forceExit"
   },
   "husky": {
     "hooks": {
