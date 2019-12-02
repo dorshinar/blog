@@ -4,7 +4,7 @@ describe("Smoke test site", () => {
   });
 
   beforeEach(async () => {
-    await page.goto(`http://localhost:9000/`);
+    await page.goto(`http://localhost:${process.env.CI ? 9 : 8}000/`);
     await page.waitForSelector('[data-p="home-link"]');
   });
 
@@ -32,31 +32,36 @@ describe("Smoke test site", () => {
     expect(title).toBe("All posts | Dor Shinar");
   });
 
+  async function validateHref(selector) {
+    return page.evaluate(
+      selector => document.querySelector(selector).getAttribute("href"),
+      selector
+    );
+  }
+
   it("navigates to github", async () => {
-    await page.click('[data-p="github"]');
-    expect(page.url()).toBe("https://github.com/dorshinar");
+    const href = await validateHref('[data-p="github"]');
+    expect(href).toBe("https://github.com/dorshinar");
   });
 
   it("navigates to twitter", async () => {
-    await page.click('[data-p="twitter"]');
-    expect(page.url()).toBe("https://twitter.com/DorShinar");
+    const href = await validateHref('[data-p="twitter"]');
+    expect(href).toBe("https://twitter.com/DorShinar");
   });
 
   it("navigates to linkedin", async () => {
-    await page.click('[data-p="linkedin"]');
-    expect(page.url()).toBe("https://www.linkedin.com/in/dor-shinar-82b00b144");
+    const href = await validateHref('[data-p="linkedin"]');
+    expect(href).toBe("https://www.linkedin.com/in/dor-shinar-82b00b144");
   });
 
   it("navigates to dev", async () => {
-    await page.click('[data-p="dev"]');
-    expect(page.url()).toBe("https://dev.to/dorshinar");
+    const href = await validateHref('[data-p="dev"]');
+    expect(href).toBe("https://dev.to/dorshinar");
   });
 
   it("navigates to stack overflow", async () => {
-    await page.click('[data-p="stack-overflow"]');
-    expect(page.url()).toBe(
-      "https://stackoverflow.com/users/3822311/dor-shinar"
-    );
+    const href = await validateHref('[data-p="stack-overflow"]');
+    expect(href).toBe("https://stackoverflow.com/users/3822311/dor-shinar");
   });
 
   it("navigates to post page", async () => {

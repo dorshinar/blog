@@ -3,11 +3,12 @@ module.exports = {
     headless: process.env.CI === "true",
     ignoreDefaultArgs: ["--disable-extensions"],
     args: ["--no-sandbox"],
-    executablePath: "chrome.exe"
+    executablePath:
+      process.env.CI === "true" ? "google-chrome-unstable" : "chrome.exe"
   },
-  server: {
+  server: process.env.CI && {
     command: "npm run prod",
     port: 9000,
-    launchTimeout: 40000
+    launchTimeout: 180000
   }
 };
