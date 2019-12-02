@@ -2,6 +2,7 @@ module.exports = {
   siteMetadata: {
     title: `Dor Shinar`,
     author: `Dor Shinar`,
+    a: "",
     description: `My Personal blog for thoughts.`,
     siteUrl: "https://dorshinar.me",
     social: {
