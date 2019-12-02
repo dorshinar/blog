@@ -56,7 +56,6 @@ const Bio = () => {
   `);
 
   const { author, social } = data.site.siteMetadata;
-  console.log(author);
 
   return (
     <Wrapper>
