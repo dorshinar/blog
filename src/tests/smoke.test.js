@@ -4,7 +4,7 @@ describe("Smoke test site", () => {
   });
 
   beforeEach(async () => {
-    await page.goto(`http://localhost:${process.env.CI ? 9000 : 8000}/`);
+    await page.goto(`http://localhost:9000/`);
     await page.waitForSelector('[data-p="home-link"]');
   });
 
@@ -63,7 +63,7 @@ describe("Smoke test site", () => {
     await page.click(
       '[href="/linting-your-react+typescript-project-with-eslint-and-prettier"]'
     );
-    await page.waitForSelector('[data-p="home-link"]');
+    await page.waitForSelector('[data-p="post-title"]');
 
     // Ensure the title is set properly
     expect(await page.title()).toBe(

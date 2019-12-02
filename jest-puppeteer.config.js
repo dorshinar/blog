@@ -4,5 +4,10 @@ module.exports = {
     ignoreDefaultArgs: ["--disable-extensions"],
     args: ["--no-sandbox"],
     executablePath: "chrome.exe"
+  },
+  server: {
+    command: "npm run prod",
+    port: 9000,
+    launchTimeout: 40000
   }
 };
