@@ -17,6 +17,8 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
+    - name: Print Chrome executable
+      run: which google-chrome
     - name: Install dependencies
       run: npm ci
     - name: npm install, build, and test
