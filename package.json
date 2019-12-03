@@ -54,7 +54,7 @@
     "react-toggle": "^4.1.1",
     "react-typography": "^0.16.19",
     "reading-time": "^1.2.0",
-    "styled-components": "5.0.0-rc.2",
+    "styled-components": "5.0.0-5.canary-sheet",
     "typography": "^0.16.19"
   },
   "devDependencies": {
