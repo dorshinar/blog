@@ -68,13 +68,11 @@ describe("Smoke test site", () => {
     await page.click(
       '[href="/linting-your-react+typescript-project-with-eslint-and-prettier"]'
     );
-    await page.waitForNavigation({ waitUntil: "domcontentloaded" });
     await page.waitForSelector('[data-p="post-title"]');
 
+    const title = await page.evaluate(() => document.title);
     // Ensure the title is set properly
-    console.log("page.title()", await page.title());
-    console.log("page.evaluate()", await page.evaluate(() => document.title));
-    expect(await page.title()).toBe(
+    expect(title).toBe(
       "Linting Your React+Typescript Project With ESlint and Prettier | Dor Shinar"
     );
 
