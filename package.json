@@ -60,8 +60,6 @@
   "devDependencies": {
     "@types/jest": "^24.0.23",
     "@types/puppeteer": "^2.0.0",
-    "husky": "^3.1.0",
-    "lint-staged": "^9.5.0",
     "typescript": "^3.7.2"
   },
   "homepage": "https://dorshinar.me",
@@ -84,16 +82,5 @@
     "serve": "gatsby serve",
     "prod": "npm run build && npm run serve",
     "test:e2e": "jest --forceExit"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "*.{js,jsx}": [
-      "eslint --fix",
-      "git add"
-    ]
   }
 }
