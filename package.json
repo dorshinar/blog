@@ -79,7 +79,7 @@
     "develop": "gatsby develop",
     "develop:mobile": "gatsby develop -H 0.0.0.0",
     "format": "prettier --write src/**/*.{js,jsx}",
-    "lint": "eslint src/**/*.{js,jsx} --fix",
+    "lint": "eslint src/**/*.{js,jsx}",
     "start": "npm run develop",
     "serve": "gatsby serve",
     "prod": "npm run build && npm run serve",
