@@ -6,4 +6,22 @@ slug: /using-github-actions-for-ci-with-puppeteer
 ---
 
 Hello!
-Lately I've added continuous integration to my blog using puppeteer for end to end testing. I don't think I should tell you why automated testing is important, and how much you can benefit from it. My main goal was to allow automatic dependency update using [Dependabot](https://dependabot.com/). I might write about it later, but in this article I chose to focus on running the tests on pull requests.
+Lately I've added continuous integration to my blog using puppeteer for end to end testing. My main goal was to allow automatic dependency update using [Dependabot](https://dependabot.com/). As my CI platform, I chose [Github Actions](https://github.com/features/actions), as it is super easy to work with, and it integrates beautifully with any Github repository you already have. The whole thing only took roughly two days of intermittent work, and I think the results are quite awesome.
+
+I do want to give a shout-out to Nick Taylor, who published [his article on the subject](https://www.iamdeveloper.com/blog/2019-08-15-update-dependencies-with-dependabot-cypress-and-netlify/), and  laid the ground work for my efforts here, so I encourage you to read his article as well.
+
+My tech stack is quite different though. I chose puppeteer as my end-to-end framework for several reasons. The first is that it is written and maintained by the folks behind the chrome dev tools, so I'm guaranteed a life-time support (until Chrome dies out, which is not in the near future), and it is really easy to work with. Another reason is that at home I'm working on a windows laptop with WSL 2 (on which I'm running oh-my-zsh), and setting up cypress in quite a bit more difficult (although in our world nothing is impossible). Both reasons led me to choose puppeteer, and so far I'm not regretting.
+
+## End to end testing
+
+End to end testing are different from other types of automated tests. E2E tests simulate a real user, performing actions on the screen. Puppeteer has a few configuration options that make it really awesome to write and validate tests. Puppeteer tests can run in a "head-full" state, i.e. run a real instance of chrome, navigate to the site being tested, and perform actions on the given page. The opposite of "head-full" would be headless, where puppeteer does not open a chrome instance, making the tests significantly faster, and less CPU-intensive.
+
+## Github Actions in a gist
+
+This is a brief introduction to Github Actions, and how to setup a basic CI pipeline.
+
+## Configuring puppeteer
+
+For the purpose of this article, I'll assume that you have a puppeteer suite up-and-running, or at least you know how to write puppeteer tests.
+
+-- Explain how to configure jest-puppeteer
