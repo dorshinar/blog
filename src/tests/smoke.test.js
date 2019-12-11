@@ -77,7 +77,7 @@ describe("Smoke test site", () => {
         "Linting Your React+Typescript Project With ESlint and Prettier | Dor Shinar"
       );
     } catch (e) {
-      page.screenshot({ path: "../../navigates-to-post-page.png" });
+      page.screenshot({ path: "./navigates-to-post-page.png" });
       throw e;
     }
 
