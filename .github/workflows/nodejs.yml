@@ -34,7 +34,6 @@ jobs:
         PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
 
     - uses: actions/upload-artifact@v1
-      if: failure()
       with:
         name: navigates-to-post-page.png
         path: .
