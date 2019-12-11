@@ -32,3 +32,8 @@ jobs:
       env:
         CI: true
         PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
+
+    - uses: actions/upload-artifact@v1
+      if: failure()
+      with:
+        path: screenshots
