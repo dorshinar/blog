@@ -51,12 +51,12 @@ const puppeteer = require("puppeteer");
 
 There are a bunch of things we can do with the puppeteer API, such as:
 
-- running code in the context of the page:
+running code in the context of the page:
 
 ```js
 (async () => {
-  await page.evaluate(() =>
-    document.querySelector('[data-p="home-link"]')   .getAttribute("href");
+  const homeLink = await page.evaluate(() =>
+    document.querySelector('[data-p="home-link"]').getAttribute("href")
   );
 })();
 ```

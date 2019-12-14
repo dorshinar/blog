@@ -58,7 +58,7 @@ Photo by [Isaac Smith](https://unsplash.com/@isaacmsmith) on [Unsplash](https://
 
 You first day often seems the most important one, a day that will mark the rest of your time in the company. On this day people will see you for the first time, talk to you and judge you. This day can be very nerve wracking. You don't want to misspeak, so people won't think you are a fool, or that you are not professional. You also don't want to spill coffee on your shirt and look like the office dork.
 
-I say - that's wrong. If, on average, an engineer stays in his position for about 3 years (give or take), that means that you will have about 365*3-1=1094 days to make amends for the first impression. Don't fret, it's OK to make mistakes, those mishaps will become something to joke about with your peers later on, when they get to know the real you.
+I say - that's wrong. If, on average, an engineer stays in his position for about 3 years (give or take), that means that you will have about 365\*3-1=1094 days to make amends for the first impression. Don't fret, it's OK to make mistakes, those mishaps will become something to joke about with your peers later on, when they get to know the real you.
 
 Of course, and I hope this goes without saying, a bad second impression (and third, fourth and so on) can completely ruin a good first impression, so watch out for that too. As I've said, no one likes a co-worker with a stinky breath, or one that makes rude comments.
 
