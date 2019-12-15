@@ -32,7 +32,7 @@ describe("Smoke test site", () => {
     expect(title).toBe("All posts | Dor Shinar");
   });
 
-  async function validateHref(selector) {
+  async function getHref(selector) {
     return page.evaluate(
       selector => document.querySelector(selector).getAttribute("href"),
       selector
@@ -40,27 +40,27 @@ describe("Smoke test site", () => {
   }
 
   it("navigates to github", async () => {
-    const href = await validateHref('[data-p="github"]');
+    const href = await getHref('[data-p="github"]');
     expect(href).toBe("https://github.com/dorshinar");
   });
 
   it("navigates to twitter", async () => {
-    const href = await validateHref('[data-p="twitter"]');
+    const href = await getHref('[data-p="twitter"]');
     expect(href).toBe("https://twitter.com/DorShinar");
   });
 
   it("navigates to linkedin", async () => {
-    const href = await validateHref('[data-p="linkedin"]');
+    const href = await getHref('[data-p="linkedin"]');
     expect(href).toBe("https://www.linkedin.com/in/dor-shinar-82b00b144");
   });
 
   it("navigates to dev", async () => {
-    const href = await validateHref('[data-p="dev"]');
+    const href = await getHref('[data-p="dev"]');
     expect(href).toBe("https://dev.to/dorshinar");
   });
 
   it("navigates to stack overflow", async () => {
-    const href = await validateHref('[data-p="stack-overflow"]');
+    const href = await getHref('[data-p="stack-overflow"]');
     expect(href).toBe("https://stackoverflow.com/users/3822311/dor-shinar");
   });
 

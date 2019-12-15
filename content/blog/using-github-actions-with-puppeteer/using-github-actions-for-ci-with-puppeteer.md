@@ -87,8 +87,6 @@ Taking a screenshot:
 
 There is a bunch more you can do with the puppeteer API, and I suggest you take a look in it before diving into writing tests, but the examples I've shown should give you a solid ground to build from. 
 
--- brief explanation about how to write puppeteer tests, basic API examples
-
 ### Integrating puppeteer with Jest
 
 -- brief explanation about jest
