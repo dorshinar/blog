@@ -10,9 +10,7 @@ describe("Smoke test site", () => {
 
   it("loads the main page", async () => {
     // Ensure the header is clickable
-    const header = await page.evaluate(() =>
-      document.querySelector('[data-p="home-link"]').getAttribute("href")
-    );
+    const header = await getAttribute('[data-p="home-link"]', "href");
     expect(header).toBe("/");
   });
 
@@ -32,35 +30,36 @@ describe("Smoke test site", () => {
     expect(title).toBe("All posts | Dor Shinar");
   });
 
-  async function getHref(selector) {
+  async function getAttribute(selector, attribute) {
     return page.evaluate(
-      selector => document.querySelector(selector).getAttribute("href"),
-      selector
+      ([selector, attribute]) =>
+        document.querySelector(selector).getAttribute(attribute),
+      [selector, attribute]
     );
   }
 
   it("navigates to github", async () => {
-    const href = await getHref('[data-p="github"]');
+    const href = await getAttribute('[data-p="github"]', "href");
     expect(href).toBe("https://github.com/dorshinar");
   });
 
   it("navigates to twitter", async () => {
-    const href = await getHref('[data-p="twitter"]');
+    const href = await getAttribute('[data-p="twitter"]', "href");
     expect(href).toBe("https://twitter.com/DorShinar");
   });
 
   it("navigates to linkedin", async () => {
-    const href = await getHref('[data-p="linkedin"]');
+    const href = await getAttribute('[data-p="linkedin"]', "href");
     expect(href).toBe("https://www.linkedin.com/in/dor-shinar-82b00b144");
   });
 
   it("navigates to dev", async () => {
-    const href = await getHref('[data-p="dev"]');
+    const href = await getAttribute('[data-p="dev"]', "href");
     expect(href).toBe("https://dev.to/dorshinar");
   });
 
   it("navigates to stack overflow", async () => {
-    const href = await getHref('[data-p="stack-overflow"]');
+    const href = await getAttribute('[data-p="stack-overflow"]', "href");
     expect(href).toBe("https://stackoverflow.com/users/3822311/dor-shinar");
   });
 
@@ -85,9 +84,7 @@ describe("Smoke test site", () => {
     expect(await page.$('[data-p="koFi"]')).not.toBeNull();
 
     // Ensure next link shows
-    const next = await page.evaluate(() =>
-      document.querySelector('[rel~="next"]').getAttribute("href")
-    );
+    const next = await getAttribute('[rel~="next"]', "href");
     expect(next).toBe("/i-am-a-great-developer");
 
     // Ensure contact links are available
@@ -135,11 +132,10 @@ describe("Smoke test site", () => {
   });
 
   it("has google site verification code", async () => {
-    const content = await page.evaluate(() => {
-      return document
-        .querySelector('meta[name="google-site-verification"]')
-        .getAttribute("content");
-    });
+    const content = await getAttribute(
+      'meta[name="google-site-verification"]',
+      "content"
+    );
 
     expect(content).toBe("Y0r9c_KfP6Wl0eYoavd1q6mHA60nmGZKbRuQ3e43Cb8");
   });
