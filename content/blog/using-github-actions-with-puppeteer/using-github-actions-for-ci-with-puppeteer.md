@@ -1,7 +1,7 @@
 ---
 title: Using Github Actions for Continuous Integration with Puppeteer
-date: "2019-12/14"
-description: "Using puppeteer for e2e testing is really awesome. I'll show you how to integrate it with github actions."
+date: 2019-12-15
+description: Using puppeteer for e2e testing is really awesome. I'll show you how to integrate it with github actions.
 slug: /using-github-actions-for-ci-with-puppeteer
 ---
 
@@ -49,20 +49,43 @@ const puppeteer = require("puppeteer");
 })();
 ```
 
-There are a bunch of things we can do with the puppeteer API, such as:
+What we do here is very simple, we open the browser with `puppeteer.launch()`, create a new page with `browser.newPage()` and navigate to this blog with `page.goto()`, and then we print the title. There are a bunch of things we can do with the puppeteer API, such as:
 
-running code in the context of the page:
+Running code in the context of the page:
 
 ```js
 (async () => {
-  const homeLink = await page.evaluate(() =>
+  await page.evaluate(() =>
     document.querySelector('[data-p="home-link"]').getAttribute("href")
   );
-  console.log(homeLink);
 })();
 ```
 
-You can basically execute any piece of code you wish, and return some result, as long as the result is serializable (meaning - you can't return `document.querySelector('[data-p="home-link"]')`, but you can return the `href` attribute value). 
+Clicking on elements in the screen using a CSS selector:
+
+```js
+(async () => {
+  await page.click(".awesome-button");
+})();
+```
+
+Making use of the `$` selector (jQuery style):
+
+```js
+(async () => {
+  await page.$(".awesome-button");
+})();
+```
+
+Taking a screenshot:
+
+```js
+(async () => {
+  await page.screenshot({ path: "screenshot.png" });
+})();
+```
+
+There is a bunch more you can do with the puppeteer API, and I suggest you take a look in it before diving into writing tests, but the examples I've shown should give you a solid ground to build from. 
 
 -- brief explanation about how to write puppeteer tests, basic API examples
 
