@@ -1,6 +1,6 @@
 ---
 title: Using Github Actions for Continuous Integration with Puppeteer
-date: "2019-10-25"
+date: "2019-12/14"
 description: "Using puppeteer for e2e testing is really awesome. I'll show you how to integrate it with github actions."
 slug: /using-github-actions-for-ci-with-puppeteer
 ---
@@ -58,8 +58,11 @@ running code in the context of the page:
   const homeLink = await page.evaluate(() =>
     document.querySelector('[data-p="home-link"]').getAttribute("href")
   );
+  console.log(homeLink);
 })();
 ```
+
+You can basically execute any piece of code you wish, and return some result, as long as the result is serializable (meaning - you can't return `document.querySelector('[data-p="home-link"]')`, but you can return the `href` attribute value). 
 
 -- brief explanation about how to write puppeteer tests, basic API examples
 

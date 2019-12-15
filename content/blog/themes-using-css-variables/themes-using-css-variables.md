@@ -74,12 +74,13 @@ And now anyone who wants to read the values in our context can do it:
 
 ```jsx
 import React, { useContext } from "react";
+
 import { ThemeSelectorContext } from "./themer";
 
-export const () => {
+export default () => {
   const { themeName } = useContext(ThemeSelectorContext);
 
-  return <div>My theme is {themeName}</div>
+  return <div>My theme is {themeName}</div>;
 };
 ```
 
@@ -93,9 +94,11 @@ export default ({ children }) => {
     themeName === "dark" ? setThemeName("light") : setThemeName("dark");
   };
 
-  <ThemeSelectorContext.Provider value={{ themeName, toggleTheme }}>
-    {children}
-  </ThemeSelectorContext.Provider>;
+  return (
+    <ThemeSelectorContext.Provider value={{ themeName, toggleTheme }}>
+      {children}
+    </ThemeSelectorContext.Provider>
+  );
 };
 ```
 
@@ -103,15 +106,18 @@ And to use it:
 
 ```jsx
 import React, { useContext } from "react";
+
 import { ThemeSelectorContext } from "./themer";
 
-export const () => {
+export default () => {
   const { themeName, toggleTheme } = useContext(ThemeSelectorContext);
 
-  return <>
-    <div>My theme is {themeName}</div>
-    <button onClick={toggleTheme}>Change Theme!</button>
-  </>
+  return (
+    <>
+      <div>My theme is {themeName}</div>
+      <button onClick={toggleTheme}>Change Theme!</button>
+    </>
+  );
 };
 ```
 
@@ -224,7 +230,7 @@ import Toggle from "react-toggle";
 export default () => {
   const { toggleTheme, themeName } = useContext(ThemeSelectorContext);
 
-  <Toggle defaultChecked={themeName === "dark"} onClick={toggleTheme} />;
+  return <Toggle defaultChecked={themeName === "dark"} onClick={toggleTheme} />;
 };
 ```
 

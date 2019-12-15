@@ -14,7 +14,7 @@ module.exports = {
     "prettier/react",
     "plugin:import/errors"
   ],
-  plugins: ["import"],
+  plugins: ["import", "markdown"],
   parserOptions: {
     sourceType: "module"
   },
@@ -32,5 +32,18 @@ module.exports = {
     "import/resolver": {
       node: { extensions: [".js", ".jsx"] }
     }
-  }
+  },
+  overrides: [
+    {
+      files: ["**/*.md"],
+      rules: {
+        "no-undef": 0,
+        "react/jsx-no-undef": 0,
+        "no-unused-vars": 0,
+        "react/react-in-jsx-scope": 0,
+        "import/no-unresolved": 0,
+        "import/order": 0
+      }
+    }
+  ]
 };
