@@ -70,11 +70,16 @@ describe("Smoke test site", () => {
     );
     await page.waitForSelector('[data-p="post-title"]');
 
-    const title = await page.evaluate(() => document.title);
-    // Ensure the title is set properly
-    expect(title).toBe(
-      "Linting Your React+Typescript Project With ESlint and Prettier | Dor Shinar"
-    );
+    try {
+      const title = await page.evaluate(() => document.title);
+      // Ensure the title is set properly
+      expect(title).toBe(
+        "Linting Your React+Typescript Project With ESlint and Prettier | Dor Shinar"
+      );
+    } catch (e) {
+      page.screenshot({ path: "./navigates-to-post-page.png" });
+      throw e;
+    }
 
     // Ensure buy me a coffee link is shown
     expect(await page.$('[data-p="koFi"]')).not.toBeNull();
