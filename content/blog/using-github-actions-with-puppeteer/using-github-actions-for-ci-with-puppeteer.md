@@ -85,15 +85,49 @@ Taking a screenshot:
 })();
 ```
 
-There is a bunch more you can do with the puppeteer API, and I suggest you take a look in it before diving into writing tests, but the examples I've shown should give you a solid ground to build from. 
+There is a bunch more you can do with the puppeteer API, and I suggest you take a look in it before diving into writing tests, but the examples I've shown should give you a solid ground to build from.
 
 ### Integrating puppeteer with Jest
 
--- brief explanation about jest
+[jest](https://jestjs.io/) is an awesome test runner and assertion library. From their docs:
 
-#### Writing your first Jest tests
+> Jest is a delightful JavaScript Testing Framework with a focus on simplicity.
 
--- this will be a dummy test, to get to know the library
+Jest allows you to run tests, mock imports, and make complex assertion really easily. Jest is also bundled with create-react-app, so I use it often at work.
+
+#### Writing your first Jest test
+
+Jest tests are super easy to write, and might be familiar to those who know other testing frameworks, by utilizing `it`, `test`, `describe` and other familiar conventions.  
+A basic test could look like:
+
+```js
+function subtract(a, b) {
+  return a - b;
+}
+
+it("subtracts 4 from 6 and returns 2", () => {
+  expect(subtract(6, 4)).toBe(2);
+});
+```
+
+You can also group multiple tests under one `describe`, so you can run different describes, or for convenient reporting:
+
+```js
+function divide(a, b) {
+  return a / b;
+}
+
+describe("divide", () => {
+  it("throws when dividing by zero", () => {
+    expect(() => divide(6, 0)).toThrow();
+  });
+  it("returns 3 when dividing 6 by 3", () => {
+    expect(divide(6, 3)).toBe(2);
+  });
+});
+```
+
+You can, of course, create much more complicated tests using mocks and other type of assertions (or expectations), but for now that's enough.
 
 #### jest-puppeteer
 
