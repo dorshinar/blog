@@ -10,7 +10,7 @@ Lately I've added continuous integration to my blog using puppeteer for end to e
 
 I do want to give a shout-out to Nick Taylor, who published [his article on the subject](https://www.iamdeveloper.com/blog/2019-08-15-update-dependencies-with-dependabot-cypress-and-netlify/), and laid the ground work for my efforts here, so I encourage you to read his article as well.
 
-My tech stack is quite different though. I chose [puppeteer](https://pptr.dev/) as my end-to-end framework for several reasons. The first is that it is written and maintained by the folks behind the chrome dev tools, so I'm guaranteed a life-time support (until Chrome dies out, which is not in the near future), and it is really easy to work with. Another reason is that at home I'm working on a windows laptop with WSL 2 (on which I'm running oh-my-zsh), and setting up cypress is quite a bit more difficult (although in our world nothing is impossible). Both reasons led me to choose puppeteer, and so far I'm not regretting.
+My tech stack is quite different though. I chose [puppeteer](https://pptr.dev/) as my end-to-end framework for several reasons. The first is that it is written and maintained by the folks behind the chrome dev tools, so I'm guaranteed a life-time support (until Chrome dies out, which is not in the near future), and it is really easy to work with. Another reason is that at home I'm working on a windows laptop with WSL (on which I'm running zshell with oh-my-zsh), and setting up cypress is quite a bit more difficult (although in our world nothing is impossible). Both reasons led me to choose puppeteer, and so far I'm not regretting.
 
 ## End to end testing
 
@@ -114,6 +114,9 @@ You can also group multiple tests under one `describe`, so you can run different
 
 ```js
 function divide(a, b) {
+  if (b === 0) {
+    throw new Error("Can't divide by zero!");
+  }
   return a / b;
 }
 
@@ -129,9 +132,41 @@ describe("divide", () => {
 
 You can, of course, create much more complicated tests using mocks and other type of assertions (or expectations), but for now that's enough.
 
+Running the tests is also very simple:
+
+```bash
+jest
+```
+
+Jest will look for test files with any of the following popular naming conventions:
+
+- Files with `.js` suffix in `__tests__` folders.
+- Files with `.test.js` suffix.
+- Files with `.spec.js` suffix.
+
 #### jest-puppeteer
 
--- Explain how to configure jest-puppeteer for easy integration
+Now, we need to make puppeteer play nicely with jest. This isn't a particularly hard job to do, as there is a great package names [jest-puppeteer](https://github.com/smooth-code/jest-puppeteer) that can comes to our aid.  
+First, we must install it as a dependency:
+
+```bash
+npm i jest-puppeteer
+```
+
+And now we must extend out jest configuration. If you don't have one yet, there are a number of ways to do it, i'll go with a config file. Create a file named `jest.config.js` in the root of your project:
+
+```bash
+touch jest.config.js
+```
+
+In the file we must tell jest to use `jest-puppeteer`'s preset, so add the following code to the file:
+
+```js{2}
+module.exports = {
+  preset: "jest-puppeteer"
+  // The rest of your file...
+};
+```
 
 ## Github Actions in a gist
 

@@ -74,6 +74,15 @@ export const Post = styled.div`
     border-left: 0.4rem solid var(--blockquoteColor);
     padding: 1rem;
   }
+
+  & .gatsby-highlight-code-line {
+    display: block;
+    margin-right: -${rhythm(1)};
+    margin-left: -${rhythm(1)};
+    padding-right: ${rhythm(1)};
+    padding-left: ${rhythm(1)};
+    background-color: #ffffff38;
+  }
 `;
 
 export const NearByPosts = styled.ul`
