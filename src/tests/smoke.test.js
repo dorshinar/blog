@@ -1,6 +1,9 @@
+const fs = require("fs");
+
 describe("Smoke test site", () => {
   beforeAll(async () => {
     await page.setViewport({ width: 1920, height: 1080 });
+    fs.mkdirSync("screenshots");
   });
 
   beforeEach(async () => {
@@ -76,7 +79,7 @@ describe("Smoke test site", () => {
         "Linting Your React+Typescript Project With ESlint and Prettier | Dor Shinar"
       );
     } catch (e) {
-      page.screenshot({ path: "./navigates-to-post-page.png" });
+      await page.screenshot({ path: "screenshots/navigates.png" });
       throw e;
     }
 
