@@ -6,15 +6,21 @@ slug: /using-github-actions-for-ci-with-puppeteer
 ---
 
 Hello!
-Lately I've added continuous integration to my blog using puppeteer for end to end testing. My main goal was to allow automatic dependency update using [Dependabot](https://dependabot.com/). As my CI platform, I chose [Github Actions](https://github.com/features/actions), as it is super easy to work with, and it integrates beautifully with any Github repository you already have. The whole thing only took roughly two days of intermittent work, and I think the results are quite awesome.
+Lately I've added continuous integration to my blog using puppeteer for end to end testing. My main goal was to allow automatic dependency update using [Dependabot](https://dependabot.com/).
+
+As my CI platform, I chose [Github Actions](https://github.com/features/actions), as it is super easy to work with, and it integrates beautifully with any Github repository you already have. The whole thing only took roughly two days of intermittent work, and I think the results are quite awesome.
 
 I do want to give a shout-out to Nick Taylor, who published [his article on the subject](https://www.iamdeveloper.com/blog/2019-08-15-update-dependencies-with-dependabot-cypress-and-netlify/), and laid the ground work for my efforts here, so I encourage you to read his article as well.
 
-My tech stack is quite different though. I chose [puppeteer](https://pptr.dev/) as my end-to-end framework for several reasons. The first is that it is written and maintained by the folks behind the chrome dev tools, so I'm guaranteed a life-time support (until Chrome dies out, which is not in the near future), and it is really easy to work with. Another reason is that at home I'm working on a windows laptop with WSL (on which I'm running zshell with oh-my-zsh), and setting up cypress is quite a bit more difficult (although in our world nothing is impossible). Both reasons led me to choose puppeteer, and so far I'm not regretting.
+My tech stack is quite different though. I chose [puppeteer](https://pptr.dev/) as my end-to-end framework for several reasons. The first is that it is written and maintained by the folks behind the chrome dev tools, so I'm guaranteed a life-time support (until Chrome dies out, which is not in the near future), and it is really easy to work with.
+
+Another reason is that at home I'm working on a windows laptop with WSL (on which I'm running zshell with oh-my-zsh), and setting up cypress is quite a bit more difficult (although in our world nothing is impossible). Both reasons led me to choose puppeteer, and so far I'm not regretting.
 
 ## End to end testing
 
-End to end tests are different from other types of automated tests. E2E tests simulate a real user, performing actions on the screen. This kind of tests should help fill the blank space between "static" tests - such as unit tests, where you usually don't bootstrap the entire application, and component testing - which usually run against a single component (or a service in a micro-service architecture). By simulating user interaction, you get to tests the experience your user is receiving, while using your application or service.
+End to end tests are different from other types of automated tests. E2E tests simulate a real user, performing actions on the screen. This kind of tests should help fill the blank space between "static" tests - such as unit tests, where you usually don't bootstrap the entire application, and component testing - which usually run against a single component (or a service in a micro-service architecture).
+
+By simulating user interaction, you get to tests the experience your user is receiving, while using your application or service.
 
 The mantra that we try to follow is that it does not matter if your code performs perfect, if the button the user should press is hidden due to some css quirk. The end result is that the user will never get to feel the greatness of your code.
 
@@ -168,6 +174,63 @@ module.exports = {
 };
 ```
 
+You may specify special launch configuration in a `jest-puppeteer.config.js` file, and jest-puppeteer will pass this configuration to `puppeteer.launch()`. For example:
+
+```js
+module.exports = {
+  launch: {
+    headless: process.env.CI === "true",
+    ignoreDefaultArgs: ["--disable-extensions"],
+    args: ["--no-sandbox"],
+    executablePath: "chrome.exe"
+  }
+};
+```
+
+`jest-puppeteer` will take care of opening a new browser and a new page and store them on the global scope, so in your tests you can simply use the globally available `browser` and `page` objects.
+
+You can now write a full test suite using jest and puppeteer. The only thing left is creating a CI pipeline, for which we'll use github actions.
+
 ## Github Actions in a gist
 
-This is a brief introduction to Github Actions, and how to setup a basic CI pipeline.
+Lately Github released a big, new feature called Actions. Basically, actions allow you to create workflows using plain yaml syntax, and run them on dedicated virtual machines. In your workflow you can do pretty much anything you want, from basic `npm ci && npm build && npm run test` to more complicated stuff.
+
+I'll show you how to configure a basic workflow running your puppeteer test suite, and prevent merging if your tests don't pass.
+
+The easiest way to start is to click on the `Actions` tab in your github repo. If you haven't configured any action before, you'll see a list of previously configured workflows, from which you can choose one with some configuration.
+
+![Basic Github Action Configuration](github-actions-start.png)
+
+For our case, choosing the predefined Node.js action is good enough. The generated yaml looks like this:
+
+```yaml
+name: Node CI
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [8.x, 10.x, 12.x]
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: npm install, build, and test
+        run: |
+          npm ci
+          npm run build --if-present
+          npm test
+        env:
+          CI: true
+```
+
+In the file you can configure the workflow name, and jobs to run. Jobs in a workflow run in parallel by default, but can be configured to run in sequence. In the above workflow, there is one job named `build`.
+
+You can also choose the OS on which your workflow will run (by default you can use Windows Server 2019, Ubuntu 18.04, Ubuntu 16.04 and macOS Catalina 10.15 - at the time of publish) with the `runs-on` key.
