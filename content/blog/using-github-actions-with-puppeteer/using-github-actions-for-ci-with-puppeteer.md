@@ -234,3 +234,7 @@ jobs:
 In the file you can configure the workflow name, and jobs to run. Jobs in a workflow run in parallel by default, but can be configured to run in sequence. In the above workflow, there is one job named `build`.
 
 You can also choose the OS on which your workflow will run (by default you can use Windows Server 2019, Ubuntu 18.04, Ubuntu 16.04 and macOS Catalina 10.15 - at the time of publish) with the `runs-on` key.
+
+The `strategy` key can help us run out test on a matrix of node versions, in this case we have the latest versions the latest LTS majors - `8.x`, `10.x` and `12.x`. If you are interested in that you can leave it as is, or simply remove it and use any specific version you want.
+
+The most interesting configuration option is the `steps`. With it we defined what actually goes on in our pipeline. Each step represents an action you can perform, such as checking out code from the repo, setting up node version, installing dependencies, running tests, uploading artifacts (to be used later or downloaded) and many more. You can find a very extensive list of readily available actions in the [Actions Marketplace](https://github.com/marketplace?type=actions).
