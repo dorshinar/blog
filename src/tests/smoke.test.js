@@ -70,18 +70,13 @@ describe("Smoke test site", () => {
     await page.click(
       '[href="/linting-your-react+typescript-project-with-eslint-and-prettier"]'
     );
-    await page.waitForSelector('[data-p="post-title"]');
+    await page.waitFor(() => document.title.includes("Linting Your"));
 
-    try {
-      const title = await page.evaluate(() => document.title);
-      // Ensure the title is set properly
-      expect(title).toBe(
-        "Linting Your React+Typescript Project With ESlint and Prettier | Dor Shinar"
-      );
-    } catch (e) {
-      await page.screenshot({ path: "screenshots/navigates.png" });
-      throw e;
-    }
+    await page.screenshot({ path: "screenshots/navigates.png" });
+    // Ensure the title is set properly
+    expect(await page.title()).toBe(
+      "Linting Your React+Typescript Project With ESlint and Prettier | Dor Shinar"
+    );
 
     // Ensure buy me a coffee link is shown
     expect(await page.$('[data-p="koFi"]')).not.toBeNull();
