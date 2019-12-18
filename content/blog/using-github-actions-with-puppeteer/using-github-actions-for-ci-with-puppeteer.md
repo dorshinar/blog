@@ -191,6 +191,19 @@ module.exports = {
 
 You can now write a full test suite using jest and puppeteer. The only thing left is creating a CI pipeline, for which we'll use github actions.
 
+You can add a script to your `package.json` file to execute your tests:
+
+```json{6}
+{
+  // Normal package.json stuff
+  "scripts": {
+    "start": "...",
+    "build": "...",
+    "test:e2e": "jest"
+  }
+}
+```
+
 ## Github Actions in a gist
 
 Lately Github released a big, new feature called Actions. Basically, actions allow you to create workflows using plain yaml syntax, and run them on dedicated virtual machines. In your workflow you can do pretty much anything you want, from basic `npm ci && npm build && npm run test` to more complicated stuff.
@@ -231,10 +244,24 @@ jobs:
           CI: true
 ```
 
-In the file you can configure the workflow name, and jobs to run. Jobs in a workflow run in parallel by default, but can be configured to run in sequence. In the above workflow, there is one job named `build`.
+In the file you can configure the workflow name, jobs to run, and when to run the workflow. You can run your workflow on every push, on new pull requests or as a recurring event. Jobs in a workflow run in parallel by default, but can be configured to run in sequence. In the above workflow, there is one job named `build`.
 
 You can also choose the OS on which your workflow will run (by default you can use Windows Server 2019, Ubuntu 18.04, Ubuntu 16.04 and macOS Catalina 10.15 - at the time of publish) with the `runs-on` key.
 
 The `strategy` key can help us run out test on a matrix of node versions, in this case we have the latest versions the latest LTS majors - `8.x`, `10.x` and `12.x`. If you are interested in that you can leave it as is, or simply remove it and use any specific version you want.
 
 The most interesting configuration option is the `steps`. With it we defined what actually goes on in our pipeline. Each step represents an action you can perform, such as checking out code from the repo, setting up node version, installing dependencies, running tests, uploading artifacts (to be used later or downloaded) and many more. You can find a very extensive list of readily available actions in the [Actions Marketplace](https://github.com/marketplace?type=actions).
+
+The basic configuration will install dependencies, build our project and run our tests. If you need more (for example if you want to serve your application for e2e tests) you may alter it to your liking. Once done, commit your changes and you are good to go.
+
+### Forcing checks to pass before merge
+
+The only thing left for us is to make sure no code can be merged before our workflow passes successfully. For that, go to your repo's settings and click on Branches:
+
+![Github Settings > Branch](github-settings-branch.png)
+
+We need to set a **Branch protection rule** so that malicious code (or at least one that doesn't pass our tests) won't be merged. Click on **Add rule**, and under **Branch name pattern** put your protected branch (master, dev or which ever one you choose). Make sure **Require status checks to pass before merging** is checked, and you'll be able to choose which checks must pass:
+
+![Require status checks](github-actions-protections.png)
+
+Click on Save changes below, and you're good to go!
