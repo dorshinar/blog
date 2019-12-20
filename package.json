@@ -44,7 +44,7 @@
     "gatsby-transformer-sharp": "^2.3.9",
     "jest": "^24.9.0",
     "jest-extended": "^0.11.2",
-    "jest-puppeteer": "^4.3.0",
+    "jest-puppeteer": "^4.4.0",
     "prettier": "^1.19.1",
     "prismjs": "^1.17.1",
     "puppeteer": "^2.0.0",
