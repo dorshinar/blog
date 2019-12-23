@@ -20,17 +20,15 @@ Another reason is that at home I'm working on a windows laptop with WSL (on whic
 
 End to end tests are different from other types of automated tests. E2E tests simulate a real user, performing actions on the screen. This kind of tests should help fill the blank space between "static" tests - such as unit tests, where you usually don't bootstrap the entire application, and component testing - which usually run against a single component (or a service in a micro-service architecture).
 
-By simulating user interaction, you get to tests the experience your user is receiving, while using your application or service.
+By simulating user interaction, you get to test the experience your user is receiving, while using your application or service.
 
-The mantra that we try to follow is that it does not matter if your code performs perfect, if the button the user should press is hidden due to some css quirk. The end result is that the user will never get to feel the greatness of your code.
+The mantra that we try to follow is that it does not matter if your code performs perfectly, as long as the button the user should press is hidden due to some css quirk. The end result is that the user will never get to feel the greatness of your code.
 
 ## Getting started with puppeteer
 
 Puppeteer has a few configuration options that make it really awesome to write and validate tests.
 
-Puppeteer tests can run in a "head-full" state, i.e. run a real instance of chrome, navigate to the site being tested, and perform actions on the given page. This way you - the developers writing the tests can see exactly what happens in the test, what button are being pressed and what the resulting UI looks like.
-
-The opposite of "head-full" would be headless, where puppeteer does not open a chrome instance, making the tests significantly faster, and less CPU-intensive. That's a great feature as we don't really need the chrome UI open when we run our tests in CI.
+Puppeteer tests can run in a "head-full" state, i.e. run a real instance of chrome, navigate to the site being tested, and perform actions on the given page. This way you - the developers writing the tests can see exactly what happens in the test, what buttons are being pressed and what the resulting UI looks like. The opposite of "head-full" would be headless, where puppeteer does not open a chrome instance, making it ideal for CI pipelines.
 
 Puppeteer is quite easy to work with, but you'll be surprised with the amount of actions you can perform using an automated tool.
 
@@ -62,7 +60,7 @@ Running code in the context of the page:
 ```js
 (async () => {
   await page.evaluate(() =>
-    document.querySelector('[data-p="home-link"]').getAttribute("href")
+    document.querySelector(".awesome-button").click();
   );
 })();
 ```
@@ -116,7 +114,7 @@ it("subtracts 4 from 6 and returns 2", () => {
 });
 ```
 
-You can also group multiple tests under one `describe`, so you can run different describes, or for convenient reporting:
+You can also group multiple tests under one `describe`, so you can run different describes, or use it for convenient reporting:
 
 ```js
 function divide(a, b) {
@@ -189,16 +187,28 @@ module.exports = {
 
 `jest-puppeteer` will take care of opening a new browser and a new page and store them on the global scope, so in your tests you can simply use the globally available `browser` and `page` objects.
 
+Another great feature we can use is the ability of jest-puppeteer to run your server during your tests, and kill it afterwards, with the `server` key:
+
+```js
+module.exports = {
+  launch: {},
+  server: {
+    command: "npm run serve",
+    port: 9000,
+    launchTimeout: 180000
+  }
+};
+```
+
+Now jest-puppeteer will run `npm run serve`, with a timeout of 180 seconds (3 minutes), and listen on port 9000 to see when it will be up. Once the server starts the tests will run.
+
 You can now write a full test suite using jest and puppeteer. The only thing left is creating a CI pipeline, for which we'll use github actions.
 
 You can add a script to your `package.json` file to execute your tests:
 
-```json{6}
+```json{3}
 {
-  // Normal package.json stuff
   "scripts": {
-    "start": "...",
-    "build": "...",
     "test:e2e": "jest"
   }
 }
@@ -206,11 +216,11 @@ You can add a script to your `package.json` file to execute your tests:
 
 ## Github Actions in a gist
 
-Lately Github released a big, new feature called Actions. Basically, actions allow you to create workflows using plain yaml syntax, and run them on dedicated virtual machines. In your workflow you can do pretty much anything you want, from basic `npm ci && npm build && npm run test` to more complicated stuff.
+Lately Github released a big new feature called Actions. Basically, actions allow you to create workflows using plain yaml syntax, and run them on dedicated virtual machines. In your workflow you can do pretty much anything you want, from basic `npm ci && npm build && npm run test` to more complicated stuff.
 
 I'll show you how to configure a basic workflow running your puppeteer test suite, and prevent merging if your tests don't pass.
 
-The easiest way to start is to click on the `Actions` tab in your github repo. If you haven't configured any action before, you'll see a list of previously configured workflows, from which you can choose one with some configuration.
+The easiest way to start is to click on the `Actions` tab in your github repo. If you haven't configured any action before, you'll see a list of previously configured workflows, from which you can choose one with some predefined configuration.
 
 ![Basic Github Action Configuration](github-actions-start.png)
 
@@ -250,7 +260,7 @@ You can also choose the OS on which your workflow will run (by default you can u
 
 The `strategy` key can help us run out test on a matrix of node versions, in this case we have the latest versions the latest LTS majors - `8.x`, `10.x` and `12.x`. If you are interested in that you can leave it as is, or simply remove it and use any specific version you want.
 
-The most interesting configuration option is the `steps`. With it we defined what actually goes on in our pipeline. Each step represents an action you can perform, such as checking out code from the repo, setting up node version, installing dependencies, running tests, uploading artifacts (to be used later or downloaded) and many more. You can find a very extensive list of readily available actions in the [Actions Marketplace](https://github.com/marketplace?type=actions).
+The most interesting configuration option is the `steps`. With it we define what actually goes on in our pipeline. Each step represents an action you can perform, such as checking out code from the repo, setting up node version, installing dependencies, running tests, uploading artifacts (to be used later or downloaded) and many more. You can find a very extensive list of readily available actions in the [Actions Marketplace](https://github.com/marketplace?type=actions).
 
 The basic configuration will install dependencies, build our project and run our tests. If you need more (for example if you want to serve your application for e2e tests) you may alter it to your liking. Once done, commit your changes and you are good to go.
 
