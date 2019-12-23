@@ -1,5 +1,5 @@
 ---
-title: Using Github Actions for Continuous Integration with Puppeteer
+title: Continuous Integration with Github Actions and Puppeteer
 date: 2019-12-15
 description: Using puppeteer for e2e testing is really awesome. I'll show you how to integrate it with github actions.
 slug: /using-github-actions-for-ci-with-puppeteer
