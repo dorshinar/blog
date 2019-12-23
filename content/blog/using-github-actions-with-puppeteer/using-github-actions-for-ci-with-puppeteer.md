@@ -59,9 +59,7 @@ Running code in the context of the page:
 
 ```js
 (async () => {
-  await page.evaluate(() =>
-    document.querySelector(".awesome-button").click();
-  );
+  await page.evaluate(() => document.querySelector(".awesome-button").click());
 })();
 ```
 
