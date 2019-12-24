@@ -1,6 +1,9 @@
+const fs = require("fs");
+
 describe("Smoke test site", () => {
   beforeAll(async () => {
     await page.setViewport({ width: 1920, height: 1080 });
+    fs.mkdirSync("screenshots");
   });
 
   beforeEach(async () => {
@@ -10,9 +13,7 @@ describe("Smoke test site", () => {
 
   it("loads the main page", async () => {
     // Ensure the header is clickable
-    const header = await page.evaluate(() =>
-      document.querySelector('[data-p="home-link"]').getAttribute("href")
-    );
+    const header = await getAttribute('[data-p="home-link"]', "href");
     expect(header).toBe("/");
   });
 
@@ -32,35 +33,36 @@ describe("Smoke test site", () => {
     expect(title).toBe("All posts | Dor Shinar");
   });
 
-  async function validateHref(selector) {
+  async function getAttribute(selector, attribute) {
     return page.evaluate(
-      selector => document.querySelector(selector).getAttribute("href"),
-      selector
+      ([selector, attribute]) =>
+        document.querySelector(selector).getAttribute(attribute),
+      [selector, attribute]
     );
   }
 
   it("navigates to github", async () => {
-    const href = await validateHref('[data-p="github"]');
+    const href = await getAttribute('[data-p="github"]', "href");
     expect(href).toBe("https://github.com/dorshinar");
   });
 
   it("navigates to twitter", async () => {
-    const href = await validateHref('[data-p="twitter"]');
+    const href = await getAttribute('[data-p="twitter"]', "href");
     expect(href).toBe("https://twitter.com/DorShinar");
   });
 
   it("navigates to linkedin", async () => {
-    const href = await validateHref('[data-p="linkedin"]');
+    const href = await getAttribute('[data-p="linkedin"]', "href");
     expect(href).toBe("https://www.linkedin.com/in/dor-shinar-82b00b144");
   });
 
   it("navigates to dev", async () => {
-    const href = await validateHref('[data-p="dev"]');
+    const href = await getAttribute('[data-p="dev"]', "href");
     expect(href).toBe("https://dev.to/dorshinar");
   });
 
   it("navigates to stack overflow", async () => {
-    const href = await validateHref('[data-p="stack-overflow"]');
+    const href = await getAttribute('[data-p="stack-overflow"]', "href");
     expect(href).toBe("https://stackoverflow.com/users/3822311/dor-shinar");
   });
 
@@ -68,26 +70,19 @@ describe("Smoke test site", () => {
     await page.click(
       '[href="/linting-your-react+typescript-project-with-eslint-and-prettier"]'
     );
-    await page.waitForSelector('[data-p="post-title"]');
+    await page.waitFor(() => document.title.includes("Linting Your"));
 
-    try {
-      const title = await page.evaluate(() => document.title);
-      // Ensure the title is set properly
-      expect(title).toBe(
-        "Linting Your React+Typescript Project With ESlint and Prettier | Dor Shinar"
-      );
-    } catch (e) {
-      page.screenshot({ path: "./navigates-to-post-page.png" });
-      throw e;
-    }
+    await page.screenshot({ path: "screenshots/navigates.png" });
+    // Ensure the title is set properly
+    expect(await page.title()).toBe(
+      "Linting Your React+Typescript Project With ESlint and Prettier | Dor Shinar"
+    );
 
     // Ensure buy me a coffee link is shown
     expect(await page.$('[data-p="koFi"]')).not.toBeNull();
 
     // Ensure next link shows
-    const next = await page.evaluate(() =>
-      document.querySelector('[rel~="next"]').getAttribute("href")
-    );
+    const next = await getAttribute('[rel~="next"]', "href");
     expect(next).toBe("/i-am-a-great-developer");
 
     // Ensure contact links are available
@@ -135,11 +130,10 @@ describe("Smoke test site", () => {
   });
 
   it("has google site verification code", async () => {
-    const content = await page.evaluate(() => {
-      return document
-        .querySelector('meta[name="google-site-verification"]')
-        .getAttribute("content");
-    });
+    const content = await getAttribute(
+      'meta[name="google-site-verification"]',
+      "content"
+    );
 
     expect(content).toBe("Y0r9c_KfP6Wl0eYoavd1q6mHA60nmGZKbRuQ3e43Cb8");
   });
