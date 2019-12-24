@@ -2,10 +2,9 @@
 title: Continuous Integration with Github Actions and Puppeteer
 date: 2019-12-15
 description: Using puppeteer for e2e testing is really awesome. I'll show you how to integrate it with github actions.
-slug: /using-github-actions-for-ci-with-puppeteer
+slug: /continuous-integration-with-github-actions-and-puppeteer
 ---
 
-Hello!
 Lately I've added continuous integration to my blog using puppeteer for end to end testing. My main goal was to allow automatic dependency update using [Dependabot](https://dependabot.com/).
 
 As my CI platform, I chose [Github Actions](https://github.com/features/actions), as it is super easy to work with, and it integrates beautifully with any Github repository you already have. The whole thing only took roughly two days of intermittent work, and I think the results are quite awesome.
@@ -18,9 +17,9 @@ Another reason is that at home I'm working on a windows laptop with WSL (on whic
 
 ## End to end testing
 
-End to end tests are different from other types of automated tests. E2E tests simulate a real user, performing actions on the screen. This kind of tests should help fill the blank space between "static" tests - such as unit tests, where you usually don't bootstrap the entire application, and component testing - which usually run against a single component (or a service in a micro-service architecture).
+End to end (or E2E) tests are different from other types of automated tests. E2E tests simulate a real user, performing actions on the screen. This kind of tests should help fill the blank space between "static" tests - such as unit tests, where you usually don't bootstrap the entire application, and component testing - which usually run against a single component (or a service in a micro-service architecture).
 
-By simulating user interaction, you get to test the experience your user is receiving, while using your application or service.
+By simulating user interaction you get to test the experience of using your application or service in the same way a regular user would experience it.
 
 The mantra that we try to follow is that it does not matter if your code performs perfectly, as long as the button the user should press is hidden due to some css quirk. The end result is that the user will never get to feel the greatness of your code.
 
@@ -28,7 +27,7 @@ The mantra that we try to follow is that it does not matter if your code perform
 
 Puppeteer has a few configuration options that make it really awesome to write and validate tests.
 
-Puppeteer tests can run in a "head-full" state, i.e. run a real instance of chrome, navigate to the site being tested, and perform actions on the given page. This way you - the developers writing the tests can see exactly what happens in the test, what buttons are being pressed and what the resulting UI looks like. The opposite of "head-full" would be headless, where puppeteer does not open a chrome instance, making it ideal for CI pipelines.
+Puppeteer tests can run in a "head-full" state, i.e. open a real browser window, navigate to the site being tested, and perform actions on the given page. This way you - the developers writing the tests - can see exactly what happens in the test, what buttons are being pressed and what the resulting UI looks like. The opposite of "head-full" would be headless, where puppeteer does not open a browser window, making it ideal for CI pipelines.
 
 Puppeteer is quite easy to work with, but you'll be surprised with the amount of actions you can perform using an automated tool.
 
@@ -148,7 +147,7 @@ Jest will look for test files with any of the following popular naming conventio
 
 #### jest-puppeteer
 
-Now, we need to make puppeteer play nicely with jest. This isn't a particularly hard job to do, as there is a great package names [jest-puppeteer](https://github.com/smooth-code/jest-puppeteer) that can comes to our aid.  
+Now, we need to make puppeteer play nicely with jest. This isn't a particularly hard job to do, as there is a great package named [jest-puppeteer](https://github.com/smooth-code/jest-puppeteer) that can comes to our aid.  
 First, we must install it as a dependency:
 
 ```bash
@@ -256,7 +255,7 @@ In the file you can configure the workflow name, jobs to run, and when to run th
 
 You can also choose the OS on which your workflow will run (by default you can use Windows Server 2019, Ubuntu 18.04, Ubuntu 16.04 and macOS Catalina 10.15 - at the time of publish) with the `runs-on` key.
 
-The `strategy` key can help us run out test on a matrix of node versions, in this case we have the latest versions the latest LTS majors - `8.x`, `10.x` and `12.x`. If you are interested in that you can leave it as is, or simply remove it and use any specific version you want.
+The `strategy` key can help us run our tests on a matrix of node versions, in this case we have the latest versions of the latest LTS majors - `8.x`, `10.x` and `12.x`. If you are interested in that you can leave it as is, or simply remove it and use any specific version you want.
 
 The most interesting configuration option is the `steps`. With it we define what actually goes on in our pipeline. Each step represents an action you can perform, such as checking out code from the repo, setting up node version, installing dependencies, running tests, uploading artifacts (to be used later or downloaded) and many more. You can find a very extensive list of readily available actions in the [Actions Marketplace](https://github.com/marketplace?type=actions).
 
