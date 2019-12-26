@@ -59,7 +59,7 @@
     "typography": "^0.16.19"
   },
   "devDependencies": {
-    "@types/jest": "^24.0.23",
+    "@types/jest": "^24.0.25",
     "@types/puppeteer": "^2.0.0",
     "typescript": "^3.7.4"
   },
