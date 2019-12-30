@@ -103,6 +103,15 @@ module.exports = {
         }
       }
     },
-    `gatsby-plugin-sitemap`
+    `gatsby-plugin-sitemap`,
+    {
+      resolve: "gatsby-plugin-web-font-loader",
+      options: {
+        custom: {
+          families: ["Montserrat"],
+          urls: ["/fonts/fonts.css"]
+        }
+      }
+    }
   ]
 };
