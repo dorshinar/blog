@@ -8,7 +8,7 @@ describe("Smoke test site", () => {
 
   beforeEach(async () => {
     await page.goto(`http://localhost:${process.env.CI ? 9 : 8}000/`);
-    await page.waitForSelector('[data-p="home-link"]');
+    await page.waitFor(() => document.title.includes("All posts | Dor Shinar"));
   });
 
   it("loads the main page", async () => {
