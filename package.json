@@ -14,7 +14,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.11.2",
     "@fortawesome/react-fontawesome": "^0.1.8",
     "babel-plugin-styled-components": "^1.10.7",
-    "eslint-config-prettier": "^6.9.0",
+    "eslint-config-prettier": "^6.10.0",
     "eslint-config-react": "^1.1.7",
     "eslint-config-react-app": "^5.1.0",
     "eslint-plugin-import": "^2.18.2",
@@ -55,7 +55,7 @@
     "react-toggle": "^4.1.1",
     "react-typography": "^0.16.19",
     "reading-time": "^1.2.0",
-    "styled-components": "5.0.0-rc.2",
+    "styled-components": "^5.0.0",
     "typography": "^0.16.19"
   },
   "devDependencies": {
