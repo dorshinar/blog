@@ -43,7 +43,7 @@
     "gatsby-source-filesystem": "^2.1.46",
     "gatsby-transformer-remark": "^2.6.48",
     "gatsby-transformer-sharp": "^2.3.13",
-    "jest": "^24.9.0",
+    "jest": "^25.1.0",
     "jest-extended": "^0.11.2",
     "jest-puppeteer": "^4.4.0",
     "prettier": "^1.19.1",
