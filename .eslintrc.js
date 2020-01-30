@@ -44,6 +44,14 @@ module.exports = {
         "import/no-unresolved": 0,
         "import/order": 0
       }
+    },
+    {
+      files: ["content/**/*.html"],
+      rules: {
+        "no-unused-expressions": 0,
+        "react/react-in-jsx-scope": 0,
+        "react/self-closing-comp": 0
+      }
     }
   ]
 };
