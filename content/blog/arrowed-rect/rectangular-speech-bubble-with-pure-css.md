@@ -53,9 +53,7 @@ At first, I tried creating the triangle using thick borders on a div:
 </div>
 ```
 
-I've truncated parts of the CSS that aren't relevant, but you can check the full source here.
-
-<!-- TODO -->
+I've truncated parts of the CSS that aren't relevant, and I'll link the full source below.
 
 This gave me an initial result that got me somewhat closer to what I tried to achieve:
 
@@ -170,3 +168,5 @@ Both the arrow and the border are positioned absolutely so they can overlap, wit
 The border is clipped in a similar manner to the arrow, except we start clipping in `text>1% 0%` rather than `text>0% 0%`, and end in `text>1% 100%` rather than `text>0% 100%` so our border won't be clipped completely at the edges.
 
 The rest is just fine tuning the position so it looks as pixel perfect as possible, resulting in a nice, bordered arrow attached to our rectangle.
+
+You can find the full source [right here](https://github.com/dorshinar/blog/tree/master/content/blog/arrowed-rect/final-result)
