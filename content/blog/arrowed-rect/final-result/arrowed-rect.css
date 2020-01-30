@@ -9,7 +9,6 @@
   height: var(--arrowHeight);
   background-color: white;
   clip-path: polygon(0% 0%, 100% 50%, 0% 100%);
-  align-self: center;
   left: -2px;
   top: 0.25px;
   margin-top: auto;
@@ -18,7 +17,6 @@
 }
 
 .arrow-border {
-  content: "";
   left: -1px;
   position: absolute;
   width: calc(var(--arrowWidth) + 0.5px);

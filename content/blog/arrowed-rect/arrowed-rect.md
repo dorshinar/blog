@@ -5,7 +5,7 @@ description: "Arrowed rectangle"
 slug: "/arrowed-rect"
 ---
 
-Lately I've had a task to create something similar to a speaking bubble, that looks like that:
+Lately I've had a task to create something similar to a speech bubble, that looks like that:
 
 ![Arrowed Rectangle](final-result/arrowed-rect.png)
 
@@ -102,3 +102,71 @@ The short answer is that I've succeeded in making a triangle, however surroundin
 ![Rectangle with black arrow and partial green border](2nd/arrowed-rect.png)
 
 What happens here is that the borders do not considerate clipped paths in elements, and so which ever part that is not clipped out shows the border, hence the funky borders on the left edge and middle right.
+
+## My Third Attempt
+
+In my third and last attempt I've decided to go all-in and spare no expense. Leave no css property unturned. It started with a general idea to make an underlying arrow acting as the border - essentially surrounding the arrow itself.
+
+Here's the code:
+
+```html
+<div class="container">
+  <div class="content">
+    <ol>
+      <li>first thing</li>
+      <li>second thing</li>
+      <li>third thing</li>
+    </ol>
+  </div>
+  <div class="arrow-container">
+    <span class="arrow-body"></span>
+    <span class="arrow-border"></span>
+  </div>
+</div>
+```
+
+```css
+:root {
+  --arrowHeight: 3vh;
+  --arrowWidth: 1.5vw;
+}
+
+.arrow-body {
+  position: absolute;
+  width: var(--arrowWidth);
+  height: var(--arrowHeight);
+  clip-path: polygon(0% 0%, 100% 50%, 0% 100%);
+  background-color: white;
+  top: 0.25px;
+  left: -2px;
+  margin-top: auto;
+  margin-bottom: auto;
+  z-index: 1;
+}
+
+.arrow-border {
+  position: absolute;
+  width: calc(var(--arrowWidth) + 0.5px);
+  height: calc(var(--arrowHeight) + 0.5px);
+  clip-path: polygon(1% 0%, 100% 50%, 1% 100%);
+  background-color: black;
+  left: -1px;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.arrow-container {
+  position: relative;
+  height: calc(var(--arrowHeight) + 0.5px);
+}
+```
+
+Let me explain what goes on here as there are multiple aspects in play here. First, we need 2 `text>div`s - one for the border and one for the arrow.
+
+The border must be slightly taller and wider, as it must stick out from the top, bottom and right just a bit, hence the `css>height: calc(var(--arrowHeight) + 0.5px);` and `css>width: calc(var(--arrowWidth) + 0.5px);`.
+
+Both the arrow and the border are positioned absolutely so they can overlap, with the arrow having `css>z-index: 1` so it stays on top.
+
+The border is clipped in a similar manner to the arrow, except we start clipping in `text>1% 0%` rather than `text>0% 0%`, and end in `text>1% 100%` rather than `text>0% 100%` so our border won't be clipped completely at the edges.
+
+The rest is just fine tuning the position so it looks as pixel perfect as possible, resulting in a nice, bordered arrow attached to our rectangle.
