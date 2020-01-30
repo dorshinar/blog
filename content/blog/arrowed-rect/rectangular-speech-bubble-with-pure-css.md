@@ -1,15 +1,15 @@
 ---
-title: "Arrowed Rectangle using CSS and HTML"
+title: "Rectangular Speech Bubble with Pure CSS and HTML"
 date: "2020-01-20"
-description: "Arrowed rectangle"
-slug: "/arrowed-rect"
+description: "Creating a rectangular speech bubble turned out more complicated that I thought. Who knew?"
+slug: "/speech-bubble-with-css-and-html"
 ---
 
-Lately I've had a task to create something similar to a speech bubble, that looks like that:
+Lately I've been tasked with creating something similar to a speech bubble, that looks like that:
 
 ![Arrowed Rectangle](final-result/arrowed-rect.png)
 
-As you can see, it's a rectangle with an arrow sticking out on one side, and a border around it all. I'll walk you through some of the things I've tried to do to achieve the desired effect, and what method I've settled on eventually.
+As you can see, it's a rectangle with an arrow sticking out on one side, and a border around it all. I'll walk you through some of the things I've tried to do to achieve the desired effect, and how I've decided to do it eventually.
 
 First things first, we must create our rectangular div:
 
@@ -101,7 +101,7 @@ The short answer is that I've succeeded in making a triangle, however surroundin
 
 ![Rectangle with black arrow and partial green border](2nd/arrowed-rect.png)
 
-What happens here is that the borders do not considerate clipped paths in elements, and so which ever part that is not clipped out shows the border, hence the funky borders on the left edge and middle right.
+What happens here is that the clipping happens after the border is "painted", so it is clipped away with the rest of the div, hence we get our funky border.
 
 ## My Third Attempt
 
@@ -161,7 +161,7 @@ Here's the code:
 }
 ```
 
-Let me explain what goes on here as there are multiple aspects in play here. First, we need 2 `text>div`s - one for the border and one for the arrow.
+Let me explain what goes on here as there are multiple aspects in play. First, we need 2 `text>div`s - one for the border and one for the arrow.
 
 The border must be slightly taller and wider, as it must stick out from the top, bottom and right just a bit, hence the `css>height: calc(var(--arrowHeight) + 0.5px);` and `css>width: calc(var(--arrowWidth) + 0.5px);`.
 
