@@ -1,0 +1,57 @@
+:root {
+  --arrowHeight: 3vh;
+  --arrowWidth: 1.5vw;
+}
+
+.arrow-body {
+  position: absolute;
+  width: var(--arrowWidth);
+  height: var(--arrowHeight);
+  background-color: white;
+  clip-path: polygon(0% 0%, 100% 50%, 0% 100%);
+  left: -2px;
+  top: 0.25px;
+  margin-top: auto;
+  margin-bottom: auto;
+  z-index: 1;
+}
+
+.arrow-border {
+  left: -1px;
+  position: absolute;
+  width: calc(var(--arrowWidth) + 0.5px);
+  height: calc(var(--arrowHeight) + 0.5px);
+  background-color: black;
+  clip-path: polygon(1% 0%, 100% 50%, 1% 100%);
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.arrow-container {
+  position: relative;
+  height: calc(var(--arrowHeight) + 0.5px);
+}
+
+.content {
+  background-color: white;
+  border: 1px solid black;
+  padding: 1em;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 1em;
+}
+
+ol {
+  padding-left: 1em;
+  margin: 0;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+}

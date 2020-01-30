@@ -51,7 +51,8 @@ module.exports = {
                 user: "root",
                 host: "localhost",
                 global: true
-              }
+              },
+              inlineCodeMarker: ">"
             }
           },
           `gatsby-remark-copy-linked-files`,
