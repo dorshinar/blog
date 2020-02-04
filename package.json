@@ -55,7 +55,7 @@
     "react-toggle": "^4.1.1",
     "react-typography": "^0.16.19",
     "reading-time": "^1.2.0",
-    "styled-components": "^5.0.0",
+    "styled-components": "^5.0.1",
     "typography": "^0.16.19"
   },
   "devDependencies": {
