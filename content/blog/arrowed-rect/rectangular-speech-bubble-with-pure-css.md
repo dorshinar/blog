@@ -1,6 +1,6 @@
 ---
 title: "Rectangular Speech Bubble with Pure CSS and HTML"
-date: "2020-01-20"
+date: "2020-01-30"
 description: "Creating a rectangular speech bubble turned out more complicated that I thought. Who knew?"
 slug: "/speech-bubble-with-css-and-html"
 ---
