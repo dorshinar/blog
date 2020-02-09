@@ -5,11 +5,16 @@ description: "The Chrome dev tools are super powerful, and most people don't use
 slug: "/awesome-chrome-dev-tools-tips"
 ---
 
-## Introduction
-
 The Chrome Developer Tools are a super powerful suite of tools for developing web application. They can do so much, from very basic operations like traversing the DOM, to checking out network requests or even profiling your application performance.
 
 Among the big, everyday features they expose, there are quite a lot of gems to be found if you look deep enough. Features that might save you a click or two, and isn't that what we're all about here?
+
+- [jQuery style DOM queries in the console](#jquery-style-dom-queries-in-the-console)
+- [Copying an element's properties](#copying-an-elements-properties)
+- [Filtering network requests](#filtering-network-requests)
+- [Emulating different network speeds](#emulating-different-network-speeds)
+- [Using Live Expressions in console](#using-live-expressions-in-console)
+- [Emulating different devices](#emulating-different-devices)
 
 ## jQuery style DOM queries in the console
 
@@ -78,3 +83,17 @@ What are `Live Expressions`?
 With `Live Expressions`, you can focus on your code, and let chrome do the monitoring:
 
 ![Storing a variable in a live expression](live-expression.gif)
+
+## Emulating different devices
+
+Those of us working on responsive applications must know the feeling where you work really hard to make a beautiful layout, only to see it misbehave on devices with different resolutions. I'm not here to tell you about media queries, but a convenient way to test that they work.
+
+![A button to toggle device view](dev-tools-topbar.png)
+
+When you click on the button that looks like a tablet and a phone, you'll see that your browser viewport changes to reflect a different device dimensions.
+
+You can choose a device from a list of presets containing various popular devices, such as iPhone X, iPad Pro, Pixel 2, Pixel 2 XL and more.
+
+If you can't find a device that fits your needs, you can set a custom resolution. As you can see, I've set a custom resolution to emulate a OnePlus 6 (which is my daily driver).
+
+![OnePlus 6 simulated device](oneplus-6.png)
