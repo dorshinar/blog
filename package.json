@@ -20,7 +20,7 @@
     "eslint-plugin-import": "^2.20.1",
     "eslint-plugin-markdown": "^1.0.1",
     "eslint-plugin-prettier": "^3.1.1",
-    "eslint-plugin-react-app": "^6.1.0",
+    "eslint-plugin-react-app": "^6.2.0",
     "eslint-plugin-react-hooks": "^2.3.0",
     "gatsby": "^2.19.12",
     "gatsby-image": "^2.2.37",
