@@ -93,6 +93,14 @@ export const Post = styled.div`
     padding-left: ${rhythm(1)};
     background-color: #ffffff38;
   }
+
+  & li {
+    margin-bottom: 0;
+  }
+
+  & .header path {
+    fill: var(--primary);
+  }
 `;
 
 export const NearByPosts = styled.ul`
