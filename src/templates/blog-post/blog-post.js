@@ -29,6 +29,7 @@ class BlogPostTemplate extends React.Component {
           title={post.frontmatter.title}
           description={post.frontmatter.description || post.excerpt}
           slug={post.fields.slug}
+          thumbnail={post.frontmatter.thumbnail}
         />
         <Wrapper>
           <Header data-p="post-title">{post.frontmatter.title}</Header>
@@ -79,6 +80,13 @@ export const pageQuery = graphql`
         title
         date(formatString: "MMMM DD, YYYY")
         description
+        thumbnail: cover_image {
+          childImageSharp {
+            sizes(maxWidth: 600) {
+              ...GatsbyImageSharpSizes
+            }
+          }
+        }
       }
       fields {
         slug

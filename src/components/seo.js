@@ -10,7 +10,7 @@ import PropTypes from "prop-types";
 import Helmet from "react-helmet";
 import { useStaticQuery, graphql } from "gatsby";
 
-function SEO({ description, lang, meta, title, slug }) {
+function SEO({ description, lang, meta, title, slug, thumbnail }) {
   const { site } = useStaticQuery(
     graphql`
       query {
@@ -28,6 +28,11 @@ function SEO({ description, lang, meta, title, slug }) {
 
   const metaDescription = description || site.siteMetadata.description;
   const url = `${site.siteMetadata.siteUrl}${slug}/`;
+  const imageSrc = thumbnail && thumbnail.childImageSharp.sizes.src;
+  let origin = "";
+  if (typeof window !== "undefined") {
+    origin = window.location.origin;
+  }
 
   return (
     <Helmet
@@ -52,6 +57,9 @@ function SEO({ description, lang, meta, title, slug }) {
       <meta name="twitter:creator" content={site.siteMetadata.author} />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
+      {thumbnail && (
+        <meta name="twitter:image" content={`${origin}${imageSrc}`} />
+      )}
 
       {/* Google Search Tags */}
       <meta
@@ -81,7 +89,8 @@ SEO.propTypes = {
   lang: PropTypes.string,
   meta: PropTypes.arrayOf(PropTypes.object),
   title: PropTypes.string.isRequired,
-  slug: PropTypes.string
+  slug: PropTypes.string,
+  thumbnail: PropTypes.object
 };
 
 export default SEO;

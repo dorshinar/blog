@@ -3,6 +3,7 @@ title: "Awesome Chrome Dev Tools Tips and Tricks!"
 date: "2020-02-15"
 description: "The Chrome dev tools are super powerful, and most people don't use them to their full extent. I'll try to help with that."
 slug: "/awesome-chrome-dev-tools-tips"
+cover_image: "./cover_image.png"
 ---
 
 The Chrome Developer Tools are a super powerful suite of tools for developing web application. They can do so much, from very basic operations like traversing the DOM, to checking out network requests or even profiling your application performance.
