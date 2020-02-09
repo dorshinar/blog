@@ -20,6 +20,9 @@ function SEO({ description, lang, meta, title, slug, thumbnail }) {
             description
             siteUrl
             author
+            social {
+              twitter
+            }
           }
         }
       }
@@ -51,9 +54,16 @@ function SEO({ description, lang, meta, title, slug, thumbnail }) {
       <meta property="og:description" content={metaDescription} />
       <meta property="og:url" content={url} />
       <meta property="og:type" content={"website"} />
+      {thumbnail && (
+        <meta property="og:image" content={`${origin}${imageSrc}`} />
+      )}
 
       {/* Twitter Card Tags */}
       <meta name="twitter:card" content={"summary"} />
+      <meta
+        name="twitter:site"
+        content={`@${site.siteMetadata.social.twitter}`}
+      />
       <meta name="twitter:creator" content={site.siteMetadata.author} />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
