@@ -1,6 +1,6 @@
 ---
 title: "Awesome Chrome Dev Tools Tips and Tricks"
-date: "2020-02-15"
+date: "2020-02-10"
 description: "The Chrome dev tools are super powerful, and most people don't use them to their full extent. I'll try to help with that."
 slug: "/awesome-chrome-dev-tools-tips"
 cover_image: "./cover_image.png"
