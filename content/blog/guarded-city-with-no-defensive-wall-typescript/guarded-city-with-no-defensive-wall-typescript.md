@@ -1,0 +1,211 @@
+---
+title: "A Guarded City with no Defensive Wall - My 2¢ on TypeScript"
+date: "2020-03-01"
+description: "TypeScript is a police protecting a city that has no walls - if you let anyone in you'll have a really bad time. But It's definitely not useless."
+slug: "/guarded-city-with-no-defensive-wall-typescript"
+---
+
+TypeScript is huge right now. It's exploding in popularity - as of today, it has almost 10M weekly downloads from [NPM](https://www.npmjs.com/package/typescript), their repo has nearly 60K stars and it feels like everybody jumps on the bandwagon when it comes to static type checking.
+
+I'll start this article by saying I'm a huge fan of typescript, and type-checking in general. The first language I've learned was C#, but in my first professional role I've worked exclusively with Python 2.7, and I missed the auto-completion and the confidence I had writing C#.
+
+After about three years writing python I've transitioned from mostly backend to full-stack, where I quickly found solace in typescript.
+
+I've seen quite a few articles where TypeScript was talked about as "bringing C#-like features to JavaScript", or something else in that sense. And the fact that Microsoft is the company behind both languages sure helped make that case.
+
+I feel like comparing TypeScript and C# does both languages wrong, and I've wanted to consolidate my 2¢ on the debate.
+
+## TypeScript is not Object-Oriented
+
+C# is an object oriented language - everything is an object, a class instance etc. TypeScript is not. At least not by definition.
+
+You can write OO code in typescript, in much the same way you can write JavaScript in an OO way:
+
+```typescript
+export default class API {
+  private url: string;
+
+  constructor(url: string) {
+    this.url = url;
+  }
+
+  send(): Promise<{ status: number }> {
+    return fetch(this.url).then(res => res.json());
+  }
+}
+```
+
+And in JavaScript:
+
+```typescript
+export default class API {
+  constructor(url) {
+    this.url = url;
+  }
+
+  send() {
+    return fetch(this.url).then(res => res.json());
+  }
+}
+```
+
+Or you can write TypeScript in a functional way:
+
+```typescript
+export function send(url: string): Promise<{ status: number }> {
+  return fetch(this.url).then(res => res.json());
+}
+```
+
+And in JavaScript:
+
+```javascript
+export function send(url) {
+  return fetch(this.url).then(res => res.json());
+}
+```
+
+So, no one is forcing you to write in one paradigm or another, what's more is that today almost all general purpose languages have picked up characteristics from both ends of the spectrum, so I believe the difference is not a stark today as it used to be.
+
+## TypeScript is not `C#`
+
+TypeScript has a fundamentally different type system from `C#`. One can say it takes a much more modern approach, or simply has a more sophisticated type system.
+
+Things like unions, intersections, string/numeric literals, mapped types and so on are not possible (to my knowledge) in a more traditional object-oriented language such as C#.
+
+```typescript
+type Success = 200 | 201 | 202; // numeric literal
+type Error = "General Error" | "System Error"; // string literal
+type Result = Success | Error; // union - Result = 200 | 201 | 202 | "General Error" | "System Error"
+
+type A = { a: number };
+type B = { b: string };
+
+type C = A & B; // intersection - type C = { a: number, b: string }
+
+type ReadonlyC = { readonly [P in keyof C]: C[P] }; // mapped type
+```
+
+None of the examples above is possible is C#, and there are more examples like this. All of these features bring TypeScript much closer to JavaScript in terms of flexibility.
+
+Or, if you choose - you can simply go with the `any` type - that behaves just like regular JavaScript variable - it be assigned to any variable, and any property/method is assumed to exist by the typescript complier (I should note the [unknown](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-0.html#new-unknown-top-type) type, which is better for such use cases).
+
+## A Guarded City with no Defensive Wall
+
+So if TypeScript is so perfect, why did I choose to title this article the way I did, implying that TypeScript is not really as secure as it seems?
+
+Well, the answer might be obvious to those who've written typescript before, but for those who haven't I have a way to demonstrate it.
+
+In the old days, when you wanted to protect your city you would build a tall and sturdy defensive wall. You would set guards all along the the walls, on the lookout to find anyone who seeks to harm the city.
+
+![A fort](fort.jpg)
+Photo by [Richard Clark](https://unsplash.com/@clarky_523) on [Unsplash](https://unsplash.com/)
+
+Inside the wall, your police will make sure to keep the city safe from it's own citizens, making sure everyone is safe, and everyone obeys by the rules. However, the police is not an army, and will have little to help should a nearing city will declare war against you.
+
+Back to our topic, typescript is much like the police inside the walls. Given that anyone who've entered the city is cleared, the police will keep it things in check, making things expected and comfortable. As long as you deal with code bits you fully own, and are not relied on external sources or outside packages, you're good to go.
+
+Take for example the following code:
+
+```typescript
+function add(a: number, b: number): number {
+  return a + b;
+}
+
+function sumOrThrowIfLowerThan(arr: number[], threshold: number) {
+  const sum = arr.reduce(add, 0);
+
+  if (sum < 10) {
+    throw new Error("Sum can't be lower than 10");
+  }
+
+  return sum;
+}
+
+const arr = [1, 2, 3, 4];
+
+console.log(sumOrThrowIfLowerThan(arr)); // output guaranteed to be a number
+```
+
+Even though we perform no run-time validation, we can be very certain that out functions will not misbehave. Since we have compile time values here only, we can ensure that our array will contain only numbers, and their sum will behave like we expect (unlike adding a number to a string: `javascript>1 + "1" === "11"`).
+
+However, the real problem arises when out input comes from sources we can't control, most notably fetch requests or a dependency.
+
+If we modify the code just a little bit:
+
+```typescript
+function add(a: number, b: number): number {
+  return a + b;
+}
+
+function sumOrThrowIfLowerThan(arr: number[], threshold: number) {
+  const sum = arr.reduce(add, 0);
+
+  if (sum < 10) {
+    throw new Error("Sum can't be lower than 10");
+  }
+
+  return sum;
+}
+
+(async function() {
+  const arr: number[] = await fetch("https://example.com/").then(res =>
+    res.json()
+  );
+
+  console.log(sumOrThrowIfLowerThan(arr)); // Can we guarantee the output type??
+})();
+```
+
+What happens here is instead of using fixed, compile time values, we're retrieving our array from an external URL, and we assume the result will be an array of numbers.
+
+This is a very dangerous assumption to make - we **can't** guarantee that the result will in fact contain only numbers, or that it will even be an array at all!
+
+What if all of a sudden our external URL will decide to return a string? Or a single number? We might have runtime errors such as:
+
+![Runtime error trying to access a non-existing function](runtime-error.png)
+
+Many people stop, declare typescript is not worth their time, or that it generated a false sense of confidence, and therefor should not be used, is favor of vanilla javascript, and that leads me to the final section.
+
+## Fortifying Your City
+
+So we now know that typescript has very serious loop holes. Or maybe they are not loop holes at all - typescript was never designed for runtime safety. However, there are other great tools that can help us validate returned values.
+
+I won't go into much detail, but the most noticeable examples are probably [joi](https://github.com/hapijs/joi), [yup](https://github.com/jquense/yup) and [class-validator](https://github.com/typestack/class-validator). There are others for sure, but choosing any of these will be probably good enough for most use cases.
+
+Here's the previous example, but with runtime validation:
+
+```typescript
+function add(a: number, b: number): number {
+  return a + b;
+}
+
+function sumOrThrowIfLowerThan(arr: number[], threshold: number) {
+  const sum = arr.reduce(add, 0);
+
+  if (sum < 10) {
+    throw new Error("Sum can't be lower than 10");
+  }
+
+  return sum;
+}
+
+(async function() {
+  const resultSchema = yup.array().of(yup.number());
+  const arr = await fetch("https://example.com/").then(res => res.json());
+
+  const isValid = await resultSchema.isValid(arr);
+
+  isValid && console.log(sumOrThrowIfLowerThan(arr)); // output is guaranteed again and the QA is happy again 👌
+})();
+```
+
+## My 2¢
+
+This article turned out much longer that I thought it would be, but here is my 2¢:
+
+It definitely takes more time to add runtime safety on top of compile time safety, and in the end it's up to you and your team to decide whether any of them is worth your time.
+
+I believe that each on it's own is very powerful, but not enough, and it's the combination of the two that can make a great fortress.
+
+It's also OK if you choose to rely solely on runtime validation, but in that case you would need to build a much higher wall, as your citizens might be up to no good.
