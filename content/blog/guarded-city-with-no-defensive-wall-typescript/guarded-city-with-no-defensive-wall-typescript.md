@@ -66,7 +66,7 @@ export function send(url) {
 }
 ```
 
-So, no one is forcing you to write in one paradigm or another, what's more is that today almost all general purpose languages have picked up characteristics from both ends of the spectrum, so I believe the difference is not a stark today as it used to be.
+So, no one is forcing you to write in one paradigm or another, what's more is that today almost all general purpose languages have picked up characteristics from both ends of the spectrum, so I believe the difference is not as stark today as it used to be.
 
 ## TypeScript is not `C#`
 
@@ -89,7 +89,7 @@ type ReadonlyC = { readonly [P in keyof C]: C[P] }; // mapped type
 
 None of the examples above is possible is C#, and there are more examples like this. All of these features bring TypeScript much closer to JavaScript in terms of flexibility.
 
-Or, if you choose - you can simply go with the `any` type - that behaves just like regular JavaScript variable - it can be assigned to any variable, and any property/method is assumed to exist by the typescript complier (I should note the [unknown](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-0.html#new-unknown-top-type) type, which is better for such use cases).
+Or, if you choose - you can simply go with the `any` type - that behaves just like a regular JavaScript variable - it can be assigned to any variable, and any property/method is assumed to exist by the typescript complier (I should note the [unknown](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-0.html#new-unknown-top-type) type, which is better for such use cases).
 
 ## A Guarded City with no Defensive Wall
 
@@ -102,9 +102,9 @@ In the old days, when you wanted to protect your city you would build a tall and
 ![A fort](fort.jpg)
 Photo by [Richard Clark](https://unsplash.com/@clarky_523) on [Unsplash](https://unsplash.com/)
 
-Inside the wall, your police will make sure to keep the city safe from it's own citizens, making sure everyone is safe, and everyone obeys by the rules. However, the police is not an army, and will have little to help should a nearing city declare war against you.
+Inside the wall, your police will make sure to keep the city safe from it's own citizens, making sure everyone is safe, and everyone obeys by the rules. However, the police is not an army, and will be of little help should a near by city declare war against you.
 
-Back to our topic, typescript is much like the police inside the walls. Given that anyone who've entered the city is cleared, the police will keep it things in check, making things expected and comfortable.
+Back to our topic, typescript is much like the police inside the walls. Given that anyone who's entered the city is cleared, the police will keep it things in check, making things expected and comfortable.
 
 As long as you deal with code bits you fully own, and do not rely on external sources or outside packages, you're good to go.
 
@@ -118,8 +118,8 @@ function add(a: number, b: number): number {
 function sumOrThrowIfLowerThan(arr: number[], threshold: number) {
   const sum = arr.reduce(add, 0);
 
-  if (sum < 10) {
-    throw new Error("Sum can't be lower than 10");
+  if (sum < threshold) {
+    throw new Error("Sum can't be lower than threshold");
   }
 
   return sum;
@@ -127,7 +127,7 @@ function sumOrThrowIfLowerThan(arr: number[], threshold: number) {
 
 const arr = [1, 2, 3, 4];
 
-console.log(sumOrThrowIfLowerThan(arr)); // output guaranteed to be a number
+console.log(sumOrThrowIfLowerThan(arr, 10)); // output guaranteed to be a number
 ```
 
 Even though we perform no run-time validation, we can be very certain that out functions will not misbehave.
@@ -146,8 +146,8 @@ function add(a: number, b: number): number {
 function sumOrThrowIfLowerThan(arr: number[], threshold: number) {
   const sum = arr.reduce(add, 0);
 
-  if (sum < 10) {
-    throw new Error("Sum can't be lower than 10");
+  if (sum < threshold) {
+    throw new Error("Sum can't be lower than threshold");
   }
 
   return sum;
@@ -158,7 +158,7 @@ function sumOrThrowIfLowerThan(arr: number[], threshold: number) {
     res.json()
   );
 
-  console.log(sumOrThrowIfLowerThan(arr)); // Can we guarantee the output type??
+  console.log(sumOrThrowIfLowerThan(arr, 10)); // Can we guarantee the output type??
 })();
 ```
 
@@ -170,13 +170,13 @@ What if all of a sudden our external URL will decide to return a string? Or a si
 
 ![Runtime error trying to access a non-existing function](runtime-error.png)
 
-Many people would stop, declare typescript not worthy of their time, or that it generates a false sense of confidence, and therefore should not be used, is favor of vanilla javascript.
+Many people would stop, declare typescript not worthy of their time, or that it generates a false sense of confidence, and therefore should not be used in favor of vanilla javascript.
 
 ## Fortifying Your City
 
 So we now know that typescript has very serious loop holes. Or maybe they are not loop holes at all - typescript was never designed for runtime safety. However, there are other great tools that can help us validate returned values.
 
-I won't go into much detail, but the most noticeable examples are probably [joi](https://github.com/hapijs/joi), [yup](https://github.com/jquense/yup) and [class-validator](https://github.com/typestack/class-validator). There are others for sure, but choosing any of these will be probably good enough for most use cases.
+I won't go into much detail, but the most noticeable examples are probably [joi](https://github.com/hapijs/joi), [yup](https://github.com/jquense/yup) and [class-validator](https://github.com/typestack/class-validator). There are others for sure, but choosing any of these will probably be good enough for most use cases.
 
 Here's the previous example, but with runtime validation:
 
@@ -188,8 +188,8 @@ function add(a: number, b: number): number {
 function sumOrThrowIfLowerThan(arr: number[], threshold: number) {
   const sum = arr.reduce(add, 0);
 
-  if (sum < 10) {
-    throw new Error("Sum can't be lower than 10");
+  if (sum < threshold) {
+    throw new Error("Sum can't be lower than threshold");
   }
 
   return sum;
@@ -201,9 +201,11 @@ function sumOrThrowIfLowerThan(arr: number[], threshold: number) {
 
   const isValid = await resultSchema.isValid(arr);
 
-  isValid && console.log(sumOrThrowIfLowerThan(arr)); // output is guaranteed again and the QA is happy again 👌
+  isValid && console.log(sumOrThrowIfLowerThan(arr, 10)); // output is guaranteed again and the QA is happy again 👌
 })();
 ```
+
+Notice that we don't need to use runtime validation for everything in our code - only the bits we can't control in runtime.
 
 ## My 2¢
 
