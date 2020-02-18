@@ -1,11 +1,12 @@
 ---
 title: "A Guarded City with no Defensive Wall - My 2¢ on TypeScript"
-date: "2020-03-01"
+date: "2020-02-18"
 description: "TypeScript is a police protecting a city that has no walls - if you let anyone in you'll have a really bad time. But It's definitely not useless."
 slug: "/guarded-city-with-no-defensive-wall-typescript"
+cover_image: "./fort.jpg"
 ---
 
-TypeScript is huge right now. It's exploding in popularity - as of today, it has almost 10M weekly downloads from [NPM](https://www.npmjs.com/package/typescript), their repo has nearly 60K stars and it feels like everybody jumps on the bandwagon when it comes to static type checking.
+TypeScript is huge right now. It's exploding in popularity - as of today, it has almost 10M weekly downloads from [NPM](https://www.npmjs.com/package/typescript), their [repo](https://github.com/microsoft/TypeScript) has nearly 60K stars and it feels like everybody jumps on the bandwagon when it comes to static type checking.
 
 I'll start this article by saying I'm a huge fan of typescript, and type-checking in general. The first language I've learned was C#, but in my first professional role I've worked exclusively with Python 2.7, and I missed the auto-completion and the confidence I had writing C#.
 
@@ -13,7 +14,7 @@ After about three years writing python I've transitioned from mostly backend to 
 
 I've seen quite a few articles where TypeScript was talked about as "bringing C#-like features to JavaScript", or something else in that sense. And the fact that Microsoft is the company behind both languages sure helped make that case.
 
-I feel like comparing TypeScript and C# does both languages wrong, and I've wanted to consolidate my 2¢ on the debate.
+I feel like comparing TypeScript and C# does both languages wrong, and I've wanted to express my 2¢ on the debate.
 
 ## TypeScript is not Object-Oriented
 
@@ -88,7 +89,7 @@ type ReadonlyC = { readonly [P in keyof C]: C[P] }; // mapped type
 
 None of the examples above is possible is C#, and there are more examples like this. All of these features bring TypeScript much closer to JavaScript in terms of flexibility.
 
-Or, if you choose - you can simply go with the `any` type - that behaves just like regular JavaScript variable - it be assigned to any variable, and any property/method is assumed to exist by the typescript complier (I should note the [unknown](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-0.html#new-unknown-top-type) type, which is better for such use cases).
+Or, if you choose - you can simply go with the `any` type - that behaves just like regular JavaScript variable - it can be assigned to any variable, and any property/method is assumed to exist by the typescript complier (I should note the [unknown](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-0.html#new-unknown-top-type) type, which is better for such use cases).
 
 ## A Guarded City with no Defensive Wall
 
@@ -101,9 +102,11 @@ In the old days, when you wanted to protect your city you would build a tall and
 ![A fort](fort.jpg)
 Photo by [Richard Clark](https://unsplash.com/@clarky_523) on [Unsplash](https://unsplash.com/)
 
-Inside the wall, your police will make sure to keep the city safe from it's own citizens, making sure everyone is safe, and everyone obeys by the rules. However, the police is not an army, and will have little to help should a nearing city will declare war against you.
+Inside the wall, your police will make sure to keep the city safe from it's own citizens, making sure everyone is safe, and everyone obeys by the rules. However, the police is not an army, and will have little to help should a nearing city declare war against you.
 
-Back to our topic, typescript is much like the police inside the walls. Given that anyone who've entered the city is cleared, the police will keep it things in check, making things expected and comfortable. As long as you deal with code bits you fully own, and are not relied on external sources or outside packages, you're good to go.
+Back to our topic, typescript is much like the police inside the walls. Given that anyone who've entered the city is cleared, the police will keep it things in check, making things expected and comfortable.
+
+As long as you deal with code bits you fully own, and do not rely on external sources or outside packages, you're good to go.
 
 Take for example the following code:
 
@@ -127,9 +130,11 @@ const arr = [1, 2, 3, 4];
 console.log(sumOrThrowIfLowerThan(arr)); // output guaranteed to be a number
 ```
 
-Even though we perform no run-time validation, we can be very certain that out functions will not misbehave. Since we have compile time values here only, we can ensure that our array will contain only numbers, and their sum will behave like we expect (unlike adding a number to a string: `javascript>1 + "1" === "11"`).
+Even though we perform no run-time validation, we can be very certain that out functions will not misbehave.
 
-However, the real problem arises when out input comes from sources we can't control, most notably fetch requests or a dependency.
+Since we have compile time values here only, we can ensure that our array will contain only numbers, and their sum will behave like we expect (unlike adding a number to a string: `javascript>1 + "1" === "11"`).
+
+However, the real problem arises when our input comes from sources we can't control, most notably fetch requests or a dependency.
 
 If we modify the code just a little bit:
 
@@ -157,7 +162,7 @@ function sumOrThrowIfLowerThan(arr: number[], threshold: number) {
 })();
 ```
 
-What happens here is instead of using fixed, compile time values, we're retrieving our array from an external URL, and we assume the result will be an array of numbers.
+What happens here is instead of using fixed, compile time values, we're retrieving our array from an external URL, and we assume the result to be an array of numbers.
 
 This is a very dangerous assumption to make - we **can't** guarantee that the result will in fact contain only numbers, or that it will even be an array at all!
 
@@ -165,7 +170,7 @@ What if all of a sudden our external URL will decide to return a string? Or a si
 
 ![Runtime error trying to access a non-existing function](runtime-error.png)
 
-Many people stop, declare typescript is not worth their time, or that it generated a false sense of confidence, and therefor should not be used, is favor of vanilla javascript, and that leads me to the final section.
+Many people would stop, declare typescript not worthy of their time, or that it generates a false sense of confidence, and therefore should not be used, is favor of vanilla javascript.
 
 ## Fortifying Your City
 
