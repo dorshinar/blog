@@ -47,7 +47,7 @@
     "jest": "^25.1.0",
     "jest-extended": "^0.11.2",
     "jest-puppeteer": "^4.4.0",
-    "prettier": "^1.19.1",
+    "prettier": "^2.0.0",
     "prismjs": "^1.18.0",
     "puppeteer": "^2.1.1",
     "react": "^16.13.1",
