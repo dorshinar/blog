@@ -56,7 +56,7 @@ First, we must initialize a context object:
 import React from "react";
 
 export const ThemeSelectorContext = React.createContext({
-  themeName: "dark"
+  themeName: "dark",
 });
 ```
 
@@ -136,7 +136,7 @@ const themes = {
     backgroundColor: "#121212",
     headerBackgroundColor: "rgba(255,255,255,0.05)",
     blockquoteColor: "rgba(255,255,255,0.20)",
-    icon: "white"
+    icon: "white",
   },
   light: {
     primary: "#1ca086",
@@ -145,8 +145,8 @@ const themes = {
     backgroundColor: "white",
     headerBackgroundColor: "#f6f6f6",
     blockquoteColor: "rgba(0,0,0,0.80)",
-    icon: "#121212"
-  }
+    icon: "#121212",
+  },
 };
 ```
 
@@ -157,7 +157,7 @@ Now we create our `ThemeSelectorContext`:
 ```jsx
 export const ThemeSelectorContext = React.createContext({
   themeName: "dark",
-  toggleTheme: () => {}
+  toggleTheme: () => {},
 });
 ```
 
@@ -191,7 +191,7 @@ In this component we store our selected theme object, and the selected theme nam
 The last bit left is actually setting the css custom properties from our theme. We can easily do it using the `.style.setProperty` API:
 
 ```js
-const setCSSVariables = theme => {
+const setCSSVariables = (theme) => {
   for (const value in theme) {
     document.documentElement.style.setProperty(`--${value}`, theme[value]);
   }

@@ -12,7 +12,7 @@ import {
   faDev,
   faStackOverflow,
   faTwitter,
-  faLinkedin
+  faLinkedin,
 } from "@fortawesome/free-brands-svg-icons";
 import { faRss } from "@fortawesome/free-solid-svg-icons";
 
@@ -27,7 +27,7 @@ import {
   ContactTwitterBadge,
   ContactGithubBadge,
   ContactLinkedinBadge,
-  ContactRSSBadge
+  ContactRSSBadge,
 } from "./bio.styled";
 
 const Bio = () => {
@@ -63,7 +63,7 @@ const Bio = () => {
         fixed={data.avatar.childImageSharp.fixed}
         alt={author}
         imgStyle={{
-          borderRadius: `50%`
+          borderRadius: `50%`,
         }}
       />
       <AboutMe>

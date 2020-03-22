@@ -12,7 +12,7 @@ export default class ScrollIndicator extends React.Component {
   }
 
   state = {
-    width: 0
+    width: 0,
   };
 
   handleScroll = () => {

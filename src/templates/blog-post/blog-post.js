@@ -14,7 +14,7 @@ import {
   Post,
   NearByPosts,
   PostLink,
-  Wrapper
+  Wrapper,
 } from "./blog-post.styled";
 
 class BlogPostTemplate extends React.Component {
