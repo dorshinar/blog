@@ -177,8 +177,8 @@ module.exports = {
     headless: process.env.CI === "true",
     ignoreDefaultArgs: ["--disable-extensions"],
     args: ["--no-sandbox"],
-    executablePath: "chrome.exe"
-  }
+    executablePath: "chrome.exe",
+  },
 };
 ```
 
@@ -192,8 +192,8 @@ module.exports = {
   server: {
     command: "npm run serve",
     port: 9000,
-    launchTimeout: 180000
-  }
+    launchTimeout: 180000,
+  },
 };
 ```
 

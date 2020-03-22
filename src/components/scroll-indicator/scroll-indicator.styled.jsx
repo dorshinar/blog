@@ -11,8 +11,8 @@ export const Container = styled.div`
   height: ${rhythm(0.1)};
 `;
 
-export const Indicator = styled.div.attrs(props => ({
-  style: { width: `${props.width || 0}vw` }
+export const Indicator = styled.div.attrs((props) => ({
+  style: { width: `${props.width || 0}vw` },
 }))`
   height: ${rhythm(0.1)};
   background-color: #1ca086;

@@ -58,7 +58,7 @@ module.exports = {
   parser: {},
   extends: [],
   plugins: [],
-  rules: {}
+  rules: {},
 };
 ```
 
@@ -69,7 +69,7 @@ module.exports = {
   parser: "@typescript-eslint/parser",
   extends: ["plugin:@typescript-eslint/recommended"],
   plugins: ["@typescript-eslint"],
-  rules: {}
+  rules: {},
 };
 ```
 
@@ -82,7 +82,7 @@ module.exports = {
   parser: "@typescript-eslint/parser",
   extends: ["plugin:@typescript-eslint/recommended", "react-app"],
   plugins: ["@typescript-eslint", "react"],
-  rules: {}
+  rules: {},
 };
 ```
 
@@ -104,10 +104,10 @@ module.exports = {
   extends: [
     "plugin:@typescript-eslint/recommended",
     "react-app",
-    "plugin:prettier/recommended"
+    "plugin:prettier/recommended",
   ],
   plugins: ["@typescript-eslint", "react"],
-  rules: {}
+  rules: {},
 };
 ```
 

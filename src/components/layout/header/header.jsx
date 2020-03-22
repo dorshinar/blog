@@ -10,7 +10,7 @@ import {
   HomeLink,
   StyledToggle,
   StyledSun,
-  StyledMoon
+  StyledMoon,
 } from "./header.styled";
 
 import "react-toggle/style.css";
@@ -46,7 +46,7 @@ export default () => {
         </HomeLink>
         <StyledToggle
           checked={themeName === "dark"}
-          onChange={e =>
+          onChange={(e) =>
             window.__setPreferredTheme(e.target.checked ? "dark" : "light")
           }
           aria-label={"Toggle Theme"}
@@ -62,7 +62,7 @@ export default () => {
                 fixed={data.sun.childImageSharp.fixed}
                 alt={"light theme"}
               />
-            )
+            ),
           }}
           data-p="theme-switcher"
         />

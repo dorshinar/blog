@@ -4,7 +4,7 @@ const sizes = {
   small: 37.5, // 600px
   medium: 48, // 768px
   large: 62, // 992px
-  xLarge: 75 // 1200
+  xLarge: 75, // 1200
 };
 
 export default Object.keys(sizes).reduce((acc, label) => {

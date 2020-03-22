@@ -62,7 +62,7 @@ And in JavaScript:
 
 ```javascript
 export function send(url) {
-  return fetch(this.url).then(res => res.json());
+  return fetch(this.url).then((res) => res.json());
 }
 ```
 

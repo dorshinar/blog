@@ -40,7 +40,7 @@ function SEO({ description, lang, meta, title, slug, thumbnail }) {
   return (
     <Helmet
       htmlAttributes={{
-        lang
+        lang,
       }}
       title={title}
       titleTemplate={`%s | ${site.siteMetadata.title}`}
@@ -87,7 +87,7 @@ SEO.defaultProps = {
   lang: `en`,
   meta: [],
   description: ``,
-  slug: ""
+  slug: "",
 };
 
 SEO.propTypes = {
@@ -96,7 +96,7 @@ SEO.propTypes = {
   meta: PropTypes.arrayOf(PropTypes.object),
   title: PropTypes.string.isRequired,
   slug: PropTypes.string,
-  thumbnail: PropTypes.object
+  thumbnail: PropTypes.object,
 };
 
 export default SEO;
