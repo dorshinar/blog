@@ -4,8 +4,8 @@ import { rhythm, scale } from "../../utils/typography";
 import { media } from "../../components/themer";
 
 export const Wrapper = styled.div`
-  padding-right: ${rhythm(1)};
-  padding-left: ${rhythm(1)};
+  padding-right: ${rhythm(0.5)};
+  padding-left: ${rhythm(0.5)};
 
   ${media.medium`
     padding-right: 0;
