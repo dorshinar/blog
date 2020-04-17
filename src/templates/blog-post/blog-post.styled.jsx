@@ -4,8 +4,10 @@ import { rhythm, scale } from "../../utils/typography";
 import { media } from "../../components/themer";
 
 export const Wrapper = styled.div`
-  padding-right: ${rhythm(0.5)};
-  padding-left: ${rhythm(0.5)};
+  --spacing: ${rhythm(0.5)};
+
+  padding-right: var(--spacing);
+  padding-left: var(--spacing);
 
   ${media.medium`
     padding-right: 0;
@@ -31,20 +33,20 @@ export const Post = styled.div`
 
   & .gatsby-resp-image-wrapper,
   & img:not([class]) {
-    margin-right: -${rhythm(1)} !important;
-    margin-left: -${rhythm(1)} !important;
+    margin-right: calc(var(--spacing) * -1) !important;
+    margin-left: calc(var(--spacing) * -1) !important;
   }
 
   & img:not([class]) {
-    max-width: calc(100% + ${rhythm(2)});
+    max-width: calc(100% + (var(--spacing) * 2));
   }
 
   & pre[class*="language-"] {
-    margin-right: -${rhythm(1)};
-    margin-left: -${rhythm(1)};
+    margin-right: calc(var(--spacing) * -1);
+    margin-left: calc(var(--spacing) * -1);
 
-    padding-right: ${rhythm(1)};
-    padding-left: ${rhythm(1)};
+    padding-right: var(--spacing);
+    padding-left: var(--spacing);
   }
 
   ${media.medium`
@@ -80,17 +82,17 @@ export const Post = styled.div`
   }
 
   & blockquote {
-    margin-left: -${rhythm(1)};
+    margin-left: calc(var(--spacing) * -1);
     border-left: 0.4rem solid var(--blockquoteColor);
     padding: 1rem;
   }
 
   & .gatsby-highlight-code-line {
     display: block;
-    margin-right: -${rhythm(1)};
-    margin-left: -${rhythm(1)};
-    padding-right: ${rhythm(1)};
-    padding-left: ${rhythm(1)};
+    margin-right: calc(var(--spacing) * -1);
+    margin-left: calc(var(--spacing) * -1);
+    padding-right: var(--spacing);
+    padding-left: var(--spacing);
     background-color: #ffffff38;
   }
 
