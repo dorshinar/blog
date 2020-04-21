@@ -14,7 +14,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.13.0",
     "@fortawesome/react-fontawesome": "^0.1.9",
     "babel-plugin-styled-components": "^1.10.7",
-    "eslint-config-prettier": "^6.10.1",
+    "eslint-config-prettier": "^6.11.0",
     "eslint-config-react": "^1.1.7",
     "eslint-config-react-app": "^5.2.1",
     "eslint-plugin-import": "^2.20.2",
