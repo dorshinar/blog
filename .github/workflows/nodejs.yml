@@ -1,6 +1,6 @@
 name: Node CI
 
-on: [push]
+on: [deployment]
 
 jobs:
   build:
@@ -12,6 +12,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v1
+      - name: Print env
+        run: printenv
+      - name: Print GitHub
+        run: echo {{ toJson(github) }}
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
