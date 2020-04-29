@@ -1,7 +1,6 @@
 name: Node CI
 
-on: 
-  deployment
+on: [deployment, deployment_status]
 
 jobs:
   build:
