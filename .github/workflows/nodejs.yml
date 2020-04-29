@@ -15,7 +15,9 @@ jobs:
       - name: Print env
         run: printenv
       - name: Print GitHub
-        run: echo ${{ toJson(github) }}
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
