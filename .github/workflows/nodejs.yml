@@ -14,13 +14,15 @@ jobs:
     steps:
       - name: Hello world action step
         id: hello
-        uses: dorshinar/run-against-deploy-action@v1.2.21
+        uses: dorshinar/run-against-deploy-action@v1.2.22
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           repo: blog
           owner: dorshinar
       # Use the output from the `hello` step
-
+      - name: Print Deployment
+        id: print
+        run: echo ${{ steps.hello.outputs.deployment }}
 #       - uses: actions/checkout@v1
 #       - name: Print env
 #         run: printenv
