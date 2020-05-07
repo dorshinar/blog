@@ -14,41 +14,43 @@ jobs:
     steps:
       - name: Hello world action step
         id: hello
-        uses: dorshinar/run-against-deploy-action@v1.2.7
+        uses: dorshinar/run-against-deploy-action@v1.2.8
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          repo: blog
+          owner: dorshinar
       # Use the output from the `hello` step
 
-      - uses: actions/checkout@v1
-      - name: Print env
-        run: printenv
-      - name: Print GitHub
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "$GITHUB_CONTEXT"
+#       - uses: actions/checkout@v1
+#       - name: Print env
+#         run: printenv
+#       - name: Print GitHub
+#         env:
+#           GITHUB_CONTEXT: ${{ toJson(github) }}
+#         run: echo "$GITHUB_CONTEXT"
 
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
+#       - name: Use Node.js ${{ matrix.node-version }}
+#         uses: actions/setup-node@v1
+#         with:
+#           node-version: ${{ matrix.node-version }}
 
-      - name: Install dependencies
-        run: npm ci
+#       - name: Install dependencies
+#         run: npm ci
 
-      - name: Lint
-        run: npm run lint
+#       - name: Lint
+#         run: npm run lint
 
-      - name: Build
-        run: npm run build
+#       - name: Build
+#         run: npm run build
 
-      - name: Run end-to-end tests
-        run: npm run test:e2e
-        env:
-          CI: true
-          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
+#       - name: Run end-to-end tests
+#         run: npm run test:e2e
+#         env:
+#           CI: true
+#           PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
 
-      - uses: actions/upload-artifact@v1
-        if: failure()
-        with:
-          name: screenshots
-          path: ./screenshots
+#       - uses: actions/upload-artifact@v1
+#         if: failure()
+#         with:
+#           name: screenshots
+#           path: ./screenshots
