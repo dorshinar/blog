@@ -14,7 +14,7 @@ jobs:
     steps:
       - name: Hello world action step
         id: hello
-        uses: dorshinar/run-against-deploy-action@v1.2.5
+        uses: dorshinar/run-against-deploy-action@v1.2.6
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
       # Use the output from the `hello` step
