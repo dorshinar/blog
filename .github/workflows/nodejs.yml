@@ -19,10 +19,10 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           repo: blog
           owner: dorshinar
-      # Use the output from the `hello` step
-      - name: Print Deployment
-        id: print
-        run: echo ${{ steps.hello.outputs.deployment }}
+
+#       - name: Print Deployment
+#         id: print
+#         run: echo ${{ steps.hello.outputs.deployment }}
 #       - uses: actions/checkout@v1
 #       - name: Print env
 #         run: printenv
