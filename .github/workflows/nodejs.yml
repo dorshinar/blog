@@ -29,12 +29,10 @@ jobs:
 
       - name: Get deployment URL
         id: deployment
-        uses: dorshinar/run-against-deploy-action@v1.2.30
+        uses: dorshinar/run-against-deploy-action@v1.2.31
         timeout-minutes: 5
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          repo: blog
-          owner: dorshinar
 
       - name: Run end-to-end tests
         run: npm run test:e2e
