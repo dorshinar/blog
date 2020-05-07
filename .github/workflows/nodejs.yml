@@ -29,7 +29,7 @@ jobs:
 
       - name: Get deployment URL
         id: deployment
-        uses: dorshinar/run-against-deploy-action@v1.2.31
+        uses: dorshinar/run-against-deploy-action@v1.2.32
         timeout-minutes: 5
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
