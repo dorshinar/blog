@@ -1,5 +1,7 @@
 const fs = require("fs");
 
+const url = process.env.CI ? process.env.deployment : "http://localhost:8000/";
+
 describe("Smoke test site", () => {
   beforeAll(async () => {
     await page.setViewport({ width: 1920, height: 1080 });
@@ -7,7 +9,7 @@ describe("Smoke test site", () => {
   });
 
   beforeEach(async () => {
-    await page.goto(`http://localhost:${process.env.CI ? 9 : 8}000/`);
+    await page.goto(url);
     await page.waitFor(() => document.title.includes("All posts | Dor Shinar"));
   });
 

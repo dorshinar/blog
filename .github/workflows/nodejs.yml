@@ -1,10 +1,13 @@
 name: Node CI
 
-on: [push]
+on: push
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    env:
+      PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
 
     strategy:
       matrix:
@@ -24,14 +27,17 @@ jobs:
       - name: Lint
         run: npm run lint
 
-      - name: Build
-        run: npm run build
+      - name: Get deployment URL
+        id: deployment
+        uses: dorshinar/get-deployment-url@v1.0.2
+        timeout-minutes: 5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run end-to-end tests
         run: npm run test:e2e
         env:
-          CI: true
-          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
+          deployment: ${{ steps.deployment.outputs.deployment }}
 
       - uses: actions/upload-artifact@v1
         if: failure()
