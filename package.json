@@ -61,7 +61,7 @@
   },
   "devDependencies": {
     "@types/jest": "^25.2.1",
-    "@types/puppeteer": "^2.0.1",
+    "@types/puppeteer": "^2.1.0",
     "typescript": "^3.8.3"
   },
   "homepage": "https://dorshinar.me",
