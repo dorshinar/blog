@@ -11,3 +11,5 @@ To run locally, simply run `npm i` and then `npm start`, and open <http://localh
 ## Issues
 
 If you find any issues, I'd love if you could list them on the [issues](https://github.com/dorshinar/blog/issues) page in the repository.
+
+Testing action :)
