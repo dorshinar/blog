@@ -3,14 +3,12 @@ import Image from "gatsby-image";
 import { OutboundLink } from "gatsby-plugin-google-analytics";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { rhythm } from "../../utils/typography";
-
 export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: ${rhythm(1)};
-  padding: ${rhythm(0.5)};
+  margin-bottom: var(--rhythm);
+  padding: calc(var(--rhythm) * 0.5);
 `;
 
 export const ProfileImage = styled(Image)`
@@ -21,7 +19,7 @@ export const ProfileImage = styled(Image)`
 `;
 
 export const AboutMe = styled.p`
-  margin-bottom: ${rhythm(0.5)};
+  margin-bottom: calc(var(--rhythm) * 0.5);
 `;
 
 export const Contact = styled.div`
@@ -33,7 +31,7 @@ export const Contact = styled.div`
 
 export const PersonalLink = styled(OutboundLink)`
   background-image: initial;
-  margin-right: ${rhythm(1)};
+  margin-right: var(--rhythm);
 
   color: unset;
 `;

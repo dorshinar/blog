@@ -3,10 +3,9 @@ import { graphql } from "gatsby";
 import styled from "styled-components";
 
 import SEO from "../components/seo";
-import { rhythm } from "../utils/typography";
 
 const Content = styled.div`
-  padding: ${rhythm(0.5)};
+  padding: calc(var(--rhythm) * 0.5);
 `;
 
 export default () => (
