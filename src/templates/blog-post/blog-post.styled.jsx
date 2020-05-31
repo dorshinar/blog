@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 import { rhythm, scale } from "../../utils/typography";
-import { media } from "../../components/themer";
+import media from "../../components/themer/media";
 
 export const Wrapper = styled.div`
   --spacing: ${rhythm(0.5)};

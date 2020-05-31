@@ -1,9 +1,9 @@
 import React from "react";
 import { Link, graphql } from "gatsby";
 
-import { Bio } from "../../components/bio";
+import { Bio } from "../../components/bio/bio";
 import SEO from "../../components/seo";
-import { ScrollIndicator } from "../../components/scroll-indicator";
+import { ScrollIndicator } from "../../components/scroll-indicator/scroll-indicator";
 import { Separator } from "../../utils/styled/separator";
 import { BuyMeACoffee } from "../../components/buy-me-a-coffee/buy-me-a-coffee";
 import Layout from "../../components/layout/layout";

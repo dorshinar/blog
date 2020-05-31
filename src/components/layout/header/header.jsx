@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { useStaticQuery, graphql } from "gatsby";
 
-import { ThemeSelectorContext } from "../../themer";
+import { ThemeSelectorContext } from "../../themer/themer";
 
 import {
   Wrapper,

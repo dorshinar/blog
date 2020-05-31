@@ -1,9 +1,9 @@
 import React from "react";
 import { graphql } from "gatsby";
 
-import { Bio } from "../components/bio";
+import { Bio } from "../components/bio/bio";
 import SEO from "../components/seo";
-import { BlogPostPreviews } from "../components/blog-post-previews";
+import { BlogPostPreviews } from "../components/blog-post-previews/blog-post-previews";
 import Layout from "../components/layout/layout";
 
 class BlogIndex extends React.Component {
