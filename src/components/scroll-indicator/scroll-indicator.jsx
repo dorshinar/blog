@@ -14,7 +14,6 @@ export function ScrollIndicator() {
       window.removeEventListener("scroll", handleScroll);
     };
   });
-
   const handleScroll = useCallback(() => {
     const winScroll =
       document.body.scrollTop || document.documentElement.scrollTop;
