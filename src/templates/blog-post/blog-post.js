@@ -82,7 +82,7 @@ export const pageQuery = graphql`
         description
         thumbnail: cover_image {
           childImageSharp {
-            sizes(maxWidth: 600) {
+            sizes(maxWidth: 1200) {
               ...GatsbyImageSharpSizes
             }
           }
