@@ -54,7 +54,9 @@ function SEO({ description, lang, meta, title, slug, thumbnail }) {
       <meta property="og:description" content={metaDescription} />
       <meta property="og:url" content={url} />
       <meta property="og:type" content={"website"} />
-      {thumbnail && <meta property="og:image" content={`${imageSrc}`} />}
+      {thumbnail && (
+        <meta property="og:image" content={`${origin}${imageSrc}`} />
+      )}
 
       {/* Twitter Card Tags */}
       <meta name="twitter:card" content={"summary"} />
@@ -64,7 +66,9 @@ function SEO({ description, lang, meta, title, slug, thumbnail }) {
       />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
-      {thumbnail && <meta name="twitter:image" content={`${imageSrc}`} />}
+      {thumbnail && (
+        <meta name="twitter:image" content={`${origin}${imageSrc}`} />
+      )}
 
       {/* Google Search Tags */}
       <meta
