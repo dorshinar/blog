@@ -16,7 +16,7 @@ import {
 import "react-toggle/style.css";
 import "./header.css";
 
-export default () => {
+export function Header() {
   const data = useStaticQuery(graphql`
     query ThemeToggleQuery {
       sun: file(absolutePath: { regex: "/sun/" }) {
@@ -69,4 +69,4 @@ export default () => {
       </Content>
     </Wrapper>
   );
-};
+}

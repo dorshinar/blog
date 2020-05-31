@@ -1,9 +1,9 @@
 import React from "react";
 
-import { Themer } from "../themer";
+import { Themer } from "../themer/themer";
 
-import { Header } from "./header";
-import { Footer } from "./footer";
+import { Header } from "./header/header";
+import { Footer } from "./footer/footer";
 import { Wrapper, ContentWrapper } from "./layout.styled";
 
 class Layout extends React.Component {

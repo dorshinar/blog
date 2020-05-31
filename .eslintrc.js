@@ -4,7 +4,7 @@ module.exports = {
     browser: true,
     context: true,
     jestPuppeteer: true,
-    __PATH_PREFIX__: true
+    __PATH_PREFIX__: true,
   },
   extends: [
     "eslint:recommended",
@@ -12,26 +12,28 @@ module.exports = {
     "react-app",
     "plugin:prettier/recommended",
     "prettier/react",
-    "plugin:import/errors"
+    "plugin:import/errors",
+    "plugin:react-hooks/recommended",
   ],
   plugins: ["import", "markdown"],
   parserOptions: {
-    sourceType: "module"
+    sourceType: "module",
   },
   env: {
     es6: true,
     node: true,
-    jest: true
+    jest: true,
   },
   rules: {
     "react/prop-types": 0,
     "import/order": ["error", { "newlines-between": "always" }],
-    "max-nested-callbacks": 0
+    "max-nested-callbacks": 0,
+    "import/no-unresolved": "error",
   },
   settings: {
     "import/resolver": {
-      node: { extensions: [".js", ".jsx"] }
-    }
+      node: { extensions: [".js", ".jsx"] },
+    },
   },
   overrides: [
     {
@@ -42,16 +44,16 @@ module.exports = {
         "no-unused-vars": 0,
         "react/react-in-jsx-scope": 0,
         "import/no-unresolved": 0,
-        "import/order": 0
-      }
+        "import/order": 0,
+      },
     },
     {
       files: ["content/**/*.html"],
       rules: {
         "no-unused-expressions": 0,
         "react/react-in-jsx-scope": 0,
-        "react/self-closing-comp": 0
-      }
-    }
-  ]
+        "react/self-closing-comp": 0,
+      },
+    },
+  ],
 };

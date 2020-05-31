@@ -8,7 +8,7 @@ import {
   PostDescription,
 } from "./blog-post-preview.styled";
 
-export default ({ node, title }) => {
+export function BlogPostPreview({ node, title }) {
   return (
     <Wrapper>
       <Header>
@@ -22,4 +22,4 @@ export default ({ node, title }) => {
       />
     </Wrapper>
   );
-};
+}
