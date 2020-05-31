@@ -9,6 +9,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Helmet } from "react-helmet";
 import { useStaticQuery, graphql } from "gatsby";
+import { useLocation } from "@reach/router";
 
 function SEO({ description, lang, meta, title, slug, thumbnail }) {
   const { site } = useStaticQuery(
@@ -32,10 +33,10 @@ function SEO({ description, lang, meta, title, slug, thumbnail }) {
   const metaDescription = description || site.siteMetadata.description;
   const url = `${site.siteMetadata.siteUrl}${slug}/`;
   const imageSrc = thumbnail && thumbnail.childImageSharp.sizes.src;
-  let origin = "";
-  if (typeof window !== "undefined") {
-    origin = window.location.origin;
-  }
+  const imageUrl = new URL(
+    imageSrc,
+    process.env.VERCEL_URL || site.siteMetadata.siteUrl
+  );
 
   return (
     <Helmet
@@ -54,9 +55,7 @@ function SEO({ description, lang, meta, title, slug, thumbnail }) {
       <meta property="og:description" content={metaDescription} />
       <meta property="og:url" content={url} />
       <meta property="og:type" content={"website"} />
-      {thumbnail && (
-        <meta property="og:image" content={`${origin}${imageSrc}`} />
-      )}
+      {thumbnail && <meta property="og:image" content={imageUrl} />}
 
       {/* Twitter Card Tags */}
       <meta name="twitter:card" content={"summary"} />
@@ -66,9 +65,7 @@ function SEO({ description, lang, meta, title, slug, thumbnail }) {
       />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
-      {thumbnail && (
-        <meta name="twitter:image" content={`${origin}${imageSrc}`} />
-      )}
+      {thumbnail && <meta name="twitter:image" content={imageUrl} />}
 
       {/* Google Search Tags */}
       <meta
