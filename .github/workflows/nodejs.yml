@@ -33,6 +33,7 @@ jobs:
         timeout-minutes: 5
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          retryInterval: 5000
 
       - name: Run end-to-end tests
         run: npm run test:e2e
