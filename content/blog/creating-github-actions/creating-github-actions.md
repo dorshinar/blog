@@ -4,6 +4,8 @@ description: "Github actions are a great way to run custom CI workflows. What's 
 slug: "/creating-github-actions"
 ---
 
+// TODO: proof-read, add cover image, add publish date, make sure code examples work
+
 I'm a big fan of Github actions. I've started using them right when they came out of beta. Creating workflows is very easy and uses a familiar `yml` syntax as I've explained in a previous article I've written - [Continuous Integration with Github Actions and Puppeteer](https://dorshinar.me/continuous-integration-with-github-actions-and-puppeteer). I encourage you to give it a read, you might find it useful as well.
 
 My workflow was very simple - install dependencies, lint, build, test. All this happened in parallel to a [Vercel](https://vercel.com/home) deployment which is triggered on new commits. It worked great, but I had an issue which irritated me - I had to build my blog twice on each push - 1 in my CI workflow, on which I ran the tests, and 1 in my Vercel build.
@@ -328,3 +330,11 @@ steps:
 ```
 
 Now your deployment will be exposed as an environment variable to you test suite, and you will be able to access it with `process.env.deployment`.
+
+That's pretty much it. Obviously there is a lot more you can do to perfect this action, you can add retry capabilities, rate limit handling and more.
+
+There is also a lot more you can with Github actions in general. You can put them on the [Github Action Marketplace](https://github.com/marketplace?type=actions) for everyone to find, you can add logs, logo and branding and more. The sky is the limit when it comes to things like that.
+
+If you don't want to go through the hassle of creating the action, I've published an action that does exactly that for my own personal use. It should work with any Github integration that creates Deployments with Github's API, and supports retries, rate-limiting and error handling. You can find it [here](https://github.com/marketplace/actions/get-deployment-url).
+
+Thank you for reading, I hope you've learned something and found my article useful.
