@@ -2,11 +2,12 @@
 
 body {
   font-family: "Montserrat", sans-serif;
-  
+
   --primary: #1ca086;
   --light: #5cd2b6;
   --dark: #007159;
   --contentWidth: 34.8rem;
+  --rhythm: 1.45rem;
 }
 
 body.dark {
@@ -19,10 +20,10 @@ body.dark {
 }
 
 body.light {
-  --separatorColor: rgba(0,0,0,0.08);
+  --separatorColor: rgba(0, 0, 0, 0.08);
   --textColor: black;
   --backgroundColor: white;
   --headerBackgroundColor: #f6f6f6;
-  --blockquoteColor: rgba(0,0,0,0.80);
+  --blockquoteColor: rgba(0, 0, 0, 0.8);
   --icon: #121212;
 }

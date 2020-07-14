@@ -5,7 +5,7 @@ export const ThemeSelectorContext = React.createContext({
   toggleTheme: () => {},
 });
 
-export default ({ children }) => {
+export function Themer({ children }) {
   const [themeName, setThemeName] = useState("dark");
 
   useEffect(() => {
@@ -21,4 +21,4 @@ export default ({ children }) => {
       {children}
     </ThemeSelectorContext.Provider>
   );
-};
+}

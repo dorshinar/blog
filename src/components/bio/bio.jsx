@@ -1,10 +1,3 @@
-/**
- * Bio component that queries for data
- * with Gatsby's useStaticQuery component
- *
- * See: https://www.gatsbyjs.org/docs/use-static-query/
- */
-
 import React, { memo } from "react";
 import { useStaticQuery, graphql } from "gatsby";
 import {
@@ -30,7 +23,7 @@ import {
   ContactRSSBadge,
 } from "./bio.styled";
 
-const Bio = () => {
+const BioComponent = () => {
   const data = useStaticQuery(graphql`
     query BioQuery {
       avatar: file(absolutePath: { regex: "/profile-pic.jpg/" }) {
@@ -120,4 +113,4 @@ const Bio = () => {
   );
 };
 
-export default memo(Bio);
+export const Bio = memo(BioComponent);

@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { useStaticQuery, graphql } from "gatsby";
 
-import { ThemeSelectorContext } from "../../themer";
+import { ThemeSelectorContext } from "../../themer/themer";
 
 import {
   Wrapper,
@@ -16,7 +16,7 @@ import {
 import "react-toggle/style.css";
 import "./header.css";
 
-export default () => {
+export function Header() {
   const data = useStaticQuery(graphql`
     query ThemeToggleQuery {
       sun: file(absolutePath: { regex: "/sun/" }) {
@@ -69,4 +69,4 @@ export default () => {
       </Content>
     </Wrapper>
   );
-};
+}

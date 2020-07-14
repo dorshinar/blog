@@ -3,14 +3,12 @@ import { Link } from "gatsby";
 import Toggle from "react-toggle";
 import Image from "gatsby-image";
 
-import { rhythm } from "../../../utils/typography";
-
 export const Wrapper = styled.header`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: ${rhythm(0.5)};
-  height: ${rhythm(3)};
+  padding: calc(var(--rhythm) * 0.5);
+  height: calc(var(--rhythm) * 3);
   background-color: var(--headerBackgroundColor);
   transition: background-color 0.25s ease;
 `;

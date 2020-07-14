@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
-import { rhythm, scale } from "../../utils/typography";
-import { media } from "../../components/themer";
+import { scale } from "../../utils/typography";
+import media from "../../components/themer/media";
 
 export const Wrapper = styled.div`
-  --spacing: ${rhythm(0.5)};
+  --spacing: calc(var(--rhythm) * 0.5);
 
   padding-right: var(--spacing);
   padding-left: var(--spacing);
@@ -16,14 +16,14 @@ export const Wrapper = styled.div`
 `;
 
 export const Header = styled.h1`
-  margin-top: ${rhythm(1)};
+  margin-top: var(--rhythm);
   margin-bottom: 0;
 `;
 
 export const SubHeader = styled.p`
   ${scale(-1 / 5)};
   display: block;
-  margin-bottom: ${rhythm(1)};
+  margin-bottom: var(--rhythm);
 `;
 
 export const Post = styled.div`

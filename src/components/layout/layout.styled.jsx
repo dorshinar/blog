@@ -1,8 +1,6 @@
 import styled from "styled-components";
 import { Link } from "gatsby";
 
-import { rhythm } from "../../utils/typography";
-
 import "./index.css";
 
 export const LinkHome = styled(Link)`
@@ -26,8 +24,8 @@ export const Wrapper = styled.div`
 export const ContentWrapper = styled.div`
   margin-left: auto;
   margin-right: auto;
-  margin-top: ${rhythm(1)};
-  max-width: ${rhythm(24)};
+  margin-top: var(--rhythm);
+  max-width: calc(var(--rhythm) * 24);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
