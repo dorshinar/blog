@@ -49,6 +49,10 @@ export const Post = styled.div`
     padding-left: var(--spacing);
   }
 
+  & code[class*="language-"] {
+    white-space: pre-wrap;
+  }
+
   ${media.medium`
     & .gatsby-resp-image-wrapper,
     & img:not([class]) {
