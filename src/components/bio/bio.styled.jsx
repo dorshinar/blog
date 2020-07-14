@@ -12,7 +12,7 @@ export const Wrapper = styled.div`
 `;
 
 export const ProfileImage = styled(Image)`
-  margin-right: ${rhythm(1 / 2)};
+  margin-right: calc(var(--rhythm) * 0.5);
   margin-bottom: 0;
   min-width: 50;
   border-radius: 100%;
