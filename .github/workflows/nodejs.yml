@@ -29,7 +29,7 @@ jobs:
 
       - name: Get deployment URL
         id: deployment
-        uses: dorshinar/get-deployment-url@master
+        uses: dorshinar/get-deployment-url@feature/wait-on-rate-limit
         timeout-minutes: 5
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
