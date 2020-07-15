@@ -1,0 +1,356 @@
+---
+title: "Creating Custom Github Actions is Easy!"
+description: "Github actions are a great way to run custom CI workflows. What's great is that they're super easy to write."
+date: "2020-07-15"
+slug: "/creating-github-actions"
+cover_image: "./running-action.png"
+---
+
+I'm a big fan of Github actions. I've started using them right when they came out of beta. Creating workflows is very easy and uses a familiar `yml` syntax as I've explained in a previous article I've written - [Continuous Integration with Github Actions and Puppeteer](/continuous-integration-with-github-actions-and-puppeteer). I encourage you to give it a read, you might find it useful as well.
+
+My workflow was very simple - install dependencies, lint, build, test. All this happened in parallel to a [Vercel](https://vercel.com/home) deployment which is triggered on new commits. It worked great, but I had an issue which irritated me - I had to build my blog twice on each push - 1 in my CI workflow, against which I ran the tests, and 1 in my Vercel build.
+
+![A successful deployment reported by Vercel to Github](github-deployment.png)
+
+The solution seemed pretty simple - just run the tests against the Vercel build and Voila! all problems solved. However reality proved me wrong, and it was not as simple as I thought it should be. Although GitHub has a Deployments API, and Vercel was reporting deployments correctly, there was no way to access them in my build.
+
+After a lot of research, I've reached a conclusion that I must build a custom action to query Github's API for the desired deployment. So let's start building!
+
+## Querying Github's API
+
+First things first, we must come up with a query that will satisfy our needs. Github has 2 separate versions of their API, v3 which supports REST queries, and v4 which support GraphQL queries.
+
+Both APIs support a very wide range of fields you can query, as well as actions that can be performed. From creating gists, to querying details about repository's contributors. You can really do a lot with the API. The documentation for v3 is found [here](https://docs.github.com/en/rest), and the documentation for v4 is found [here](https://docs.github.com/en/graphql).
+
+To our business, this is the query I've found to work best:
+
+```graphql
+query($repo: String!, $owner: String!, $branch: String!) {
+  repository(name: $repo, owner: $owner) {
+    ref(qualifiedName: $branch) {
+      target {
+        ... on Commit {
+          deployments(last: 1) {
+            edges {
+              node {
+                latestStatus {
+                  environmentUrl
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+I won't bore you with the details, those who wish to dive in deeper into Github's API can do it in the documentation.
+
+What's important with this query is that it will fetch the latest deployment of the latest commit on our branch, which is exactly what we need. It also requires 3 parameters:
+
+1. The name of the repo - `$repo`
+2. The owner of the repo - `$owner`
+3. The branch of which we want the deployment - `$branch`
+
+You can go to [Github's API explorer](https://developer.github.com/v4/explorer/) and run it with your parameters, and the result would look something similar to this:
+
+```json
+{
+  "data": {
+    "repository": {
+      "ref": {
+        "target": {
+          "deployments": {
+            "edges": [
+              {
+                "node": {
+                  "latestStatus": {
+                    "environmentUrl": "https://your-deployment.some-domain"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+Well, great. Now we can fetch the latest relevant deployment from our repository, all we need is to utilise it. We can, obviously, just send a `fetch` request in the beginning of our test suite and get the result, but what if we need it for more than one step? Plus, it's not nearly as much fun.
+
+## Creating a Github Action
+
+Now comes the fun part. Let's create the actual action so we can consume it in our workflow.
+
+A Github Action is composed of 2 important parts - an `action.yml` file that contains metadata about the action, and an entry point.
+
+Start off by initializing a new repository, or cloning a new one:
+
+```bash
+git clone https://github.com/your-name/your-action.git
+```
+
+### Creating an `action.yml`
+
+Let's continue with the `action.yml`. This file contains general information about our action, such as name and description, and how your action should run.
+
+In our case we're using node.js in version 12, and our entry point in `index.js`. Later we'll see how to add inputs and outputs to our action.
+
+```yml
+name: "Hello World"
+description: "Greet the world"
+runs:
+  using: "node12"
+  main: "index.js"
+```
+
+### Creating the main entry point
+
+Now we need to create the `index.js` file we've specified in our `action.yml`. Luckily, Github provides two packages that will come in handy for writing our action: [`@actions/core`](https://github.com/actions/toolkit/tree/master/packages/core) and [`@actions/github`](https://github.com/actions/toolkit/tree/master/packages/github).
+
+From the [docs](https://docs.github.com/en/actions/creating-actions/creating-a-javascript-action#adding-actions-toolkit-packages):
+
+> The toolkit `@actions/core` package provides an interface to the workflow commands, input and output variables, exit statuses, and debug messages.
+>
+> The toolkit also offers a `@actions/github` package that returns an authenticated Octokit REST client and access to GitHub Actions contexts.
+
+You can go ahead and install them, we'll use them later on.
+
+```bash
+npm i @actions/github @actions/core
+```
+
+The most basic `index.js` can look like this:
+
+```js
+console.log("Hello World!");
+```
+
+But we want it to be slightly more productive than that, and for that we need to define our action's inputs. Add the following lines to your `action.yml`:
+
+```yml{3-6}
+name: "Get Deployment URL"
+description: "Get the URL of the last deployment on a given branch"
+inputs:
+  token:
+    description: "GitHub token"
+    required: true
+runs:
+  using: "node12"
+  main: "index.js"
+```
+
+We've now added a required input named `token`. The token is, as described, a token for authenticating with GitHub's API. Later I'll show you how to make sure the right token is passed to your action.
+
+Let's make some use of this token in our `index.js`:
+
+```js
+import { getInput } from "@actions/core";
+import { GitHub } from "@actions/github";
+
+const octokit = new GitHub(getInput("token", { required: true }));
+```
+
+The `getInput` utility function allows us to access inputs passed to the action. Later we'll see exactly how to pass them. The `octokit` variable is an authenticated REST client. We will use it to query Github's API.
+
+### Fetching the deployment in our action
+
+Like I said earlier, to query the deployment we need 3 parameters - repo, owner and branch. All of those values are provided for us by Github, without us having to do much work.
+
+For our `owner` and `repo` params, we can extract them from the `GITHUB_REPOSITORY` environment variable like so:
+
+```js
+const [owner, repo] = process.env.GITHUB_REPOSITORY.split("/");
+```
+
+Getting the branch name is a little more tricky, here's how I ended up doing it:
+
+```js
+const branch =
+  process.env.GITHUB_HEAD_REF ||
+  process.env.GITHUB_REF.match(/(?<=refs\/heads\/).+/g)[0];
+```
+
+You can get the full list of available environment variables [here](https://docs.github.com/en/actions/configuring-and-managing-workflows/using-environment-variables#default-environment-variables).
+
+Now we just need to combine the query with our authenticated client. Create a file called `query.gql` and export the query from it like so:
+
+```graphql
+module.exports = `query($repo: String!, $owner: String!, $branch: String!) {
+  repository(name: $repo, owner: $owner) {
+    ref(qualifiedName: $branch) {
+      target {
+        ... on Commit {
+          deployments(last: 1) {
+            edges {
+              node {
+                latestStatus {
+                  environmentUrl
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+`;
+```
+
+And our `index.js` file will look like this:
+
+```js
+import { getInput } from "@actions/core";
+import { GitHub } from "@actions/github";
+import query from "./query.gql";
+
+const [owner, repo] = process.env.GITHUB_REPOSITORY.split("/");
+const branch =
+  process.env.GITHUB_HEAD_REF ||
+  process.env.GITHUB_REF.match(/(?<=refs\/heads\/).+/g)[0];
+
+async function run() {
+  const octokit = new GitHub(getInput("token", { required: true }));
+  const args = { repo, owner, branch };
+  const result = await octokit.graphql(query, args);
+}
+
+run();
+```
+
+### Pay it forward
+
+Our job is not yet complete. In order to consume our deployment URL, we must set it as an output. First we must declare so in our `action.yml`:
+
+```yml{7-9}
+name: "Get Deployment URL"
+description: "Get the URL of the last deployment on a given branch"
+inputs:
+  token:
+    description: "GitHub token"
+    required: true
+outputs:
+  deployment:
+    description: "The url of the most recent deployment"
+runs:
+  using: "node12"
+  main: "index.js"
+```
+
+And now we can safely export it:
+
+```js{1, 14-18}
+import { getInput, setOutput } from "@actions/core";
+import { GitHub } from "@actions/github";
+import query from "./query.gql";
+
+const [owner, repo] = process.env.GITHUB_REPOSITORY.split("/");
+const branch =
+  process.env.GITHUB_HEAD_REF ||
+  process.env.GITHUB_REF.match(/(?<=refs\/heads\/).+/g)[0];
+
+async function run() {
+  const octokit = new GitHub(getInput("token", { required: true }));
+  const args = { repo, owner, branch };
+  const result = await octokit.graphql(query, args);
+  const deployments = result.repository.ref.target.deployments;
+  setOutput(
+    "deployment",
+    deployments.edges[0].node.latestStatus.environmentUrl
+  );
+}
+
+run();
+```
+
+### Error Handling
+
+But what if our action fails? What if we fail to authenticate with Github's API? What if we suddenly get a `null`?
+
+For that we can use the `setFailed` function from `@actions/core`:
+
+```js{1,11,20-22}
+import { getInput, setOutput, setFailed } from "@actions/core";
+import { GitHub } from "@actions/github";
+import query from "./query.gql";
+
+const [owner, repo] = process.env.GITHUB_REPOSITORY.split("/");
+const branch =
+  process.env.GITHUB_HEAD_REF ||
+  process.env.GITHUB_REF.match(/(?<=refs\/heads\/).+/g)[0];
+
+async function run() {
+  try {
+    const octokit = new GitHub(getInput("token", { required: true }));
+    const args = { repo, owner, branch };
+    const result = await octokit.graphql(query, args);
+    const deployments = result.repository.ref.target.deployments;
+    setOutput(
+      "deployment",
+      deployments.edges[0].node.latestStatus.environmentUrl
+    );
+  } catch (error) {
+    setFailed(error.message);
+  }
+}
+
+run();
+```
+
+Now we can be sure the correct status is reported when our action throws an exception.
+
+### Committing `node_modules` to git
+
+Our last step is to commit the `node_modules` folder. Yeah I know what you're thinking. Take a deep breath, we'll go through it together.
+
+The reason we do it is that when we run our action, Github does not allow us to run any sort of build script, so we can't install them when the action is ran.
+
+To add you `node_modules` to git run the following commands:
+
+```bash
+git add node_modules/*
+git commit -m "adding node_modules 😢"
+git push
+```
+
+Those who want to avoid pushing your `node_modules` to the repo can use the excellent [ncc compiler](https://github.com/vercel/ncc).
+
+## Putting everything together
+
+Now all that's left is to use our action.
+
+Open the repo you wish to add the action to, and add it as a step in your workflow file:
+
+```yml
+# ...the rest of you file
+steps:
+  # ...previous steps
+  - name: Get deployment URL
+    id: deployment
+    uses: your-name/your-action-repo@master
+    with:
+      token: ${{ secrets.GITHUB_TOKEN }}
+
+  - name: Run e2e
+    run: npm run e2e
+    env:
+      deployment: ${{ steps.deployment.outputs.deployment }}
+  # ...following steps
+```
+
+Do note that we're passing `${{ secrets.GITHUB_TOKEN }}` as a token input to our function. This tells Github to pass a special token that is kept in secret, so no snooping eyes will be able to get it and authenticate with our credentials.
+
+Now your deployment will be exposed as an environment variable to you test suite, and you will be able to access it with `process.env.deployment`.
+
+That's pretty much it. Obviously there is a lot more you can do to perfect this action, you can add retry capabilities, rate limit handling and more.
+
+There is also a lot more you can with Github actions in general. You can put them on the [Github Action Marketplace](https://github.com/marketplace?type=actions) for everyone to find, you can add logs, logo and branding and more. The sky is the limit when it comes to things like that.
+
+If you don't want to go through the hassle of creating the action, I've published an action that does exactly that for my own personal use. It should work with any Github integration that creates Deployments with Github's API, and supports retries, rate-limiting and error handling. You can find it [here](https://github.com/marketplace/actions/get-deployment-url).
+
+Thank you for reading, I hope you've learned something and found my article useful.

@@ -111,5 +111,6 @@ module.exports = {
       },
     },
     `gatsby-plugin-sitemap`,
+    `gatsby-plugin-catch-links`,
   ],
 };

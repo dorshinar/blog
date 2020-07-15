@@ -49,6 +49,10 @@ export const Post = styled.div`
     padding-left: var(--spacing);
   }
 
+  & code[class*="language-"] {
+    white-space: pre-wrap;
+  }
+
   ${media.medium`
     & .gatsby-resp-image-wrapper,
     & img:not([class]) {
@@ -88,12 +92,15 @@ export const Post = styled.div`
   }
 
   & .gatsby-highlight-code-line {
+    --margin: 0.3rem;
+
     display: block;
     margin-right: calc(var(--spacing) * -1);
     margin-left: calc(var(--spacing) * -1);
     padding-right: var(--spacing);
-    padding-left: var(--spacing);
-    background-color: #ffffff38;
+    padding-left: calc(var(--spacing) - var(--margin));
+    background-color: #ffffff14;
+    border-left: var(--margin) solid #ffffffa1;
   }
 
   & li {
