@@ -1,18 +1,18 @@
 ---
 title: "Creating Custom Github Actions is Easy!"
 description: "Github actions are a great way to run custom CI workflows. What's great is that they're super easy to write."
+date: "2020-07-15"
 slug: "/creating-github-actions"
+cover_image: "./running-action.png"
 ---
 
-// TODO: proof-read, add cover image, add publish date, make sure code examples work
+I'm a big fan of Github actions. I've started using them right when they came out of beta. Creating workflows is very easy and uses a familiar `yml` syntax as I've explained in a previous article I've written - [Continuous Integration with Github Actions and Puppeteer](/continuous-integration-with-github-actions-and-puppeteer). I encourage you to give it a read, you might find it useful as well.
 
-I'm a big fan of Github actions. I've started using them right when they came out of beta. Creating workflows is very easy and uses a familiar `yml` syntax as I've explained in a previous article I've written - [Continuous Integration with Github Actions and Puppeteer](https://dorshinar.me/continuous-integration-with-github-actions-and-puppeteer). I encourage you to give it a read, you might find it useful as well.
-
-My workflow was very simple - install dependencies, lint, build, test. All this happened in parallel to a [Vercel](https://vercel.com/home) deployment which is triggered on new commits. It worked great, but I had an issue which irritated me - I had to build my blog twice on each push - 1 in my CI workflow, on which I ran the tests, and 1 in my Vercel build.
+My workflow was very simple - install dependencies, lint, build, test. All this happened in parallel to a [Vercel](https://vercel.com/home) deployment which is triggered on new commits. It worked great, but I had an issue which irritated me - I had to build my blog twice on each push - 1 in my CI workflow, against which I ran the tests, and 1 in my Vercel build.
 
 ![A successful deployment reported by Vercel to Github](github-deployment.png)
 
-The solution seemed pretty simple - just run the tests against the Vercel build and Voila! all problems solved. However reality showed me it was not as simple as I thought it should be. Although GitHub has a Deployments API, and Vercel was reporting deployments correctly, there was no way to access them in my build.
+The solution seemed pretty simple - just run the tests against the Vercel build and Voila! all problems solved. However reality proved me wrong, and it was not as simple as I thought it should be. Although GitHub has a Deployments API, and Vercel was reporting deployments correctly, there was no way to access them in my build.
 
 After a lot of research, I've reached a conclusion that I must build a custom action to query Github's API for the desired deployment. So let's start building!
 
@@ -20,7 +20,7 @@ After a lot of research, I've reached a conclusion that I must build a custom ac
 
 First things first, we must come up with a query that will satisfy our needs. Github has 2 separate versions of their API, v3 which supports REST queries, and v4 which support GraphQL queries.
 
-Both APIs support a very wide range of query-able fields as well as actions that can be performed. From creating gists, to querying details about repository's contributors. You can really do a lot with the API. The documentation for v3 is found [here](https://docs.github.com/en/rest), and the documentation for v4 is found [here](https://docs.github.com/en/graphql).
+Both APIs support a very wide range of fields you can query, as well as actions that can be performed. From creating gists, to querying details about repository's contributors. You can really do a lot with the API. The documentation for v3 is found [here](https://docs.github.com/en/rest), and the documentation for v4 is found [here](https://docs.github.com/en/graphql).
 
 To our business, this is the query I've found to work best:
 
@@ -48,7 +48,7 @@ query($repo: String!, $owner: String!, $branch: String!) {
 
 I won't bore you with the details, those who wish to dive in deeper into Github's API can do it in the documentation.
 
-What's important with this query is that it will fetch the latest deployment of the latest commit on out branch, which is exactly what we need. It also requires 3 parameters:
+What's important with this query is that it will fetch the latest deployment of the latest commit on our branch, which is exactly what we need. It also requires 3 parameters:
 
 1. The name of the repo - `$repo`
 2. The owner of the repo - `$owner`
@@ -80,19 +80,25 @@ You can go to [Github's API explorer](https://developer.github.com/v4/explorer/)
 }
 ```
 
-Well, great. Now we can fetch the latest relevant deployment from our repository, not we need to be able to use it. We can, obviously just make a `fetch` in the beginning of our test suite and get the result, but what if we need it for more than one step? Plus, it's not nearly as much fun.
+Well, great. Now we can fetch the latest relevant deployment from our repository, now we need to utilise it. We can, obviously, just send a `fetch` request in the beginning of our test suite and get the result, but what if we need it for more than one step? Plus, it's not nearly as much fun.
 
 ## Creating a Github Action
 
-Now comes the interesting part of this post. Let's create the actual actions so we can consume it in our workflow.
+Now comes the fun part. Let's create the actual action so we can consume it in our workflow.
 
 A Github Action is composed of 2 important parts - an `action.yml` file that contains metadata about the action, and an entry point.
 
+Start off by initializing a new repository, or cloning a new one:
+
+```bash
+git clone https://github.com/your-name/your-action.git
+```
+
 ### Creating an `action.yml`
 
-Let's start with the `action.yml`. This file contains general information about our action, such as name and description, and how your action should run.
+Let's continue with the `action.yml`. This file contains general information about our action, such as name and description, and how your action should run.
 
-In our case we're using node.js in version 12, and our entry point in `index.js`. Later we'll see how to add inputs and outputs to your action.
+In our case we're using node.js in version 12, and our entry point in `index.js`. Later we'll see how to add inputs and outputs to our action.
 
 ```yml
 name: "Hello World"
@@ -124,7 +130,7 @@ The most basic `index.js` can look like this:
 console.log("Hello World!");
 ```
 
-But we want it to be slightly more productive than that, and for that we need to defined out action's inputs. Add the following lines to your `action.yml`:
+But we want it to be slightly more productive than that, and for that we need to define our action's inputs. Add the following lines to your `action.yml`:
 
 ```yml{3-6}
 name: "Get Deployment URL"
@@ -143,18 +149,19 @@ We've now added a required input named `token`. The token is, as described, a to
 Let's make some use of this token in our `index.js`:
 
 ```js
+import { getInput } from "@actions/core";
 import { GitHub } from "@actions/github";
 
 const octokit = new GitHub(getInput("token", { required: true }));
 ```
 
-`octokit` is an authenticated REST client. We will use it to query Github's API.
+The `getInput` utility function allows us to access inputs passed to the action. Later we'll see exactly how to pass them. The `octokit` variable is an authenticated REST client. We will use it to query Github's API.
 
 ### Fetching the deployment in our action
 
-Like I said earlier, to query the deployment we need 3 parameters - repo, owner and branch. All of those values are provided for us by Github, without us having to do anything else.
+Like I said earlier, to query the deployment we need 3 parameters - repo, owner and branch. All of those values are provided for us by Github, without us having to do much work.
 
-For our `owner` and `repo` params, we can extract them from the GITHUB_REPOSITORY environment variable like so:
+For our `owner` and `repo` params, we can extract them from the `GITHUB_REPOSITORY` environment variable like so:
 
 ```js
 const [owner, repo] = process.env.GITHUB_REPOSITORY.split("/");
@@ -209,6 +216,7 @@ const branch =
 
 async function run() {
   const octokit = new GitHub(getInput("token", { required: true }));
+  const args = { repo, owner, branch };
   const result = await octokit.graphql(query, args);
 }
 
@@ -217,7 +225,7 @@ run();
 
 ### Pay it forward
 
-Our job is not yet complete. In order to consume our environment, we must set it as an output. First we must declare so in our `action.yml`:
+Our job is not yet complete. In order to consume our deployment URL, we must set it as an output. First we must declare so in our `action.yml`:
 
 ```yml{7-9}
 name: "Get Deployment URL"
@@ -236,7 +244,7 @@ runs:
 
 And now we can safely export it:
 
-```js{1, 13-17}
+```js{1, 14-18}
 import { getInput, setOutput } from "@actions/core";
 import { GitHub } from "@actions/github";
 import query from "./query.gql";
@@ -248,6 +256,7 @@ const branch =
 
 async function run() {
   const octokit = new GitHub(getInput("token", { required: true }));
+  const args = { repo, owner, branch };
   const result = await octokit.graphql(query, args);
   const deployments = result.repository.ref.target.deployments;
   setOutput(
@@ -265,7 +274,7 @@ But what if our action fails? What if we fail to authenticate with Github's API?
 
 For that we can use the `setFailed` function from `@actions/core`:
 
-```js{1,11,19-21}
+```js{1,11,20-22}
 import { getInput, setOutput, setFailed } from "@actions/core";
 import { GitHub } from "@actions/github";
 import query from "./query.gql";
@@ -278,6 +287,7 @@ const branch =
 async function run() {
   try {
     const octokit = new GitHub(getInput("token", { required: true }));
+    const args = { repo, owner, branch };
     const result = await octokit.graphql(query, args);
     const deployments = result.repository.ref.target.deployments;
     setOutput(
@@ -294,17 +304,21 @@ run();
 
 Now we can be sure the correct status is reported when our action throws an exception.
 
-### Committing node_modules to git
+### Committing `node_modules` to git
 
-Our last step is to commit the node_modules folder. The reason we do it is that when we run our action, Github does not allow you to run any sort of build script, so we can't install them when the action is ran.
+Our last step is to commit the `node_modules` folder. Yeah I know what you're thinking. Take a deep breath, we'll go through it together.
 
-To add you node_modules to git run the following command:
+The reason we do it is that when we run our action, Github does not allow us to run any sort of build script, so we can't install them when the action is ran.
+
+To add you `node_modules` to git run the following commands:
 
 ```bash
-git add node_modules/* && git commit -m "adding node_modules 😢" && git push
+git add node_modules/*
+git commit -m "adding node_modules 😢"
+git push
 ```
 
-Those who want to avoid pushing your node_modules to the repo can use the excellent [ncc compiler](https://github.com/vercel/ncc).
+Those who want to avoid pushing your `node_modules` to the repo can use the excellent [ncc compiler](https://github.com/vercel/ncc).
 
 ## Putting everything together
 
@@ -328,6 +342,8 @@ steps:
       deployment: ${{ steps.deployment.outputs.deployment }}
   # ...following steps
 ```
+
+Do note that we're passing `${{ secrets.GITHUB_TOKEN }}` as a token input to our function. This tells Github to pass a special token that is kept in secret, so no snooping eyes will be able to get it and authenticate with our credentials.
 
 Now your deployment will be exposed as an environment variable to you test suite, and you will be able to access it with `process.env.deployment`.
 
