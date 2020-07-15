@@ -57,7 +57,7 @@ function SEO({ description, lang, meta, title, slug, thumbnail }) {
       {thumbnail && <meta property="og:image" content={imageUrl} />}
 
       {/* Twitter Card Tags */}
-      <meta name="twitter:card" content={"summary"} />
+      <meta name="twitter:card" content={"summary_large_image"} />
       <meta
         name="twitter:creator"
         content={`@${site.siteMetadata.social.twitter}`}
