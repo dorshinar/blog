@@ -80,7 +80,7 @@ You can go to [Github's API explorer](https://developer.github.com/v4/explorer/)
 }
 ```
 
-Well, great. Now we can fetch the latest relevant deployment from our repository, now we need to utilise it. We can, obviously, just send a `fetch` request in the beginning of our test suite and get the result, but what if we need it for more than one step? Plus, it's not nearly as much fun.
+Well, great. Now we can fetch the latest relevant deployment from our repository, all we need is to utilise it. We can, obviously, just send a `fetch` request in the beginning of our test suite and get the result, but what if we need it for more than one step? Plus, it's not nearly as much fun.
 
 ## Creating a Github Action
 
