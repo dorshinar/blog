@@ -40,12 +40,7 @@ function SEO({ description, lang, meta, title, slug, thumbnail }) {
   const url = `${site.siteMetadata.siteUrl}${slug}/`;
   const imageSrc =
     thumbnail?.childImageSharp?.sizes?.src || avatar.childImageSharp.fixed.src;
-  const imageUrl = new URL(
-    imageSrc,
-    process.env.VERCEL_URL || site.siteMetadata.siteUrl
-  );
-
-  console.dir(avatar);
+  const imageUrl = new URL(imageSrc, site.siteMetadata.siteUrl);
 
   return (
     <Helmet
@@ -76,7 +71,7 @@ function SEO({ description, lang, meta, title, slug, thumbnail }) {
         content={`@${site.siteMetadata.social.twitter}`}
       />
       <meta name="twitter:title" content={title} />
-      <meta name="twitter:description" content={description} />
+      <meta name="twitter:description" content={metaDescription} />
       <meta name="twitter:image" content={imageUrl} />
 
       {/* Google Search Tags */}
