@@ -11,7 +11,7 @@ import { Helmet } from "react-helmet";
 import { useStaticQuery, graphql } from "gatsby";
 
 function SEO({ description, lang, meta, title, slug, thumbnail }) {
-  const { site } = useStaticQuery(
+  const { site, avatar } = useStaticQuery(
     graphql`
       query {
         site {
@@ -25,17 +25,22 @@ function SEO({ description, lang, meta, title, slug, thumbnail }) {
             }
           }
         }
+        avatar: file(absolutePath: { regex: "/profile-pic.jpg/" }) {
+          childImageSharp {
+            fixed(width: 1200, height: 1200) {
+              ...GatsbyImageSharpFixed
+            }
+          }
+        }
       }
     `
   );
 
   const metaDescription = description || site.siteMetadata.description;
   const url = `${site.siteMetadata.siteUrl}${slug}/`;
-  const imageSrc = thumbnail && thumbnail.childImageSharp.sizes.src;
-  const imageUrl = new URL(
-    imageSrc,
-    process.env.VERCEL_URL || site.siteMetadata.siteUrl
-  );
+  const imageSrc =
+    thumbnail?.childImageSharp?.sizes?.src || avatar.childImageSharp.fixed.src;
+  const imageUrl = new URL(imageSrc, site.siteMetadata.siteUrl);
 
   return (
     <Helmet
@@ -54,17 +59,20 @@ function SEO({ description, lang, meta, title, slug, thumbnail }) {
       <meta property="og:description" content={metaDescription} />
       <meta property="og:url" content={url} />
       <meta property="og:type" content={"website"} />
-      {thumbnail && <meta property="og:image" content={imageUrl} />}
+      <meta property="og:image" content={imageUrl} />
 
       {/* Twitter Card Tags */}
-      <meta name="twitter:card" content={"summary_large_image"} />
+      <meta
+        name="twitter:card"
+        content={thumbnail ? "summary_large_image" : "summary"}
+      />
       <meta
         name="twitter:creator"
         content={`@${site.siteMetadata.social.twitter}`}
       />
       <meta name="twitter:title" content={title} />
-      <meta name="twitter:description" content={description} />
-      {thumbnail && <meta name="twitter:image" content={imageUrl} />}
+      <meta name="twitter:description" content={metaDescription} />
+      <meta name="twitter:image" content={imageUrl} />
 
       {/* Google Search Tags */}
       <meta
