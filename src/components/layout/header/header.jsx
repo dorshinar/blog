@@ -22,14 +22,14 @@ export function Header() {
       sun: file(absolutePath: { regex: "/sun/" }) {
         childImageSharp {
           fixed(width: 20, height: 20) {
-            ...GatsbyImageSharpFixed
+            ...GatsbyImageSharpFixed_withWebp_noBase64
           }
         }
       }
       moon: file(absolutePath: { regex: "/moon/" }) {
         childImageSharp {
           fixed(width: 18, height: 18) {
-            ...GatsbyImageSharpFixed
+            ...GatsbyImageSharpFixed_withWebp_noBase64
           }
         }
       }
