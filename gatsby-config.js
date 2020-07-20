@@ -3,7 +3,7 @@ module.exports = {
     title: `Dor Shinar`,
     author: `Dor Shinar`,
     description: `My Personal blog for thoughts.`,
-    siteUrl: "https://dorshinar.me",
+    siteUrl: `https://${process.env.VERCEL_URL}` || "https://dorshinar.me",
     social: {
       github: `dorshinar`,
       linkedin: "dor-shinar-82b00b144",

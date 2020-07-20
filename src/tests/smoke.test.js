@@ -107,10 +107,10 @@ describe("Smoke test site", () => {
       "<description><![CDATA[Lately we started a new project at work, written in React + Typescript. Of course, like any other project we wanted it to be automatically…]]></description>"
     );
     expect(rss).toInclude(
-      "<link>https://dorshinar.me/linting-your-react+typescript-project-with-eslint-and-prettier</link>"
+      `<link>${url}/linting-your-react+typescript-project-with-eslint-and-prettier</link>`
     );
     expect(rss).toInclude(
-      '<guid isPermaLink="false">https://dorshinar.me/linting-your-react+typescript-project-with-eslint-and-prettier</guid>'
+      `<guid isPermaLink="false">${url}/linting-your-react+typescript-project-with-eslint-and-prettier</guid>`
     );
     expect(rss).toInclude("<pubDate>Mon, 21 Jan 2019 20:00:00 GMT</pubDate>");
   });
@@ -125,9 +125,9 @@ describe("Smoke test site", () => {
     expect(map).toInclude('<?xml version="1.0" encoding="UTF-8"?>');
     expect(map).toInclude("<urlset");
     expect(map).toInclude("</urlset>");
-    expect(map).toInclude("<loc>https://dorshinar.me/</loc>");
+    expect(map).toInclude(`<loc>${url}/</loc>`);
     expect(map).toInclude(
-      "<loc>https://dorshinar.me/themes-using-css-variables-and-react-context</loc>"
+      `<loc>${url}/themes-using-css-variables-and-react-context</loc>`
     );
   });
 
