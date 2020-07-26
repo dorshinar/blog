@@ -8,14 +8,7 @@ import { Separator } from "../../utils/styled/separator";
 import { BuyMeACoffee } from "../../components/buy-me-a-coffee/buy-me-a-coffee";
 import Layout from "../../components/layout/layout";
 
-import {
-  Header,
-  SubHeader,
-  Post,
-  NearByPosts,
-  PostLink,
-  Wrapper,
-} from "./blog-post.styled";
+import "./blog-post.css";
 
 class BlogPostTemplate extends React.Component {
   render() {
@@ -31,32 +24,35 @@ class BlogPostTemplate extends React.Component {
           slug={post.fields.slug}
           thumbnail={post.frontmatter.thumbnail}
         />
-        <Wrapper>
-          <Header data-p="post-title">{post.frontmatter.title}</Header>
-          <SubHeader>
+        <article className="blog-post-wrapper">
+          <h2 data-p="post-title">{post.frontmatter.title}</h2>
+          <p className="subtitle">
             {`${post.frontmatter.date}, ${post.fields.readingTime.text}`}
-          </SubHeader>
-          <Post dangerouslySetInnerHTML={{ __html: post.html }} />
+          </p>
+          <div
+            className="post"
+            dangerouslySetInnerHTML={{ __html: post.html }}
+          />
           <BuyMeACoffee />
           <Separator />
           <Bio />
-          <NearByPosts>
-            <PostLink>
+          <ul className="near-by-posts">
+            <li>
               {previous && (
                 <Link to={previous.fields.slug} rel="prev">
                   ← {previous.frontmatter.title}
                 </Link>
               )}
-            </PostLink>
-            <PostLink>
+            </li>
+            <li>
               {next && (
                 <Link to={next.fields.slug} rel="next">
                   {next.frontmatter.title} →
                 </Link>
               )}
-            </PostLink>
-          </NearByPosts>
-        </Wrapper>
+            </li>
+          </ul>
+        </article>
       </Layout>
     );
   }

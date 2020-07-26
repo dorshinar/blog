@@ -1,0 +1,115 @@
+.blog-post-wrapper {
+  --spacing: calc(var(--rhythm) * 0.5);
+
+  padding-right: var(--spacing);
+  padding-left: var(--spacing);
+}
+
+h2 {
+  margin-top: var(--rhythm);
+  margin-bottom: 0;
+  color: var(--primary);
+}
+
+.subtitle {
+  font-size: 0.9em;
+  display: block;
+  margin-bottom: var(--rhythm);
+}
+
+.near-by-posts {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  list-style: none;
+  padding: 0;
+}
+
+.post > p > img {
+  margin-bottom: 0;
+}
+
+.post .gatsby-resp-image-wrapper,
+.post img:not([class]) {
+  margin-right: calc(var(--spacing) * -1) !important;
+  margin-left: calc(var(--spacing) * -1) !important;
+}
+
+.post img:not([class]) {
+  max-width: calc(100% + (var(--spacing) * 2));
+}
+
+.post pre[class*="language-"] {
+  margin-right: calc(var(--spacing) * -1);
+  margin-left: calc(var(--spacing) * -1);
+
+  padding-right: var(--spacing);
+  padding-left: var(--spacing);
+}
+
+.post code[class*="language-"] {
+  white-space: pre-wrap;
+}
+
+.post .command-line-prompt {
+  border-right: 0;
+  margin-right: 0;
+}
+
+.post :not(pre) > code[class*="language-"] {
+  border-radius: 0.3em;
+}
+
+/* Prompt for all users */
+.post .command-line-prompt > span:before {
+  content: "$";
+}
+
+.post blockquote {
+  margin-left: calc(var(--spacing) * -1);
+  border-left: 0.4rem solid var(--blockquoteColor);
+  padding: 1rem;
+}
+
+.post .gatsby-highlight-code-line {
+  --margin: 0.3rem;
+
+  display: block;
+  margin-right: calc(var(--spacing) * -1);
+  margin-left: calc(var(--spacing) * -1);
+  padding-right: var(--spacing);
+  padding-left: calc(var(--spacing) - var(--margin));
+  background-color: #ffffff14;
+  border-left: var(--margin) solid #ffffffa1;
+}
+
+.post li {
+  margin-bottom: 0;
+}
+
+.post .header path {
+  fill: var(--primary);
+}
+
+@media (min-width: 48em) {
+  .blog-post-wrapper {
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+  .post .gatsby-resp-image-wrapper,
+  .post img:not([class]) {
+    margin-right: auto !important;
+    margin-left: auto !important;
+  }
+
+  .post img:not([class]) {
+    max-width: 100%;
+  }
+
+  .post pre[class*="language-"] {
+    margin-right: auto;
+    margin-left: auto;
+    border-radius: 5px;
+  }
+}

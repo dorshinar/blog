@@ -1,14 +1,14 @@
 import React from "react";
 import { OutboundLink } from "gatsby-plugin-google-analytics";
 
-import { StyledFooter } from "./footer.styled";
+import "./footer.css";
 
 export function Footer() {
   return (
-    <StyledFooter>
+    <footer>
       © {new Date().getFullYear()} Dor Shinar, Built with
       {` `}
       <OutboundLink href="https://www.gatsbyjs.org">Gatsby</OutboundLink>
-    </StyledFooter>
+    </footer>
   );
 }

@@ -1,0 +1,67 @@
+.bio-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: var(--rhythm);
+  padding: calc(var(--rhythm) * 0.5);
+}
+
+.profile-image {
+  margin-right: calc(var(--rhythm) * 0.5);
+  margin-bottom: 0;
+  min-width: 50;
+  border-radius: 100%;
+}
+
+.about {
+  margin-bottom: calc(var(--rhythm) * 0.5);
+}
+
+address {
+  display: flex;
+  justify-content: flex-start;
+  margin: 0;
+  width: 100%;
+}
+
+.social-link {
+  background-image: initial;
+  margin-right: var(--rhythm);
+
+  color: unset;
+}
+
+.social-link path {
+  fill: var(--icon);
+  transition: fill 0.3s ease;
+}
+
+.social-link-icon {
+  font-size: 150%;
+  fill: var(--icon);
+  transition: fill 0.3s ease;
+}
+
+.github:hover path {
+  fill: rgb(173, 155, 198);
+}
+
+.twitter:hover path {
+  fill: rgb(29, 161, 242);
+}
+
+.linkedin:hover path {
+  fill: rgb(0, 119, 181);
+}
+
+.dev:hover path {
+  fill: rgb(247, 131, 172);
+}
+
+.stackoverflow:hover path {
+  fill: rgb(244, 128, 36);
+}
+
+.rss:hover path {
+  fill: rgb(253, 126, 20);
+}

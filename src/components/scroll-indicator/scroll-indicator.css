@@ -1,0 +1,13 @@
+.scroll-indicator-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  z-index: 1;
+  height: calc(var(--rhythm) * 0.1);
+}
+
+.indicator {
+  height: calc(var(--rhythm) * 0.1);
+  background-color: var(--primary);
+}

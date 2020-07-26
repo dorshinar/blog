@@ -4,7 +4,8 @@ import { Themer } from "../themer/themer";
 
 import { Header } from "./header/header";
 import { Footer } from "./footer/footer";
-import { Wrapper, ContentWrapper } from "./layout.styled";
+
+import "./layout.css";
 
 class Layout extends React.Component {
   render() {
@@ -12,13 +13,13 @@ class Layout extends React.Component {
 
     return (
       <Themer>
-        <Wrapper>
+        <div className="layout-wrapper">
           <Header />
-          <ContentWrapper>
+          <div className="content-wrapper">
             <main>{children}</main>
             <Footer />
-          </ContentWrapper>
-        </Wrapper>
+          </div>
+        </div>
       </Themer>
     );
   }

@@ -17,3 +17,45 @@
   box-shadow: none;
   background-color: var(--headerBackgroundColor);
 }
+
+header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: calc(var(--rhythm) * 0.5);
+  height: calc(var(--rhythm) * 3);
+  background-color: var(--headerBackgroundColor);
+  transition: background-color 0.25s ease;
+}
+
+.header-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: var(--contentWidth);
+}
+
+.home-link {
+  text-decoration: none;
+}
+
+h1 {
+  margin-bottom: 0;
+  color: var(--primary);
+}
+
+.theme-toggle {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.moon {
+  top: -50%;
+  left: -15%;
+}
+
+.sun {
+  top: -50%;
+  left: -30%;
+}

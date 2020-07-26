@@ -1,7 +1,8 @@
 import React from "react";
 import { useStaticQuery, graphql } from "gatsby";
+import { OutboundLink } from "gatsby-plugin-google-analytics";
 
-import { BuyMeACoffeeSentence } from "./buy-me-a-coffee.styled";
+import "./buy-me-a-coffee.css";
 
 const BuyMeACoffee = () => {
   const data = useStaticQuery(graphql`
@@ -17,8 +18,8 @@ const BuyMeACoffee = () => {
   `);
   return (
     <>
-      <BuyMeACoffeeSentence>Loved the article?</BuyMeACoffeeSentence>
-      <a
+      <p className="buy-me-a-coffee">Loved the article?</p>
+      <OutboundLink
         href={data.site.siteMetadata.social.koFi}
         rel="noopener noreferrer"
         target="_blank"
@@ -31,7 +32,7 @@ const BuyMeACoffee = () => {
           border="0"
           alt="Buy Me a Coffee at ko-fi.com"
         />
-      </a>
+      </OutboundLink>
     </>
   );
 };
