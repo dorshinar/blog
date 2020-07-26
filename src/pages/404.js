@@ -1,8 +1,9 @@
 import React from "react";
-import { graphql } from "gatsby";
+// import { graphql } from "gatsby";
 import styled from "styled-components";
 
 import SEO from "../components/seo";
+import Layout from "../components/layout/layout";
 
 const Content = styled.div`
   padding: calc(var(--rhythm) * 0.5);
@@ -10,20 +11,12 @@ const Content = styled.div`
 
 export default () => (
   <>
-    <SEO title="404: Not Found" />
-    <Content>
-      <h1>Not Found</h1>
-      <p>You just hit a route that doesn&#39;t exist... the sadness.</p>
-    </Content>
+    <Layout>
+      <SEO title="404: Not Found" />
+      <Content>
+        <h1>Not Found</h1>
+        <p>You just hit a route that doesn&#39;t exist... the sadness.</p>
+      </Content>
+    </Layout>
   </>
 );
-
-export const pageQuery = graphql`
-  query {
-    site {
-      siteMetadata {
-        title
-      }
-    }
-  }
-`;
