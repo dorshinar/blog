@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useCallback } from "react";
 
-import { Container, Indicator } from "./scroll-indicator.styled";
+import "./scroll-indicator.css";
 
 export function ScrollIndicator() {
   const [width, setWidth] = useState(0);
@@ -14,6 +14,7 @@ export function ScrollIndicator() {
       window.removeEventListener("scroll", handleScroll);
     };
   });
+
   const handleScroll = useCallback(() => {
     const winScroll =
       document.body.scrollTop || document.documentElement.scrollTop;
@@ -25,8 +26,8 @@ export function ScrollIndicator() {
   }, []);
 
   return (
-    <Container>
-      <Indicator width={width} />
-    </Container>
+    <div className="scroll-indicator-container">
+      <div className="indicator" style={{ width: `${width}vw` }} />
+    </div>
   );
 }

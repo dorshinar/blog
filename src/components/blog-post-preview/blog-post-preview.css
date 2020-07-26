@@ -1,0 +1,17 @@
+.preview-wrapper {
+  padding: calc(var(--rhythm) * 0.5);
+}
+
+.preview-header {
+  margin-top: 0;
+  margin-bottom: calc(var(--rhythm) * 0.25);
+}
+
+.post-link {
+  color: var(--primary);
+  text-decoration: none;
+}
+
+p.description {
+  margin-bottom: 0;
+}

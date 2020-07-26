@@ -1,7 +1,11 @@
-import styled from "styled-components";
+import React from "react";
 
-export const Separator = styled.hr`
-  margin: var(--rhythm) 0;
-  background-color: var(--separatorColor);
-  transition: background-color 0.25s ease;
-`;
+export const Separator = () => (
+  <hr
+    style={{
+      margin: "var(--rhythm) 0",
+      backgroundColor: "var(--separatorColor)",
+      transition: "background-color 0.25s ease",
+    }}
+  />
+);
