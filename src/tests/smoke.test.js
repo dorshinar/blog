@@ -74,7 +74,6 @@ describe("Smoke test site", () => {
     );
     await page.waitFor(() => document.title.includes("Linting Your"));
 
-    await page.screenshot({ path: "screenshots/navigates.png" });
     // Ensure the title is set properly
     expect(await page.title()).toBe(
       "Linting Your React+Typescript Project With ESlint and Prettier | Dor Shinar"

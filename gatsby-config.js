@@ -64,6 +64,10 @@ module.exports = {
               inlineCodeMarker: ">",
             },
           },
+          {
+            resolve: "gatsby-remark-behead",
+            options: { depth: 1 },
+          },
           `gatsby-remark-copy-linked-files`,
           `gatsby-remark-smartypants`,
         ],
