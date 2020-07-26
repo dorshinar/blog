@@ -46,9 +46,3 @@ jobs:
         run: npm run test:e2e
         env:
           deployment: ${{ steps.deployment.outputs.deployment }}
-
-      - uses: actions/upload-artifact@v1
-        if: failure()
-        with:
-          name: screenshots
-          path: ./screenshots
