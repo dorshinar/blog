@@ -30,7 +30,7 @@ jobs:
 
       - name: Install dependencies
         if: steps.cache.outputs.cache-hit != 'true'
-        run: npm ci
+        run: npm ci --prefer-offline
 
       - name: Lint
         run: npm run lint
