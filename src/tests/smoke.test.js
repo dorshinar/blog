@@ -4,6 +4,8 @@ const puppeteer = require("puppeteer");
 
 const url = process.env.CI ? process.env.deployment : "http://localhost:8000/";
 
+jest.setTimeout(30000);
+
 function getExecutablePath() {
   if (process.env.CI === "true") {
     return "google-chrome";
