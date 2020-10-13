@@ -27,7 +27,7 @@ describe("Smoke test site", () => {
       args: ["--no-sandbox"],
       executablePath: getExecutablePath(),
     });
-    console.log({ browser });
+
     if (!fs.existsSync("screenshots")) {
       fs.mkdirSync("screenshots");
     }
