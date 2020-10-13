@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 
 export default function HTML(props) {
   return (
+    // props.htmlAttributes contains lang prop
+    // eslint-disable-next-line jsx-a11y/html-has-lang
     <html {...props.htmlAttributes}>
       <head>
         <meta charSet="utf-8" />
