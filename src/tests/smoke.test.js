@@ -136,20 +136,22 @@ describe("Smoke test site", () => {
     });
 
     // Ensure rss feed is set up correctly
-    expect(rss).toInclude('<?xml version="1.0" encoding="UTF-8"?>');
-    expect(rss).toInclude(
+    expect(rss).stringContaining('<?xml version="1.0" encoding="UTF-8"?>');
+    expect(rss).stringContaining(
       "<title><![CDATA[Linting Your React+Typescript Project With ESlint and Prettier]]></title>"
     );
-    expect(rss).toInclude(
+    expect(rss).stringContaining(
       "<description><![CDATA[Lately we started a new project at work, written in React + Typescript. Of course, like any other project we wanted it to be automatically…]]></description>"
     );
-    expect(rss).toInclude(
+    expect(rss).stringContaining(
       `<link>${url}/linting-your-react+typescript-project-with-eslint-and-prettier</link>`
     );
-    expect(rss).toInclude(
+    expect(rss).stringContaining(
       `<guid isPermaLink="false">${url}/linting-your-react+typescript-project-with-eslint-and-prettier</guid>`
     );
-    expect(rss).toInclude("<pubDate>Mon, 21 Jan 2019 20:00:00 GMT</pubDate>");
+    expect(rss).stringContaining(
+      "<pubDate>Mon, 21 Jan 2019 20:00:00 GMT</pubDate>"
+    );
   });
 
   it("loads the sitemap.xml", async () => {
@@ -159,11 +161,11 @@ describe("Smoke test site", () => {
       return text;
     });
 
-    expect(map).toInclude('<?xml version="1.0" encoding="UTF-8"?>');
-    expect(map).toInclude("<urlset");
-    expect(map).toInclude("</urlset>");
-    expect(map).toInclude(`<loc>${url}/</loc>`);
-    expect(map).toInclude(
+    expect(map).stringContaining('<?xml version="1.0" encoding="UTF-8"?>');
+    expect(map).stringContaining("<urlset");
+    expect(map).stringContaining("</urlset>");
+    expect(map).stringContaining(`<loc>${url}/</loc>`);
+    expect(map).stringContaining(
       `<loc>${url}/themes-using-css-variables-and-react-context</loc>`
     );
   });
