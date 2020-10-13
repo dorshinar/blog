@@ -45,8 +45,6 @@
     "gatsby-transformer-remark": "^2.8.38",
     "gatsby-transformer-sharp": "^2.5.17",
     "jest": "^26.5.3",
-    "jest-extended": "^0.11.5",
-    "jest-puppeteer": "^4.4.0",
     "prettier": "^2.1.2",
     "prismjs": "^1.22.0",
     "puppeteer": "^5.3.1",
@@ -82,7 +80,7 @@
     "start": "npm run develop",
     "serve": "gatsby serve",
     "prod": "npm run build && npm run serve",
-    "test:e2e": "jest --forceExit",
+    "test:e2e": "jest --runInBand",
     "clean": "gatsby clean"
   }
 }

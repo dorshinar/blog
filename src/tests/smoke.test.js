@@ -1,16 +1,45 @@
 const fs = require("fs");
 
+const puppeteer = require("puppeteer");
+
 const url = process.env.CI ? process.env.deployment : "http://localhost:8000/";
 
 describe("Smoke test site", () => {
+  let browser;
+  let page;
+
   beforeAll(async () => {
-    await page.setViewport({ width: 1920, height: 1080 });
-    fs.mkdirSync("screenshots");
+    browser = await puppeteer.launch({
+      headless: process.env.CI === "true",
+      ignoreDefaultArgs: ["--disable-extensions"],
+      args: ["--no-sandbox"],
+      executablePath:
+        process.env.CI === "true"
+          ? "google-chrome"
+          : "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+    });
+
+    if (!fs.existsSync("screenshots")) {
+      fs.mkdirSync("screenshots");
+    }
+  });
+
+  afterAll(async () => {
+    await browser.close();
   });
 
   beforeEach(async () => {
+    page = await browser.newPage();
+
+    await page.setViewport({ width: 1920, height: 1080 });
     await page.goto(url);
-    await page.waitFor(() => document.title.includes("All posts | Dor Shinar"));
+    await page.waitForFunction(() =>
+      document.title.includes("All posts | Dor Shinar")
+    );
+  });
+
+  afterEach(async () => {
+    await page.close();
   });
 
   it("loads the main page", async () => {
@@ -72,7 +101,7 @@ describe("Smoke test site", () => {
     await page.click(
       '[href="/linting-your-react+typescript-project-with-eslint-and-prettier"]'
     );
-    await page.waitFor(() => document.title.includes("Linting Your"));
+    await page.waitForFunction(() => document.title.includes("Linting Your"));
 
     // Ensure the title is set properly
     expect(await page.title()).toBe(
