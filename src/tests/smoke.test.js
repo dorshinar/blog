@@ -4,6 +4,18 @@ const puppeteer = require("puppeteer");
 
 const url = process.env.CI ? process.env.deployment : "http://localhost:8000/";
 
+function getExecutablePath() {
+  if (process.env.CI === "true") {
+    return "google-chrome";
+  }
+
+  if (process.platform === "darwin") {
+    return "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
+  }
+
+  return "chrome.exe";
+}
+
 describe("Smoke test site", () => {
   let browser;
   let page;
@@ -13,10 +25,7 @@ describe("Smoke test site", () => {
       headless: process.env.CI === "true",
       ignoreDefaultArgs: ["--disable-extensions"],
       args: ["--no-sandbox"],
-      executablePath:
-        process.env.CI === "true"
-          ? "google-chrome"
-          : "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+      executablePath: getExecutablePath(),
     });
 
     if (!fs.existsSync("screenshots")) {
