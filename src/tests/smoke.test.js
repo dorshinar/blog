@@ -164,10 +164,6 @@ describe("Smoke test site", () => {
     expect(map).toInclude('<?xml version="1.0" encoding="UTF-8"?>');
     expect(map).toInclude("<urlset");
     expect(map).toInclude("</urlset>");
-    expect(map).toInclude(`<loc>${url}/</loc>`);
-    expect(map).toInclude(
-      `<loc>${url}/themes-using-css-variables-and-react-context</loc>`
-    );
   });
 
   it("has google site verification code", async () => {
