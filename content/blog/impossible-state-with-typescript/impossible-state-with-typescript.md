@@ -5,151 +5,104 @@ description: "Typescript's greatest strength, in my opinion is it's ability to d
 slug: "/avoid-impossible-state-with-typescript"
 ---
 
-I love [TypeScript](https://www.typescriptlang.org/). I've been using it for over 2 years in various projects, and the more I use it the less compelling I find vanilla Javascript. Not that there is anything wrong with vanilla Javascript ([my blog](https://dorshinar.me/) is vanilla!), but I think that as when it comes to medium to large projects, Typescript makes a lot of things easier.
+I love [TypeScript](https://www.typescriptlang.org/). I've been using it for over 2 years in various projects, and the more I use it the less compelling I find vanilla Javascript.
+
+Not that there is anything wrong with vanilla Javascript ([my blog](https://dorshinar.me/) is vanilla!), but I think that when it comes to medium to large projects, Typescript makes a lot of things easier.
 
 Among the many good things Typescript offers, I'd like to address one that, in my experience, has saved me quite a few bugs.
 
 Let's start with an example first.
 
-Say, we work on an app that manages supply in a computer hardware store. Currently, the store only sells PCs.
-
-Our basic type would be, then, the `Computer`:
-
-```typescript
-type CPU = "Intel Core i9-10850K" | "AMD Ryzen 9 5950X";
-
-type GPU = "Iris Plus Graphics 655" | "Nvidia GEFORCE RTX 3090";
-
-interface Computer {
-  cpu: CPU;
-  gpu: GPU;
-  brand: string;
-  modelName: string;
-}
-```
-
-In order to display the available PCs in the store, we can use a component like so:
+Let's say we have a very rudimentary loading indicator in our app:
 
 ```tsx
 import React from "react";
 
-const PC: React.FC<Computer> = ({ computer }) => (
-  <div>
-    <h3>{computer.modelName}</h3>
-    <h4>{computer.brand}</h4>
-    <div>
-      <CPU>{computer.cpu}</CPU>
-      <GPU>{computer.gpu}</GPU>
-    </div>
-  </div>
-);
-```
+type RequestStatus = "PENDING" | "SUCCESSFUL" | "FAILED";
 
-Very simple right?
-
-Let's add a very basic test for the component.
-
-```typescript
-import { render } from "react-dom";
-
-it("renders without crashing", () => {
-  const computer: Computer = {
-    cpu: "Intel Core i9-10850K",
-    gpu: "Iris Plus Graphics 655",
-    brand: "UltraPCs",
-    modelName: "Mega 5",
-  };
-
-  render(<PC computer={computer} />, container);
-});
-```
-
-## When specs change
-
-Most apps aspire to keep evolving over time, so demands are never standing still. Let's say, that our store wants to expand, and sell laptops as well as PCs.
-
-That shouldn't be too hard right? We have Typescript! We can re-factor all we want with absolute confidence.
-
-Laptop have one special things PCs don't have, and that's a screen. To overcome this obstacle, we will add a `screenSize` field to our `Computer` interface.
-
-```typescript
-interface Computer {
-  cpu: CPU;
-  gpu: GPU;
-  brand: string;
-  modelName: string;
-  // highlight-next-line
-  screenSize: number | undefined;
+interface RequestLoadingIndicatorProps {
+  state: RequestStatus;
 }
-```
 
-`screenSize` can be undefined because, as we've established before, PCs have no screen. We could use 0, but I prefer more direct approaches to inexistent values.
+const styles: Record<RequestStatus, React.CSSProperties> = {
+  PENDING: {
+    backgroundColor: "blue",
+    borderRadius: "50%",
+    width: "50px",
+    height: "50px",
+  },
+  FAILED: {
+    backgroundColor: "red",
+    borderRadius: "50%",
+    width: "50px",
+    height: "50px",
+  },
+  SUCCESSFUL: {
+    backgroundColor: "green",
+    borderRadius: "50%",
+    width: "50px",
+    height: "50px",
+  },
+};
 
-A while later, we decide we want to emphasize the specs of our laptops over the brand and model, so we create a special component for it.
-
-```tsx
-import React from "react";
-
-const Laptop: React.FC<Computer> = ({ computer }) => (
-  <div>
-    <h3>
-      <CPU>{computer.cpu}</CPU>
-    </h3>
-    <h4>
-      <GPU>{computer.gpu}</GPU>
-    </h4>
-    <div>
-      <span>{computer.modelName}</span>
-      <span>{computer.brand}</span>
-    </div>
-    <span>screen size: {computer.screenSize}</span>
-  </div>
-);
-```
-
-Rendering our long inventory list, is a `ComputersList` component. This component is in charge of deciding which type of device every computer is, and based on that render the correct component.
-
-```typescript
-import React from "react";
-
-const ComputersList: React.FC<Computer[]> = ({ computers }) => {
-  return computers.map((computer) =>
-    Boolean(computer.screenSize) ? (
-      <Computer computer={computer} />
-    ) : (
-      <PC computer={computer} />
-    )
-  );
+export const RequestLoadingIndicator: React.FC<RequestLoadingIndicatorProps> = ({
+  state,
+}) => {
+  return <div style={styles[state]} />;
 };
 ```
 
-If our computer has a `screenSize` field (that is different form 0, and therefore truthy), it's obviously a laptop, otherwise - PC.
+You can see what it look like [here](https://codesandbox.io/s/funny-northcutt-l11zi?file=/src/index.tsx). It's nothing special, but our users are content.
 
-However, when our component hierarchy is 1 level deep, we don't have to do a lot of work. But what if our `Laptop` component got more complicated?
+In order to display a loading indicator in our system all we need is to tell it in what state our request is, and it will display a circle in the corresponding color.
 
-If, for instance, we wanted to allow admins to update mistyped information in our app, our `Laptop` component could get a little bit more nested.
+One day, we choose to allow adding a message to go along with `FAILED` requests. We can modify our props interface like so:
 
-```tsx
-import React from "react";
-
-const Laptop: React.FC<Computer> = ({ computer }) => (
-  <div>
-    <h3>
-      <CPU>{computer.cpu}</CPU>
-    </h3>
-    <h4>
-      <GPU>{computer.gpu}</GPU>
-    </h4>
-    <div>
-      <span>{computer.modelName}</span>
-      <span>{computer.brand}</span>
-    </div>
-    <LaptopScreenSize computer={computer} />
-  </div>
-);
+```typescript
+interface RequestLoadingIndicatorProps {
+  state: RequestStatus;
+  message: string;
+}
 ```
 
-If our `LaptopScreenSize` component did in fact get complicated, we might have to verify that the object we received indeed has a `screenSize` field.
+And our component will now display the message:
+
+```tsx
+export const RequestLoadingIndicator: React.FC<RequestLoadingIndicatorProps> = ({
+  state,
+  message,
+}) => {
+  return <div style={styles[state]}>{message}</div>;
+};
+```
+
+A while passes and everything is just fine, but then - one engineer on our team is refactoring some old code, and rewrites some code to fetch data from your server.
+
+When the data arrives, the engineer renders a `SUCCESSFUL` loading indicator with a message, although your guidelines specifically say that successful indicator should _not_ have messages.
+
+```tsx
+function GetData() {
+  const { data } = useData();
+
+  if (data) {
+    return (
+      <RequestLoadingIndicator state="SUCCESSFUL" message="data fetched" />
+    );
+  }
+}
+```
+
+One way to go about it, is to document the fact that `SUCCESSFUL` or `PENDING` requests should have no message, like so:
+
+```typescript
+interface RequestLoadingIndicatorProps {
+  state: RequestStatus;
+  // Message should only be present when state is `FAILED`
+  message: string;
+}
+```
+
+But this method, in my opinion, is error prone - in the end the only way to find it is with a human eye, and humans are prone to failure.
 
 ## A better way
 
@@ -157,13 +110,15 @@ But I am here to present to you a better way. There is a very simple way in whic
 
 We can leverage Typescript's powerful [Union Types](https://www.typescriptlang.org/docs/handbook/unions-and-intersections.html#union-types). In essence, union types allow us to make new types, that act as an `OR` clause in a way.
 
-Let's start with a quick example. Say we have an intelligent logger that can both print single log messages, and multiple messages passed as a string array.
+Let's start with a quick example. Say we have an intelligent logger that can both print single log messages, and can concatenate log messages if passed as an array.
 
 ```javascript
 function log(messages) {
-  Array.isArray(messages)
-    ? console.log(messages.join(" "))
-    : console.log(messages);
+  if (Array.isArray(message)) {
+    console.log(messages.join(" "));
+  }
+
+  console.log(messages);
 }
 
 log("hello"); // prints 'Hello'.
@@ -174,9 +129,11 @@ If we wanted to type it, we could do it naively like so:
 
 ```typescript
 function log(messages: any) {
-  Array.isArray(messages)
-    ? console.log(messages.join(" "))
-    : console.log(messages);
+  if (Array.isArray(message)) {
+    console.log(messages.join(" "));
+  }
+
+  console.log(messages);
 }
 
 log("Hello"); // prints 'Hello'.
@@ -187,9 +144,11 @@ But that won't help us much, leaving us with pretty much untyped javascript. How
 
 ```typescript
 function log(messages: string | string[]) {
-  Array.isArray(messages)
-    ? console.log(messages.join(" "))
-    : console.log(messages);
+  if (Array.isArray(message)) {
+    console.log(messages.join(" "));
+  }
+
+  console.log(messages);
 }
 
 log("Hello"); // prints 'Hello'.
@@ -197,34 +156,110 @@ log(["Hello", "World"]); // prints 'Hello World'
 log(6); // Compile time error: Argument of type 'number' is not assignable to parameter of type 'string | string[]'.
 ```
 
-Now that we know how to work with union types, we can use them to our advantage in our computer hardware store.
+Now that we know how to work with union types, we can use them to our advantage in our loading indicator.
 
-## One interface to rule them all? No!
+## One interface to rule them all? No
 
-Instead of using a single interface to describe both types of devices, we could split them up like so:
+Instead of using a single interface for all the possible states of the request, we can split them up, each having their own unique fields.
 
 ```typescript
-type CPU = "Intel Core i9-10850K" | "AMD Ryzen 9 5950X";
-
-type GPU = "Iris Plus Graphics 655" | "Nvidia GEFORCE RTX 3090";
-
-enum DeviceType {
-  PC = "PC",
-  LAPTOP = "LAPTOP",
+interface PendingLoadingIndicatorProps {
+  state: "PENDING";
 }
 
-interface PC {
-  cpu: CPU;
-  gpu: GPU;
-  brand: string;
-  modelName: string;
-  deviceType: DeviceType.PC;
+interface SuccessfulLoadingIndicatorProps {
+  state: "SUCCESSFUL";
 }
 
-interface Laptop extends PC {
-  screenSize: number;
-  deviceType: DeviceType.LAPTOP;
+interface FailedLoadingIndicatorProps {
+  state: "FAILED";
+  message: string;
 }
 
-interface Computer = Laptop | PC;
+// highlight-start
+type RequestLoadingIndicatorProps =
+  | PendingLoadingIndicatorProps
+  | SuccessfulLoadingIndicatorProps
+  | FailedLoadingIndicatorProps;
+// highlight-end
 ```
+
+The highlighted part is where the magic happens. With it we specify all the different types of props we accept, and only allow a message on `FAILED` requests.
+
+You'll immediately see that Typescript is yelling at our component:
+
+![a component with an error message over the message prop](message-does-not-exist.png)
+
+So we'll change our component just a little:
+
+```tsx
+export const RequestLoadingIndicator: React.FC<RequestLoadingIndicatorProps> = (
+  props
+) => {
+  if (props.state === "FAILED") {
+    return <div style={styles[props.state]}>{props.message}</div>; // no error!
+  }
+
+  return <div style={styles[props.state]} />;
+};
+```
+
+Inside our `if` block Typescript is able to narrow down the type of our prop from `PendingLoadingIndicatorProps | SuccessfulLoadingIndicatorProps | FailedLoadingIndicatorProps` to `FailedLoadingIndicatorProps`, and ensures us that the `message` prop exists.
+
+If we now tried to render our `RequestLoadingIndicator` with a message and a state other than `FAILED`, we would get compile time error:
+
+![Trying to render RequestLoadingIndicator with a message and different state, and getting compile time errors when state is not FAILED](message-with-state-not-failed.png)
+
+## Embracing difference
+
+We could stop at that and call it a day, or we can take it up a notch.
+
+What if we wanted to change our `SUCCESSFUL` loading indicator to show an animation, and allow consumers of our indicator to pass a callback that fires when the animation ends?
+
+With a monolithic interface, we'd go through the same trouble as we did when we added the `message` field.
+
+```typescript
+interface RequestLoadingIndicatorProps {
+  state: RequestStatus;
+  // Message should only be present when state is `FAILED`
+  message: string;
+  // onAnimationEnd should only be present when state is `SUCCESSFUL`
+  onAnimationEnd?: () => void;
+}
+```
+
+See how quickly it gets out of hand?
+
+Our union types make this a non-issue:
+
+```typescript
+interface PendingLoadingIndicatorProps {
+  state: "PENDING";
+}
+
+interface SuccessfulLoadingIndicatorProps {
+  state: "SUCCESSFUL";
+  // highlight-next-line
+  onAnimationEnd?: () => void;
+}
+
+interface FailedLoadingIndicatorProps {
+  state: "FAILED";
+  message: string;
+}
+
+type RequestLoadingIndicatorProps =
+  | PendingLoadingIndicatorProps
+  | SuccessfulLoadingIndicatorProps
+  | FailedLoadingIndicatorProps;
+```
+
+Now, we only allow our indicator's consumers to pass `onAnimationEnd` when state is `SUCCESSFUL`, and we have Typescript to enforce that.
+
+Notice that we used `?`, so we don't force anyone to pass empty functions.
+
+## Summary
+
+Obviously, this is a contrived example, but I hope it makes it clear how we can leverage Typescript's union types and type narrowing, ensuring as much type safety as possible, while still leveraging some of Javascript's dynamic nature.
+
+Thank you for reading!
