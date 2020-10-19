@@ -3,6 +3,7 @@ title: "Avoiding impossible state with TypeScript"
 date: "2020-10-25"
 description: "Typescript's greatest strength, in my opinion is it's ability to disallow forbidden state."
 slug: "/avoid-impossible-state-with-typescript"
+cover_image: "impossible.jpeg"
 ---
 
 I love [TypeScript](https://www.typescriptlang.org/). I've been using it for over 2 years in various projects, and the more I use it the less compelling I find vanilla Javascript.
@@ -12,6 +13,8 @@ Not that there is anything wrong with vanilla Javascript ([my blog](https://dors
 Among the many good things Typescript offers, I'd like to address one that, in my experience, has saved me quite a few bugs.
 
 Let's start with an example first.
+
+The code will contain React components, but the general principle stays the same with other frameworks as well.
 
 Let's say we have a very rudimentary loading indicator in our app:
 
@@ -76,9 +79,9 @@ export const RequestLoadingIndicator: React.FC<RequestLoadingIndicatorProps> = (
 };
 ```
 
-A while passes and everything is just fine, but then - one engineer on our team is refactoring some old code, and rewrites some code to fetch data from your server.
+A while passes and everything is just fine, but then - an engineer on our team is refactoring some old code, and rewrites some code to fetch data from your server.
 
-When the data arrives, the engineer renders a `SUCCESSFUL` loading indicator with a message, although your guidelines specifically say that successful indicator should _not_ have messages.
+When the data arrives, the engineer renders a `SUCCESSFUL` loading indicator with a message, although our guidelines specifically say that successful indicator should _not_ have a message.
 
 ```tsx
 function GetData() {
@@ -91,6 +94,26 @@ function GetData() {
   }
 }
 ```
+
+## Impossible State
+
+What we have here is an **impossible state**!
+
+> An **impossible state** is a certain combination of fields and values, that should never co-exist simultaneously.
+
+In other words - an "impossible state" might be a _possible state_ in that if we disregard our company guidelines/lint rules/compiler, the state may occur, but we should never accept it, and therefore must make sure it never occurs (whether intentionally or unintentionally).
+
+You don't need Typescript to avoid impossible states. In fact - you _could_ get away without anything stopping you from making the impossible state mistake, given that everyone in your team is aware of it, and all of you are responsible engineers with buckets of ownership.
+
+That might be the case _today_. What will happen when your company doubles in size? or triples? or quadruples?
+
+Would you still feel like word-of-mouth is good enough?
+
+I strongly disbelieve that. Not because I don't trust other engineers around me, I have complete faith in them. I like to think about it in exponential terms - if your team doubled in size, you'd need 4 times the efforts to preserve code quality.
+
+To comply with that, we need some mechanism that would prevent, to the highest degree possible, the presence of such "impossible states".
+
+## Naïve solution
 
 One way to go about it, is to document the fact that `SUCCESSFUL` or `PENDING` requests should have no message, like so:
 
@@ -108,7 +131,7 @@ But this method, in my opinion, is error prone - in the end the only way to find
 
 But I am here to present to you a better way. There is a very simple way in which we can ensure we always have exactly what we want, nothing more and nothing less.
 
-We can leverage Typescript's powerful [Union Types](https://www.typescriptlang.org/docs/handbook/unions-and-intersections.html#union-types). In essence, union types allow us to make new types, that act as an `OR` clause in a way.
+We can leverage Typescript's powerful [Union Types](https://www.typescriptlang.org/docs/handbook/unions-and-intersections.html#union-types). In essence, union types allow us to make new types that act as an `OR` clause in a way.
 
 Let's start with a quick example. Say we have an intelligent logger that can both print single log messages, and can concatenate log messages if passed as an array.
 
@@ -117,23 +140,29 @@ function log(messages) {
   if (Array.isArray(message)) {
     console.log(messages.join(" "));
   }
+  if (typeof messages === "string") {
+    console.log(messages);
+  }
 
-  console.log(messages);
+  throw new Error("unsupported type!");
 }
 
 log("hello"); // prints 'Hello'.
 log(["Hello", "World"]); // prints 'Hello World'.
 ```
 
-If we wanted to type it, we could do it naively like so:
+If we wanted to type it, we could do it naïvely like so:
 
 ```typescript
 function log(messages: any) {
   if (Array.isArray(message)) {
     console.log(messages.join(" "));
   }
+  if (typeof messages === "string") {
+    console.log(messages);
+  }
 
-  console.log(messages);
+  throw new Error("unsupported type!");
 }
 
 log("Hello"); // prints 'Hello'.
@@ -147,8 +176,11 @@ function log(messages: string | string[]) {
   if (Array.isArray(message)) {
     console.log(messages.join(" "));
   }
+  if (typeof messages === "string") {
+    console.log(messages);
+  }
 
-  console.log(messages);
+  throw new Error("unsupported type!");
 }
 
 log("Hello"); // prints 'Hello'.
@@ -173,6 +205,7 @@ interface SuccessfulLoadingIndicatorProps {
 
 interface FailedLoadingIndicatorProps {
   state: "FAILED";
+  // highlight-next-line
   message: string;
 }
 
@@ -204,7 +237,7 @@ export const RequestLoadingIndicator: React.FC<RequestLoadingIndicatorProps> = (
 };
 ```
 
-Inside our `if` block Typescript is able to narrow down the type of our prop from `PendingLoadingIndicatorProps | SuccessfulLoadingIndicatorProps | FailedLoadingIndicatorProps` to `FailedLoadingIndicatorProps`, and ensures us that the `message` prop exists.
+Inside our `if` block Typescript is able to narrow down the type of our props from `PendingLoadingIndicatorProps | SuccessfulLoadingIndicatorProps | FailedLoadingIndicatorProps` to `FailedLoadingIndicatorProps`, and ensures us that the `message` prop exists.
 
 If we now tried to render our `RequestLoadingIndicator` with a message and a state other than `FAILED`, we would get compile time error:
 
@@ -263,3 +296,5 @@ Notice that we used `?`, so we don't force anyone to pass empty functions.
 Obviously, this is a contrived example, but I hope it makes it clear how we can leverage Typescript's union types and type narrowing, ensuring as much type safety as possible, while still leveraging some of Javascript's dynamic nature.
 
 Thank you for reading!
+
+(cover photos by [Matt Atherton](https://unsplash.com/@mattatherton) on [Unsplash](https://unsplash.com/))
