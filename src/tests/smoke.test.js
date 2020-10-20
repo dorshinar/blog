@@ -2,6 +2,10 @@ const fs = require("fs");
 
 const puppeteer = require("puppeteer");
 
+const {
+  siteMetadata: { siteUrl },
+} = require("../../gatsby-config");
+
 const url = process.env.CI ? process.env.deployment : "http://localhost:8000/";
 
 jest.setTimeout(30000);
@@ -146,10 +150,10 @@ describe("Smoke test site", () => {
       "<description><![CDATA[Lately we started a new project at work, written in React + Typescript. Of course, like any other project we wanted it to be automatically…]]></description>"
     );
     expect(rss).toInclude(
-      `<link>${url}/linting-your-react+typescript-project-with-eslint-and-prettier</link>`
+      `<link>${siteUrl}/linting-your-react+typescript-project-with-eslint-and-prettier</link>`
     );
     expect(rss).toInclude(
-      `<guid isPermaLink="false">${url}/linting-your-react+typescript-project-with-eslint-and-prettier</guid>`
+      `<guid isPermaLink="false">${siteUrl}/linting-your-react+typescript-project-with-eslint-and-prettier</guid>`
     );
     expect(rss).toInclude("<pubDate>Mon, 21 Jan 2019 20:00:00 GMT</pubDate>");
   });
