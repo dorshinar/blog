@@ -297,4 +297,4 @@ Obviously, this is a contrived example, but I hope it makes it clear how we can 
 
 Thank you for reading!
 
-(cover photos by [Matt Atherton](https://unsplash.com/@mattatherton) on [Unsplash](https://unsplash.com/))
+(cover photo by [Matt Atherton](https://unsplash.com/@mattatherton) on [Unsplash](https://unsplash.com/))
