@@ -120,7 +120,7 @@ module.exports = {
       resolve: "gatsby-plugin-web-font-loader",
       options: {
         google: {
-          families: ["Montserrat:400,700"],
+          families: ["Montserrat:400,700", "Fira Code:400"],
         },
       },
     },
