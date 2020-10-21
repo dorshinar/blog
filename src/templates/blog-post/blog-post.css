@@ -91,6 +91,10 @@ h2 {
   fill: var(--primary);
 }
 
+.post pre code {
+  font-family: "Fira Code", "sans-serif";
+}
+
 @media (min-width: 48em) {
   .blog-post-wrapper {
     padding-right: 0;
