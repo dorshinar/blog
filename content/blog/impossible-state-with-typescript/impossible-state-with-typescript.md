@@ -1,6 +1,6 @@
 ---
 title: "Avoiding impossible state with TypeScript"
-date: "2020-10-25"
+date: "2020-10-20"
 description: "Typescript's greatest strength, in my opinion is it's ability to disallow forbidden state."
 slug: "/avoid-impossible-state-with-typescript"
 cover_image: "impossible.jpeg"
@@ -297,4 +297,4 @@ Obviously, this is a contrived example, but I hope it makes it clear how we can 
 
 Thank you for reading!
 
-(cover photos by [Matt Atherton](https://unsplash.com/@mattatherton) on [Unsplash](https://unsplash.com/))
+(cover photo by [Matt Atherton](https://unsplash.com/@mattatherton) on [Unsplash](https://unsplash.com/))
