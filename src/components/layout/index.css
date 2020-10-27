@@ -1,5 +1,7 @@
 body {
   font-family: "Montserrat", sans-serif;
+  margin: 0;
+  padding: 0;
 
   --primary: #1ca086;
   --light: #5cd2b6;
@@ -24,4 +26,27 @@ body.light {
   --headerBackgroundColor: #f6f6f6;
   --blockquoteColor: rgba(0, 0, 0, 0.8);
   --icon: #121212;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+h1 {
+  margin: 0;
+}
+
+small {
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+
+hr {
+  border: none;
+  height: 1px;
+}
+
+p {
+  margin: 0 0 var(--rhythm) 0;
+  line-height: 1.5;
 }

@@ -12,8 +12,7 @@ h2 {
 }
 
 .subtitle {
-  font-size: 0.9em;
-  display: block;
+  font-size: 0.8rem;
   margin-bottom: var(--rhythm);
 }
 
@@ -93,6 +92,10 @@ h2 {
 
 .post pre code {
   font-family: "Fira Code", "sans-serif";
+}
+
+blockquote *:last-child {
+  margin-bottom: 0;
 }
 
 @media (min-width: 48em) {
