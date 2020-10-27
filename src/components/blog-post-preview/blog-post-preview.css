@@ -13,5 +13,6 @@
 }
 
 p.description {
-  margin-bottom: 0;
+  margin: 0;
+  line-height: 1.5;
 }
