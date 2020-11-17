@@ -49,8 +49,8 @@ const BioComponent = () => {
         alt={author}
       />
       <p className="about">
-        I'm <strong>{author}</strong>. I am a web developer, who also likes to
-        write articles. This is my blog!
+        I&apos;m <strong>{author}</strong>. I am a web developer, who also likes
+        to write articles. This is my blog!
       </p>
       <address data-p="contact">
         <OutboundLink
