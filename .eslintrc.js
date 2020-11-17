@@ -8,8 +8,7 @@ module.exports = {
   },
   extends: [
     "eslint:recommended",
-    "react",
-    "react-app",
+    "plugin:react/recommended",
     "plugin:prettier/recommended",
     "prettier/react",
     "plugin:import/errors",
@@ -18,12 +17,14 @@ module.exports = {
   ],
   plugins: ["import", "markdown"],
   parserOptions: {
+    ecmaVersion: 2021,
     sourceType: "module",
   },
   env: {
     es6: true,
     node: true,
     jest: true,
+    browser: true,
   },
   rules: {
     "react/prop-types": 0,
@@ -34,6 +35,9 @@ module.exports = {
   settings: {
     "import/resolver": {
       node: { extensions: [".js", ".jsx"] },
+    },
+    react: {
+      version: "detect",
     },
   },
   overrides: [
@@ -46,6 +50,7 @@ module.exports = {
         "react/react-in-jsx-scope": 0,
         "import/no-unresolved": 0,
         "import/order": 0,
+        "react/display-name": 0,
       },
     },
     {
