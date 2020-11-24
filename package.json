@@ -53,7 +53,7 @@
     "react-dom": "^17.0.1",
     "react-helmet": "^6.1.0",
     "react-toggle": "^4.1.1",
-    "reading-time": "^1.2.0"
+    "reading-time": "^1.2.1"
   },
   "devDependencies": {
     "@types/jest": "^26.0.15",
