@@ -13,6 +13,26 @@ export default function HTML(props) {
           name="viewport"
           content="width=device-width, initial-scale=1, shrink-to-fit=no"
         />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="true"
+        />
+        <link
+          rel="preload"
+          as="style"
+          href="https://fonts.googleapis.com/css2?family=Fira+Code&family=Montserrat:ital,wght@0,400;0,700;1,400&display=swap"
+        />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Fira+Code&family=Montserrat:ital,wght@0,400;0,700;1,400&display=swap"
+        />
+        <noscript>
+          <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Fira+Code&family=Montserrat:ital,wght@0,400;0,700;1,400&display=swap"
+          />
+        </noscript>
         {props.headComponents}
       </head>
       <body {...props.bodyAttributes}>

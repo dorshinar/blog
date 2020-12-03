@@ -91,7 +91,7 @@ h2 {
 }
 
 .post pre code {
-  font-family: "Fira Code", "sans-serif";
+  font-family: "Fira Code", monospace;
 }
 
 blockquote *:last-child {
