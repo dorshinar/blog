@@ -104,13 +104,5 @@ module.exports = {
     },
     `gatsby-plugin-sitemap`,
     `gatsby-plugin-catch-links`,
-    {
-      resolve: "gatsby-plugin-web-font-loader",
-      options: {
-        google: {
-          families: ["Montserrat:400,700", "Fira Code:400"],
-        },
-      },
-    },
   ],
 };
