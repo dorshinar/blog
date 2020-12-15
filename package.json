@@ -33,7 +33,7 @@
     "gatsby-plugin-react-svg": "^3.0.0",
     "gatsby-plugin-sharp": "^2.10.1",
     "gatsby-plugin-sitemap": "^2.8.0",
-    "gatsby-remark-autolink-headers": "^2.7.0",
+    "gatsby-remark-autolink-headers": "^2.8.0",
     "gatsby-remark-behead": "0.0.3",
     "gatsby-remark-copy-linked-files": "^2.7.0",
     "gatsby-remark-images": "^3.7.1",
