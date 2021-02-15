@@ -207,6 +207,7 @@ And our `index.js` file will look like this:
 ```js
 import { getInput } from "@actions/core";
 import { GitHub } from "@actions/github";
+
 import query from "./query.gql";
 
 const [owner, repo] = process.env.GITHUB_REPOSITORY.split("/");

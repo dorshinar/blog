@@ -20,9 +20,10 @@ In practice, it goes something like this - let's create a super simple component
 A simple test for it might be something along the lines of:
 
 ```js
-import { mount, shallow } from "enzyme";
-import { App } from "./app";
 import React from "react";
+import { mount, shallow } from "enzyme";
+
+import { App } from "./app";
 
 describe("<App />", () => {
   it("matches snapshot with color blue", () => {
