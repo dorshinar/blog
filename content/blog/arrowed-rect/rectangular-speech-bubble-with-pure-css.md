@@ -29,6 +29,8 @@ It's nothing fancy, just a regular div displaying an ordered list, so it won't b
 
 At first, I tried creating the triangle using thick borders on a div:
 
+<!-- eslint-skip -->
+
 ```html
 <style>
   .arrow {
