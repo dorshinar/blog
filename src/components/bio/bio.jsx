@@ -8,7 +8,7 @@ import {
   faLinkedin,
 } from "@fortawesome/free-brands-svg-icons";
 import { faRss } from "@fortawesome/free-solid-svg-icons";
-import Image from "gatsby-image";
+import { GatsbyImage } from "gatsby-plugin-image";
 import { OutboundLink } from "gatsby-plugin-google-analytics";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -19,9 +19,7 @@ const BioComponent = () => {
     query BioQuery {
       avatar: file(absolutePath: { regex: "/profile-pic.jpg/" }) {
         childImageSharp {
-          fixed(width: 200, height: 200) {
-            ...GatsbyImageSharpFixed_withWebp
-          }
+          gatsbyImageData(width: 200, height: 200, layout: FIXED)
         }
       }
       site {
@@ -43,9 +41,9 @@ const BioComponent = () => {
 
   return (
     <div className="bio-wrapper">
-      <Image
+      <GatsbyImage
+        image={data.avatar.childImageSharp.gatsbyImageData}
         className="profile-image"
-        fixed={data.avatar.childImageSharp.fixed}
         alt={author}
       />
       <p className="about">

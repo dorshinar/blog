@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { useStaticQuery, graphql, Link } from "gatsby";
-import Image from "gatsby-image";
+import { GatsbyImage } from "gatsby-plugin-image";
 import Toggle from "react-toggle";
 
 import { ThemeSelectorContext } from "../../themer/themer";
@@ -13,16 +13,12 @@ export function Header() {
     query ThemeToggleQuery {
       sun: file(absolutePath: { regex: "/sun/" }) {
         childImageSharp {
-          fixed(width: 20, height: 20) {
-            ...GatsbyImageSharpFixed_withWebp
-          }
+          gatsbyImageData(width: 20, height: 20, layout: FIXED)
         }
       }
       moon: file(absolutePath: { regex: "/moon/" }) {
         childImageSharp {
-          fixed(width: 18, height: 18) {
-            ...GatsbyImageSharpFixed_withWebp
-          }
+          gatsbyImageData(width: 18, height: 18, layout: FIXED)
         }
       }
     }
@@ -45,16 +41,16 @@ export function Header() {
           aria-label={"Toggle Theme"}
           icons={{
             checked: (
-              <Image
+              <GatsbyImage
+                image={data.moon.childImageSharp.gatsbyImageData}
                 className="moon"
-                fixed={data.moon.childImageSharp.fixed}
                 alt={"dark theme"}
               />
             ),
             unchecked: (
-              <Image
+              <GatsbyImage
+                image={data.sun.childImageSharp.gatsbyImageData}
                 className="sun"
-                fixed={data.sun.childImageSharp.fixed}
                 alt={"light theme"}
               />
             ),

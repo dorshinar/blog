@@ -1,0 +1,8 @@
+{
+  "redirects": [
+    {
+      "source": "/linting-your-react+typescript-project-with-eslint-and-prettier",
+      "destination": "/linting-your-react-typescript-project-with-eslint-and-prettier"
+    }
+  ]
+}

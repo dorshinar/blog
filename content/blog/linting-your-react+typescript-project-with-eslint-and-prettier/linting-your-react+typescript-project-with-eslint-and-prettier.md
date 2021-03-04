@@ -1,9 +1,9 @@
 ---
-title: Linting Your React+Typescript Project With ESlint and Prettier
+title: "Linting Your React+Typescript Project With ESlint and Prettier"
 date: "2019-01-21T20:00:00.000Z"
 description: "ESlint and Prettier are a bless for the JS world, and up until now there was no proper solution to achieving the same greatness with typescript. In this guide I'll walk you through how you can drink the cool kids juice as well."
 published: true
-slug: /linting-your-react+typescript-project-with-eslint-and-prettier
+slug: "/linting-your-react-typescript-project-with-eslint-and-prettier"
 ---
 
 Lately we started a new project at work, written in React + Typescript. Of course, like any other project we wanted it to be automatically linted and style checked, so we don’t have to worry about that ourselves.
@@ -127,7 +127,7 @@ First, install the ESLint and Prettier VSCode extensions:
 ext install esbenp.prettier-vscode dbaeumer.vscode-eslint
 ```
 
-Both come with various configuration options to play with, but their defaults are pretty good. The only thing we need to change is ESLint’s default behavior to only inspect _.JS and _.JSX files. Add this configuration option to your settings:
+Both come with various configuration options to play with, but their defaults are pretty good. The only thing we need to change is ESLint’s default behavior to only inspect _.JS and_.JSX files. Add this configuration option to your settings:
 
 ```json
 "eslint.validate": [
