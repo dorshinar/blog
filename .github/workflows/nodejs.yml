@@ -39,6 +39,9 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Link request
+        run: npm link request
+
       - name: Run end-to-end tests
         run: npm run test:e2e || npm run test:e2e
         env:
