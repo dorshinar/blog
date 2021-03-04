@@ -158,7 +158,7 @@ describe("Smoke test site", () => {
     expect(rss).toInclude("<pubDate>Mon, 21 Jan 2019 20:00:00 GMT</pubDate>");
   });
 
-  it.only("loads the sitemap.xml", async () => {
+  it("loads the sitemap.xml", async () => {
     const map = await page.evaluate(async () => {
       const response = await fetch("/sitemap.xml");
       const text = await response.text();
