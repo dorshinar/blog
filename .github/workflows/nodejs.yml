@@ -24,9 +24,7 @@ jobs:
       - uses: actions/cache@v2
         with:
           path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
+          key: ${{ runner.os }}-node-v2-${{ hashFiles('**/package-lock.json') }}
 
       - name: Install dependencies
         run: npm ci --prefer-offline
@@ -40,6 +38,9 @@ jobs:
         timeout-minutes: 5
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Link request
+        run: npm link request
 
       - name: Run end-to-end tests
         run: npm run test:e2e || npm run test:e2e

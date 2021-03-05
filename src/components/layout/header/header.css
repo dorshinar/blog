@@ -32,6 +32,7 @@ header {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
   width: var(--contentWidth);
 }
 
@@ -51,11 +52,13 @@ h1 {
 }
 
 .moon {
-  top: -50%;
-  left: -15%;
+  /* top: -50%;
+  left: -15%; */
+  /* color: #F5F3CE; */
 }
 
 .sun {
-  top: -50%;
-  left: -30%;
+  /* top: -50%;
+  left: -30%; */
+  /* color: #F28C38; */
 }

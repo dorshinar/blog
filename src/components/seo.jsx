@@ -13,7 +13,7 @@ import { useStaticQuery, graphql } from "gatsby";
 function SEO({ description, lang, meta, title, slug, thumbnail }) {
   const { site, avatar } = useStaticQuery(
     graphql`
-      query {
+      {
         site {
           siteMetadata {
             title
@@ -27,9 +27,7 @@ function SEO({ description, lang, meta, title, slug, thumbnail }) {
         }
         avatar: file(absolutePath: { regex: "/profile-pic.jpg/" }) {
           childImageSharp {
-            fixed(width: 1200, height: 1200) {
-              ...GatsbyImageSharpFixed
-            }
+            gatsbyImageData(width: 1200, height: 1200, layout: FIXED)
           }
         }
       }
@@ -39,7 +37,8 @@ function SEO({ description, lang, meta, title, slug, thumbnail }) {
   const metaDescription = description || site.siteMetadata.description;
   const url = `${site.siteMetadata.siteUrl}${slug}/`;
   const imageSrc =
-    thumbnail?.childImageSharp?.sizes?.src || avatar.childImageSharp.fixed.src;
+    thumbnail?.childImageSharp?.gatsbyImageData?.images?.fallback?.src ||
+    avatar.childImageSharp.gatsbyImageData?.images?.fallback?.src;
   const imageUrl = new URL(imageSrc, site.siteMetadata.siteUrl);
 
   return (

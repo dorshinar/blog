@@ -114,7 +114,7 @@ describe("Smoke test site", () => {
 
   it("navigates to post page", async () => {
     await page.click(
-      '[href="/linting-your-react+typescript-project-with-eslint-and-prettier"]'
+      '[href="/linting-your-react-typescript-project-with-eslint-and-prettier"]'
     );
     await page.waitForFunction(() => document.title.includes("Linting Your"));
 
@@ -150,10 +150,10 @@ describe("Smoke test site", () => {
       "<description><![CDATA[Lately we started a new project at work, written in React + Typescript. Of course, like any other project we wanted it to be automatically…]]></description>"
     );
     expect(rss).toInclude(
-      `<link>${siteUrl}/linting-your-react+typescript-project-with-eslint-and-prettier</link>`
+      `<link>${siteUrl}/linting-your-react-typescript-project-with-eslint-and-prettier</link>`
     );
     expect(rss).toInclude(
-      `<guid isPermaLink="false">${siteUrl}/linting-your-react+typescript-project-with-eslint-and-prettier</guid>`
+      `<guid isPermaLink="false">${siteUrl}/linting-your-react-typescript-project-with-eslint-and-prettier</guid>`
     );
     expect(rss).toInclude("<pubDate>Mon, 21 Jan 2019 20:00:00 GMT</pubDate>");
   });

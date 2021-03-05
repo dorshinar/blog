@@ -17,6 +17,7 @@ body.dark {
   --headerBackgroundColor: rgba(255, 255, 255, 0.05);
   --blockquoteColor: rgba(255, 255, 255, 0.2);
   --icon: white;
+  --themeIconColor: hsl(0deg, 0%, 100%);
 }
 
 body.light {
@@ -26,6 +27,7 @@ body.light {
   --headerBackgroundColor: #f6f6f6;
   --blockquoteColor: rgba(0, 0, 0, 0.8);
   --icon: #121212;
+  --themeIconColor: hsl(222deg, 22%, 5%);
 }
 
 * {
