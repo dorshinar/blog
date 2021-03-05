@@ -153,7 +153,7 @@ describe("Smoke test site", () => {
       `<link>${siteUrl}/linting-your-react-typescript-project-with-eslint-and-prettier</link>`
     );
     expect(rss).toInclude(
-      `<guid isPermaLink="false">${siteUrl}/linting-your-react+typescript-project-with-eslint-and-prettier</guid>`
+      `<guid isPermaLink="false">${siteUrl}/linting-your-react-typescript-project-with-eslint-and-prettier</guid>`
     );
     expect(rss).toInclude("<pubDate>Mon, 21 Jan 2019 20:00:00 GMT</pubDate>");
   });
