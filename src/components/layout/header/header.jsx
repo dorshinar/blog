@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "gatsby";
 
-import "react-toggle/style.css";
 import "./header.css";
 import { ThemeButton } from "../theme-button/themeButton";
 
