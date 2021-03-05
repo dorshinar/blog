@@ -38,7 +38,7 @@ function SEO({ description, lang, meta, title, slug, thumbnail }) {
   const url = `${site.siteMetadata.siteUrl}${slug}/`;
   const imageSrc =
     thumbnail?.childImageSharp?.gatsbyImageData?.images?.fallback?.src ||
-    avatar.childImageSharp.gatsbyImageData.src;
+    avatar.childImageSharp.gatsbyImageData?.images?.fallback?.src;
   const imageUrl = new URL(imageSrc, site.siteMetadata.siteUrl);
 
   return (

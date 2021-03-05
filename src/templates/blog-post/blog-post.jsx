@@ -39,14 +39,14 @@ class BlogPostTemplate extends React.Component {
           <ul className="near-by-posts">
             <li>
               {previous && (
-                <Link to={previous.fields.slug} rel="prev">
+                <Link to={previous.frontmatter.slug} rel="prev">
                   ← {previous.frontmatter.title}
                 </Link>
               )}
             </li>
             <li>
               {next && (
-                <Link to={next.fields.slug} rel="next">
+                <Link to={next.frontmatter.slug} rel="next">
                   {next.frontmatter.title} →
                 </Link>
               )}
@@ -68,7 +68,7 @@ export const pageQuery = graphql`
         author
       }
     }
-    markdownRemark(fields: { slug: { eq: $slug } }) {
+    markdownRemark(frontmatter: { slug: { eq: $slug } }) {
       id
       excerpt(pruneLength: 160)
       html
@@ -76,6 +76,7 @@ export const pageQuery = graphql`
         title
         date(formatString: "MMMM DD, YYYY")
         description
+        slug
         thumbnail: cover_image {
           childImageSharp {
             gatsbyImageData(width: 1200)
@@ -83,7 +84,6 @@ export const pageQuery = graphql`
         }
       }
       fields {
-        slug
         readingTime {
           text
         }

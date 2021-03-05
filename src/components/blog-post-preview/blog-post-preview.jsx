@@ -7,7 +7,7 @@ export function BlogPostPreview({ node, title }) {
   return (
     <article className="preview-wrapper">
       <h2 className="preview-header">
-        <Link className="post-link" to={node.fields.slug}>
+        <Link className="post-link" to={node.frontmatter.slug}>
           {title}
         </Link>
       </h2>
