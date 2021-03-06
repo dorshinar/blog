@@ -12,6 +12,7 @@ button.unstyled {
     align-items: center;
     justify-content: center;
     color: var(--themeIconColor);
+    overflow: hidden;
 }
 
 button.unstyled:hover { 
