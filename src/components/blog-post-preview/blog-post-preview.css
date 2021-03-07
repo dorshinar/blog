@@ -1,5 +1,10 @@
 .preview-wrapper {
-  padding: calc(var(--rhythm) * 0.5);
+  padding: calc(var(--rhythm)) calc(var(--rhythm) * 0.5);
+}
+
+.preview-wrapper:not(:last-child) {
+  border-bottom: 1px solid var(--separatorColor);
+  transition: border-bottom-color 0.25s ease,
 }
 
 .preview-header {
