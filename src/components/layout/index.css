@@ -34,6 +34,13 @@ body.light {
   box-sizing: border-box;
 }
 
+@media screen and (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
 h1 {
   margin: 0;
 }
