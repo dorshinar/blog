@@ -24,21 +24,21 @@ h2 {
   padding: 0;
 }
 
-.post > p > img {
+.blog-post-wrapper > p > img {
   margin-bottom: 0;
 }
 
-.post .gatsby-resp-image-wrapper,
-.post img:not([class]) {
+.blog-post-wrapper .gatsby-resp-image-wrapper,
+.blog-post-wrapper img:not([class]) {
   margin-right: calc(var(--spacing) * -1) !important;
   margin-left: calc(var(--spacing) * -1) !important;
 }
 
-.post img:not([class]) {
+.blog-post-wrapper img:not([class]) {
   max-width: calc(100% + (var(--spacing) * 2));
 }
 
-.post pre[class*="language-"] {
+.blog-post-wrapper pre[class*="language-"] {
   margin-right: calc(var(--spacing) * -1);
   margin-left: calc(var(--spacing) * -1);
 
@@ -46,31 +46,31 @@ h2 {
   padding-left: var(--spacing);
 }
 
-.post code[class*="language-"] {
+.blog-post-wrapper code[class*="language-"] {
   white-space: pre-wrap;
 }
 
-.post .command-line-prompt {
+.blog-post-wrapper .command-line-prompt {
   border-right: 0;
   margin-right: 0;
 }
 
-.post :not(pre) > code[class*="language-"] {
+.blog-post-wrapper :not(pre) > code[class*="language-"] {
   border-radius: 0.3em;
 }
 
 /* Prompt for all users */
-.post .command-line-prompt > span:before {
+.blog-post-wrapper .command-line-prompt > span:before {
   content: "$";
 }
 
-.post blockquote {
+.blog-post-wrapper blockquote {
   margin-left: calc(var(--spacing) * -1);
   border-left: 0.4rem solid var(--blockquoteColor);
   padding: 1rem;
 }
 
-.post .gatsby-highlight-code-line {
+.blog-post-wrapper .gatsby-highlight-code-line {
   --margin: 0.3rem;
 
   display: block;
@@ -82,15 +82,15 @@ h2 {
   border-left: var(--margin) solid #ffffffa1;
 }
 
-.post li {
+.blog-post-wrapper li {
   margin-bottom: 0;
 }
 
-.post .header path {
+.blog-post-wrapper .header path {
   fill: var(--primary);
 }
 
-.post pre code {
+.blog-post-wrapper pre code {
   font-family: "Fira Code", monospace;
 }
 
@@ -104,17 +104,17 @@ blockquote *:last-child {
     padding-left: 0;
   }
 
-  .post .gatsby-resp-image-wrapper,
-  .post img:not([class]) {
+  .blog-post-wrapper .gatsby-resp-image-wrapper,
+  .blog-post-wrapper img:not([class]) {
     margin-right: auto !important;
     margin-left: auto !important;
   }
 
-  .post img:not([class]) {
+  .blog-post-wrapper img:not([class]) {
     max-width: 100%;
   }
 
-  .post pre[class*="language-"] {
+  .blog-post-wrapper pre[class*="language-"] {
     margin-right: auto;
     margin-left: auto;
     border-radius: 5px;

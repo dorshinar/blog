@@ -5,6 +5,24 @@ description: "Infinite scrolling is a great way to only fetch what the user can 
 slug: "/create-react-infinite-scroll-hook"
 ---
 
-Scrolling is one of the fundamentals of the web. To make a simple scrollable container, all you have to do is render something that is taller than its container, set `css>overflow: auto` or `css>overflow: scroll` and you'r good to go.
+import SimpleList from "./simple-list.jsx"
 
-Let's say you have a simple list that renders a bunch of entries. 
+Often we want to render lists of items. It could be facebook posts, articles in this very own blog or products in an e-commerce site.  
+
+If we had all the compute power in the world and network wasn't an issue, we'd simply download the entire feed when first loading the page, and let our users scroll for hours on end.
+
+Sadly, we're usually constrained by compute, network, or both, and that forces us to compromise. In our case, we must give up trying to load the entire list in the client's device. think about it - *very* large lists full of information can be several magebytes large!
+
+The 'Fast 3G' network preset in Chrome's dev tools is clocked at 1.5Mb/s. At those rates, downloading several megabytes worth of products information is simply not feasible.
+
+## Load More Button
+
+The easiest way to avoid loading more data than absolutely necessary is to load a small, fixed number of items on first render, and place a 'Load More' button at the bottom.
+
+Go ahead, scroll to the bottom of the list and click 'Load More'. 
+
+<SimpleList />
+
+And now let's simulate network latency, so you can get a better feeling of what the users feels. I've added a 2 second delay to mimic network effect.
+
+<SimpleList simulateLatency />

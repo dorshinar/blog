@@ -157,5 +157,6 @@ module.exports = {
     },
     `gatsby-plugin-sitemap`,
     `gatsby-plugin-catch-links`,
+    `gatsby-plugin-styled-components`,
   ],
 };

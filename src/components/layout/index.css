@@ -8,6 +8,7 @@ body {
   --dark: #007159;
   --contentWidth: 34.8rem;
   --rhythm: 1.45rem;
+  --snippetBackgroundColor: #2d2d2d;
 }
 
 body.dark {
@@ -58,4 +59,8 @@ hr {
 p {
   margin: 0 0 var(--rhythm) 0;
   line-height: 1.5;
+}
+
+button {
+  font: inherit;
 }
