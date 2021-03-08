@@ -14,6 +14,7 @@ module.exports = {
     "plugin:react-hooks/recommended",
     "plugin:jsx-a11y/recommended",
     "plugin:markdown/recommended",
+    "plugin:mdx/recommended",
   ],
   plugins: ["import", "markdown"],
   parserOptions: {
@@ -42,21 +43,14 @@ module.exports = {
   },
   overrides: [
     {
-      files: ["**/*.md/*"],
+      files: ["**/*.md*/*"],
       rules: {
-        // "no-undef": 0,
-        // "react/jsx-no-undef": 0,
-        // "no-unused-vars": 0,
-        // "react/react-in-jsx-scope": 0,
-        // "import/no-unresolved": 0,
-        // "import/order": 0,
-        // "react/display-name": 0,
         "prettier/prettier": "off",
         "import/no-unresolved": "off",
       },
     },
     {
-      files: ["**/*.md/*.html"],
+      files: ["**/*.md*/*.html"],
       rules: {
         "react/no-unknown-property": "off",
       },
