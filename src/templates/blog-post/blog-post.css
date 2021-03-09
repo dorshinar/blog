@@ -46,10 +46,6 @@ h2 {
   padding-left: var(--spacing);
 }
 
-.blog-post-wrapper code[class*="language-"] {
-  white-space: pre-wrap;
-}
-
 .blog-post-wrapper .command-line-prompt {
   border-right: 0;
   margin-right: 0;
@@ -80,6 +76,10 @@ h2 {
   padding-left: calc(var(--spacing) - var(--margin));
   background-color: #ffffff14;
   border-left: var(--margin) solid #ffffffa1;
+}
+
+.blog-post-wrapper .gatsby-highlight {
+  margin-bottom: var(--rhythm);
 }
 
 .blog-post-wrapper li {

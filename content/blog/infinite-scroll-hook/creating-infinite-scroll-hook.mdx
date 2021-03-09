@@ -21,8 +21,90 @@ The easiest way to avoid loading more data than absolutely necessary is to load 
 
 Go ahead, scroll to the bottom of the list and click 'Load More'. 
 
-<SimpleList />
+<SimpleList items={5} />
 
 And now let's simulate network latency, so you can get a better feeling of what the users feels. I've added a 2 second delay to mimic network effect.
 
-<SimpleList simulateLatency />
+<SimpleList simulateLatency items={5} />
+
+Doesn't feel so good, doesn't it? 
+
+It's hard as it is to make users click on a 'Load More' button, but expecting them to wait a few seconds for the content to load? No way. 
+
+We want to find a way to make content load automagically for the users, and we want the experience to be as smooth as possible for them.
+
+## Using Bounding Rect
+
+OK, so we've decided that a simple 'Load More' button is not good enough for us. Ideally, we would like to know when the user scrolls to the bottom of the list, and automatically trigger a call to get the next items.
+
+We could call the `js>getBoundingClientRect()` of an element at the bottom of the list, and that would give us it's absolute position in the viewport. 
+
+Here is the (contrived) code for the list we've rendered before: 
+
+```jsx
+function SimpleList({items, loading}) {
+  return (
+    <List>
+      {list.map((item) => (
+        <ListItem key={item}>{item}</ListItem>
+      ))}
+      <Button onClick={loadMore} title={loading ? "loading..." : "Load More!"}>
+        {loading ? "loading..." : "Load More!"}
+      </Button>
+    </List>
+  );
+}
+```
+
+To know if the last item in the list in visible, we could use a callback ref like so: 
+
+```jsx
+function SimpleList({items, loading}) {
+  const ref = useCallback((refElement) => {
+    if (!refElement) {
+      return;
+    }
+
+    const rect = refElement.getBoundingClientRect();
+  }, []);
+
+  return (
+    <List>
+      {list.map((item, index, array) => (
+        <ListItem key={item} ref={index === array.length - 1 ? ref : undefined}>
+          {item}
+        </ListItem>
+      ))}
+      <Button onClick={loadMore} title={loading ? "loading..." : "Load More!"}>
+        {loading ? "loading..." : "Load More!"}
+      </Button>
+    </List>
+  );
+}
+```
+
+Our `rect` will look something like this:
+
+```json
+{
+  "bottom": -780.625,
+  "height": 64,
+  "left": 682.09375,
+  "right": 746.09375,
+  "top": -844.625,
+  "width": 64,
+  "x": 682.09375,
+  "y": -844.625
+}
+```
+
+In order to use that information to calculate whether an element is on screen we can use the `top` and `bottom` attributes.  
+
+The `top` attribute tells us how far (in pixels) the top of the element in from the top of the viewport. If `top` is negative, that means the top of the element is above the viewport.
+
+The `bottom` attribute tells us how far the bottom of the element is from the top of the viewport. If `bottom` is negative, that means that the entire element is above the viewport.
+
+Now we can use both attributes to say that if `top` >= 0 and `bottom` <= screen height. 
+
+For partial visibility we could check whether `top` < 0 and `bottom` >= 0 (if the element is partially visible from the top of screen), or `top` >= 0 and `bottom` > screen height (if the element is partially visible from the bottom of the screen).
+

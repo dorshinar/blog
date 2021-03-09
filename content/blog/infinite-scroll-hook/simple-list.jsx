@@ -4,11 +4,14 @@ import styled from "styled-components";
 const List = styled.ul`
   height: 20em;
   width: 100%;
-  list-style: none;
-  margin: 0;
+  margin: 0 0 var(--rhythm) 0;
   padding: 0 0.5em;
+
+  list-style: none;
+
   display: flex;
   flex-direction: column;
+
   border-radius: 5px;
   overflow: auto;
   background-color: white;
@@ -36,6 +39,7 @@ const Button = styled.button`
   color: white;
   border: 3px solid var(--snippetBackgroundColor);
   min-height: 3em;
+  width: 10em;
   cursor: pointer;
 
   :focus:not(:focus-visible) {
@@ -43,30 +47,41 @@ const Button = styled.button`
   }
 `;
 
-const SimpleList = ({ simulateLatency }) => {
-  const [list, setList] = useState([...Array(5).keys()]);
+const SimpleList = ({ simulateLatency, items }) => {
+  const [list, setList] = useState([...Array(items).keys()]);
   const [loading, setLoading] = useState(false);
 
   const loadMore = useCallback(() => {
     if (!simulateLatency) {
       return setList(
-        list.concat([...Array(5).keys()].map((item) => item + list.length))
+        list.concat([...Array(items).keys()].map((item) => item + list.length))
       );
     }
 
     setLoading(true);
     setTimeout(() => {
       setList(
-        list.concat([...Array(5).keys()].map((item) => item + list.length))
+        list.concat([...Array(items).keys()].map((item) => item + list.length))
       );
       setLoading(false);
     }, [2000]);
-  }, [list, simulateLatency]);
+  }, [items, list, simulateLatency]);
+
+  const ref = useCallback((refElement) => {
+    if (!refElement) {
+      return;
+    }
+
+    const rect = refElement.getBoundingClientRect();
+    console.log(rect);
+  }, []);
 
   return (
     <List>
-      {list.map((item) => (
-        <ListItem key={item}>{item}</ListItem>
+      {list.map((item, index, array) => (
+        <ListItem key={item} ref={index === array.length - 1 ? ref : undefined}>
+          {item}
+        </ListItem>
       ))}
       <Button onClick={loadMore} title={loading ? "loading..." : "Load More!"}>
         {loading ? "loading..." : "Load More!"}
