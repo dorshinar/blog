@@ -23,7 +23,7 @@
     "eslint-plugin-react": "^7.22.0",
     "eslint-plugin-react-hooks": "^4.2.0",
     "framer-motion": "^3.10.2",
-    "gatsby": "^3.0.3",
+    "gatsby": "^3.0.4",
     "gatsby-plugin-catch-links": "^3.0.0",
     "gatsby-plugin-feed": "^3.0.0",
     "gatsby-plugin-google-analytics": "^3.0.0",
