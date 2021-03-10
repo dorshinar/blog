@@ -1,24 +1,17 @@
 import React, { useCallback, useState } from "react";
 import styled from "styled-components";
 
+import { CodeSnippetWrapper } from "../../../src/components/CodeSnippetWrapper";
+
 const List = styled.ul`
   height: 20em;
-  width: 100%;
-  margin: 0 0 var(--rhythm) 0;
-  padding: 0 0.5em;
 
   list-style: none;
 
   display: flex;
   flex-direction: column;
-
-  border-radius: 5px;
-  overflow: auto;
-  background-color: white;
-
-  & * {
-    margin: 0.5em 0 !important;
-  }
+  margin: 0;
+  padding: 0;
 `;
 const ListItem = styled.li`
   display: block;
@@ -30,6 +23,7 @@ const ListItem = styled.li`
   justify-content: center;
   align-items: center;
   border: 3px solid var(--snippetBackgroundColor);
+  margin-bottom: 0.5em !important;
 `;
 const Button = styled.button`
   margin: 0;
@@ -45,6 +39,9 @@ const Button = styled.button`
   :focus:not(:focus-visible) {
     outline: none;
   }
+`;
+const Spacer = styled.div`
+  min-height: 0.5em;
 `;
 
 const SimpleList = ({ simulateLatency, items }) => {
@@ -77,16 +74,25 @@ const SimpleList = ({ simulateLatency, items }) => {
   }, []);
 
   return (
-    <List>
-      {list.map((item, index, array) => (
-        <ListItem key={item} ref={index === array.length - 1 ? ref : undefined}>
-          {item}
-        </ListItem>
-      ))}
-      <Button onClick={loadMore} title={loading ? "loading..." : "Load More!"}>
-        {loading ? "loading..." : "Load More!"}
-      </Button>
-    </List>
+    <CodeSnippetWrapper>
+      <List>
+        {list.map((item, index, array) => (
+          <ListItem
+            key={item}
+            ref={index === array.length - 1 ? ref : undefined}
+          >
+            {item}
+          </ListItem>
+        ))}
+        <Button
+          onClick={loadMore}
+          title={loading ? "loading..." : "Load More!"}
+        >
+          {loading ? "loading..." : "Load More!"}
+        </Button>
+        <Spacer />
+      </List>
+    </CodeSnippetWrapper>
   );
 };
 

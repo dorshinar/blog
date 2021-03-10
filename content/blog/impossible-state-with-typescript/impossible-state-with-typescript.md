@@ -43,7 +43,7 @@ const styles: Record<RequestStatus, React.CSSProperties> = {
   SUCCESSFUL: {
     backgroundColor: "green",
     borderRadius: "50%",
-    width: "50px"  ,
+    width: "50px",
     height: "50px",
   },
 };

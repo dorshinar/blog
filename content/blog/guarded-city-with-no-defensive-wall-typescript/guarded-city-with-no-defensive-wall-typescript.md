@@ -31,7 +31,7 @@ export default class API {
   }
 
   send(): Promise<{ status: number }> {
-    return fetch(this.url).then(res => res.json());
+    return fetch(this.url).then((res) => res.json());
   }
 }
 ```
@@ -45,7 +45,7 @@ export default class API {
   }
 
   send() {
-    return fetch(this.url).then(res => res.json());
+    return fetch(this.url).then((res) => res.json());
   }
 }
 ```
@@ -54,7 +54,7 @@ Or you can write TypeScript in a functional way:
 
 ```typescript
 export function send(url: string): Promise<{ status: number }> {
-  return fetch(this.url).then(res => res.json());
+  return fetch(this.url).then((res) => res.json());
 }
 ```
 
@@ -153,8 +153,8 @@ function sumOrThrowIfLowerThan(arr: number[], threshold: number) {
   return sum;
 }
 
-(async function() {
-  const arr: number[] = await fetch("https://example.com/").then(res =>
+(async function () {
+  const arr: number[] = await fetch("https://example.com/").then((res) =>
     res.json()
   );
 
@@ -195,9 +195,9 @@ function sumOrThrowIfLowerThan(arr: number[], threshold: number) {
   return sum;
 }
 
-(async function() {
+(async function () {
   const resultSchema = yup.array().of(yup.number());
-  const arr = await fetch("https://example.com/").then(res => res.json());
+  const arr = await fetch("https://example.com/").then((res) => res.json());
 
   const isValid = await resultSchema.isValid(arr);
 
