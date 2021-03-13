@@ -62,7 +62,7 @@ h2 {
 
 .blog-post-wrapper blockquote {
   margin-left: calc(var(--spacing) * -1);
-  border-left: 0.4rem solid var(--blockquoteColor);
+  border-left: 0.4rem solid var(--gray-600);
   padding: 1rem;
 }
 
@@ -74,8 +74,8 @@ h2 {
   margin-left: calc(var(--spacing) * -1);
   padding-right: var(--spacing);
   padding-left: calc(var(--spacing) - var(--margin));
-  background-color: #ffffff14;
-  border-left: var(--margin) solid #ffffffa1;
+  background-color: var(--gray-800);
+  border-left: var(--margin) solid var(--gray-400);
 }
 
 .blog-post-wrapper .gatsby-highlight {
@@ -98,6 +98,10 @@ blockquote *:last-child {
   margin-bottom: 0;
 }
 
+a.header.before { 
+  margin-right: 8px;
+}
+
 @media (min-width: 48em) {
   .blog-post-wrapper {
     padding-right: 0;
@@ -115,8 +119,12 @@ blockquote *:last-child {
   }
 
   .blog-post-wrapper pre[class*="language-"] {
-    margin-right: auto;
-    margin-left: auto;
+    margin-right: calc(-2 * var(--rhythm));
+    margin-left: calc(-2 * var(--rhythm));
     border-radius: 5px;
+  }
+
+  a.header.before {
+    margin-left: -24px;
   }
 }

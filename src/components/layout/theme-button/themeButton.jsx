@@ -1,14 +1,13 @@
-import React, { useContext } from "react";
+import React from "react";
 import { faSun, faMoon } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 
-import { ThemeSelectorContext } from "../../themer/themer";
-
+import { useTheme } from "../../themer/themer";
 import "./themeButton.css";
 
 export function ThemeButton() {
-  const { themeName } = useContext(ThemeSelectorContext);
+  const themeName = useTheme();
   const prefersReducedMotion = useReducedMotion();
 
   const onClick = () => {

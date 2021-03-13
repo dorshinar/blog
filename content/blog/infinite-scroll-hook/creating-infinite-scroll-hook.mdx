@@ -1,13 +1,17 @@
 ---
 title: "Creating Infinite Scroll Hook in React"
 date: "2021-03-20"
-description: "Infinite scrolling is a great way to only fetch what the user can see, while still feeling like there's more to scroll. Let's imple[callbackParam]nt that in React."
+description: "Infinite scrolling is a great way to only fetch what the user can see, while still feeling like there's more to scroll. Let's implement that in React."
 slug: "/create-react-infinite-scroll-hook"
 ---
 
-import SimpleList from "./simple-list.jsx";
+import SimpleListContainer from "./SimpleListContainer.jsx";
+import SimpleList from "./SimpleList.jsx";
 import CodeShiftingBox from "./ColorShiftingBox.jsx";
+import SimpleListWithHook from "./SimpleListWithHook.jsx";
+import Checkbox from "../../../src/components/Checkbox.jsx";
 
+<Checkbox checked /> 
 Often we want to render lists of items. It could be facebook posts, articles in this very own blog or products in an e-commerce site.
 
 If we had all the compute power in the world and network wasn't an issue, we'd simply download the entire feed when first loading the page, and let our users scroll for hours on end.
@@ -16,17 +20,15 @@ Sadly, we're usually constrained by compute, network, or both, and that forces u
 
 The 'Fast 3G' network preset in Chrome's dev tools is clocked at 1.5Mb/s. At those rates, downloading several megabytes worth of products information is simply not feasible.
 
+> If you want to cut to the chase, you can go straight to [the final hook](#the-final-hook).
+
 ## Load More Button
 
 The easiest way to avoid loading more data than absolutely necessary is to load a small, fixed number of items on first render, and place a 'Load More' button at the bottom.
 
-Go ahead, scroll to the bottom of the list and click 'Load More'.
+Go ahead, scroll to the bottom of the list and click 'Load More'. I've added a small checkbox to simulate network latency. It will add a 2 second delay before loading the next batch of items. 
 
-<SimpleList items={5} />
-
-And now let's simulate network latency, so you can get a better feeling of what the users feels. I've added a 2 second delay to mimic network effect.
-
-<SimpleList simulateLatency items={5} />
+<SimpleListContainer items={5} ListComponent={SimpleList} />
 
 Doesn't feel so good, doesn't it?
 
@@ -287,7 +289,7 @@ function useInfiniteScroll(callbackParam) {
         return;
       }
 
-      if (entities[0].isIntersecting) {
+      if (entries[0].isIntersecting) {
         callbackParam();
       }
     },
@@ -300,8 +302,8 @@ function useInfiniteScroll(callbackParam) {
         return;
       }
 
-      const intersectionObserver = new intersectionObserver(callback); // highlight-line
-      intersectionObserver.observe(node); // highlight-line
+      const intersectionObserver = new IntersectionObserver(callback);
+      intersectionObserver.observe(node);
     },
     [callback]
   );
@@ -309,3 +311,105 @@ function useInfiniteScroll(callbackParam) {
   return infiniteScrollRef;
 }
 ```
+
+Using this hook is simple. All you need is to call the hook with your `load more` callback, set the ref to whichever component you wish to trigger the request, and Voilà!
+
+```jsx
+const SimpleListWithHook = ({ list, loading, loadMore }) => {
+  const infiniteScrollRef = useInfiniteScroll(loadMore); // highlight-line
+
+  return (
+    <CodeSnippetWrapper>
+      <ListWrapper>
+        <Wrapper>
+          <List>
+            {list.map((item, index, array) => (
+              <ListItem
+                key={item}
+                ref={index === array.length - 1 ? infiniteScrollRef : undefined} // highlight-line
+              >
+                {item}
+              </ListItem>
+            ))}
+            <Spacer />
+          </List>
+          {loading && <Loading>Loading...</Loading>}
+        </Wrapper>
+      </ListWrapper>
+    </CodeSnippetWrapper>
+  );
+};
+```
+
+Note that the trick here is that I attach the `infiniteScrollRef` to the last component in the array. This makes it so new elements are fetched only when the user scrolls to the bottom of the list. 
+
+I could attach it to any other element, triggering the fetch sooner. 
+
+In the real world you'll need to find _your_ sweet spot - where your user gets the most seamless experience, but you don't overfetch in a way that causes you trouble.
+
+Here's a running example of this component. You can play around with it. You'll quickly notice that it works _for the most part_, but it's still pretty finicky.
+
+<SimpleListContainer
+  simulateLatency
+  items={10}
+  ListComponent={SimpleListWithHook}
+  hookVersion={1}
+  initialSimulateLatency
+/>
+
+There are some things we can do to improve the hook and make it work event better.
+
+## The final hook
+
+Let's add an `isActive` parameter to the hook, so we can avoid triggering our `load more` callback if we're in the middle of a request.
+
+Note that we're disconnecting our `observer` before we're creating a new one, and we've also added a `useEffect` to make sure our `observer` is disconnected. We don't want any leaks in our code!
+
+```js
+function useInfiniteScroll(callbackParam, isActive) { // highlight-line
+  const observer = useRef(null);
+
+  const callback = useCallback(
+    (entries) => {
+      if (entries.length === 0) {
+        return;
+      }
+
+      if (entries[0].isIntersecting && isActive) { // highlight-line
+        callbackParam();
+      }
+    },
+    [callbackParam, isActive] // highlight-line
+  );
+
+  const infiniteScrollRef = useCallback(
+    (node) => {
+      if (!node) {
+        return;
+      }
+
+      observer.current?.disconnect(); // highlight-line
+
+      observer.current = new IntersectionObserver(callback);
+      observer.current.observe(node);
+    },
+    [callback]
+  );
+
+  useEffect(() => { // highlight-line
+    return () => observer.current?.disconnect(); // highlight-line
+  }, []); // highlight-line
+
+  return infiniteScrollRef;
+}
+```
+
+And here's our box list with the final hook.
+
+<SimpleListContainer
+  simulateLatency
+  items={10}
+  ListComponent={SimpleListWithHook}
+  hookVersion={2}
+  initialSimulateLatency
+/>
