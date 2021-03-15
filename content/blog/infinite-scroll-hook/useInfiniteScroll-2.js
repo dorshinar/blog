@@ -1,4 +1,4 @@
-const { useCallback, useRef, useEffect } = require("react");
+const { useCallback, useRef } = require("react");
 
 function useInfiniteScroll(callbackParam, isActive) {
   const observer = useRef(null);
@@ -30,9 +30,13 @@ function useInfiniteScroll(callbackParam, isActive) {
     [callback]
   );
 
-  useEffect(() => {
-    return observer.current?.disconnect;
-  }, []);
+  /**
+   * Disconnecting on unmount causes issues with hot-reloading the article.
+   * In real use it should be un-commented.
+   */
+  // useEffect(() => {
+  // return () => observer.current?.disconnect();
+  // }, []);
 
   return infiniteScrollRef;
 }
