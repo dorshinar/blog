@@ -41,15 +41,11 @@ const StyledCheckbox = styled(motion.div)`
           border: 1px solid var(--gray-500);
         `}
 
-  ${CheckboxContainer}:hover & {
-    ${(props) =>
-      props.theme === "dark"
-        ? css`
-            border-color: var(--gray-300);
-          `
-        : css`
-            border-color: var(--gray-900);
-          `};
+  ${CheckboxContainer}:hover &.dark {
+    border-color: var(--gray-300);
+  }
+  ${CheckboxContainer}:hover &.light {
+    border-color: var(--gray-900);
   }
 `;
 const CheckMark = styled(motion.div)`
@@ -71,6 +67,7 @@ const Checkbox = ({ className, checked, children, ...props }) => {
           tap: { scale: 0.7 },
         }}
         theme={theme}
+        className={theme}
       >
         <AnimatePresence>
           {checked && (

@@ -11,7 +11,6 @@ import CodeShiftingBox from "./ColorShiftingBox.jsx";
 import SimpleListWithHook from "./SimpleListWithHook.jsx";
 import Checkbox from "../../../src/components/Checkbox.jsx";
 
-<Checkbox checked /> 
 Often we want to render lists of items. It could be facebook posts, articles in this very own blog or products in an e-commerce site.
 
 If we had all the compute power in the world and network wasn't an issue, we'd simply download the entire feed when first loading the page, and let our users scroll for hours on end.
@@ -20,7 +19,7 @@ Sadly, we're usually constrained by compute, network, or both, and that forces u
 
 The 'Fast 3G' network preset in Chrome's dev tools is clocked at 1.5Mb/s. At those rates, downloading several megabytes worth of products information is simply not feasible.
 
-> If you want to cut to the chase, you can go straight to [the final hook](#the-final-hook).
+> Just want the code? Go straight to [the final hook](#the-final-hook).
 
 ## Load More Button
 
@@ -413,3 +412,7 @@ And here's our box list with the final hook.
   hookVersion={2}
   initialSimulateLatency
 />
+
+## The IntersectionObserver options parameter
+
+Our hook is complete, but for sake of being thorough I wanted to go over more options of the IntersectionObserver API. Some of you may find them useful.
