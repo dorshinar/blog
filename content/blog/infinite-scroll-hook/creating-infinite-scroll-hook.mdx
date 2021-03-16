@@ -11,21 +11,21 @@ import CodeShiftingBox from "./ColorShiftingBox.jsx";
 import SimpleListWithHook from "./SimpleListWithHook.jsx";
 import Checkbox from "../../../src/components/Checkbox.jsx";
 
-Often we want to render lists of items. It could be facebook posts, articles in this very own blog or products in an e-commerce site.
+Often we want to render lists of items. It could be Facebook posts, articles in this very own blog, or products on an e-commerce site.
 
-If we had all the compute power in the world and network wasn't an issue, we'd simply download the entire feed when first loading the page, and let our users scroll for hours on end.
+If we had all the computing power in the world and the network wasn't an issue, we'd simply download the entire feed when first loading the page, and let our users scroll for hours on end.
 
-Sadly, we're usually constrained by compute, network, or both, and that forces us to compromise. In our case, we must give up trying to load the entire list in the client's device. think about it - _very_ large lists full of information can be several magebytes large!
+Sadly, we're usually constrained by computing, network, or both, and that forces us to compromise. In our case, we must give up trying to load the entire list on the client's device. think about it - _very_ large lists full of information can be several megabytes large!
 
-The 'Fast 3G' network preset in Chrome's dev tools is clocked at 1.5Mb/s. At those rates, downloading several megabytes worth of products information is simply not feasible.
+The 'Fast 3G' network preset in Chrome's dev tools is clocked at 1.5Mb/s. At those rates, downloading several megabytes worth of product information is simply not feasible.
 
 > Just want the code? Go straight to [the final hook](#the-final-hook).
 
 ## Load More Button
 
-The easiest way to avoid loading more data than absolutely necessary is to load a small, fixed number of items on first render, and place a 'Load More' button at the bottom.
+The easiest way to avoid loading more data than necessary is to load a small, fixed number of items on the first render, and place a 'Load More' button at the bottom.
 
-Go ahead, scroll to the bottom of the list and click 'Load More'. I've added a small checkbox to simulate network latency. It will add a 2 second delay before loading the next batch of items. 
+Go ahead, scroll to the bottom of the list and click 'Load More'. I've added a small checkbox to simulate network latency. It will add a 2-second delay before loading the next batch of items.
 
 <SimpleListContainer items={5} ListComponent={SimpleList} />
 
@@ -39,7 +39,7 @@ We want to find a way to make content load automagically for the users, and we w
 
 OK, so we've decided that a simple 'Load More' button is not good enough for us. Ideally, we would like to know when the user scrolls to the bottom of the list, and automatically trigger a call to get the next items.
 
-We could call the `js>getBoundingClientRect()` of an element at the bottom of the list, and that would give us it's absolute position in the viewport.
+We could call the `js>getBoundingClientRect()` of an element at the bottom of the list, and that would give us its absolute position in the viewport.
 
 Here is the (contrived) code for the list we've rendered before:
 
@@ -100,9 +100,9 @@ Our `rect` will look something like this:
 }
 ```
 
-In order to use that information to calculate whether an element is on screen we can use the `top` and `bottom` attributes.
+To use that information to calculate whether an element is on screen we can use the `top` and `bottom` attributes.
 
-The `top` attribute tells us how far (in pixels) the top of the element in from the top of the viewport. If `top` is negative, that means the top of the element is above the viewport.
+The `top` attribute tells us how far (in pixels) the top of the element is from the top of the viewport. If `top` is negative, that means the top of the element is above the viewport.
 
 The `bottom` attribute tells us how far the bottom of the element is from the top of the viewport. If `bottom` is negative, that means that the entire element is above the viewport.
 
@@ -130,29 +130,29 @@ window.addEventListener("scroll", function () {
 
 Boom. Done. 🥳
 
-No, not really - the 'scroll' event has some serious performance issues, making it a big no-no in meaningful application without some performance maneuvers.
+No, not really - the 'scroll' event has some serious performance issues, making it a big no-no in a meaningful application without some performance maneuvers.
 
 ## Intersection Observer
 
-The [Intersection Observer API](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API) is the (not so) new kid on the block. It provides an asynchronous API to detect inetrsection of elements with out viewport.
+The [Intersection Observer API](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API) is the (not so) new kid on the block. It provides an asynchronous API to detect the intersection of elements without viewport.
 
 From MDN:
 
 > The Intersection Observer API provides a way to asynchronously observe changes in the intersection of a target element with an ancestor element or with a top-level document's viewport.
 
-It solves all the issues of the `scroll` event handler, and saves us from doing math to know when (and how much!) an element is intersecting with our viewport.
+It solves all the issues of the `scroll` event handler and saves us from doing the math to know when (and how much!) an element is intersecting with our viewport.
 
 With an Intersection Observer, making something like this becomes super easy. Scroll until you see the box.
 
 <CodeShiftingBox />
 
-See how the box is changing it's color when it enters the viewport? We've achieved that with the help of an Intersection Observer.
+See how the box is changing its color when it enters the viewport? We've achieved that with the help of an Intersection Observer.
 
 > According to [caniuse](https://caniuse.com/intersectionobserver) the IntersectionObserver API has over 93% support, including all major browsers (sorry IE).
 
-To create an Intersection Observer, you first need to get a ref of the element we wish to be notified when it enters the viewport.
+To create an Intersection Observer, you first need to get a ref of the element we wish to be notified of when it enters the viewport.
 
-This can be done with a callback ref, same as we did before. Here's a contrvied example from the color shifting box example above.
+This can be done with a callback ref, the same as we did before. Here's a contrived example from the color-shifting box example above.
 
 ```jsx
 const ColorShiftingBox = () => {
@@ -207,15 +207,15 @@ const ColorShiftingBox = () => {
 };
 ```
 
-I've highlighted the new parts - we create a `callback` function to be invoked, and we create a new `intersectionObserver` object with our `callback` as a parameter. Then, we call `.observe()` method and give it our node as a parameter.
+I've highlighted the new parts - we create a `callback` function to be invoked, and we create a new `intersectionObserver` object with our `callback` as a parameter. Then, we call the `.observe()` method and give it our node as a parameter.
 
-That's about it. Now, whenever out `node` enters or leaves the viewport our `callback` wil be invoked. How can we now know what the state of the `node` is?
+That's about it. Now, whenever our `node` enters or leaves the viewport our `callback` will be invoked. How can we now know what the state of the `node` is?
 
 The trick is that our callback receives 2 parameters. The second one is the `IntersectionObserver` object that triggered the callback, and the first one is an array of [IntersectionObserverEntries](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserverEntry).
 
-Why do we get an array? Simple - we can use a single `IntersectionObserver` to monitor multiple nodes. I'll touch on it later, but for now since we're only monitoring one node we can assume that the list contains a single `IntersectionObserverEntry`.
+Why do we get an array? Simple - we can use a single `IntersectionObserver` to monitor multiple nodes. I'll touch on it later, but for now, since we're only monitoring one node we can assume that the list contains a single `IntersectionObserverEntry`.
 
-Each `IntersectionObserverEntry` contains some very interesting arguments. I'll leave it up to you to dig through the docs to learn about all of them, but for out purposes we only need one argument - `isIntersecting`. We will touch another cool one at the end.
+Each `IntersectionObserverEntry` contains some very interesting arguments. I'll leave it up to you to dig through the docs to learn about all of them, but for our purposes, we only need one argument - `isIntersecting`. We will touch another cool one at the end.
 
 It's a boolean value that will tell us whether our node is in the viewport (`isIntersecting === true`) or out of the viewport (`isIntersecting === false`).
 
@@ -255,7 +255,7 @@ const ColorShiftingBox = () => {
 
 That's great, and it works - but it's not very flexible. If we wanted to use that elsewhere we'd have to write it all over again. Luckily, the folks over at the React team have given us hooks. Let's extract what we've made to a hook.
 
-We'd want out hook's API to be very minimal, so it's dead simple to use.
+We'd want our hook's API to be very minimal, so it's dead simple to use.
 
 ```jsx
 const ColorShiftingBox = () => {
@@ -342,11 +342,11 @@ const SimpleListWithHook = ({ list, loading, loadMore }) => {
 };
 ```
 
-Note that the trick here is that I attach the `infiniteScrollRef` to the last component in the array. This makes it so new elements are fetched only when the user scrolls to the bottom of the list. 
+Note that the trick here is that I attach the `infiniteScrollRef` to the last component in the array. This makes it so new elements are fetched only when the user scrolls to the bottom of the list.
 
-I could attach it to any other element, triggering the fetch sooner. 
+I could attach it to any other element, triggering the fetch sooner.
 
-In the real world you'll need to find _your_ sweet spot - where your user gets the most seamless experience, but you don't overfetch in a way that causes you trouble.
+In the real world, you'll need to find _your_ sweet spot - where your user gets the most seamless experience, but you don't over fetch in a way that causes you trouble.
 
 Here's a running example of this component. You can play around with it. You'll quickly notice that it works _for the most part_, but it's still pretty finicky.
 
@@ -358,7 +358,7 @@ Here's a running example of this component. You can play around with it. You'll 
   initialSimulateLatency
 />
 
-There are some things we can do to improve the hook and make it work event better.
+There are some things we can do to improve the hook and make it work even better.
 
 ## The final hook
 
@@ -367,7 +367,8 @@ Let's add an `isActive` parameter to the hook, so we can avoid triggering our `l
 Note that we're disconnecting our `observer` before we're creating a new one, and we've also added a `useEffect` to make sure our `observer` is disconnected. We don't want any leaks in our code!
 
 ```js
-function useInfiniteScroll(callbackParam, isActive) { // highlight-line
+function useInfiniteScroll(callbackParam, isActive) {
+  // highlight-line
   const observer = useRef(null);
 
   const callback = useCallback(
@@ -376,7 +377,8 @@ function useInfiniteScroll(callbackParam, isActive) { // highlight-line
         return;
       }
 
-      if (entries[0].isIntersecting && isActive) { // highlight-line
+      if (entries[0].isIntersecting && isActive) {
+        // highlight-line
         callbackParam();
       }
     },
@@ -397,7 +399,8 @@ function useInfiniteScroll(callbackParam, isActive) { // highlight-line
     [callback]
   );
 
-  useEffect(() => { // highlight-line
+  useEffect(() => {
+    // highlight-line
     return () => observer.current?.disconnect(); // highlight-line
   }, []); // highlight-line
 
@@ -417,42 +420,42 @@ And here's our box list with the final hook.
 
 ## The IntersectionObserver options parameter
 
-Our hook is complete, but for sake of being thorough I wanted to go over more options of the IntersectionObserver API. Some of you may find them useful.
+Our hook is complete, but for sake of being thorough, I wanted to go over more options of the IntersectionObserver API. Some of you may find them useful.
 
 The first one is the `root` parameter. The root parameter allows you to set a custom viewport, so that intersection won't be calculated against the entire visible screen, but the visible part of an element.
 
 The default value of `root` is the document viewport.
 
-The second is `rootMargin`. The `rootMargin` parameter allows us to grow or shrink the intersection area. 
+The second is `rootMargin`. The `rootMargin` parameter allows us to grow or shrink the intersection area.
 
-In the following example I've set a negative `rootMargin` of `-100px`, which translates to `-100px -100px -100px -100px`, effectively shrinking the relevant viewport by 100 pixels from each side. 
+In the following example I've set a negative `rootMargin` of `-100px`, which translates to `-100px -100px -100px -100px`, effectively shrinking the relevant viewport by 100 pixels from each side.
 
 <CodeShiftingBox root />
 
-The third parameter is `threashold`. It accepts either a single number or an array of numbers, which represent the how much of the element should be visible in order to trigger the callback. 
+The third parameter is `threshold`. It accepts either a single number or an array of numbers, which represent how much of the element should be visible to trigger the callback.
 
-A threashold of 1 would trigger the callback when every pixel of the element is visible. 
+A threshold of 1 would trigger the callback when every pixel of the element is visible.
 
 <CodeShiftingBox root threshold={1} />
 
-A threshold of 0.5 would trigger the callback when the half of the element is visible.  
+A threshold of 0.5 would trigger the callback when half of the element is visible.
 
 <CodeShiftingBox root threshold={0.5} />
 
-If you specify an array, the callback would fire whenever the element's visibility surpasses one of the entries. 
+If you specify an array, the callback would fire whenever the element's visibility surpasses one of the entries.
 
-For example, for a threashold of [0.33, 0.67, 1], the callback would fire 3 times - the first when 33% of the element is visible, the second when 50% of the element is visible, and the last when the entire element is visible. 
+For example, for a threshold of [0.33, 0.67, 1], the callback would fire 3 times - the first when 33% of the element is visible, the second when 50% of the element is visible, and the last when the entire element is visible.
 
 How can we know which threshold triggered the callback?
 
-That's a good question. Remember that I promised to tell you about another cool property of the `IntersectionObserverEntry` parameter we get in the callback? 
+That's a good question. Remember that I promised to tell you about another cool property of the `IntersectionObserverEntry` parameter we get in the callback?
 
-Aside from the `isIntersecting` parameter, we also get `intersectionRatio`, which tells us by how much our element is intersecting with the relevant viewport. This way we can tell whether it's 33% visible, 50% visible or 100% visible.
+Aside from the `isIntersecting` parameter, we also get `intersectionRatio`, which tells us by how much our element is intersecting with the relevant viewport. This way we can tell whether it's 33% visible, 50% visible, or 100% visible.
 
 ## Final Words
 
-The Intersection Observer is and awesome API that opens the doors for a lot of fun interactions. 
+The Intersection Observer is an awesome API that opens the doors for a lot of fun interactions.
 
-From infinite scrolls, to lazy-loading images, or to make some intricate metrics about which content on your site is actually viewed by the users. 
+From infinite scrolls to lazy-loading images, or to make some intricate metrics about which content on your site is actually viewed by the users.
 
 I hope you've enjoyed the article!

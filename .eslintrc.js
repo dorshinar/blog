@@ -9,14 +9,14 @@ module.exports = {
   extends: [
     "eslint:recommended",
     "plugin:react/recommended",
-    "plugin:prettier/recommended",
     "plugin:import/errors",
     "plugin:react-hooks/recommended",
     "plugin:jsx-a11y/recommended",
     "plugin:markdown/recommended",
     "plugin:mdx/recommended",
+    "prettier",
   ],
-  plugins: ["import", "markdown"],
+  plugins: ["import", "markdown", "mdx"],
   parserOptions: {
     ecmaVersion: 2021,
     sourceType: "module",
@@ -45,7 +45,6 @@ module.exports = {
     {
       files: ["**/*.md*/*"],
       rules: {
-        "prettier/prettier": "off",
         "import/no-unresolved": "off",
       },
     },

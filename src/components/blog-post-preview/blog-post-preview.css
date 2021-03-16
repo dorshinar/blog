@@ -4,7 +4,7 @@
 
 .preview-wrapper:not(:last-child) {
   border-bottom: 1px solid var(--separatorColor);
-  transition: border-bottom-color 0.25s ease,
+  transition: border-bottom-color 0.25s ease;
 }
 
 .preview-header {
