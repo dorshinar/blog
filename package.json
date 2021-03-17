@@ -15,14 +15,13 @@
     "@fortawesome/react-fontawesome": "^0.1.14",
     "@mdx-js/mdx": "^1.6.22",
     "@mdx-js/react": "^1.6.22",
+    "@typescript-eslint/eslint-plugin": "^4.18.0",
+    "@typescript-eslint/parser": "^4.18.0",
     "eslint": "^7.22.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-config-react": "^1.1.7",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jsx-a11y": "^6.4.1",
-    "eslint-plugin-markdown": "^2.0.0",
-    "eslint-plugin-mdx": "^1.10.0",
-    "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-react": "^7.22.0",
     "eslint-plugin-react-hooks": "^4.2.0",
     "framer-motion": "^3.10.5",
@@ -57,12 +56,12 @@
     "react-dom": "^17.0.1",
     "react-helmet": "^6.1.0",
     "reading-time": "^1.3.0",
-    "styled-components": "^5.2.1"
+    "styled-components": "^5.2.1",
+    "typescript": "^4.2.3"
   },
   "devDependencies": {
     "@types/jest": "^26.0.20",
-    "@types/puppeteer": "^5.4.3",
-    "typescript": "^4.2.3"
+    "@types/puppeteer": "^5.4.3"
   },
   "homepage": "https://dorshinar.me",
   "keywords": [
@@ -78,10 +77,10 @@
     "build": "gatsby build",
     "develop": "gatsby develop",
     "develop:mobile": "gatsby develop -H 0.0.0.0",
-    "format": "prettier --write ./**/*.{js,jsx,css,html,md,mdx}",
-    "format:check": "prettier --check ./**/*.{js,jsx,css,html,md,mdx}",
-    "lint": "eslint --fix './**/*.{js,jsx,md,mdx}' --cache",
-    "lint:check": "eslint './**/*.{js,jsx,md,mdx}' --cache",
+    "format": "prettier --write ./**/*.{ts,tsx,js,jsx,css,html,md,mdx}",
+    "format:check": "prettier --check ./**/*.{ts,tsx,js,jsx,css,html,md,mdx}",
+    "lint": "eslint --fix './**/*.{ts,tsx,js,jsx}' --cache",
+    "lint:check": "eslint './**/*.{ts,tsx,js,jsx}' --cache",
     "start": "npm run develop",
     "serve": "gatsby serve",
     "prod": "npm run build && npm run serve",
