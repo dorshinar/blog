@@ -75,15 +75,17 @@ const SimpleListContainer = ({
           loading={loading}
           hookVersion={hookVersion}
         />
-        <StickyWrapper>
-          <AnimatePresence>
-            {loading && (
-              <Loading initial={initial} animate={animate} exit={initial}>
-                Loading...
-              </Loading>
-            )}
-          </AnimatePresence>
-        </StickyWrapper>
+        {hookVersion && (
+          <StickyWrapper>
+            <AnimatePresence>
+              {loading && (
+                <Loading initial={initial} animate={animate} exit={initial}>
+                  Loading...
+                </Loading>
+              )}
+            </AnimatePresence>
+          </StickyWrapper>
+        )}
       </ListWrapper>
       <Checkbox
         checked={simulateLatency}
