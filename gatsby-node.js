@@ -20,6 +20,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
             frontmatter {
               title
               slug
+              published
             }
           }
         }
@@ -68,15 +69,25 @@ exports.onCreateNode = ({ node, actions }) => {
   }
 };
 
+exports.onCreatePage = ({ page, actions }) => {
+  const { createPage, deletePage } = actions;
+
+  if (page.path === "/") {
+    deletePage(page);
+    createPage({
+      ...page,
+      context: {
+        ...page.context,
+        published:
+          process.env.NODE_ENV === "production" ? [true] : [false, true],
+      },
+    });
+  }
+};
+
 exports.createSchemaCustomization = ({ actions }) => {
   const { createTypes } = actions;
 
-  // Explicitly define the siteMetadata {} object
-  // This way those will always be defined even if removed from gatsby-config.js
-
-  // Also explicitly define the Markdown frontmatter
-  // This way the "MarkdownRemark" queries will return `null` even when no
-  // blog posts are stored inside "content/blog" instead of returning an error
   createTypes(`
     type Mdx implements Node {
       frontmatter: Frontmatter
@@ -87,6 +98,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       description: String
       date: Date @dateformat
       slug: String
+      published: Boolean
     }
     type Fields {
       readingTime: ReadingTime

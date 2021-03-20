@@ -4,6 +4,7 @@ date: "2020-02-18"
 description: "TypeScript is a police protecting a city that has no walls - if you let anyone in you'll have a really bad time. But It's definitely not useless."
 slug: "/guarded-city-with-no-defensive-wall-typescript"
 cover_image: "./fort.jpg"
+published: true
 ---
 
 TypeScript is huge right now. It's exploding in popularity - as of today, it has almost 10M weekly downloads from [NPM](https://www.npmjs.com/package/typescript), their [repo](https://github.com/microsoft/TypeScript) has nearly 60K stars and it feels like everybody jumps on the bandwagon when it comes to static type checking.

@@ -3,6 +3,7 @@ title: "Rectangular Speech Bubble with Pure CSS and HTML"
 date: "2020-01-30"
 description: "Creating a rectangular speech bubble turned out more complicated that I thought. Who knew?"
 slug: "/speech-bubble-with-css-and-html"
+published: true
 ---
 
 Lately I've been tasked with creating something similar to a speech bubble, that looks like that:

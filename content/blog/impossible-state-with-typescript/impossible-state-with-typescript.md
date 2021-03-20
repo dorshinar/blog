@@ -4,6 +4,7 @@ date: "2020-10-20"
 description: "Typescript's greatest strength, in my opinion is it's ability to disallow forbidden state."
 slug: "/avoid-impossible-state-with-typescript"
 cover_image: "impossible.jpeg"
+published: true
 ---
 
 I love [TypeScript](https://www.typescriptlang.org/). I've been using it for over 2 years in various projects, and the more I use it the less compelling I find vanilla Javascript.

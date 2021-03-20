@@ -3,6 +3,7 @@ title: Be The Perfect Teammate!
 date: "2019-09-12"
 description: "Being a good teammate is sometimes more important than being a good developer."
 slug: /be-the-perfect-teammate
+published: true
 ---
 
 I bet your all have had a teammate in the past you could not stand. Each with his/her own reasons, maybe you didn't like their professional capabilities, the way their breath smelled in the morning or the inappropriate jokes they made during serious meetings. On the other hand I bet you've had people in your teams who you've felt like they're such a positive addition to the team, that you can't remember being without them. I'll try to list some things here that I think can make someone a better teammate.
