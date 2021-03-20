@@ -158,5 +158,8 @@ module.exports = {
     `gatsby-plugin-sitemap`,
     `gatsby-plugin-catch-links`,
     `gatsby-plugin-styled-components`,
+    {
+      resolve: "gatsby-plugin-webpack-bundle-analyser-v2",
+    },
   ],
 };

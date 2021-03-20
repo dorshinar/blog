@@ -6,10 +6,9 @@ slug: "/create-react-infinite-scroll-hook"
 published: false
 ---
 
-import SimpleListContainer from "./SimpleListContainer.jsx";
-import SimpleList from "./SimpleList.jsx";
-import CodeShiftingBox from "./ColorShiftingBox.jsx";
-import SimpleListWithHook from "./SimpleListWithHook.jsx";
+import LazySimpleListContainer from "./LazySimpleListContainer.jsx";
+import LazyListWithHooksContainer from "./LazyListWithHooksContainer.jsx";
+import LazyColorShiftingBoxContainer from "./LazyColorShiftingBoxContainer.jsx";
 
 Often we want to render lists of items. It could be Facebook posts, articles in this very own blog, or products on an e-commerce site.
 
@@ -27,7 +26,7 @@ The easiest way to avoid loading more data than necessary is to load a small, fi
 
 Go ahead, scroll to the bottom of the list and click 'Load More'. I've added a small checkbox to simulate network latency. It will add a 2-second delay before loading the next batch of items.
 
-<SimpleListContainer items={5} ListComponent={SimpleList} />
+<LazySimpleListContainer items={5} />
 
 Doesn't feel so good, doesn't it?
 
@@ -144,7 +143,7 @@ It solves all the issues of the `scroll` event handler and saves us from doing t
 
 With an Intersection Observer, making something like this becomes super easy. Scroll until you see the box.
 
-<CodeShiftingBox />
+<LazyColorShiftingBoxContainer />
 
 See how the box is changing its color when it enters the viewport? We've achieved that with the help of an Intersection Observer.
 
@@ -338,10 +337,9 @@ In the real world, you'll need to find _your_ sweet spot - where your user gets 
 
 Here's a running example of this component. You can play around with it. You'll quickly notice that it works _for the most part_, but it's still pretty finicky.
 
-<SimpleListContainer
+<LazyListWithHooksContainer
   simulateLatency
   items={10}
-  ListComponent={SimpleListWithHook}
   hookVersion={1}
   initialSimulateLatency
 />
@@ -397,10 +395,9 @@ function useInfiniteScroll(callbackParam, isActive) {
 
 And here's our box list with the final hook.
 
-<SimpleListContainer
+<LazyListWithHooksContainer
   simulateLatency
   items={10}
-  ListComponent={SimpleListWithHook}
   hookVersion={2}
   initialSimulateLatency
 />
@@ -417,17 +414,17 @@ The second is `rootMargin`. The `rootMargin` parameter allows us to grow or shri
 
 In the following example I've set a negative `rootMargin` of `-100px`, which translates to `-100px -100px -100px -100px`, effectively shrinking the relevant viewport by 100 pixels from each side.
 
-<CodeShiftingBox root />
+<LazyColorShiftingBoxContainer root />
 
 The third parameter is `threshold`. It accepts either a single number or an array of numbers, which represent how much of the element should be visible to trigger the callback.
 
 A threshold of 1 would trigger the callback when every pixel of the element is visible.
 
-<CodeShiftingBox root threshold={1} />
+<LazyColorShiftingBoxContainer root threshold={1} />
 
 A threshold of 0.5 would trigger the callback when half of the element is visible.
 
-<CodeShiftingBox root threshold={0.5} />
+<LazyColorShiftingBoxContainer root threshold={0.5} />
 
 If you specify an array, the callback would fire whenever the element's visibility surpasses one of the entries.
 

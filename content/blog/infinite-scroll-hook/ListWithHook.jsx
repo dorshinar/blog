@@ -14,7 +14,7 @@ const Wrapper = styled.div`
   justify-content: space-between;
 `;
 
-const SimpleListWithHook = ({ list, loading, loadMore, hookVersion }) => {
+const ListWithHook = ({ list, loading, loadMore, hookVersion }) => {
   const infiniteScrollRefV1 = useInfiniteScrollV1(loadMore, !loading);
   const infiniteScrollRefV2 = useInfiniteScrollV2(loadMore, !loading);
 
@@ -39,4 +39,4 @@ const SimpleListWithHook = ({ list, loading, loadMore, hookVersion }) => {
   );
 };
 
-export default SimpleListWithHook;
+export default ListWithHook;
