@@ -2,7 +2,7 @@ const path = require(`path`);
 const readingTime = require("reading-time");
 
 const activeEnv =
-  process.env.GATSBY_ACTIVE_ENV || process.env.NODE_ENV || "development";
+  process.env.VERCEL_ENV || process.env.NODE_ENV || "development";
 
 exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions;
