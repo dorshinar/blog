@@ -31,6 +31,7 @@ const BuyMeACoffee = () => {
           src="https://az743702.vo.msecnd.net/cdn/kofi4.png?v=2"
           border="0"
           alt="Buy Me a Coffee at ko-fi.com"
+          className="buy-me-a-coffee"
         />
       </OutboundLink>
     </>

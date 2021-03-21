@@ -31,25 +31,25 @@ const BlogPostTemplate = (props) => {
         </p>
         <MDXRenderer>{post.body}</MDXRenderer>
         <BuyMeACoffee />
-        <Separator />
-        <Bio />
-        <ul className="near-by-posts">
-          <li>
-            {previous && (
-              <Link to={previous.frontmatter.slug} rel="prev">
-                ← {previous.frontmatter.title}
-              </Link>
-            )}
-          </li>
-          <li>
-            {next && (
-              <Link to={next.frontmatter.slug} rel="next">
-                {next.frontmatter.title} →
-              </Link>
-            )}
-          </li>
-        </ul>
       </article>
+      <Separator />
+      <Bio />
+      <ul className="near-by-posts">
+        <li>
+          {previous && (
+            <Link to={previous.frontmatter.slug} rel="prev">
+              ← {previous.frontmatter.title}
+            </Link>
+          )}
+        </li>
+        <li>
+          {next && (
+            <Link to={next.frontmatter.slug} rel="next">
+              {next.frontmatter.title} →
+            </Link>
+          )}
+        </li>
+      </ul>
     </Layout>
   );
 };

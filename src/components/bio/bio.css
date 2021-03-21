@@ -4,6 +4,8 @@
   align-items: center;
   margin-bottom: var(--rhythm);
   padding: calc(var(--rhythm) * 0.5);
+  margin-right: auto;
+  margin-left: auto;
 }
 
 .profile-image {
