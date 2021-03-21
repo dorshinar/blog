@@ -6,14 +6,26 @@ body {
   --primary: #1ca086;
   --light: #5cd2b6;
   --dark: #007159;
-  --contentWidth: 34.8rem;
+  --contentWidth: 40rem;
   --rhythm: 1.45rem;
+  --snippetBackgroundColor: #2d2d2d;
+
+  --gray-50: hsl(0, 0%, 98%);
+  --gray-100: hsl(0, 0%, 96%);
+  --gray-200: hsl(0, 0%, 93%);
+  --gray-300: hsl(0, 0%, 88%);
+  --gray-400: hsl(0, 0%, 74%);
+  --gray-500: hsl(0, 0%, 62%);
+  --gray-600: hsl(0, 0%, 46%);
+  --gray-700: hsl(0, 0%, 38%);
+  --gray-800: hsl(0, 0%, 26%);
+  --gray-900: hsl(0, 0%, 13%);
 }
 
 body.dark {
   --separatorColor: rgba(255, 255, 255, 0.2);
-  --textColor: white;
-  --backgroundColor: #121212;
+  --textColor: var(--gray-50);
+  --backgroundColor: var(--gray-900);
   --headerBackgroundColor: rgba(255, 255, 255, 0.05);
   --blockquoteColor: rgba(255, 255, 255, 0.2);
   --icon: white;
@@ -22,7 +34,7 @@ body.dark {
 
 body.light {
   --separatorColor: rgba(0, 0, 0, 0.08);
-  --textColor: black;
+  --textColor: var(--gray-900);
   --backgroundColor: white;
   --headerBackgroundColor: #f6f6f6;
   --blockquoteColor: rgba(0, 0, 0, 0.8);
@@ -58,4 +70,8 @@ hr {
 p {
   margin: 0 0 var(--rhythm) 0;
   line-height: 1.5;
+}
+
+button {
+  font: inherit;
 }

@@ -1,4 +1,5 @@
 module.exports = {
+  root: true,
   globals: {
     page: true,
     browser: true,
@@ -8,18 +9,20 @@ module.exports = {
   },
   extends: [
     "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
     "plugin:react/recommended",
-    "plugin:prettier/recommended",
     "plugin:import/errors",
     "plugin:react-hooks/recommended",
     "plugin:jsx-a11y/recommended",
-    "plugin:markdown/recommended",
+    "prettier",
   ],
-  plugins: ["import", "markdown"],
+  plugins: [],
   parserOptions: {
     ecmaVersion: 2021,
+    parser: "@typescript-eslint/parser",
     sourceType: "module",
   },
+  parser: "@typescript-eslint/parser",
   env: {
     es6: true,
     node: true,
@@ -29,8 +32,10 @@ module.exports = {
   rules: {
     "react/prop-types": 0,
     "import/order": ["error", { "newlines-between": "always" }],
-    "max-nested-callbacks": 0,
+    "max-nested-callbacks": "off",
     "import/no-unresolved": "error",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "@typescript-eslint/no-empty-function": "off",
   },
   settings: {
     "import/resolver": {
@@ -42,21 +47,18 @@ module.exports = {
   },
   overrides: [
     {
-      files: ["**/*.md/*"],
+      files: ["**/*.md*/*"],
       rules: {
-        // "no-undef": 0,
-        // "react/jsx-no-undef": 0,
-        // "no-unused-vars": 0,
-        // "react/react-in-jsx-scope": 0,
-        // "import/no-unresolved": 0,
-        // "import/order": 0,
-        // "react/display-name": 0,
-        "prettier/prettier": "off",
         "import/no-unresolved": "off",
+        "no-undef": "off",
+        "@typescript-eslint/no-unused-vars": "off",
+        "@typescript-eslint/no-unused-expressions": "off",
+        "react/react-in-jsx-scope": "off",
+        "react/jsx-no-undef": "off",
       },
     },
     {
-      files: ["**/*.md/*.html"],
+      files: ["**/*.md*/*.html"],
       rules: {
         "react/no-unknown-property": "off",
       },
@@ -67,7 +69,12 @@ module.exports = {
         "no-unused-expressions": 0,
         "react/react-in-jsx-scope": 0,
         "react/self-closing-comp": 0,
-        "prettier/prettier": "off",
+      },
+    },
+    {
+      files: ["**/*.js"],
+      rules: {
+        "@typescript-eslint/no-var-requires": "off",
       },
     },
   ],

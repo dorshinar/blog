@@ -1,6 +1,9 @@
 const path = require(`path`);
 const readingTime = require("reading-time");
 
+const activeEnv =
+  process.env.VERCEL_ENV || process.env.NODE_ENV || "development";
+
 exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions;
 
@@ -11,7 +14,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   const result = await graphql(
     `
       {
-        allMarkdownRemark(
+        allMdx(
           sort: { fields: [frontmatter___date], order: ASC }
           limit: 1000
         ) {
@@ -20,6 +23,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
             frontmatter {
               title
               slug
+              published
             }
           }
         }
@@ -35,7 +39,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     return;
   }
 
-  const posts = result.data.allMarkdownRemark.nodes;
+  const posts = result.data.allMdx.nodes;
 
   if (posts.length > 0) {
     posts.forEach((post, index) => {
@@ -59,11 +63,26 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 exports.onCreateNode = ({ node, actions }) => {
   const { createNodeField } = actions;
 
-  if (node.internal.type === `MarkdownRemark`) {
+  if (node.internal.type === `Mdx`) {
     createNodeField({
       node,
       name: `readingTime`,
-      value: readingTime(node.rawMarkdownBody),
+      value: readingTime(node.rawBody),
+    });
+  }
+};
+
+exports.onCreatePage = ({ page, actions }) => {
+  const { createPage, deletePage } = actions;
+
+  if (page.path === "/") {
+    deletePage(page);
+    createPage({
+      ...page,
+      context: {
+        ...page.context,
+        published: activeEnv === "production" ? [true] : [false, true],
+      },
     });
   }
 };
@@ -71,14 +90,8 @@ exports.onCreateNode = ({ node, actions }) => {
 exports.createSchemaCustomization = ({ actions }) => {
   const { createTypes } = actions;
 
-  // Explicitly define the siteMetadata {} object
-  // This way those will always be defined even if removed from gatsby-config.js
-
-  // Also explicitly define the Markdown frontmatter
-  // This way the "MarkdownRemark" queries will return `null` even when no
-  // blog posts are stored inside "content/blog" instead of returning an error
   createTypes(`
-    type MarkdownRemark implements Node {
+    type Mdx implements Node {
       frontmatter: Frontmatter
       fields: Fields
     }
@@ -87,6 +100,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       description: String
       date: Date @dateformat
       slug: String
+      published: Boolean
     }
     type Fields {
       readingTime: ReadingTime

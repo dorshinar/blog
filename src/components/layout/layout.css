@@ -14,7 +14,7 @@ a {
   margin-left: auto;
   margin-right: auto;
   margin-top: var(--rhythm);
-  max-width: calc(var(--rhythm) * 24);
+  max-width: var(--contentWidth);
   display: flex;
   flex-direction: column;
   justify-content: space-between;

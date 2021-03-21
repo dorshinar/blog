@@ -4,6 +4,7 @@ date: "2020-10-20"
 description: "Typescript's greatest strength, in my opinion is it's ability to disallow forbidden state."
 slug: "/avoid-impossible-state-with-typescript"
 cover_image: "impossible.jpeg"
+published: true
 ---
 
 I love [TypeScript](https://www.typescriptlang.org/). I've been using it for over 2 years in various projects, and the more I use it the less compelling I find vanilla Javascript.
@@ -43,7 +44,7 @@ const styles: Record<RequestStatus, React.CSSProperties> = {
   SUCCESSFUL: {
     backgroundColor: "green",
     borderRadius: "50%",
-    width: "50px"  ,
+    width: "50px",
     height: "50px",
   },
 };

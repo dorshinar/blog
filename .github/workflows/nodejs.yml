@@ -30,7 +30,10 @@ jobs:
         run: npm ci --prefer-offline
 
       - name: Lint
-        run: npm run lint
+        run: npm run lint:check
+
+      - name: Format
+        run: npm run format:check
 
       - name: Get deployment URL
         id: deployment

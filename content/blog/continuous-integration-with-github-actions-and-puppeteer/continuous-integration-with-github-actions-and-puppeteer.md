@@ -3,6 +3,7 @@ title: Continuous Integration with Github Actions and Puppeteer
 date: 2019-12-15
 description: Using puppeteer for e2e testing is really awesome. I'll show you how to integrate it with github actions.
 slug: /continuous-integration-with-github-actions-and-puppeteer
+published: true
 ---
 
 Lately I've added continuous integration to my blog using puppeteer for end to end testing. My main goal was to allow automatic dependency update using [Dependabot](https://dependabot.com/).

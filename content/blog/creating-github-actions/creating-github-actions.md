@@ -4,6 +4,7 @@ description: "Github actions are a great way to run custom CI workflows. What's 
 date: "2020-07-15"
 slug: "/creating-github-actions"
 cover_image: "./running-action.png"
+published: true
 ---
 
 I'm a big fan of Github actions. I've started using them right when they came out of beta. Creating workflows is very easy and uses a familiar `yml` syntax as I've explained in a previous article I've written - [Continuous Integration with Github Actions and Puppeteer](/continuous-integration-with-github-actions-and-puppeteer). I encourage you to give it a read, you might find it useful as well.

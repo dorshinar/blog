@@ -3,6 +3,7 @@ title: Themes Using CSS Variables and React Context
 date: "2019-10-25"
 description: "CSS variables are awesome! We can integrate them beautifully with React Context for a super easy way to theme our application."
 slug: /themes-using-css-variables-and-react-context
+published: true
 ---
 
 CSS variables are really cool. You can use them for a lot of things, one of which is applying themes in your application with ease. In this tutorial I'll show you how to integrate them with react to create a `ThemeComponent` (with context!).

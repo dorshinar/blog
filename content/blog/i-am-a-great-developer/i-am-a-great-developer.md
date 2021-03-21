@@ -8,7 +8,7 @@ slug: /i-am-a-great-developer
 
 Well, I’m not THAT much a narcissist as the title implies. In fact, I’m not nearly as good as I wish I was. I only have a few years of experience under my sleeve, but I have gathered some helpful insights that help me get better everyday.
 
-I believe that if you follow them you can definitely step up your game. It doesn’t have to be all at once — slowly and steadily adopt some parts of it, in whichever pace fits you.
+I believe that if you follow them you can definitely step up your game. It doesn’t have to be all at once — slowly and steadily adopt some parts of it, in whichever pace fits you.
 
 #### Always Be Better Than Yesterday
 
@@ -23,7 +23,7 @@ There are oh-so-many ways to be better everyday, but the most fundamental is lea
 
 Let’s say you’ve heard from a co-worker of yours about that sweet sweet new feature in [Some-Super-Awesome-Framework]. Sadly, most developers I know will go “yeah that sure sounds nice, but I bet it’s complicated so I shouldn’t even try”. Whether it’s from laziness, low self-esteem or lack of time, I can safely say, this statement is wrong more often than not. Most likely the technologies you chose are maintained by responsible teams, or avid communities (and if not, then maybe you should reconsider them), and most features (complicated or not) would have awesome guides to help you through.
 
-Don’t fear the unknown. The worst thing that can happen is that you will fail to implement said feature and learn for the future. I’ve yet to fail without learning anything new. And let’s not forget the happy scenario where you succeed — you got to learn something and made your/your team’s/your company’s code better and more maintainable, and isn’t that what we’re all about?
+Don’t fear the unknown. The worst thing that can happen is that you will fail to implement said feature and learn for the future. I’ve yet to fail without learning anything new. And let’s not forget the happy scenario where you succeed — you got to learn something and made your/your team’s/your company’s code better and more maintainable, and isn’t that what we’re all about?
 
 I think the best thing you can do is adopt a habit of reading at least one article every day. I regularly use [Pocket](https://getpocket.com) (I’m not affiliated with them in any way) to store articles I find in different sources, so I always have a list of articles waiting for me, and whenever I get the time I open the app and catch up on them. You can choose whichever method that works for you (for example, I’ve also trained my Google feed to show me a lot of tech oriented articles), but make sure you do it, and it should be as easy as possible.
 
@@ -43,7 +43,7 @@ or worse:
 
 The code doesn’t belong to anyone, and it works both ways. You should know as much as possible about as many aspects of your system as possible. Of course I don’t expect anyone to know by heart every micro-service in a system that contains hundreds of them, with barely a dozen maintained by their team, but that’s what you should aspire to.
 
-You should know how your app is deployed, rather than simply relying on it to work. Get to know your CI/CD pipeline, environments used, scripts used to run your application. If you use some form of logs analyzing tool (and you should), get to know how to query it and how to create dashboards, even if no-one will look at them, as that might be useful in the future. I would also consider in this category some basic things that exist in any application — user authentication, database interactions and so on.
+You should know how your app is deployed, rather than simply relying on it to work. Get to know your CI/CD pipeline, environments used, scripts used to run your application. If you use some form of logs analyzing tool (and you should), get to know how to query it and how to create dashboards, even if no-one will look at them, as that might be useful in the future. I would also consider in this category some basic things that exist in any application — user authentication, database interactions and so on.
 
 You might even want to get people to explain to you about things they’ve done in the code base, so you don’t have to figure everything out by yourself.
 
@@ -55,7 +55,7 @@ You don’t have to master every aspect of your system, nor should you be a jack
 
 ![Other people's code](pankaj-patel-kNfP4Z2eq7w-unsplash.jpg)Photo by [Pankaj Patel](https://unsplash.com/@pankajpatel) on [Unsplash](https://unsplash.com)
 
-Usually this line opens a paragraph (or an article) about writing clean code or using some documentation format. While those things are very important, and no application would succeed without close attention to them, I would like to put an emphasis on the reading part, rather than the writing part. Reading other people’s code can do wonders for you — it can open your mind to creative ways to achieve a certain goal or a feature, you can find weak spots in the code base (ones you’d like to fix later, or simply inform your team) and make you a better developer in general.
+Usually this line opens a paragraph (or an article) about writing clean code or using some documentation format. While those things are very important, and no application would succeed without close attention to them, I would like to put an emphasis on the reading part, rather than the writing part. Reading other people’s code can do wonders for you — it can open your mind to creative ways to achieve a certain goal or a feature, you can find weak spots in the code base (ones you’d like to fix later, or simply inform your team) and make you a better developer in general.
 
 You should also aspire to review people’s code as often as possible (I know it can be a hassle for some people, but trust me it’s worth it).
 

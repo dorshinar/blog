@@ -1,9 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 
-export const ThemeSelectorContext = React.createContext({
+const ThemeSelectorContext = React.createContext({
   themeName: "dark",
   toggleTheme: () => {},
 });
+
+export function useTheme() {
+  const { themeName } = useContext(ThemeSelectorContext);
+
+  return themeName;
+}
 
 export function Themer({ children }) {
   const [themeName, setThemeName] = useState("dark");
