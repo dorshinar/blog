@@ -2,14 +2,14 @@ import React from "react";
 import { Link, graphql } from "gatsby";
 import { MDXRenderer } from "gatsby-plugin-mdx";
 
-import { Bio } from "../../components/bio/bio";
-import SEO from "../../components/seo";
-import { ScrollIndicator } from "../../components/scroll-indicator/scroll-indicator";
-import { Separator } from "../../utils/styled/separator";
-import { BuyMeACoffee } from "../../components/buy-me-a-coffee/buy-me-a-coffee";
-import Layout from "../../components/layout/layout";
+import { Bio } from "../bio/Bio";
+import SEO from "../Seo";
+import { ScrollIndicator } from "../ScrollIndicator/ScrollIndicator";
+import { Separator } from "../../Separator";
+import { BuyMeACoffee } from "../BuyMeACoffee/BuyMeACoffee";
+import Layout from "../Layout/Layout";
 
-import "./blog-post.css";
+import "./BlogPost.css";
 
 const BlogPostTemplate = (props) => {
   const post = props.data.mdx;

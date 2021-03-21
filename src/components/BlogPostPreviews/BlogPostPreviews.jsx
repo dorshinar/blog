@@ -1,6 +1,6 @@
 import React from "react";
 
-import { BlogPostPreview } from "../blog-post-preview/blog-post-preview";
+import { BlogPostPreview } from "../BlogPostPreview/BlogPostPreview";
 
 export function BlogPostPreviews({ posts }) {
   return posts.map(({ node }) => {

@@ -1,7 +1,7 @@
 import React from "react";
 import { OutboundLink } from "gatsby-plugin-google-analytics";
 
-import "./footer.css";
+import "./Footer.css";
 
 export function Footer() {
   return (

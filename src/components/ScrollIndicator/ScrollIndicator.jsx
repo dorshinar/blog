@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useCallback } from "react";
 
-import "./scroll-indicator.css";
+import "./ScrollIndicator.css";
 
 export function ScrollIndicator() {
   const [width, setWidth] = useState(0);

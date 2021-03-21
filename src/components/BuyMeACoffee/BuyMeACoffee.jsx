@@ -2,9 +2,9 @@ import React from "react";
 import { useStaticQuery, graphql } from "gatsby";
 import { OutboundLink } from "gatsby-plugin-google-analytics";
 
-import "./buy-me-a-coffee.css";
+import "./BuyMeACoffee.css";
 
-const BuyMeACoffee = () => {
+export const BuyMeACoffee = () => {
   const data = useStaticQuery(graphql`
     query {
       site {
@@ -37,5 +37,3 @@ const BuyMeACoffee = () => {
     </>
   );
 };
-
-export { BuyMeACoffee };

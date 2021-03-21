@@ -1,28 +1,23 @@
 import React from "react";
 
-import { Themer } from "../themer/themer";
+import { Themer } from "../Theme/Theme";
+import { Footer } from "../Footer/Footer";
+import { Header } from "../Header/Header";
 
-import { Header } from "./header/header";
-import { Footer } from "./footer/footer";
+import "./Layout.css";
 
-import "./layout.css";
-
-class Layout extends React.Component {
-  render() {
-    const { children } = this.props;
-
-    return (
-      <Themer>
-        <div className="layout-wrapper">
-          <Header />
-          <div className="content-wrapper">
-            <main>{children}</main>
-            <Footer />
-          </div>
+const Layout = ({ children }) => {
+  return (
+    <Themer>
+      <div className="layout-wrapper">
+        <Header />
+        <div className="content-wrapper">
+          <main>{children}</main>
+          <Footer />
         </div>
-      </Themer>
-    );
-  }
-}
+      </div>
+    </Themer>
+  );
+};
 
 export default Layout;

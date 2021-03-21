@@ -1,7 +1,7 @@
 import React from "react";
 
-import Layout from "../components/layout/layout";
-import SEO from "../components/seo";
+import Layout from "../components/Layout/Layout";
+import SEO from "../components/Seo";
 
 function PageNotExists() {
   return (
