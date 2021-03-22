@@ -12,7 +12,7 @@ import { GatsbyImage } from "gatsby-plugin-image";
 import { OutboundLink } from "gatsby-plugin-google-analytics";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import "./bio.css";
+import "./Bio.css";
 
 export const Bio = () => {
   const data = useStaticQuery(graphql`
