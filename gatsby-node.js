@@ -105,7 +105,6 @@ exports.createSchemaCustomization = ({ actions }) => {
       slug: String
       published: Boolean
       cover_image_credit: String
-      cover_image: String
       cover_image_alt: String
     }
     type Fields {
