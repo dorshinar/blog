@@ -3,7 +3,7 @@ import React from "react";
 import styled, { css } from "styled-components";
 
 import Spacer from "./Spacer";
-import { useTheme } from "./themer/themer";
+import { useTheme } from "./Theme/Theme";
 
 const CheckboxContainer = styled(motion.label)`
   display: flex;

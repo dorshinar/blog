@@ -1,7 +1,7 @@
 import React from "react";
 import loadable from "@loadable/component";
 
-import { Placeholder } from "../../../src/utils/styled/CodePlaceholder";
+import { Placeholder } from "../../../src/CodePlaceholder";
 
 const LazyList = loadable(() => import("./ListWithHookContainer"), {
   fallback: <Placeholder upperHeight={21} lowerHeight={3} />,

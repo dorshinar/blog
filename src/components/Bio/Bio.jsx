@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React from "react";
 import { useStaticQuery, graphql } from "gatsby";
 import {
   faGithub,
@@ -12,9 +12,9 @@ import { GatsbyImage } from "gatsby-plugin-image";
 import { OutboundLink } from "gatsby-plugin-google-analytics";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import "./bio.css";
+import "./Bio.css";
 
-const BioComponent = () => {
+export const Bio = () => {
   const data = useStaticQuery(graphql`
     query BioQuery {
       avatar: file(absolutePath: { regex: "/profile-pic.jpg/" }) {
@@ -129,5 +129,3 @@ const BioComponent = () => {
     </div>
   );
 };
-
-export const Bio = memo(BioComponent);

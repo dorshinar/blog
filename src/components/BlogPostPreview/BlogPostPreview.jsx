@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "gatsby";
 
-import "./blog-post-preview.css";
+import "./BlogPostPreview.css";
 
 export function BlogPostPreview({ node, title }) {
   return (

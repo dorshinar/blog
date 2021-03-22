@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import Loader from "../../../content/assets/loader.svg";
+import Loader from "../content/assets/loader.svg";
 
 const Upper = styled.div`
   height: ${({ height = 21 }) => `${height}rem`};

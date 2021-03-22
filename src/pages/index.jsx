@@ -1,10 +1,10 @@
 import React from "react";
 import { graphql } from "gatsby";
 
-import { Bio } from "../components/bio/bio";
-import SEO from "../components/seo";
-import { BlogPostPreviews } from "../components/blog-post-previews/blog-post-previews";
-import Layout from "../components/layout/layout";
+import { Bio } from "../components/Bio/Bio";
+import SEO from "../components/Seo";
+import { BlogPostPreviews } from "../components/BlogPostPreviews/BlogPostPreviews";
+import Layout from "../components/Layout/Layout";
 
 const BlogIndex = (props) => {
   const { data } = props;

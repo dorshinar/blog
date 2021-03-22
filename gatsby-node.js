@@ -3,19 +3,21 @@ const readingTime = require("reading-time");
 
 const activeEnv =
   process.env.VERCEL_ENV || process.env.NODE_ENV || "development";
+const published = activeEnv === "production" ? [true] : [false, true];
 
 exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions;
 
   // Define a template for blog post
-  const blogPost = path.resolve(`./src/templates/blog-post/blog-post.jsx`);
+  const blogPost = path.resolve(`./src/components/BlogPost/BlogPost.jsx`);
 
   // Get all markdown blog posts sorted by date
   const result = await graphql(
     `
-      {
+      query AllPostQuery($published: [Boolean!]!) {
         allMdx(
           sort: { fields: [frontmatter___date], order: ASC }
+          filter: { frontmatter: { published: { in: $published } } }
           limit: 1000
         ) {
           nodes {
@@ -28,7 +30,8 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
           }
         }
       }
-    `
+    `,
+    { published }
   );
 
   if (result.errors) {
@@ -81,7 +84,7 @@ exports.onCreatePage = ({ page, actions }) => {
       ...page,
       context: {
         ...page.context,
-        published: activeEnv === "production" ? [true] : [false, true],
+        published,
       },
     });
   }

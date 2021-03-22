@@ -3,8 +3,9 @@ import { faSun, faMoon } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 
-import { useTheme } from "../../themer/themer";
-import "./themeButton.css";
+import { useTheme } from "../Theme/Theme";
+
+import "./ThemeButton.css";
 
 export function ThemeButton() {
   const themeName = useTheme();

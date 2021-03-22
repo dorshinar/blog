@@ -2,8 +2,9 @@ import React from "react";
 import { Link } from "gatsby";
 import { motion } from "framer-motion";
 
-import { ThemeButton } from "../theme-button/themeButton";
-import "./header.css";
+import { ThemeButton } from "../ThemeButton/ThemeButton";
+
+import "./Header.css";
 
 const MotionLink = motion(Link);
 
