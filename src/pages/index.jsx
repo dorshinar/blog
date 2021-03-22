@@ -1,7 +1,7 @@
 import React from "react";
 import { graphql } from "gatsby";
 
-import { Bio } from "../components/bio/Bio";
+import { Bio } from "../components/Bio/Bio";
 import SEO from "../components/Seo";
 import { BlogPostPreviews } from "../components/BlogPostPreviews/BlogPostPreviews";
 import Layout from "../components/Layout/Layout";

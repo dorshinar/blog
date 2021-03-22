@@ -2,7 +2,7 @@ import React from "react";
 import { Link, graphql } from "gatsby";
 import { MDXRenderer } from "gatsby-plugin-mdx";
 
-import { Bio } from "../bio/Bio";
+import { Bio } from "../Bio/Bio";
 import SEO from "../Seo";
 import { ScrollIndicator } from "../ScrollIndicator/ScrollIndicator";
 import { Separator } from "../../Separator";
