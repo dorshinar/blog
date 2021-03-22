@@ -104,6 +104,8 @@ exports.createSchemaCustomization = ({ actions }) => {
       date: Date @dateformat
       slug: String
       published: Boolean
+      cover_image_credit: String
+      cover_image_alt: String
     }
     type Fields {
       readingTime: ReadingTime

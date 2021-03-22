@@ -8,7 +8,7 @@ import {
   faLinkedin,
 } from "@fortawesome/free-brands-svg-icons";
 import { faRss } from "@fortawesome/free-solid-svg-icons";
-import { GatsbyImage } from "gatsby-plugin-image";
+import { StaticImage } from "gatsby-plugin-image";
 import { OutboundLink } from "gatsby-plugin-google-analytics";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -17,11 +17,6 @@ import "./Bio.css";
 export const Bio = () => {
   const data = useStaticQuery(graphql`
     query BioQuery {
-      avatar: file(absolutePath: { regex: "/profile-pic.jpg/" }) {
-        childImageSharp {
-          gatsbyImageData(width: 200, height: 200, layout: FIXED)
-        }
-      }
       site {
         siteMetadata {
           author
@@ -41,8 +36,12 @@ export const Bio = () => {
 
   return (
     <div className="bio-wrapper">
-      <GatsbyImage
-        image={data.avatar.childImageSharp.gatsbyImageData}
+      <StaticImage
+        src="../../../content/assets/profile-pic.jpg"
+        width={200}
+        height={200}
+        placeholder={"blurred"}
+        formats={["avif", "webp", "auto"]}
         className="profile-image"
         alt={author}
       />

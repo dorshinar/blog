@@ -1,6 +1,9 @@
 import React from "react";
 import { Link, graphql } from "gatsby";
 import { MDXRenderer } from "gatsby-plugin-mdx";
+import { GatsbyImage, getImage } from "gatsby-plugin-image";
+import styled from "styled-components";
+import ReactMarkdown from "react-markdown";
 
 import { Bio } from "../Bio/Bio";
 import SEO from "../Seo";
@@ -11,9 +14,17 @@ import Layout from "../Layout/Layout";
 
 import "./BlogPost.css";
 
+const CoverImageWrapper = styled.figure`
+  margin: 0;
+`;
+const CoverImageCredit = styled.figcaption`
+  text-align: center;
+`;
+
 const BlogPostTemplate = (props) => {
   const post = props.data.mdx;
   const { previous, next } = props.pageContext;
+  const image = getImage(post.frontmatter.thumbnail);
 
   return (
     <Layout>
@@ -29,6 +40,20 @@ const BlogPostTemplate = (props) => {
         <p className="subtitle">
           {`${post.frontmatter.date}, ${post.fields.readingTime.text}`}
         </p>
+        {post.frontmatter.cover_image_credit &&
+          post.frontmatter.cover_image_alt && (
+            <CoverImageWrapper>
+              <GatsbyImage
+                image={image}
+                alt={post.frontmatter.cover_image_alt}
+              ></GatsbyImage>
+              <CoverImageCredit>
+                <ReactMarkdown>
+                  {post.frontmatter.cover_image_credit}
+                </ReactMarkdown>
+              </CoverImageCredit>
+            </CoverImageWrapper>
+          )}
         <MDXRenderer>{post.body}</MDXRenderer>
         <BuyMeACoffee />
       </article>
@@ -69,9 +94,15 @@ export const pageQuery = graphql`
         slug
         thumbnail: cover_image {
           childImageSharp {
-            gatsbyImageData(width: 1200)
+            gatsbyImageData(
+              width: 1200
+              placeholder: BLURRED
+              formats: [AVIF, WEBP, AUTO]
+            )
           }
         }
+        cover_image_credit
+        cover_image_alt
       }
       fields {
         readingTime {

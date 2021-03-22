@@ -9,6 +9,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Helmet } from "react-helmet";
 import { useStaticQuery, graphql } from "gatsby";
+import { getSrc } from "gatsby-plugin-image";
 
 function SEO({ description, lang, meta, title, slug, thumbnail }) {
   const { site, avatar } = useStaticQuery(
@@ -36,9 +37,7 @@ function SEO({ description, lang, meta, title, slug, thumbnail }) {
 
   const metaDescription = description || site.siteMetadata.description;
   const url = `${site.siteMetadata.siteUrl}${slug}/`;
-  const imageSrc =
-    thumbnail?.childImageSharp?.gatsbyImageData?.images?.fallback?.src ||
-    avatar.childImageSharp.gatsbyImageData?.images?.fallback?.src;
+  const imageSrc = getSrc(thumbnail) || getSrc(avatar);
   const imageUrl = new URL(imageSrc, site.siteMetadata.siteUrl);
 
   return (
