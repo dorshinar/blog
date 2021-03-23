@@ -11,12 +11,12 @@ const CheckboxContainer = styled(motion.label)`
   position: relative;
 `;
 const HiddenCheckbox = styled.input.attrs({ type: "checkbox" })`
-  height: 0;
-  width: 0;
+  height: 1rem;
+  width: 1rem;
   position: absolute;
-  top: 0;
-  left: 0;
-  opacity: 0;
+  z-index: 1;
+  margin: 0;
+  opacity: 0.0000001;
 `;
 const StyledCheckbox = styled(motion.div)`
   display: inline-block;
