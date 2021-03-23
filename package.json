@@ -25,7 +25,7 @@
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-react": "^7.23.0",
     "eslint-plugin-react-hooks": "^4.2.0",
-    "framer-motion": "^4.0.0",
+    "framer-motion": "^4.0.2",
     "gatsby": "^3.1.1",
     "gatsby-plugin-catch-links": "^3.1.0",
     "gatsby-plugin-feed": "^3.1.0",
