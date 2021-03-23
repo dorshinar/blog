@@ -52,7 +52,9 @@ const CheckMark = styled(motion.div)`
   border-radius: 2px;
   background-color: var(--dark);
   position: absolute;
-  inset: 2px;
+  width: 10px;
+  height: 10px;
+  margin: 3px;
 `;
 
 const Checkbox = ({ className, checked, children, ...props }) => {
@@ -68,17 +70,20 @@ const Checkbox = ({ className, checked, children, ...props }) => {
         }}
         theme={theme}
         className={theme}
-      >
-        <AnimatePresence>
-          {checked && (
-            <CheckMark
-              initial={{ scale: 0 }}
-              animate={{ scale: 1, delay: 0.5 }}
-              exit={{ scale: 0 }}
-            />
-          )}
-        </AnimatePresence>
-      </StyledCheckbox>
+        aria-hidden="true"
+        focusable={false}
+      ></StyledCheckbox>
+      <AnimatePresence>
+        {checked && (
+          <CheckMark
+            aria-hidden="true"
+            focusable={false}
+            initial={{ scale: 0 }}
+            animate={{ scale: 1, delay: 0.5 }}
+            exit={{ scale: 0 }}
+          />
+        )}
+      </AnimatePresence>
       <Spacer left="0.5rem" />
       {children}
     </CheckboxContainer>

@@ -38,12 +38,21 @@ h2 {
   max-width: calc(100% + (var(--spacing) * 2));
 }
 
-.blog-post-wrapper pre[class*="language-"] {
+.blog-post-wrapper .gatsby-highlight {
+  background-color: var(--gray-850);
   margin-right: calc(var(--spacing) * -1);
   margin-left: calc(var(--spacing) * -1);
+  padding: var(--spacing);
+  overflow: auto;
+}
 
-  padding-right: var(--spacing);
-  padding-left: var(--spacing);
+.blog-post-wrapper pre[class*="language-"] {
+  background-color: transparent;
+  margin: 0;
+  padding: 0;
+  overflow: initial;
+  float: left;
+  min-width: 100%;
 }
 
 .blog-post-wrapper .command-line-prompt {
@@ -118,9 +127,9 @@ a.header.before {
     max-width: 100%;
   }
 
-  .blog-post-wrapper pre[class*="language-"] {
-    margin-right: calc(-2 * var(--rhythm));
-    margin-left: calc(-2 * var(--rhythm));
+  .blog-post-wrapper .gatsby-highlight {
+    margin-right: calc(var(--rhythm) * -2);
+    margin-left: calc(var(--rhythm) * -2);
     border-radius: 5px;
   }
 
