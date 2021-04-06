@@ -29,7 +29,7 @@
     "gatsby": "^3.2.1",
     "gatsby-plugin-catch-links": "^3.1.0",
     "gatsby-plugin-feed": "^3.2.0",
-    "gatsby-plugin-google-analytics": "^3.1.0",
+    "gatsby-plugin-google-analytics": "^3.2.0",
     "gatsby-plugin-image": "^1.2.0",
     "gatsby-plugin-manifest": "^3.2.0",
     "gatsby-plugin-mdx": "^2.2.0",
