@@ -38,7 +38,7 @@
     "gatsby-plugin-react-svg": "^3.0.1",
     "gatsby-plugin-sharp": "^3.2.1",
     "gatsby-plugin-sitemap": "^3.2.0",
-    "gatsby-plugin-styled-components": "^4.2.0",
+    "gatsby-plugin-styled-components": "^4.3.0",
     "gatsby-plugin-webpack-bundle-analyser-v2": "^1.1.22",
     "gatsby-remark-autolink-headers": "^3.2.0",
     "gatsby-remark-behead": "0.0.3",
