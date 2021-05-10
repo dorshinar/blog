@@ -49,11 +49,10 @@ const styles: Record<RequestStatus, React.CSSProperties> = {
   },
 };
 
-export const RequestLoadingIndicator: React.FC<RequestLoadingIndicatorProps> = ({
-  state,
-}) => {
-  return <div style={styles[state]} />;
-};
+export const RequestLoadingIndicator: React.FC<RequestLoadingIndicatorProps> =
+  ({ state }) => {
+    return <div style={styles[state]} />;
+  };
 ```
 
 You can see what it look like [here](https://codesandbox.io/s/funny-northcutt-l11zi?file=/src/index.tsx). It's nothing special, but our users are content.
@@ -72,12 +71,10 @@ interface RequestLoadingIndicatorProps {
 And our component will now display the message:
 
 ```tsx
-export const RequestLoadingIndicator: React.FC<RequestLoadingIndicatorProps> = ({
-  state,
-  message,
-}) => {
-  return <div style={styles[state]}>{message}</div>;
-};
+export const RequestLoadingIndicator: React.FC<RequestLoadingIndicatorProps> =
+  ({ state, message }) => {
+    return <div style={styles[state]}>{message}</div>;
+  };
 ```
 
 A while passes and everything is just fine, but then - an engineer on our team is refactoring some old code, and rewrites some code to fetch data from your server.
