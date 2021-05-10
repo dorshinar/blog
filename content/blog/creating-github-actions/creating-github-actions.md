@@ -26,7 +26,7 @@ Both APIs support a very wide range of fields you can query, as well as actions 
 To our business, this is the query I've found to work best:
 
 ```graphql
-query($repo: String!, $owner: String!, $branch: String!) {
+query ($repo: String!, $owner: String!, $branch: String!) {
   repository(name: $repo, owner: $owner) {
     ref(qualifiedName: $branch) {
       target {
