@@ -37,7 +37,7 @@
     "gatsby-plugin-react-helmet": "^4.12.0",
     "gatsby-plugin-react-svg": "^3.0.1",
     "gatsby-plugin-sharp": "^3.12.0",
-    "gatsby-plugin-sitemap": "^4.8.0",
+    "gatsby-plugin-sitemap": "^4.9.0",
     "gatsby-plugin-styled-components": "^4.12.0",
     "gatsby-plugin-webpack-bundle-analyser-v2": "^1.1.24",
     "gatsby-remark-autolink-headers": "^4.9.0",
