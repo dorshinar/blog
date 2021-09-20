@@ -42,7 +42,7 @@
     "gatsby-plugin-webpack-bundle-analyser-v2": "^1.1.25",
     "gatsby-remark-autolink-headers": "^4.10.0",
     "gatsby-remark-behead": "0.0.3",
-    "gatsby-remark-copy-linked-files": "^4.10.0",
+    "gatsby-remark-copy-linked-files": "^4.11.0",
     "gatsby-remark-images": "^5.10.0",
     "gatsby-remark-prismjs": "^5.10.0",
     "gatsby-remark-responsive-iframe": "^4.10.0",
