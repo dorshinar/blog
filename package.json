@@ -63,7 +63,7 @@
     "typescript": "^4.5.2"
   },
   "devDependencies": {
-    "@types/jest": "^27.0.2",
+    "@types/jest": "^27.0.3",
     "@types/puppeteer": "^5.4.4"
   },
   "homepage": "https://dorshinar.me",
