@@ -50,7 +50,7 @@
     "gatsby-source-filesystem": "^3.14.0",
     "gatsby-transformer-sharp": "^3.14.0",
     "jest": "^27.4.4",
-    "jest-extended": "^0.11.5",
+    "jest-extended": "^1.2.0",
     "prettier": "^2.5.1",
     "prismjs": "^1.25.0",
     "puppeteer": "^13.0.0",
