@@ -1,4 +1,4 @@
 module.exports = {
   roots: ["src"],
-  setupFilesAfterEnv: ["jest-extended"],
+  setupFilesAfterEnv: ["jest-extended/all"],
 };
