@@ -16,7 +16,7 @@
     "@loadable/component": "^5.15.2",
     "@mdx-js/mdx": "^1.6.22",
     "@mdx-js/react": "^1.6.22",
-    "@typescript-eslint/eslint-plugin": "^5.8.0",
+    "@typescript-eslint/eslint-plugin": "^5.8.1",
     "@typescript-eslint/parser": "^5.8.1",
     "assert": "^2.0.0",
     "eslint": "^8.5.0",
