@@ -58,7 +58,7 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-helmet": "^6.1.0",
-    "react-markdown": "^7.1.1",
+    "react-markdown": "^7.1.2",
     "reading-time": "^1.5.0",
     "styled-components": "^5.3.3",
     "typescript": "^4.5.4"
