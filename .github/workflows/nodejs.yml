@@ -49,3 +49,17 @@ jobs:
         run: npm run test:e2e || npm run test:e2e
         env:
           deployment: ${{ steps.deployment.outputs.deployment }}
+          
+      - name: Fetch dependabotependabot metadata
+        if: ${{ github.actor == 'dependabot[bot]' }}
+        id: metadata
+        uses: dependabot/fetch-metadata@v1.1.1
+        with:
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
+          
+      - name: Enable auto-merge for Dependabot PRs
+        if: ${{ github.actor == 'dependabot[bot]' }}
+        run: gh pr merge --auto --merge "$PR_URL"
+        env:
+          PR_URL: ${{github.event.pull_request.html_url}}
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
