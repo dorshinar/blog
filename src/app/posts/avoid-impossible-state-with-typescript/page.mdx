@@ -1,0 +1,319 @@
+import Cover from "./cover.jpeg";
+
+export const meta = {
+  title: "Avoiding impossible state with TypeScript",
+  date: "2020-10-20",
+  description:
+    "Typescript's greatest strength, in my opinion is it's ability to disallow forbidden state.",
+  slug: "avoid-impossible-state-with-typescript",
+  cover: Cover,
+  published: true,
+};
+
+import Image from "next/image";
+import messageDoesNotExist from "./message-does-not-exist.png";
+import messageNotFailed from "./message-with-state-not-failed.png";
+import { getPostMetadata } from "@/utils/get-metadata";
+import { PostHeader } from "@/components/post-header";
+
+export const metadata = getPostMetadata(meta);
+
+<PostHeader meta={meta} />
+
+I love [TypeScript](https://www.typescriptlang.org/). I've been using it for over 2 years in various projects, and the more I use it the less compelling I find vanilla Javascript.
+
+Not that there is anything wrong with vanilla Javascript, but I think that when it comes to medium to large projects, Typescript makes a lot of things easier.
+
+Among the many good things Typescript offers, I'd like to address one that, in my experience, has saved me quite a few bugs.
+
+Let's start with an example first.
+
+The code will contain React components, but the general principle stays the same with other frameworks as well.
+
+Let's say we have a very rudimentary loading indicator in our app:
+
+```tsx
+import React from "react";
+
+type RequestStatus = "PENDING" | "SUCCESSFUL" | "FAILED";
+
+interface RequestLoadingIndicatorProps {
+  state: RequestStatus;
+}
+
+const styles: Record<RequestStatus, React.CSSProperties> = {
+  PENDING: {
+    backgroundColor: "blue",
+    borderRadius: "50%",
+    width: "50px",
+    height: "50px",
+  },
+  FAILED: {
+    backgroundColor: "red",
+    borderRadius: "50%",
+    width: "50px",
+    height: "50px",
+  },
+  SUCCESSFUL: {
+    backgroundColor: "green",
+    borderRadius: "50%",
+    width: "50px",
+    height: "50px",
+  },
+};
+
+export const RequestLoadingIndicator: React.FC<
+  RequestLoadingIndicatorProps
+> = ({ state }) => {
+  return <div style={styles[state]} />;
+};
+```
+
+You can see what it look like [here](https://codesandbox.io/s/funny-northcutt-l11zi?file=/src/index.tsx). It's nothing special, but our users are content.
+
+In order to display a loading indicator in our system all we need is to tell it in what state our request is, and it will display a circle in the corresponding color.
+
+One day, we choose to allow adding a message to go along with `FAILED` requests. We can modify our props interface like so:
+
+```typescript
+interface RequestLoadingIndicatorProps {
+  state: RequestStatus;
+  message: string;
+}
+```
+
+And our component will now display the message:
+
+```tsx
+export const RequestLoadingIndicator: React.FC<
+  RequestLoadingIndicatorProps
+> = ({ state, message }) => {
+  return <div style={styles[state]}>{message}</div>;
+};
+```
+
+A while passes and everything is just fine, but then - an engineer on our team is refactoring some old code, and rewrites some code to fetch data from your server.
+
+When the data arrives, the engineer renders a `SUCCESSFUL` loading indicator with a message, although our guidelines specifically say that successful indicator should _not_ have a message.
+
+```tsx
+function GetData() {
+  const { data } = useData();
+
+  if (data) {
+    return (
+      <RequestLoadingIndicator state="SUCCESSFUL" message="data fetched" />
+    );
+  }
+}
+```
+
+## Impossible State
+
+What we have here is an **impossible state**!
+
+> An **impossible state** is a certain combination of fields and values, that should never co-exist simultaneously.
+
+In other words - an "impossible state" might be a _possible state_ in that if we disregard our company guidelines/lint rules/compiler, the state may occur, but we should never accept it, and therefore must make sure it never occurs (whether intentionally or unintentionally).
+
+You don't need Typescript to avoid impossible states. In fact - you _could_ get away without anything stopping you from making the impossible state mistake, given that everyone in your team is aware of it, and all of you are responsible engineers with buckets of ownership.
+
+That might be the case _today_. What will happen when your company doubles in size? or triples? or quadruples?
+
+Would you still feel like word-of-mouth is good enough?
+
+I strongly disbelieve that. Not because I don't trust other engineers around me, I have complete faith in them. I like to think about it in exponential terms - if your team doubled in size, you'd need 4 times the efforts to preserve code quality.
+
+To comply with that, we need some mechanism that would prevent, to the highest degree possible, the presence of such "impossible states".
+
+## Naïve solution
+
+One way to go about it, is to document the fact that `SUCCESSFUL` or `PENDING` requests should have no message, like so:
+
+```typescript
+interface RequestLoadingIndicatorProps {
+  state: RequestStatus;
+  // Message should only be present when state is `FAILED`
+  message: string;
+}
+```
+
+But this method, in my opinion, is error prone - in the end the only way to find it is with a human eye, and humans are prone to failure.
+
+## A better way
+
+But I am here to present to you a better way. There is a very simple way in which we can ensure we always have exactly what we want, nothing more and nothing less.
+
+We can leverage Typescript's powerful [Union Types](https://www.typescriptlang.org/docs/handbook/unions-and-intersections.html#union-types). In essence, union types allow us to make new types that act as an `OR` clause in a way.
+
+Let's start with a quick example. Say we have an intelligent logger that can both print single log messages, and can concatenate log messages if passed as an array.
+
+```javascript
+function log(messages) {
+  if (Array.isArray(message)) {
+    console.log(messages.join(" "));
+  }
+  if (typeof messages === "string") {
+    console.log(messages);
+  }
+
+  throw new Error("unsupported type!");
+}
+
+log("hello"); // prints 'Hello'.
+log(["Hello", "World"]); // prints 'Hello World'.
+```
+
+If we wanted to type it, we could do it naïvely like so:
+
+```typescript
+function log(messages: any) {
+  if (Array.isArray(message)) {
+    console.log(messages.join(" "));
+  }
+  if (typeof messages === "string") {
+    console.log(messages);
+  }
+
+  throw new Error("unsupported type!");
+}
+
+log("Hello"); // prints 'Hello'.
+log(6); // this function will pass at compile time, but fail in runtime.
+```
+
+But that won't help us much, leaving us with pretty much untyped javascript. However, using union types we could type the function like this:
+
+```typescript
+function log(messages: string | string[]) {
+  if (Array.isArray(message)) {
+    console.log(messages.join(" "));
+  }
+  if (typeof messages === "string") {
+    console.log(messages);
+  }
+
+  throw new Error("unsupported type!");
+}
+
+log("Hello"); // prints 'Hello'.
+log(["Hello", "World"]); // prints 'Hello World'
+log(6); // Compile time error: Argument of type 'number' is not assignable to parameter of type 'string | string[]'.
+```
+
+Now that we know how to work with union types, we can use them to our advantage in our loading indicator.
+
+## One interface to rule them all? No
+
+Instead of using a single interface for all the possible states of the request, we can split them up, each having their own unique fields.
+
+```typescript {11,14-17}
+interface PendingLoadingIndicatorProps {
+  state: "PENDING";
+}
+
+interface SuccessfulLoadingIndicatorProps {
+  state: "SUCCESSFUL";
+}
+
+interface FailedLoadingIndicatorProps {
+  state: "FAILED";
+  message: string;
+}
+
+type RequestLoadingIndicatorProps =
+  | PendingLoadingIndicatorProps
+  | SuccessfulLoadingIndicatorProps
+  | FailedLoadingIndicatorProps;
+```
+
+The highlighted part is where the magic happens. With it we specify all the different types of props we accept, and only allow a message on `FAILED` requests.
+
+You'll immediately see that Typescript is yelling at our component:
+
+<Image
+  src={messageDoesNotExist}
+  alt="a component with an error message over the message prop"
+/>
+
+So we'll change our component just a little:
+
+```tsx
+export const RequestLoadingIndicator: React.FC<RequestLoadingIndicatorProps> = (
+  props
+) => {
+  if (props.state === "FAILED") {
+    return <div style={styles[props.state]}>{props.message}</div>; // no error!
+  }
+
+  return <div style={styles[props.state]} />;
+};
+```
+
+Inside our `if` block Typescript is able to narrow down the type of our props from `PendingLoadingIndicatorProps | SuccessfulLoadingIndicatorProps | FailedLoadingIndicatorProps` to `FailedLoadingIndicatorProps`, and ensures us that the `message` prop exists.
+
+If we now tried to render our `RequestLoadingIndicator` with a message and a state other than `FAILED`, we would get compile time error:
+
+<Image
+  src={messageNotFailed}
+  alt="Trying to render RequestLoadingIndicator with a message and different state, and getting compile time errors when state is not FAILED"
+/>
+
+## Embracing difference
+
+We could stop at that and call it a day, or we can take it up a notch.
+
+What if we wanted to change our `SUCCESSFUL` loading indicator to show an animation, and allow consumers of our indicator to pass a callback that fires when the animation ends?
+
+With a monolithic interface, we'd go through the same trouble as we did when we added the `message` field.
+
+```typescript
+interface RequestLoadingIndicatorProps {
+  state: RequestStatus;
+  // Message should only be present when state is `FAILED`
+  message: string;
+  // onAnimationEnd should only be present when state is `SUCCESSFUL`
+  onAnimationEnd?: () => void;
+}
+```
+
+See how quickly it gets out of hand?
+
+Our union types make this a non-issue:
+
+```typescript {7}
+interface PendingLoadingIndicatorProps {
+  state: "PENDING";
+}
+
+interface SuccessfulLoadingIndicatorProps {
+  state: "SUCCESSFUL";
+  onAnimationEnd?: () => void;
+}
+
+interface FailedLoadingIndicatorProps {
+  state: "FAILED";
+  message: string;
+}
+
+type RequestLoadingIndicatorProps =
+  | PendingLoadingIndicatorProps
+  | SuccessfulLoadingIndicatorProps
+  | FailedLoadingIndicatorProps;
+```
+
+Now, we only allow our indicator's consumers to pass `onAnimationEnd` when state is `SUCCESSFUL`, and we have Typescript to enforce that.
+
+Notice that we used `?`, so we don't force anyone to pass empty functions.
+
+## Summary
+
+Obviously, this is a contrived example, but I hope it makes it clear how we can leverage Typescript's union types and type narrowing, ensuring as much type safety as possible, while still leveraging some of Javascript's dynamic nature.
+
+Thank you for reading!
+
+(cover photo by [Matt Atherton](https://unsplash.com/@mattatherton) on [Unsplash](https://unsplash.com/))
+
+import { PostFooter } from "@/components/post-footer";
+
+<PostFooter {...meta} />

@@ -1,5 +1,0 @@
-.cache/**/*
-.node_modules/**/*
-content/**/*.html
-public/*
-README.md
