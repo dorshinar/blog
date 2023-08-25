@@ -3,6 +3,46 @@
     {
       "source": "/linting-your-react\\+typescript-project-with-eslint-and-prettier",
       "destination": "/linting-your-react-typescript-project-with-eslint-and-prettier"
+    },
+    {
+      "source": "/be-the-perfect-teammate",
+      "destination": "/posts/be-the-perfect-teammate"
+    },
+    {
+      "source": "/building-a-personal-blog",
+      "destination": "/posts/building-a-personal-blog"
+    },
+    {
+      "source": "/continuous-integration-with-github-actions-and-puppeteer",
+      "destination": "/posts/continuous-integration-with-github-actions-and-puppeteer"
+    },
+    {
+      "source": "/creating-github-actions",
+      "destination": "/posts/creating-github-actions"
+    },
+    {
+      "source": "/guarded-city-with-no-defensive-wall-typescript",
+      "destination": "/posts/guarded-city-with-no-defensive-wall-typescript"
+    },
+    {
+      "source": "/avoid-impossible-state-with-typescript",
+      "destination": "/posts/avoid-impossible-state-with-typescript"
+    },
+    {
+      "source": "/create-react-infinite-scroll-hook",
+      "destination": "/posts/infinite-scroll-hook"
+    },
+    {
+      "source": "/linting-your-react-typescript-project-with-eslint-and-prettier",
+      "destination": "/posts/linting-your-react-typescript-project-with-eslint-and-prettier"
+    },
+    {
+      "source": "/themes-using-css-variables-and-react-context",
+      "destination": "/posts/themes-using-css-variables-and-react-context"
+    },
+    {
+      "source": "/why-i-stopped-writing-jest-snapshot-tests",
+      "destination": "/posts/why-i-stopped-writing-jest-snapshot-tests"
     }
   ]
 }
