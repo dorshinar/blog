@@ -1,0 +1,458 @@
+import Cover from "./cover.jpg";
+
+export const meta = {
+  title: "Creating Infinite Scroll Hook in React",
+  date: "2021-03-20",
+  description:
+    "Infinite scrolling is a great way to only fetch what the user can see, while still feeling like there's more to scroll. Let's implement that in React.",
+  slug: "infinite-scroll-hook",
+  cover: Cover,
+  cover_image_credit:
+    "Photo by [Ryan Stone](https://unsplash.com/@rstone_design) on [Unsplash](https://unsplash.com/)",
+  cover_image_alt: "Infinity sign made by slow exposure and lights",
+  published: true,
+};
+
+import { ColorShiftingBox } from "./ColorShiftingBox";
+import { SimpleListContainer } from "./SimpleListContainer";
+import { ListWithHookContainer } from "./ListWithHookContainer";
+import { getPostMetadata } from "@/utils/get-metadata";
+import { PostHeader } from "@/components/post-header";
+
+export const metadata = getPostMetadata(meta);
+
+<PostHeader meta={meta} />
+
+Often we want to render lists of items. It could be Facebook posts, articles in this very own blog, or products on an e-commerce site.
+
+If we had all the computing power in the world and the network wasn't an issue, we'd simply download the entire feed when first loading the page, and let our users scroll for hours on end.
+
+Sadly, we're usually constrained by computing power, networking, or both, and that forces us to compromise. In our case, we must give up trying to load the entire list on the client's device. think about it - _very_ large lists full of information can be several megabytes large!
+
+The 'Fast 3G' network preset in Chrome's dev tools is clocked at 1.5Mb/s. At those rates, downloading several megabytes worth of product information is simply not feasible.
+
+> Just want the code? Go straight to [the final hook](#the-final-hook).
+
+## Load More Button
+
+The easiest way to avoid loading more data than necessary is to load a small, fixed number of items on the first render, and place a 'Load More' button at the bottom.
+
+Go ahead, scroll to the bottom of the list and click 'Load More'. I've added a small checkbox to simulate network latency. It will add a 2-second delay before loading the next batch of items.
+
+<SimpleListContainer items={5} />
+
+Doesn't feel so good, doesn't it?
+
+It's hard as it is to make users click on a 'Load More' button, but expecting them to wait a few seconds for the content to load? No way.
+
+We want to find a way to make content load automagically for the users, and we want the experience to be as smooth as possible for them.
+
+## Using Bounding Rect
+
+OK, so we've decided that a simple 'Load More' button is not good enough for us. Ideally, we would like to know when the user scrolls to the bottom of the list, and automatically trigger a call to get the next items.
+
+We could call the `getBoundingClientRect(){:js}` of an element at the bottom of the list, and that would give us its absolute position in the viewport.
+
+Here is the (contrived) code for the list we've rendered before:
+
+```jsx
+function SimpleList({ items, loading }) {
+  return (
+    <List>
+      {list.map((item) => (
+        <ListItem key={item}>{item}</ListItem>
+      ))}
+      <Button onClick={loadMore} title={loading ? "loading..." : "Load More!"}>
+        {loading ? "loading..." : "Load More!"}
+      </Button>
+    </List>
+  );
+}
+```
+
+To know if the last item in the list in visible, we could use a callback ref like so:
+
+```jsx
+function SimpleList({ items, loading }) {
+  const ref = useCallback((refElement) => {
+    if (!refElement) {
+      return;
+    }
+
+    const rect = refElement.getBoundingClientRect();
+  }, []);
+
+  return (
+    <List>
+      {list.map((item, index, array) => (
+        <ListItem key={item} ref={index === array.length - 1 ? ref : undefined}>
+          {item}
+        </ListItem>
+      ))}
+      <Button onClick={loadMore} title={loading ? "loading..." : "Load More!"}>
+        {loading ? "loading..." : "Load More!"}
+      </Button>
+    </List>
+  );
+}
+```
+
+Our `rect` will look something like this:
+
+```json
+{
+  "bottom": 455.375,
+  "height": 64,
+  "left": 682.09375,
+  "right": 746.09375,
+  "top": 391.375,
+  "width": 64,
+  "x": 682.09375,
+  "y": 391.375
+}
+```
+
+To use that information to calculate whether an element is on screen we can use the `top` and `bottom` attributes.
+
+The `top` attribute tells us how far (in pixels) the top of the element is from the top of the viewport. If `top` is negative, that means the top of the element is above the viewport.
+
+The `bottom` attribute tells us how far the bottom of the element is from the top of the viewport. If `bottom` is negative, that means that the entire element is above the viewport.
+
+Now we can use both attributes to say that if `top >= 0` and `bottom <= screen height`, the element is fully visible in the viewport.
+
+For partial visibility we could check whether `top` < 0 and `bottom` >= 0 (if the element is partially visible from the top of screen), or `top` >= 0 and `bottom` > screen height (if the element is partially visible from the bottom of the screen).
+
+Great, now we can tell whether an element is in view at a certain point in time, but that's still not good enough. We want to know _when_ an element enters the screen.
+
+To do that, we can attach an event handler on the `window` object, listening for the `scroll` event.
+
+```js
+window.addEventListener("scroll", function () {
+  const position = refElement.getBoundingClientRect();
+
+  if (position.top >= 0 && position.bottom <= window.innerHeight) {
+    // Element is fully visible
+  }
+
+  if (position.top < window.innerHeight && position.bottom >= 0) {
+    // Element is partially visible
+  }
+});
+```
+
+Boom. Done. 🥳
+
+No, not really - the 'scroll' event has some serious performance issues, making it a big no-no in a meaningful application without some performance maneuvers.
+
+## Intersection Observer
+
+The [Intersection Observer API](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API) is the (not so) new kid on the block. It provides an asynchronous API to detect the intersection of elements with our viewport.
+
+From MDN:
+
+> The Intersection Observer API provides a way to asynchronously observe changes in the intersection of a target element with an ancestor element or with a top-level document's viewport.
+
+It solves all the issues of the `scroll` event handler and saves us from doing the math to know when (and how much) an element is intersecting with our viewport.
+
+With an Intersection Observer, making something like this becomes super easy. Scroll until you see the box.
+
+<ColorShiftingBox />
+
+See how the box is changing its color when it enters the viewport? We've achieved that with the help of an Intersection Observer.
+
+> According to [caniuse](https://caniuse.com/intersectionobserver) the IntersectionObserver API has over 93% support, including all major browsers (sorry IE).
+
+To create an Intersection Observer, we first need to get a ref of the element we wish to be notified of when it enters the viewport.
+
+This can be done with a callback ref, the same as we did before. Here's a contrived example from the color-shifting box example above.
+
+```jsx
+const ColorShiftingBox = () => {
+  const boxRef = useCallback((node) => {
+    // `node` is a ref to the box element
+  }, []);
+
+  return (
+    <Wrapper>
+      <ScrollMe>Scroll Me!</ScrollMe>
+      <BoxWrapper>
+        <Box ref={boxRef} />
+      </BoxWrapper>
+    </Wrapper>
+  );
+};
+```
+
+Now, we want to instantiate an Intersection Observer object and have it monitor our `node`, and we want it to invoke a certain callback whenever the visibility status of our `node` is changing:
+
+```jsx {2-4,12-13}
+const ColorShiftingBox = () => {
+  const callback = useCallback(() => {
+    console.log("Status changed!");
+  }, []);
+
+  const boxRef = useCallback(
+    (node) => {
+      if (!node) {
+        return;
+      }
+
+      const intersectionObserver = new intersectionObserver(callback);
+      intersectionObserver.observe(node);
+    },
+    [callback],
+  );
+
+  return (
+    <CodeSnippetWrapper>
+      <Wrapper>
+        <ScrollMe>Scroll Me!</ScrollMe>
+        <BoxWrapper>
+          <Box ref={boxRef} />
+        </BoxWrapper>
+      </Wrapper>
+    </CodeSnippetWrapper>
+  );
+};
+```
+
+I've highlighted the new parts - we create a `callback` function to be invoked, and we create a new `intersectionObserver` object with our `callback` as a parameter. Then, we call the `.observe()` method and give it our node as a parameter.
+
+That's about it. Now, whenever our `node` enters or leaves the viewport our `callback` will be invoked. How can we now know what the state of the `node` is?
+
+The trick is that our callback receives 2 parameters. The second one is the `IntersectionObserver` object that triggered the callback, and the first one is an array of [IntersectionObserverEntries](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserverEntry).
+
+Why do we get an array? Simple - we can use a single `IntersectionObserver` to monitor multiple nodes. We're only monitoring one node so we can assume that the list contains a single `IntersectionObserverEntry`.
+
+Each `IntersectionObserverEntry` contains some very interesting arguments. I'll leave it up to you to dig through the docs to learn about all of them, but for our purposes, we only need one argument - `isIntersecting`. We will touch another cool one at the end.
+
+The `isIntersecting` parameter is a boolean value that will tell us whether our node is in the viewport (`isIntersecting === true`) or out of the viewport (`isIntersecting === false`).
+
+To log whether our node is in the viewport or not, we can use the `isIntersecting` property like so:
+
+```jsx {2,3}
+const ColorShiftingBox = () => {
+  const callback = useCallback((entries) => {
+    console.log(entries[0].isIntersecting);
+  }, []);
+
+  const boxRef = useCallback(
+    (node) => {
+      if (!node) {
+        return;
+      }
+
+      const intersectionObserver = new intersectionObserver(callback);
+      intersectionObserver.observe(node);
+    },
+    [callback],
+  );
+
+  return (
+    <Wrapper>
+      <ScrollMe>Scroll Me!</ScrollMe>
+      <BoxWrapper>
+        <Box ref={boxRef} />
+      </BoxWrapper>
+    </Wrapper>
+  );
+};
+```
+
+That's great, and it works - but it's not very flexible. If we wanted to use that elsewhere we'd have to write it all over again. Luckily, the folks over at the React team have given us hooks. Let's extract what we've made to a hook.
+
+We'd want our hook's API to be very minimal, so it's dead simple to use.
+
+```jsx {6}
+const ColorShiftingBox = () => {
+  const callback = useCallback(() => {
+    // This should be called only when the Box is intersecting.
+  }, []);
+
+  const boxRef = useInfiniteScroll(callback);
+
+  return (
+    <Wrapper>
+      <ScrollMe>Scroll Me!</ScrollMe>
+      <BoxWrapper>
+        <Box ref={boxRef} />
+      </BoxWrapper>
+    </Wrapper>
+  );
+};
+```
+
+## Creating the Hook
+
+We can extract what we've made simply like so:
+
+```js
+function useInfiniteScroll(callbackParam) {
+  const callback = useCallback(
+    (entries) => {
+      if (entries[0].isIntersecting) {
+        callbackParam();
+      }
+    },
+    [callbackParam],
+  );
+
+  const infiniteScrollRef = useCallback(
+    (node) => {
+      if (!node) {
+        return;
+      }
+
+      const intersectionObserver = new IntersectionObserver(callback);
+      intersectionObserver.observe(node);
+    },
+    [callback],
+  );
+
+  return infiniteScrollRef;
+}
+```
+
+Using this hook is simple. All you need is to call the hook with your `load more` callback, set the ref to whichever component you wish to trigger the request, and voilà!
+
+```jsx {2, 11}
+const SimpleListWithHook = ({ list, loading, loadMore }) => {
+  const infiniteScrollRef = useInfiniteScroll(loadMore);
+
+  return (
+    <ListWrapper>
+      <Wrapper>
+        <List>
+          {list.map((item, index, array) => (
+            <ListItem
+              key={item}
+              ref={index === array.length - 1 ? infiniteScrollRef : undefined}
+            >
+              {item}
+            </ListItem>
+          ))}
+          <Spacer />
+        </List>
+        {loading && <Loading>Loading...</Loading>}
+      </Wrapper>
+    </ListWrapper>
+  );
+};
+```
+
+Note that the trick here is that I attach the `infiniteScrollRef` to the last component in the array. This makes it so new elements are fetched only when the user scrolls to the bottom of the list.
+
+I could attach it to any other element, triggering the fetch sooner.
+
+In the real world, you'll need to find _your_ sweet spot - where your user gets the most seamless experience, but you don't over fetch in a way that causes you trouble.
+
+Here's a running example of this component. You can play around with it. You'll quickly notice that it works _for the most part_, but it's still pretty finicky.
+
+<ListWithHookContainer
+  simulateLatency
+  items={10}
+  hookVersion={1}
+  initialSimulateLatency
+/>
+
+There are some things we can do to improve the hook and make it work even better.
+
+## The final hook
+
+Let's add an `isActive` parameter to the hook, so we can avoid triggering our `load more` callback if we're in the middle of a request.
+
+Note that we're disconnecting our `observer` before we're creating a new one, and we've also added a `useEffect` to make sure our `observer` is disconnected. We don't want any leaks in our code!
+
+```js {1, 10, 14, 23, 31-33}
+function useInfiniteScroll(callbackParam, isActive) {
+  const observer = useRef(null);
+
+  const callback = useCallback(
+    (entries) => {
+      if (entries.length === 0) {
+        return;
+      }
+
+      if (entries[0].isIntersecting && isActive) {
+        callbackParam();
+      }
+    },
+    [callbackParam, isActive],
+  );
+
+  const infiniteScrollRef = useCallback(
+    (node) => {
+      if (!node) {
+        return;
+      }
+
+      observer.current?.disconnect();
+
+      observer.current = new IntersectionObserver(callback);
+      observer.current.observe(node);
+    },
+    [callback],
+  );
+
+  useEffect(() => {
+    return () => observer.current?.disconnect();
+  }, []);
+
+  return infiniteScrollRef;
+}
+```
+
+And here's our box list with the final hook.
+
+<ListWithHookContainer
+  simulateLatency
+  items={10}
+  hookVersion={2}
+  initialSimulateLatency
+/>
+
+## The IntersectionObserver options parameter
+
+Our hook is complete, but for sake of being thorough, I wanted to go over some of the other options of the IntersectionObserver API. Some of you may find them useful.
+
+The first one is the `root` parameter. The root parameter allows you to set a custom viewport, so that intersection won't be calculated against the entire visible screen, but the visible part of an element.
+
+The default value of `root` is the document viewport.
+
+The second is `rootMargin`. The `rootMargin` parameter allows us to grow or shrink the intersection area.
+
+In the following example I've set a negative `rootMargin` of `-100px`, which translates to `-100px -100px -100px -100px`, effectively shrinking the relevant viewport by 100 pixels from each side.
+
+<ColorShiftingBox root />
+
+The third parameter is `threshold`. It accepts either a single number or an array of numbers, which represent how much of the element should be visible to trigger the callback.
+
+A threshold of 1 would trigger the callback when every pixel of the element is visible.
+
+<ColorShiftingBox root threshold={1} />
+
+A threshold of 0.5 would trigger the callback when half of the element is visible.
+
+<ColorShiftingBox root threshold={0.5} />
+
+If you specify an array, the callback would fire whenever the element's visibility surpasses one of the entries.
+
+For example, for a threshold of `[0.33, 0.67, 1]`, the callback would fire 3 times - the first when 33% of the element is visible, the second when 67% of the element is visible, and the last when the entire element is visible.
+
+How can we know which threshold triggered the callback?
+
+That's a good question. Remember that I promised to tell you about another cool property of the `IntersectionObserverEntry` parameter we get in the callback?
+
+Aside from the `isIntersecting` parameter, we also get `intersectionRatio`, which tells us by how much our element is intersecting with the relevant viewport. This way we can tell whether it's 33% visible, 67% visible, or 100% visible.
+
+## Final Words
+
+The Intersection Observer is an awesome API that opens the doors for a lot of fun interactions.
+
+From infinite scrolls to lazy-loading images, or to make some intricate metrics about which content on your site is actually viewed by the users.
+
+I hope you've enjoyed the article!
+
+import { PostFooter } from "@/components/post-footer";
+
+<PostFooter {...meta} />
