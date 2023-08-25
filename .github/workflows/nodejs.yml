@@ -1,51 +1,53 @@
-# name: Node CI
+name: 🚀 Deploy
 
-# on: push
+on:
+  push:
+    branches:
+      - main
+  pull_request: {}
 
-# jobs:
-#   build:
-#     runs-on: ubuntu-latest
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
-#     env:
-#       PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
+jobs:
+  build:
+    runs-on: ubuntu-latest
 
-#     strategy:
-#       matrix:
-#         node-version: [12.x]
+    steps:
+      - uses: actions/checkout@v3
 
-#     steps:
-#       - uses: actions/checkout@v1
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: latest
 
-#       - name: Use Node.js ${{ matrix.node-version }}
-#         uses: actions/setup-node@v1
-#         with:
-#           node-version: ${{ matrix.node-version }}
+      - uses: pnpm/action-setup@v2
+        name: Install pnpm
+        with:
+          run_install: false
 
-#       - uses: actions/cache@v2
-#         with:
-#           path: ~/.npm
-#           key: ${{ runner.os }}-node-v2-${{ hashFiles('**/package-lock.json') }}
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
 
-#       - name: Install dependencies
-#         run: npm ci --prefer-offline
+      - uses: actions/cache@v3
+        name: Setup pnpm cache
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
 
-#       - name: Lint
-#         run: npm run lint:check
+      - name: Install dependencies
+        run: pnpm install
 
-#       - name: Format
-#         run: npm run format:check
+      - name: 🔬 Lint
+        run: pnpm lint
 
-#       # - name: Get deployment URL
-#       #   id: deployment
-#       #   uses: dorshinar/get-deployment-url@master
-#       #   timeout-minutes: 5
-#       #   with:
-#       #     token: ${{ secrets.GITHUB_TOKEN }}
+      - name: 🔎 Type check
+        run: pnpm typecheck
 
-#       # - name: Link request
-#       #   run: npm link request
-
-#       # - name: Run end-to-end tests
-#       #   run: npm run test:e2e || npm run test:e2e
-#       #   env:
-#       #     deployment: ${{ steps.deployment.outputs.deployment }}
+      - name: 💅 Prettier
+        run: pnpm format:check
