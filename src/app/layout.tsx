@@ -36,7 +36,7 @@ export default function RootLayout({
             </NextLink>
           </h1>
         </header>
-        <main className="flex w-full flex-col items-center overflow-hidden">
+        <main className="flex flex-1 w-full flex-col items-center overflow-hidden">
           {children}
         </main>
         <footer className="flex items-center justify-center w-full">
