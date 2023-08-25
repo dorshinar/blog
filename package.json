@@ -18,7 +18,7 @@
     "@next/mdx": "^13.4.19",
     "@radix-ui/react-checkbox": "^1.0.4",
     "@types/node": "20.5.6",
-    "@types/react": "18.2.20",
+    "@types/react": "18.2.21",
     "@types/react-dom": "18.2.7",
     "autoprefixer": "10.4.15",
     "clsx": "^2.0.0",
