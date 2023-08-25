@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Link } from "@/components/Link";
 import NextLink from "next/link";
+import { ServiceWorkerRegister } from "@/components/sw-register";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -44,6 +45,7 @@ export default function RootLayout({
             <Link href="https://nextjs.org/">Next.js</Link>
           </span>
         </footer>
+        <ServiceWorkerRegister />
       </body>
     </html>
   );
