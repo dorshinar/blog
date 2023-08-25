@@ -234,6 +234,7 @@ You'll immediately see that Typescript is yelling at our component:
 <Image
   src={messageDoesNotExist}
   alt="a component with an error message over the message prop"
+  placeholder="blur"
 />
 
 So we'll change our component just a little:
@@ -257,6 +258,7 @@ If we now tried to render our `RequestLoadingIndicator` with a message and a sta
 <Image
   src={messageNotFailed}
   alt="Trying to render RequestLoadingIndicator with a message and different state, and getting compile time errors when state is not FAILED"
+  placeholder="blur"
 />
 
 ## Embracing difference

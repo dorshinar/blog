@@ -30,7 +30,7 @@ I was thinking to myself - Why shouldn't I have one? You could say it's not real
 
 Hint - that's the end result:
 
-<Image src={MyBlog} alt="My Blog" />
+<Image src={MyBlog} alt="My Blog" placeholder="blur" />
 
 I have a decent experience with web development, mostly in [React](https://reactjs.org/) and I was thinking I could make a use of it in my blog. Around that time I stumbled upon [this post](https://mike.biful.co/gatsby-dev-to-cross-poster-brainstorm), where the author suggested using [Gatsby.js](https://www.gatsbyjs.org/) for such things. I've never worked with Gatsby before, and most of my experience in web development comes from the component age (quite a noob, I know), but after a quick look through the documentation (which is superb!) I figured it would be a perfect solution for my blog.
 
@@ -57,7 +57,7 @@ I've converted all the inline CSS to [Styled Components](https://www.styled-comp
 
 My journey continued with A LOT of small tweaks, mostly around CSS and visibility - using a google font, line breaks between posts, and extracting the Header to a new component. Nothing big, but those tweaks helped me down the line, and made the site look slightly better.
 
-<Image src={DarkMode} alt="Dark Mode ALL THE THINGS!" />
+<Image src={DarkMode} alt="Dark Mode ALL THE THINGS!" placeholder="blur" />
 
 I'm a huge fan of dark mode. My agenda is "Dark Mode ALL THE THINGS!", so naturally I couldn't let my website sit idly by with only white background. I started implementing a theme switcher (using Context and styled-components' `ThemeProvider`). At the beginning it was a simple button to switch black and white background, and as I got is up an running I created a full color scheme for my website, both for a light theme and a dark theme. (Shout out to Google's [Material Design Dark Theme Documentation](https://material.io/design/color/dark-theme.html)). All my referral icons had to be converted based on the theme, so that happened as well, and my theme was nearly complete (it has undergone some small hue tweaks later but whatever).
 
@@ -73,14 +73,14 @@ In an effort to make the site ready for going live, I've added a link to the RSS
 
 Now I really felt confident I could upload it to the cloud for the world to see. Knowing there will be no traffic at the beginning, I knew I can experiment after setting it up, so I left some things for later. The cloud provider I chose was [Now](https://zeit.co/now), as I saw a [post on dev.to](https://dev.to/crumb1e/heroku-now-sh-netlify-what-are-you-using-and-why-14m4) where quite a lot of people recommended it, so I figured I'd take a look at their offers. My blog is strictly a hobby, and I don't plan on monetizing it, so I was looking for something with a free tier that would fit my needs, and after comparing the offerings of [Netlify](https://www.netlify.com) and Now, I've decided to go with Now.
 
-<Image src={NowVsNetlify} alt="Now vs. Netlify" />
+<Image src={NowVsNetlify} alt="Now vs. Netlify" placeholder="blur" />
 
 Setting it up with my Github account was super easy, and everything just worked, as I expected. I bought a domain and registered it there, and I'm off to the races.  
 Now.sh integrates really well into Github, so it redeploys on every push, saving me a few clicks, and the overall UI feels very intuitive, allowing me to get up and running in less that an hour.
 
 The last few things I had to do were setting up analytics (first time for me as well), adjust links to point to my flashy new domain and fix some small a11y stuff (I don't want to keep anyone from reading my blog), allowing me to get awesome scores in lighthouse tests (YAY!).
 
-<Image src={Lighthouse} alt="lighthouse results" />
+<Image src={Lighthouse} alt="lighthouse results" placeholder="blur" />
 
 Now my site is up and running, and all that is left is make sure it appears in search results (canonical URLs and all that), and marvel on almost 2 months of work. It sounds like a lot but I only had a few hours here and there to actually work on it. If I was doing it full time it probably would have taken 2-3 week, or even less.
 

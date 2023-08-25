@@ -20,7 +20,13 @@ export function PostPreview({ post, cover }: Props) {
     >
       {cover && (
         <span className="aspect-[3] block relative mb-2">
-          <Image src={cover} alt="cover image" fill className="object-cover" />
+          <Image
+            src={cover}
+            alt="cover image"
+            fill
+            className="object-cover"
+            placeholder="blur"
+          />
         </span>
       )}
       <h2 className="text-zinc-200 text-2xl font-medium">{post.title}</h2>

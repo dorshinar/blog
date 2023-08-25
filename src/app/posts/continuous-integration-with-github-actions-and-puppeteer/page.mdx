@@ -232,7 +232,7 @@ I'll show you how to configure a basic workflow running your puppeteer test suit
 
 The easiest way to start is to click on the `Actions` tab in your github repo. If you haven't configured any action before, you'll see a list of previously configured workflows, from which you can choose one with some predefined configuration.
 
-<Image src={Start} alt="Basic Github Action Configuration" />
+<Image src={Start} alt="Basic Github Action Configuration" placeholder="blur" />
 
 For our case, choosing the predefined Node.js action is good enough. The generated yaml looks like this:
 
@@ -278,11 +278,11 @@ The basic configuration will install dependencies, build our project and run our
 
 The only thing left for us is to make sure no code can be merged before our workflow passes successfully. For that, go to your repo's settings and click on Branches:
 
-<Image src={Branch} alt="Github Settings > Branch" />
+<Image src={Branch} alt="Github Settings > Branch" placeholder="blur" />
 
 We need to set a **Branch protection rule** so that malicious code (or at least one that doesn't pass our tests) won't be merged. Click on **Add rule**, and under **Branch name pattern** put your protected branch (master, dev or which ever one you choose). Make sure **Require status checks to pass before merging** is checked, and you'll be able to choose which checks must pass:
 
-<Image src={Protections} alt="Require status checks" />
+<Image src={Protections} alt="Require status checks" placeholder="blur" />
 
 Click on Save changes below, and you're good to go!
 

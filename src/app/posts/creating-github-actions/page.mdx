@@ -26,6 +26,7 @@ My workflow was very simple - install dependencies, lint, build, test. All this 
 <Image
   src={GithubDeploy}
   alt="A successful deployment reported by Vercel to Github"
+  placeholder="blur"
 />
 
 The solution seemed pretty simple - just run the tests against the Vercel build and Voila! all problems solved. However reality proved me wrong, and it was not as simple as I thought it should be. Although GitHub has a Deployments API, and Vercel was reporting deployments correctly, there was no way to access them in my build.
