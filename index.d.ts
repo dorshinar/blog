@@ -1,6 +1,4 @@
 declare module "*.mdx" {
-  import { PostMeta } from "./src/types/Post";
-
   export const meta: Record<string, unknown>;
 
   import { MDXProps } from "mdx/types";

@@ -22,7 +22,7 @@ export default function RootLayout({
       <body
         className={clsx(
           inter.className,
-          "min-h-screen flex flex-col gap-12 items-center bg-zinc-900 text-zinc-200 pb-2"
+          "min-h-screen flex flex-col gap-12 items-center bg-zinc-900 text-zinc-200 pb-2",
         )}
       >
         <header className="flex justify-center items-center w-full py-6 border-b border-zinc-200">

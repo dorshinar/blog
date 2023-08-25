@@ -11,7 +11,6 @@ export const meta = {
 };
 
 import Image from "next/image";
-import Fort from "./cover.jpg";
 import Runtime from "./runtime-error.png";
 import { getPostMetadata } from "@/utils/get-metadata";
 import { PostHeader } from "@/components/post-header";
@@ -113,7 +112,7 @@ Well, the answer might be obvious to those who've written typescript before, but
 
 In the old days, when you wanted to protect your city you would build a tall and sturdy defensive wall. You would set guards all along the the walls, on the lookout to find anyone who seeks to harm the city.
 
-<Image src={Fort} alt="a fort" placeholder="blur" />
+<Image src={Cover} alt="a fort" placeholder="blur" />
 Photo by [Richard Clark](https://unsplash.com/@clarky_523) on [Unsplash](https://unsplash.com/)
 
 Inside the wall, your police will make sure to keep the city safe from it's own citizens, making sure everyone is safe, and everyone obeys by the rules. However, the police is not an army, and will be of little help should a near by city declare war against you.
@@ -169,7 +168,7 @@ function sumOrThrowIfLowerThan(arr: number[], threshold: number) {
 
 (async function () {
   const arr: number[] = await fetch("https://example.com/").then((res) =>
-    res.json()
+    res.json(),
   );
 
   console.log(sumOrThrowIfLowerThan(arr, 10)); // Can we guarantee the output type??

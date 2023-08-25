@@ -26,7 +26,7 @@ const ListContainer = ({
   const [list, setList] = useState([...Array(items).keys()]);
   const [loading, setLoading] = useState(false);
   const [simulateLatency, setSimulateLatency] = useState(
-    initialSimulateLatency
+    initialSimulateLatency,
   );
 
   const prefersReducedMotion = useReducedMotion();
@@ -41,14 +41,14 @@ const ListContainer = ({
   const loadMore = useCallback(() => {
     if (!simulateLatency) {
       return setList(
-        list.concat([...Array(items).keys()].map((item) => item + list.length))
+        list.concat([...Array(items).keys()].map((item) => item + list.length)),
       );
     }
 
     setLoading(true);
     setTimeout(() => {
       setList(
-        list.concat([...Array(items).keys()].map((item) => item + list.length))
+        list.concat([...Array(items).keys()].map((item) => item + list.length)),
       );
       setLoading(false);
     }, 2000);

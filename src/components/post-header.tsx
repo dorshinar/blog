@@ -2,7 +2,7 @@ import { PostSchema } from "@/types/Post";
 import Image from "next/image";
 
 interface Props {
-  meta: any;
+  meta: Record<string, unknown>;
 }
 
 export function PostHeader({ meta: metaProp }: Props) {
@@ -14,7 +14,7 @@ export function PostHeader({ meta: metaProp }: Props) {
         <h1 className="text-2xl text-emerald-500 font-medium">{meta.title}</h1>
         <small className="text-zinc-400 text-sm">
           {new Intl.DateTimeFormat("en-US", { dateStyle: "long" }).format(
-            meta.date
+            meta.date,
           )}
         </small>
       </header>

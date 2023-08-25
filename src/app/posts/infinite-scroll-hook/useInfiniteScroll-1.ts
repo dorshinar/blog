@@ -15,7 +15,7 @@ function useInfiniteScroll({ callback: callbackParam }: Params) {
         callbackParam();
       }
     },
-    [callbackParam]
+    [callbackParam],
   );
 
   const infiniteScrollRef = useCallback(
@@ -27,7 +27,7 @@ function useInfiniteScroll({ callback: callbackParam }: Params) {
       const intersectionObserver = new IntersectionObserver(callback);
       intersectionObserver.observe(node);
     },
-    [callback]
+    [callback],
   );
 
   return infiniteScrollRef;

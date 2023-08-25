@@ -200,7 +200,7 @@ const ColorShiftingBox = () => {
       const intersectionObserver = new intersectionObserver(callback);
       intersectionObserver.observe(node);
     },
-    [callback]
+    [callback],
   );
 
   return (
@@ -245,7 +245,7 @@ const ColorShiftingBox = () => {
       const intersectionObserver = new intersectionObserver(callback);
       intersectionObserver.observe(node);
     },
-    [callback]
+    [callback],
   );
 
   return (
@@ -294,7 +294,7 @@ function useInfiniteScroll(callbackParam) {
         callbackParam();
       }
     },
-    [callbackParam]
+    [callbackParam],
   );
 
   const infiniteScrollRef = useCallback(
@@ -306,7 +306,7 @@ function useInfiniteScroll(callbackParam) {
       const intersectionObserver = new IntersectionObserver(callback);
       intersectionObserver.observe(node);
     },
-    [callback]
+    [callback],
   );
 
   return infiniteScrollRef;
@@ -377,7 +377,7 @@ function useInfiniteScroll(callbackParam, isActive) {
         callbackParam();
       }
     },
-    [callbackParam, isActive]
+    [callbackParam, isActive],
   );
 
   const infiniteScrollRef = useCallback(
@@ -391,7 +391,7 @@ function useInfiniteScroll(callbackParam, isActive) {
       observer.current = new IntersectionObserver(callback);
       observer.current.observe(node);
     },
-    [callback]
+    [callback],
   );
 
   useEffect(() => {

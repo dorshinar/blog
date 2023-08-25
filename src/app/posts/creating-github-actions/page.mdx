@@ -279,7 +279,7 @@ async function run() {
   const deployments = result.repository.ref.target.deployments;
   setOutput(
     "deployment",
-    deployments.edges[0].node.latestStatus.environmentUrl
+    deployments.edges[0].node.latestStatus.environmentUrl,
   );
 }
 
@@ -310,7 +310,7 @@ async function run() {
     const deployments = result.repository.ref.target.deployments;
     setOutput(
       "deployment",
-      deployments.edges[0].node.latestStatus.environmentUrl
+      deployments.edges[0].node.latestStatus.environmentUrl,
     );
   } catch (error) {
     setFailed(error.message);

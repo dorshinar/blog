@@ -1,6 +1,6 @@
 import { PostMeta } from "@/types/Post";
 import { getPosts } from "@/utils/get-posts";
-import { ArrowLeft, ArrowRight, MoveLeft, MoveRight } from "lucide-react";
+import { MoveLeft, MoveRight } from "lucide-react";
 import Link from "next/link";
 
 interface Props {

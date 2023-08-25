@@ -19,7 +19,7 @@ export function ColorShiftingBox({ root, threshold }: Props) {
     (entries: IntersectionObserverEntry[]) => {
       setIsIntersecting(entries[0].isIntersecting);
     },
-    []
+    [],
   );
 
   const rootRef = useCallback((node: HTMLDivElement) => {
@@ -46,7 +46,7 @@ export function ColorShiftingBox({ root, threshold }: Props) {
       observer.current = new IntersectionObserver(setIntersecting, options);
       observer.current.observe(node);
     },
-    [observedNode, root, rootNode, setIntersecting, threshold]
+    [observedNode, root, rootNode, setIntersecting, threshold],
   );
 
   return (
@@ -66,7 +66,7 @@ export function ColorShiftingBox({ root, threshold }: Props) {
             <div
               className={clsx(
                 "w-20 h-20 rounded border transition-colors duration-[3s]",
-                isIntersecting ? "bg-orange-500" : "bg-violet-700"
+                isIntersecting ? "bg-orange-500" : "bg-violet-700",
               )}
               ref={boxRef}
             />

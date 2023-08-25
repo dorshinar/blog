@@ -42,7 +42,7 @@ export function getMetadata(params: Params): Metadata {
   };
 }
 
-export function getPostMetadata(metaParam: any) {
+export function getPostMetadata(metaParam: Record<string, unknown>) {
   const meta = PostSchema.parse(metaParam);
 
   return getMetadata({ ...meta, images: [meta.cover] });

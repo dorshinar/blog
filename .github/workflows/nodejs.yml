@@ -50,4 +50,4 @@ jobs:
         run: pnpm typecheck
 
       - name: 💅 Prettier
-        run: pnpm format:check
+        run: pnpm format
