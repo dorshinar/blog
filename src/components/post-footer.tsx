@@ -1,10 +1,11 @@
 import { PostMeta } from "@/types/Post";
 import { getPosts } from "@/utils/get-posts";
 import { MoveLeft, MoveRight } from "lucide-react";
+import { Route } from "next";
 import Link from "next/link";
 
 interface Props {
-  slug: string;
+  slug: Route;
 }
 
 export function PostFooter({ slug }: Props) {
