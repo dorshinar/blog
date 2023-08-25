@@ -5,6 +5,7 @@ import { Inter } from "next/font/google";
 import { Link } from "@/components/Link";
 import NextLink from "next/link";
 import { ServiceWorkerRegister } from "@/components/sw-register";
+import { Analytics } from "@vercel/analytics/react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -46,6 +47,7 @@ export default function RootLayout({
           </span>
         </footer>
         <ServiceWorkerRegister />
+        <Analytics />
       </body>
     </html>
   );
