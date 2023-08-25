@@ -75,4 +75,8 @@ export const metadata: Metadata = {
   }),
   metadataBase: new URL("https://dorshinar.me"),
   manifest: "/manifest.json",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#18181b" },
+    { media: "(prefers-color-scheme: dark)", color: "#18181b" },
+  ],
 };
