@@ -19,7 +19,13 @@ export function PostHeader({ meta: metaProp }: Props) {
         </small>
       </header>
       {meta.cover && (
-        <Image src={meta.cover} alt="cover image" priority placeholder="blur" />
+        <Image
+          src={meta.cover}
+          alt="cover image"
+          priority
+          placeholder="blur"
+          className="rounded-lg"
+        />
       )}
     </>
   );

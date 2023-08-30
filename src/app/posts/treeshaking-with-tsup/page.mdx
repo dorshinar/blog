@@ -1,0 +1,50 @@
+import Cover from "./cover.jpg";
+import { Fragment } from "react";
+import { getPostMetadata } from "@/utils/get-metadata";
+import { PostHeader } from "@/components/post-header";
+import { PostFooter } from "@/components/post-footer";
+
+export const meta = {
+  title: "Creating a tree-shakable library with tsup",
+  date: "2023-09-15",
+  description:
+    "Tree shaking is a crucial part of Javascript libraries, but it can be a tricky feat to achieve.",
+  slug: "treeshaking-with-tsup",
+  published: false,
+  cover: Cover,
+  coverImageCredit: (
+    <Fragment>
+      Photo by{" "}
+      <a href="https://unsplash.com/@maritaextrabold">Marita Kavelashvili</a> on{" "}
+      <a href="https://unsplash.com/photos/ugnrXk1129g">Unsplash</a>
+    </Fragment>
+  ),
+  coverImageAlt: "A top-down view of a forest full of trees",
+};
+
+export const metadata = getPostMetadata(meta);
+
+<PostHeader meta={meta} />
+
+- What is tree shaking
+  - A method bundlers use to include necessary code
+  - Example - library with a small and large export
+  - Show build size for various bundlers
+- Why we need tree shaking
+  - Smaller bundle
+  - Better CWV
+- Requirements to get tree shaking to work
+  - Multiple entry points
+  - file imports
+  - ESM, but CJS can work
+  - A bundler configured properly
+- Configuraing tsup to create a tree-shakable library
+  - What is tsup
+  - What is esbuild
+  - All the knobs we need to turn to get it working
+  - Making sure it works
+- Tips, tricks, ways to analyze bundle size
+  - import-cost
+  - bundlephobia
+
+<PostFooter {...meta} />

@@ -8,6 +8,7 @@ import { meta as ci } from "../app/posts/continuous-integration-with-github-acti
 import { meta as guardedCity } from "../app/posts/guarded-city-with-no-defensive-wall-typescript/page.mdx";
 import { meta as githubActions } from "../app/posts/creating-github-actions/page.mdx";
 import { meta as infiniteScroll } from "../app/posts/infinite-scroll-hook/page.mdx";
+import { meta as treeShaking } from "../app/posts/treeshaking-with-tsup/page.mdx";
 import { PostSchema } from "../types/Post";
 import { z } from "zod";
 
@@ -25,5 +26,6 @@ export function getPosts() {
     guardedCity,
     githubActions,
     infiniteScroll,
+    treeShaking,
   ]).sort((first, second) => (first.date > second.date ? -1 : 1));
 }
