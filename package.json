@@ -49,6 +49,6 @@
     "eslint-plugin-import": "^2.28.1",
     "eslint-plugin-jsx-a11y": "^6.7.1",
     "eslint-plugin-mdx": "^2.2.0",
-    "prettier": "^3.0.2"
+    "prettier": "^3.0.3"
   }
 }
