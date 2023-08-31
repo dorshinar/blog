@@ -12,6 +12,7 @@ export const PostSchema = z.object({
   published: z.boolean(),
   slug: z.string(),
   cover: Cover,
+  url: z.string().optional(),
 });
 
 export type PostMeta = z.infer<typeof PostSchema>;

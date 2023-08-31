@@ -12,7 +12,7 @@ interface Props {
 export function PostPreview({ post, cover }: Props) {
   return (
     <Link
-      href={`posts/${post.slug}`}
+      href={post.url ?? `posts/${post.slug}`}
       className={clsx(
         "group rounded-2xl overflow-hidden w-full transition-[transform,shadow]",
         "hover:ring-2 focus-within:ring-2 focus:ring-2 ring-offset-zinc-900 ring-emerald-500 p-2",
