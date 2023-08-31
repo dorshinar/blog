@@ -26,6 +26,75 @@ export const metadata = getPostMetadata(meta);
 
 <PostHeader meta={meta} />
 
+As software developers, we always want to provide our users with the best experience we can.
+
+To do that we employ a bunch of different strategies. We optimize images, code-split per route, lazy load code and images. We render at the edge and work hard to shave more and more kbs from our bundles.
+
+When it comes to shrinking our bundles we often take advantage of a feature that exists in most modern bundlers called `Tree Shaking`.
+
+As it turns out, creating a tree-shakable library can be quite tricky. In this post, I'll try to explain how to use [tsup](https://tsup.egoist.dev/) to create a tree-shakable bundle.
+
+## What is tree shaking?
+
+First, an introduction to tree-shaking.
+
+To illustrate how it works, let's say we are working on a component library for the company you work for. We currently have 2 components - a `Button` component and a `Dialog` component.
+
+Our `Button` component is very simple:
+
+```tsx
+export function Button(props: HTMLAttributes<HTMLButtonProps>) {
+  return <button {...props} />;
+}
+```
+
+But for the `Dialog` component we'll use the excellent `@radix-ui/react-dialog`. I pulled the example straight from their [docs](https://www.radix-ui.com/primitives/docs/components/dialog).
+
+```tsx
+import React from "react";
+import * as Dialog from "@radix-ui/react-dialog";
+import { Cross2Icon } from "@radix-ui/react-icons";
+
+export function Dialog() {
+  return (
+    <Dialog.Root>
+      <Dialog.Trigger asChild>
+        <button>Edit profile</button>
+      </Dialog.Trigger>
+      <Dialog.Portal>
+        <Dialog.Overlay />
+        <Dialog.Content>
+          <Dialog.Title>Edit profile</Dialog.Title>
+          <Dialog.Description>
+            Make changes to your profile here. Click save when you're done.
+          </Dialog.Description>
+          <Dialog.Close asChild>
+            <button aria-label="Close">
+              <Cross2Icon />
+            </button>
+          </Dialog.Close>
+        </Dialog.Content>
+      </Dialog.Portal>
+    </Dialog.Root>
+  );
+}
+```
+
+Without any other external dependencies, our button component weights about 99 bytes, and our dialog weighs about 51.9kB (minified, not gzipped).
+
+We bundle them together, produce an `index.js` file, publish to `npm` and we have a library.
+
+If this library is consumed in multiple applications, not all of need will import both components.
+Some only need the button, others only the dialog and some would need both.
+Ideally, when we are building the consuming application we would like the bundle of each application to only contain the code it _actually_ uses.
+
+Without tree-shaking, each application that uses the `<Button>{:jsx}` component will have 51.9kB _that it doesn't need_.
+In this contrived example it may not sound so bad, but as your library gets bigger and its uses become more diverse, this could actually hurt the performance of your applications.
+
+@@@ example build numbers @@@
+
+---
+
 - What is tree shaking
   - A method bundlers use to include necessary code
   - Example - library with a small and large export
@@ -48,3 +117,4 @@ export const metadata = getPostMetadata(meta);
   - bundlephobia
 
 <PostFooter {...meta} />
+```
