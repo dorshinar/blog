@@ -16,7 +16,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         {...props}
         className={clsx(
           props.className,
-          "text-emerald-500 shadow-[0_2px_0_0_theme(colors.emerald.500)] hover:shadow-[0_3px_0_0_theme(colors.emerald.500)] transition-shadow",
+          "text-emerald-500 underline shadow-[0_2px_0_0_theme(colors.emerald.500)] hover:shadow-[0_3px_0_0_theme(colors.emerald.500)] transition-shadow",
           "[blockquote_&]:text-zinc-200 [blockquote_&]:font-medium [blockquote_&]:shadow-[0_2px_0_0_theme(colors.sky.300)] [blockquote_&]:hover:shadow-[0_3px_0_0_theme(colors.sky.300)]",
         )}
       >
@@ -42,7 +42,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       </h2>
     ),
     h3: (props) => (
-      <h2
+      <h3
         {...props}
         className={clsx(
           props.className,
@@ -57,7 +57,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         >
           <LinkIcon size={18} />
         </a>
-      </h2>
+      </h3>
     ),
     blockquote: (props) => (
       <blockquote
