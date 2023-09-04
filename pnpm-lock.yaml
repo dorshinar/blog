@@ -63,8 +63,8 @@ dependencies:
     specifier: 18.2.0
     version: 18.2.0(react@18.2.0)
   rehype-pretty-code:
-    specifier: ^0.10.0
-    version: 0.10.0(shiki@0.14.4)
+    specifier: ^0.10.1
+    version: 0.10.1(shiki@0.14.4)
   rehype-slug:
     specifier: ^6.0.0
     version: 6.0.0
@@ -732,7 +732,7 @@ packages:
   /@types/hast@3.0.0:
     resolution: {integrity: sha512-SoytUJRuf68HXYqcXicQIhCrLQjqeYU2anikr4G3p3Iz+OZO5QDQpDj++gv+RenHsnUBwNZ2dumBArF8VLSk2Q==}
     dependencies:
-      '@types/unist': 2.0.7
+      '@types/unist': 3.0.0
     dev: false
 
   /@types/is-empty@1.2.1:
@@ -4026,8 +4026,8 @@ packages:
       define-properties: 1.2.0
       functions-have-names: 1.2.3
 
-  /rehype-pretty-code@0.10.0(shiki@0.14.4):
-    resolution: {integrity: sha512-qCD071Y+vUxEy9yyrATPk2+W9q7qCbzZgtc9suZhu75bmRQvOlBhJt4d3WvqSMTamkKoFkvqtCjyAk+ggH+aXQ==}
+  /rehype-pretty-code@0.10.1(shiki@0.14.4):
+    resolution: {integrity: sha512-WHjRvGlqPXG8BVRB9mK0255WvIOnzvHivAWhFkA2OG+NTkQWtTbCULZMokOHLf3Yy8q8I8/F8QNjDSQBhjMK5w==}
     engines: {node: '>=16'}
     peerDependencies:
       shiki: 0.x
