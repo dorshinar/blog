@@ -26,17 +26,23 @@ export const metadata = getPostMetadata(meta);
 
 <PostHeader meta={meta} />
 
-As software developers, we always want to provide our users with the best experience we can.
+At work we had a major project where we started developing a component library, distributed via NPM and consumed by several applications. We were bundling our library with [tsup](https://tsup.egoist.dev/) which worked great.
 
-To do that we employ a bunch of different strategies. We optimize images, code-split per route, lazy load code and images. We render at the edge and work hard to shave more and more kbs from our bundles.
+Or so I thought.
 
-When it comes to shrinking our bundles we often take advantage of a feature that exists in most modern bundlers called `Tree Shaking`.
+While the library was properly bundled, and build times were very quick thanks to [ESBuild](https://esbuild.github.io/), I noticed that our application bundles were big. Too big to seem reasonable.
 
-As it turns out, creating a tree-shakable library can be quite tricky. In this post, I'll try to explain how to use [tsup](https://tsup.egoist.dev/) to create a tree-shakable bundle.
+Importing our `<Button />{:jsx}` component, [Import Cost](https://marketplace.visualstudio.com/items?itemName=wix.vscode-import-cost) reported 97Kb added to our bundle. Don't get me wrong, we do have nice buttons, but certainly not 97Kb worth of buttons. Importing `*.svg` icons resulted in similar bundle size added to our application's bundle.
+
+I tested it in multiple environments. Both `webpack` and `vite` behaved similarly, so I figured out our library was not as tree-shakable as I thought it would be.
+
+As it turns out, creating a tree-shakable library can be quite tricky. In this post I'll walk you through how I set our component library to be tree-shakable with `tsup`.
 
 ## What is tree shaking?
 
-First, an introduction to tree-shaking.
+First, an introduction to tree-shaking. Taken from the [webpack documentation](https://webpack.js.org/guides/tree-shaking/):
+
+> Tree shaking is a term commonly used in the JavaScript context for dead-code elimination. It relies on the static structure of ES2015 module syntax, i.e. import and export. The name and concept have been popularized by the ES2015 module bundler rollup.
 
 To illustrate how it works, let's say we are working on a component library for the company you work for. We currently have 2 components - a `Button` component and a `Dialog` component.
 
@@ -80,18 +86,104 @@ export function Dialog() {
 }
 ```
 
-Without any other external dependencies, our button component weights about 99 bytes, and our dialog weighs about 51.9kB (minified, not gzipped).
+Without any other external dependencies, our button component weights about 99 bytes, and our dialog weighs about 50kB (minified, not gzipped).
 
-We bundle them together, produce an `index.js` file, publish to `npm` and we have a library.
+To consume our component in an application we bundle them together, produce an `index.js` file, publish to `npm` and we have a library.
 
-If this library is consumed in multiple applications, not all of need will import both components.
-Some only need the button, others only the dialog and some would need both.
-Ideally, when we are building the consuming application we would like the bundle of each application to only contain the code it _actually_ uses.
+Different application may import different components from our library. Some only need the button, others only the dialog and some would need both. Ideally, when we are building the consuming application we would like the bundle of each application to only contain the code it _actually_ uses.
 
-Without tree-shaking, each application that uses the `<Button>{:jsx}` component will have 51.9kB _that it doesn't need_.
-In this contrived example it may not sound so bad, but as your library gets bigger and its uses become more diverse, this could actually hurt the performance of your applications.
+Without tree-shaking, each application that uses the `<Button>{:jsx}` component will have 51.9kB _that it doesn't need_. As our library grows larger and larger in size, this will become an issue. It not unheard of to have component libraries that contain 100kB+, where each application only needs a sliver of.
 
-@@@ example build numbers @@@
+We definitely don't need 100kB extra in our landing page.
+
+To address this issue, bundlers such as webpack and rollup perform an operation called tree-shaking. In the tree-shaking process the bundlers will scan our code to figure our what external pieces of code we imported, and they will only include in our final bundle the code we imported.
+
+## Requirements for tree-shaking
+
+### ESM
+
+To get tree-shaking working most reliably, you should distribute your code in ESM format. ESM uses statically analyzable `export/import` statements which bundlers can take advantage of when bundling our code.
+
+Both webpack and rollup support it as well as [all modern browsers](https://caniuse.com/?search=esm%20module), so it's a safe choice as a compilation target.
+
+To output ESM when bundling with `tsup`, the default bundle format is `cjs`. Change that to `esm` either via the command line:
+
+```sh
+tsup src/index.ts --format esm
+```
+
+Or via the config file:
+
+```js
+import { defineConfig } from "tsup";
+
+export default defineConfig({
+  format: ["esm"],
+});
+```
+
+If you are bundling you library with typescript, set the `compilerOptions.module` to `ES2015/ES6/ES2020/ES2022/ESNext`.
+
+### No side effects
+
+The second thing you should do is make sure you code is side-effects free. From the [webpack docs](https://webpack.js.org/guides/tree-shaking/#mark-the-file-as-side-effect-free):
+
+> A "side effect" is defined as code that performs a special behavior when imported, other than exposing one or more exports. An example of this are polyfills, which affect the global scope and usually do not provide an export.
+
+Basically, any code that performs an action, alters the global state or anything else when imported is considered to have side effects.
+
+This is important because while side effects are rare, if you do have code that is not pure, like polyfills or otherwise, you would probably not want it excluded from your bundle.
+
+In webpack the config is called `sideEffects` and in rollup it's called `moduleSideEffects`. Both can receive the value `false` to indicate that there are no side effects in the code, or a list of files that _do_ contain side effects.
+
+### Separate files as entry points
+
+For the most part, bundlers can exclude entire file from your build. While rollup may be able to tree-shake unused function and variables in the same file, webpack cannot - so it's best to stick to the lowest common denominator.
+
+What this means for you in practice is that you should either configure your library to have multiple entry points, or have a single entry points that imports and exports your code from separate files.
+
+The `dist/` folder of a library with multiple entry points would look something like that:
+
+```
+dist/
+├── button.mjs
+└── dialog.mjs
+```
+
+And when importing code we would import from the relevant file:
+
+```ts
+import { Button } from "component-library/button";
+```
+
+While this works, it's not very ergonomic when you import multiple things from your component library in the same file:
+
+```ts
+import { Button } from "component-library/button";
+import { Dialog } from "component-library/dialog";
+```
+
+To solve that you can bundle your library so that you still have a single entry point, but it points to separate files that can be excluded individually:
+
+```
+dist/
+├── index.mjs
+├── button.mjs
+└── tooltip.mjs
+```
+
+And your `index.mjs` would look roughly like this:
+
+```ts
+export * from "./button";
+export * from "./dialog";
+```
+
+And now your imports can look like this:
+
+```ts
+import { Button, Dialog } from "component-library";
+```
 
 ---
 
@@ -107,7 +199,8 @@ In this contrived example it may not sound so bad, but as your library gets bigg
   - file imports
   - ESM, but CJS can work
   - A bundler configured properly
-- Configuraing tsup to create a tree-shakable library
+  - side effect free
+- Configuring tsup to create a tree-shakable library
   - What is tsup
   - What is esbuild
   - All the knobs we need to turn to get it working
@@ -116,5 +209,6 @@ In this contrived example it may not sound so bad, but as your library gets bigg
   - import-cost
   - bundlephobia
 
+> No tree were harmed in the making of this post
+
 <PostFooter {...meta} />
-```

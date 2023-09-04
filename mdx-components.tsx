@@ -42,11 +42,11 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       </h2>
     ),
     h3: (props) => (
-      <h2
+      <h3
         {...props}
         className={clsx(
           props.className,
-          "text-lg font-medium group flex gap-2 items-center",
+          "text-base font-medium group flex gap-2 items-center",
         )}
       >
         {props.children}
@@ -57,7 +57,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         >
           <LinkIcon size={18} />
         </a>
-      </h2>
+      </h3>
     ),
     blockquote: (props) => (
       <blockquote
