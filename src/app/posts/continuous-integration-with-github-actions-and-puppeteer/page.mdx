@@ -12,7 +12,6 @@ import Start from "./github-actions-start.png";
 import Branch from "./github-settings-branch.png";
 import Protections from "./github-actions-protections.png";
 import { getPostMetadata } from "@/utils/get-metadata";
-import { PostHeader } from "@/components/post-header";
 
 export const metadata = getPostMetadata(meta);
 
@@ -285,7 +284,5 @@ We need to set a **Branch protection rule** so that malicious code (or at least 
 <Image src={Protections} alt="Require status checks" placeholder="blur" />
 
 Click on Save changes below, and you're good to go!
-
-import { PostFooter } from "@/components/post-footer";
 
 <PostFooter {...meta} />

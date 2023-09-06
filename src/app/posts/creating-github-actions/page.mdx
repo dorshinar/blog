@@ -13,7 +13,6 @@ export const meta = {
 import Image from "next/image";
 import GithubDeploy from "./github-deployment.png";
 import { getPostMetadata } from "@/utils/get-metadata";
-import { PostHeader } from "@/components/post-header";
 
 export const metadata = getPostMetadata(meta);
 
@@ -372,7 +371,5 @@ There is also a lot more you can with Github actions in general. You can put the
 If you don't want to go through the hassle of creating the action, I've published an action that does exactly that for my own personal use. It should work with any Github integration that creates Deployments with Github's API, and supports retries, rate-limiting and error handling. You can find it [here](https://github.com/marketplace/actions/get-deployment-url).
 
 Thank you for reading, I hope you've learned something and found my article useful.
-
-import { PostFooter } from "@/components/post-footer";
 
 <PostFooter {...meta} />

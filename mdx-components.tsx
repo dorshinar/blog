@@ -1,3 +1,8 @@
+import { Message } from "@/components/message";
+import { PostFooter } from "@/components/post-footer";
+
+import { PostHeader } from "@/components/post-header";
+
 import clsx from "clsx";
 import { LinkIcon } from "lucide-react";
 import type { MDXComponents } from "mdx/types";
@@ -18,6 +23,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
           props.className,
           "text-emerald-500 shadow-[0_2px_0_0_theme(colors.emerald.500)] hover:shadow-[0_3px_0_0_theme(colors.emerald.500)] transition-shadow",
           "[blockquote_&]:text-zinc-200 [blockquote_&]:font-medium [blockquote_&]:shadow-[0_2px_0_0_theme(colors.sky.300)] [blockquote_&]:hover:shadow-[0_3px_0_0_theme(colors.sky.300)]",
+          "[aside_&]:text-zinc-200 [aside_&]:font-medium [aside_&]:shadow-[0_2px_0_0_theme(colors.sky.300)] [aside_&]:hover:shadow-[0_3px_0_0_theme(colors.sky.300)]",
         )}
       >
         {props.children}
@@ -83,5 +89,8 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         className={clsx(props.className, "list-disc px-4 flex flex-col gap-2")}
       />
     ),
+    Message,
+    PostHeader,
+    PostFooter,
   };
 }

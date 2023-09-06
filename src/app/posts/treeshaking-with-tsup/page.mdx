@@ -1,8 +1,6 @@
 import Cover from "./cover.jpg";
 import { Fragment } from "react";
 import { getPostMetadata } from "@/utils/get-metadata";
-import { PostHeader } from "@/components/post-header";
-import { PostFooter } from "@/components/post-footer";
 
 export const meta = {
   title: "Creating a tree-shakable library with tsup",
@@ -38,11 +36,20 @@ I tested it in multiple environments. Both `webpack` and `vite` behaved similarl
 
 As it turns out, creating a tree-shakable library can be quite tricky. In this post I'll walk you through how I set our component library to be tree-shakable with `tsup`.
 
+<Message>
+  Only interested in the final config? [Skip to the end](#the-final-config).
+</Message>
+
 ## What is tree shaking?
 
 First, an introduction to tree-shaking. Taken from the [webpack documentation](https://webpack.js.org/guides/tree-shaking/):
 
-> Tree shaking is a term commonly used in the JavaScript context for dead-code elimination. It relies on the static structure of ES2015 module syntax, i.e. import and export. The name and concept have been popularized by the ES2015 module bundler rollup.
+<Message>
+  Tree shaking is a term commonly used in the JavaScript context for dead-code
+  elimination. It relies on the static structure of ES2015 module syntax, i.e.
+  import and export. The name and concept have been popularized by the ES2015
+  module bundler rollup.
+</Message>
 
 To illustrate how it works, let's say we are working on a component library for the company you work for. We currently have 2 components - a `Button` component and a `Dialog` component.
 
@@ -128,11 +135,19 @@ If you are bundling you library with typescript, set the `compilerOptions.module
 
 The second thing you should do is make sure you code is side-effects free. From the [webpack docs](https://webpack.js.org/guides/tree-shaking/#mark-the-file-as-side-effect-free):
 
-> A "side effect" is defined as code that performs a special behavior when imported, other than exposing one or more exports. An example of this are polyfills, which affect the global scope and usually do not provide an export.
+<Message>
+  A "side effect" is defined as code that performs a special behavior when
+  imported, other than exposing one or more exports. An example of this are
+  polyfills, which affect the global scope and usually do not provide an export.
+</Message>
 
 Basically, any code that performs an action, alters the global state or anything else when imported is considered to have side effects.
 
-This is important because while side effects are rare, if you do have code that is not pure, like polyfills or otherwise, you would probably not want it excluded from your bundle.
+This is important because while side effects are rare, if you do have code that is not pure, like polyfills or otherwise, you would probably not want it excluded from your bundle when the imported module is not referenced. This can include CSS files that are imported but not referenced.
+
+```tsx
+import "normalize.css";
+```
 
 In webpack the config is called `sideEffects` and in rollup it's called `moduleSideEffects`. Both can receive the value `false` to indicate that there are no side effects in the code, or a list of files that _do_ contain side effects.
 
@@ -140,7 +155,7 @@ In webpack the config is called `sideEffects` and in rollup it's called `moduleS
 
 For the most part, bundlers can exclude entire file from your build. While rollup may be able to tree-shake unused function and variables in the same file, webpack cannot - so it's best to stick to the lowest common denominator.
 
-What this means for you in practice is that you should either configure your library to have multiple entry points, or have a single entry points that imports and exports your code from separate files.
+What this means for you in practice is that you should either configure your library to have multiple entry points, or have a single entry points that imports and exports your code from separate files. In my experience, both methods yield similar results, so it's up to you to decide which one you prefer.
 
 The `dist/` folder of a library with multiple entry points would look something like that:
 
@@ -185,30 +200,131 @@ And now your imports can look like this:
 import { Button, Dialog } from "component-library";
 ```
 
----
+## Bundling a library with `tsup`
 
-- What is tree shaking
-  - A method bundlers use to include necessary code
-  - Example - library with a small and large export
-  - Show build size for various bundlers
-- Why we need tree shaking
-  - Smaller bundle
-  - Better CWV
-- Requirements to get tree shaking to work
-  - Multiple entry points
-  - file imports
-  - ESM, but CJS can work
-  - A bundler configured properly
-  - side effect free
-- Configuring tsup to create a tree-shakable library
-  - What is tsup
-  - What is esbuild
-  - All the knobs we need to turn to get it working
-  - Making sure it works
-- Tips, tricks, ways to analyze bundle size
-  - import-cost
-  - bundlephobia
+Now that we know what we need to do to get tree-shaking to work, let's see how we can do that with `tsup`. `tsup` is a zero-config bundler that uses `esbuild` under the hood. To get it working properly we would need to configure it a bit.
 
-> No tree were harmed in the making of this post
+First, install `tsup`:
+
+```sh
+npm i tsup -D
+# Or yarn
+yarn add tsup --dev
+# Or pnpm
+pnpm add tsup -D
+```
+
+The [`tsup`](https://tsup.egoist.dev/#bundle-files) docs will tell you to specify an entry point such as `src/index.js`, and `tsup` will crawl all files imported from that entry point and bundle them together. This is not what we want, as we want to bundle each file separately.
+
+You can see, that if we leave the default configuration, `tsup` will bundle all files together, and out library will not be tree-shakable.
+
+@@@ NUMBERS @@@
+
+To get `tsup` to bundle each file separately, we need to specify the `entry` option. This option accepts a glob pattern, so we can specify all `.ts` files in the `src/` folder:
+
+```ts
+import { defineConfig } from "tsup";
+
+export default defineConfig({
+  entry: ["src/**/*.ts"],
+  format: ["esm"],
+});
+```
+
+Don't forget to include `format: ["esm"]`. This will tell `tsup` to output ESM files, which is the only format that supports tree-shaking. You can choose to output `cjs` as well if you want to support older bundlers, but it's not necessary.
+
+If you are working with other file type such as `.tsx`, `.js` or `.jsx` you can add them to the glob pattern, like so:
+
+```ts
+import { defineConfig } from "tsup";
+
+export default defineConfig({
+  entry: ["src/**/*@(ts|tsx)"],
+  format: ["esm"],
+});
+```
+
+You can also have `tsup` generate `.dts` files as well.
+
+The last part we need is to let the bundlers that will consume our library know where to import files from, as well as let them know we don't plan on performing any side effects which may make them bail out of tree-shaking.
+
+Update your `package.json` and add the following lines:
+
+```json
+{
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "sideEffects": false
+}
+```
+
+The `exports` field tells bundlers where to import files from. The `"."` identifier means that imports from the root of the package will be imported from the `default` field.
+
+If we wanted to allow importing from a sub-module, we would specify it as well. For example, to allow importing a CSS file named `style.css`, we would add the following line to the `exports` object:
+
+```json
+{
+  "style.css": "./dist/style.css"
+}
+```
+
+The `import` field is for ESM bundlers, and the `require` field is for CJS bundlers. The `default` field is for the default import, and the `types` field is for the types.
+
+Other than that we also specify our `main` file, which is used by older bundlers that are not aware of the `exports` syntax, as well as `types` which is used by typescript, and last we specify that our code has no side effects.
+
+This should be everything you need to bundle a tree-shakable library with `tsup`.
+
+## The final config
+
+The `tsup.config.ts`:
+
+```ts
+import { defineConfig } from "tsup";
+
+export default defineConfig({
+  entry: ["src/**/*@(ts|tsx)"],
+  dts: true,
+  format: ["esm"],
+  treeshake: true,
+});
+```
+
+And the `package.json`:
+
+```json
+{
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "sideEffects": false
+}
+```
+
+Finding the right config has been a bit of trial and error for me, so if you have any suggestions or improvements, please let me know.
+
+<Message>No tree were harmed in the making of this post</Message>
 
 <PostFooter {...meta} />

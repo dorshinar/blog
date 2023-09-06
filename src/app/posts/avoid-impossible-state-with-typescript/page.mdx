@@ -14,7 +14,6 @@ import Image from "next/image";
 import messageDoesNotExist from "./message-does-not-exist.png";
 import messageNotFailed from "./message-with-state-not-failed.png";
 import { getPostMetadata } from "@/utils/get-metadata";
-import { PostHeader } from "@/components/post-header";
 
 export const metadata = getPostMetadata(meta);
 
@@ -315,7 +314,5 @@ Obviously, this is a contrived example, but I hope it makes it clear how we can 
 Thank you for reading!
 
 (cover photo by [Matt Atherton](https://unsplash.com/@mattatherton) on [Unsplash](https://unsplash.com/))
-
-import { PostFooter } from "@/components/post-footer";
 
 <PostFooter {...meta} />
