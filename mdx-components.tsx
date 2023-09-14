@@ -22,8 +22,6 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         className={clsx(
           props.className,
           "text-emerald-500 shadow-[0_2px_0_0_theme(colors.emerald.500)] hover:shadow-[0_3px_0_0_theme(colors.emerald.500)] transition-shadow",
-          "[blockquote_&]:text-zinc-200 [blockquote_&]:font-medium [blockquote_&]:shadow-[0_2px_0_0_theme(colors.sky.300)] [blockquote_&]:hover:shadow-[0_3px_0_0_theme(colors.sky.300)]",
-          "[aside_&]:text-zinc-200 [aside_&]:font-medium [aside_&]:shadow-[0_2px_0_0_theme(colors.sky.300)] [aside_&]:hover:shadow-[0_3px_0_0_theme(colors.sky.300)]",
         )}
       >
         {props.children}
@@ -71,6 +69,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         className={clsx(
           props.className,
           "bg-sky-900 border-l-8 border-sky-500 sm:rounded p-4 -mx-4",
+          "[&_a]:text-zinc-200 [&_a]:font-medium [&_a]:shadow-[0_2px_0_0_theme(colors.sky.300)] [&_a]:hover:shadow-[0_3px_0_0_theme(colors.sky.300)]",
         )}
       />
     ),

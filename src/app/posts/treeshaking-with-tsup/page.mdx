@@ -24,17 +24,17 @@ export const metadata = getPostMetadata(meta);
 
 <PostHeader meta={meta} />
 
-At work we had a major project where we started developing a component library, distributed via NPM and consumed by several applications. We were bundling our library with [tsup](https://tsup.egoist.dev/) which worked great.
+At work, we started working on a component library distributed through NPM and consumed by several applications. We bundled our library with [tsup](https://tsup.egoist.dev/) which worked great.
 
 Or so I thought.
 
-While the library was properly bundled, and build times were very quick thanks to [ESBuild](https://esbuild.github.io/), I noticed that our application bundles were big. Too big to seem reasonable.
+While the library was properly bundled, and build times were very quick thanks to [ESBuild](https://esbuild.github.io/), I noticed that our application bundles were too big to seem reasonable.
 
-Importing our `<Button />{:jsx}` component, [Import Cost](https://marketplace.visualstudio.com/items?itemName=wix.vscode-import-cost) reported 97Kb added to our bundle. Don't get me wrong, we do have nice buttons, but certainly not 97Kb worth of buttons. Importing `*.svg` icons resulted in similar bundle size added to our application's bundle.
+Importing our `<Button />{:jsx}` component, [Import Cost](https://marketplace.visualstudio.com/items?itemName=wix.vscode-import-cost) reported 97Kb added to our bundle. Don't get me wrong, we have nice buttons, but not 97Kb worth. Importing `*.svg` icons resulted in a similar bundle size added to our application's bundle.
 
 I tested it in multiple environments. Both `webpack` and `vite` behaved similarly, so I figured out our library was not as tree-shakable as I thought it would be.
 
-As it turns out, creating a tree-shakable library can be quite tricky. In this post I'll walk you through how I set our component library to be tree-shakable with `tsup`.
+As it turns out, creating a tree-shakable library can be tricky. In this post I'll walk you through how I set our component library to be tree-shakable with `tsup`.
 
 <Message>
   Only interested in the final config? [Skip to the end](#the-final-config).
@@ -44,14 +44,9 @@ As it turns out, creating a tree-shakable library can be quite tricky. In this p
 
 First, an introduction to tree-shaking. Taken from the [webpack documentation](https://webpack.js.org/guides/tree-shaking/):
 
-<Message>
-  Tree shaking is a term commonly used in the JavaScript context for dead-code
-  elimination. It relies on the static structure of ES2015 module syntax, i.e.
-  import and export. The name and concept have been popularized by the ES2015
-  module bundler rollup.
-</Message>
+> Tree shaking is a term commonly used in the JavaScript context for dead-code elimination. It relies on the static structure of ES2015 module syntax, i.e. import and export. The name and concept have been popularized by the ES2015 module bundler rollup.
 
-To illustrate how it works, let's say we are working on a component library for the company you work for. We currently have 2 components - a `Button` component and a `Dialog` component.
+To illustrate how it works, let's say we are working on a component library. We currently have 2 components - a `Button` and a `Dialog` component.
 
 Our `Button` component is very simple:
 
@@ -61,57 +56,56 @@ export function Button(props: HTMLAttributes<HTMLButtonProps>) {
 }
 ```
 
-But for the `Dialog` component we'll use the excellent `@radix-ui/react-dialog`. I pulled the example straight from their [docs](https://www.radix-ui.com/primitives/docs/components/dialog).
+But for the `Dialog` component we'll use the excellent `@radix-ui/react-dialog`. I pulled the example from their [docs](https://www.radix-ui.com/primitives/docs/components/dialog).
 
 ```tsx
-import React from "react";
-import * as Dialog from "@radix-ui/react-dialog";
+import * as RadixDialog from "@radix-ui/react-dialog";
 import { Cross2Icon } from "@radix-ui/react-icons";
 
 export function Dialog() {
   return (
-    <Dialog.Root>
-      <Dialog.Trigger asChild>
+    <RadixDialog.Root>
+      <RadixDialog.Trigger asChild>
         <button>Edit profile</button>
-      </Dialog.Trigger>
-      <Dialog.Portal>
-        <Dialog.Overlay />
-        <Dialog.Content>
-          <Dialog.Title>Edit profile</Dialog.Title>
-          <Dialog.Description>
+      </RadixDialog.Trigger>
+      <RadixDialog.Portal>
+        <RadixDialog.Overlay />
+        <RadixDialog.Content>
+          <RadixDialog.Title>Edit profile</RadixDialog.Title>
+          <RadixDialog.Description>
             Make changes to your profile here. Click save when you're done.
-          </Dialog.Description>
-          <Dialog.Close asChild>
+          </RadixDialog.Description>
+          <RadixDialog.Close asChild>
             <button aria-label="Close">
               <Cross2Icon />
             </button>
-          </Dialog.Close>
-        </Dialog.Content>
-      </Dialog.Portal>
-    </Dialog.Root>
+          </RadixDialog.Close>
+        </RadixDialog.Content>
+      </RadixDialog.Portal>
+    </RadixDialog.Root>
   );
 }
 ```
 
-Without any other external dependencies, our button component weights about 99 bytes, and our dialog weighs about 50kB (minified, not gzipped).
+Without any other external dependencies, our button component weighs about 99 bytes, and our dialog weighs about 50kB (minified, not gzipped).
 
-To consume our component in an application we bundle them together, produce an `index.js` file, publish to `npm` and we have a library.
+To consume our components in an application we bundle them together, produce an `index.js` file, publish to `npm` and we have a library.
 
-Different application may import different components from our library. Some only need the button, others only the dialog and some would need both. Ideally, when we are building the consuming application we would like the bundle of each application to only contain the code it _actually_ uses.
+Different applications may import different components from our library. Some only need the button, others the dialog and some need both. Ideally, when we are building the consuming application we would like the bundle of each application to only contain the code it _actually_ uses.
 
-Without tree-shaking, each application that uses the `<Button>{:jsx}` component will have 51.9kB _that it doesn't need_. As our library grows larger and larger in size, this will become an issue. It not unheard of to have component libraries that contain 100kB+, where each application only needs a sliver of.
+Without tree-shaking, each application that uses the `<Button>{:jsx}` component will have 51.9kB _it doesn't need_. As our library grows larger, this will become an issue. It is not unheard of to have component libraries that contain 100kB+, where each application only needs a sliver of.
 
 We definitely don't need 100kB extra in our landing page.
 
-To address this issue, bundlers such as webpack and rollup perform an operation called tree-shaking. In the tree-shaking process the bundlers will scan our code to figure our what external pieces of code we imported, and they will only include in our final bundle the code we imported.
+To address this issue, bundlers such as webpack and rollup perform an operation called tree-shaking. In the tree-shaking process the bundlers will scan our code to figure out what external pieces of code we imported, and only include that code in the final build.
 
 ## Requirements for tree-shaking
 
 ### ESM
 
-To get tree-shaking working most reliably, you should distribute your code in ESM format. ESM uses statically analyzable `export/import` statements which bundlers can take advantage of when bundling our code.
+To get tree-shaking working reliably, distribute your code in ESM format. ESM uses statically analyzable `import/export` statements which bundlers can use when bundling our code.
 
-Both webpack and rollup support it as well as [all modern browsers](https://caniuse.com/?search=esm%20module), so it's a safe choice as a compilation target.
+Webpack and rollup support it as well as [modern browsers](https://caniuse.com/?search=esm%20module), so it's a safe compilation target.
 
 To output ESM when bundling with `tsup`, the default bundle format is `cjs`. Change that to `esm` either via the command line:
 
@@ -129,21 +123,17 @@ export default defineConfig({
 });
 ```
 
-If you are bundling you library with typescript, set the `compilerOptions.module` to `ES2015/ES6/ES2020/ES2022/ESNext`.
+If you are bundling your library with typescript, set the `compilerOptions.module` to `ES2015/ES6/ES2020/ES2022/ESNext`.
 
 ### No side effects
 
-The second thing you should do is make sure you code is side-effects free. From the [webpack docs](https://webpack.js.org/guides/tree-shaking/#mark-the-file-as-side-effect-free):
+The second thing you should do is make sure that your code has no side effects. From the [webpack docs](https://webpack.js.org/guides/tree-shaking/#mark-the-file-as-side-effect-free):
 
-<Message>
-  A "side effect" is defined as code that performs a special behavior when
-  imported, other than exposing one or more exports. An example of this are
-  polyfills, which affect the global scope and usually do not provide an export.
-</Message>
+> A "side effect" is defined as code that performs a special behavior when imported, other than exposing one or more exports. An example of this are polyfills, which affect the global scope and usually do not provide an export.
 
-Basically, any code that performs an action, alters the global state or anything else when imported is considered to have side effects.
+Basically, any code that performs an action, alters the global state or does anything else when imported is considered to have side effects.
 
-This is important because while side effects are rare, if you do have code that is not pure, like polyfills or otherwise, you would probably not want it excluded from your bundle when the imported module is not referenced. This can include CSS files that are imported but not referenced.
+This is critical because while side effects are rare, if you do have code that is not pure, like polyfills or otherwise, you might not want it excluded from your bundle when the imported module is not referenced. This can include CSS files imported but not referenced.
 
 ```tsx
 import "normalize.css";
@@ -153,11 +143,11 @@ In webpack the config is called `sideEffects` and in rollup it's called `moduleS
 
 ### Separate files as entry points
 
-For the most part, bundlers can exclude entire file from your build. While rollup may be able to tree-shake unused function and variables in the same file, webpack cannot - so it's best to stick to the lowest common denominator.
+For the most part, bundlers can exclude the entire file from your build. Rollup and webpack may tree-shake unused functions and variables written in the same file. This behavior is not very predictable so it's best to stick to the lowest common denominator.
 
-What this means for you in practice is that you should either configure your library to have multiple entry points, or have a single entry points that imports and exports your code from separate files. In my experience, both methods yield similar results, so it's up to you to decide which one you prefer.
+What this means for you in practice is that you should either configure your library to have multiple entry points, or have a single entry point that imports and exports your code from separate files. In my experience, both methods yield similar results, so it's up to you to decide which one you prefer.
 
-The `dist/` folder of a library with multiple entry points would look something like that:
+The `dist/` folder of a library with multiple entry points would look like this:
 
 ```
 dist/
@@ -178,7 +168,7 @@ import { Button } from "component-library/button";
 import { Dialog } from "component-library/dialog";
 ```
 
-To solve that you can bundle your library so that you still have a single entry point, but it points to separate files that can be excluded individually:
+To solve that you can bundle your library so that you still have a single entry point, but it points to separate files that can be excluded individually. Notice that in reality your `dist` folder will probably be messier than that, but the idea is the same.
 
 ```
 dist/
@@ -187,14 +177,14 @@ dist/
 └── tooltip.mjs
 ```
 
-And your `index.mjs` would look roughly like this:
+And your `index.mjs` would look like this:
 
 ```ts
 export * from "./button";
 export * from "./dialog";
 ```
 
-And now your imports can look like this:
+And now your imports look like this:
 
 ```ts
 import { Button, Dialog } from "component-library";
@@ -216,10 +206,6 @@ pnpm add tsup -D
 
 The [`tsup`](https://tsup.egoist.dev/#bundle-files) docs will tell you to specify an entry point such as `src/index.js`, and `tsup` will crawl all files imported from that entry point and bundle them together. This is not what we want, as we want to bundle each file separately.
 
-You can see, that if we leave the default configuration, `tsup` will bundle all files together, and out library will not be tree-shakable.
-
-@@@ NUMBERS @@@
-
 To get `tsup` to bundle each file separately, we need to specify the `entry` option. This option accepts a glob pattern, so we can specify all `.ts` files in the `src/` folder:
 
 ```ts
@@ -233,7 +219,7 @@ export default defineConfig({
 
 Don't forget to include `format: ["esm"]`. This will tell `tsup` to output ESM files, which is the only format that supports tree-shaking. You can choose to output `cjs` as well if you want to support older bundlers, but it's not necessary.
 
-If you are working with other file type such as `.tsx`, `.js` or `.jsx` you can add them to the glob pattern, like so:
+If you are working with other file types such as `.tsx`, `.js` or `.jsx` you can add them to the glob pattern, like so:
 
 ```ts
 import { defineConfig } from "tsup";
@@ -246,7 +232,7 @@ export default defineConfig({
 
 You can also have `tsup` generate `.dts` files as well.
 
-The last part we need is to let the bundlers that will consume our library know where to import files from, as well as let them know we don't plan on performing any side effects which may make them bail out of tree-shaking.
+The last part we need is to let the bundlers that will consume our library know where to import files from. We also need to let them know we don't plan on performing any side effects that may make them bail out of tree-shaking.
 
 Update your `package.json` and add the following lines:
 
@@ -258,6 +244,7 @@ Update your `package.json` and add the following lines:
         "types": "./dist/index.d.mts",
         "default": "./dist/index.mjs"
       },
+      // This part is only required if your output is CJS
       "require": {
         "types": "./dist/index.d.ts",
         "default": "./dist/index.js"
@@ -270,7 +257,7 @@ Update your `package.json` and add the following lines:
 }
 ```
 
-The `exports` field tells bundlers where to import files from. The `"."` identifier means that imports from the root of the package will be imported from the `default` field.
+The `exports` field tells bundlers where to import files from. The `"."` identifier means that imports from the root of the package (`import * from "package-name"`) will be imported from the `default` field.
 
 If we wanted to allow importing from a sub-module, we would specify it as well. For example, to allow importing a CSS file named `style.css`, we would add the following line to the `exports` object:
 
@@ -280,11 +267,136 @@ If we wanted to allow importing from a sub-module, we would specify it as well. 
 }
 ```
 
-The `import` field is for ESM bundlers, and the `require` field is for CJS bundlers. The `default` field is for the default import, and the `types` field is for the types.
+The `import` field is for ESM bundlers, and the `require` field is for CJS bundlers. The `default` field is for the default import, and the `types` field is for telling typescript where to find the types for our files.
 
 Other than that we also specify our `main` file, which is used by older bundlers that are not aware of the `exports` syntax, as well as `types` which is used by typescript, and last we specify that our code has no side effects.
 
 This should be everything you need to bundle a tree-shakable library with `tsup`.
+
+## Comparing the numbers
+
+Let's make sure our library is tree-shakable by looking at some numbers. I've created a repository with an example package, and a couple of brand new applications - `Next.js` and `Vite` with a react template.
+
+To do that, I've created a [repository](https://github.com/dorshinar/treeshaking-demo) with an example library and 2 applications using different bundlers - a `Next.js` application and a `Vite` application.
+
+The library contains 2 components - a `Button` and a `Dialog` component. The `Button` component is a simple component that renders a button, and the `Dialog` component is a wrapper around `@radix-ui/react-dialog`.
+
+Both applications contain the same code in the index route. Note that in the `Next.js` app I've poisoned the root page with `"use client"` to make sure the page is not a React Server Component.
+
+```tsx
+import { useState } from "react";
+import { Button, Dialog } from "example-package";
+
+export default function Home() {
+  const [count, setCount] = useState(0);
+
+  return (
+    <div>
+      Count is: {count}
+      <Button onClick={() => setCount((c) => c + 1)}>Increment</Button>
+      {count > 5 && <Dialog></Dialog>}
+    </div>
+  );
+}
+```
+
+Let's first look at the application bundle sizes when importing both components.
+
+```plaintext {12}
+> next-project@0.1.0 build treeshaking-demo/next-project
+> next build
+
+- info Creating an optimized production build
+- info Compiled successfully
+- info Linting and checking validity of types
+- info Collecting page data
+- info Generating static pages (4/4)
+- info Finalizing page optimization
+
+Route (app)                                Size     First Load JS
+┌ ○ /                                      14.2 kB        92.6 kB
+└ ○ /favicon.ico                           0 B                0 B
++ First Load JS shared by all              78.4 kB
+  ├ chunks/442-744379bed9c4eb8a.js         26.1 kB
+  ├ chunks/ad1c5502-63654f6e7379ed3e.js    50.5 kB
+  ├ chunks/main-app-52e10136fc1e8b70.js    217 B
+  └ chunks/webpack-d9b3eee2dd984a06.js     1.65 kB
+
+Route (pages)                              Size     First Load JS
+─ ○ /404                                   182 B          76.5 kB
++ First Load JS shared by all              76.3 kB
+  ├ chunks/framework-16d02afa1e645564.js   45.1 kB
+  ├ chunks/main-d0362342523b905b.js        29.4 kB
+  ├ chunks/pages/_app-d289e2608d34b8bd.js  195 B
+  └ chunks/webpack-d9b3eee2dd984a06.js     1.65 kB
+
+○  (Static)  automatically rendered as static HTML (uses no initial props)
+```
+
+I've highlighted the relevant line - our initial bundle is 92.6kB. Let's see the `Vite` application results:
+
+```plaintext {8}
+> vite-project@0.0.0 build treeshaking-demo/vite-project
+> vite build
+
+vite v4.4.5 building for production...
+✓ 87 modules transformed.
+dist/index.html                   0.46 kB │ gzip:  0.30 kB
+dist/assets/index-04490b11.css    0.95 kB │ gzip:  0.52 kB
+dist/assets/index-ffdd97bc.js   182.54 kB │ gzip: 59.17 kB
+✓ built in 746ms
+```
+
+The `Vite` bundle is 59.17kB.
+
+So that's our baseline - 92.6kB for `Next.js` and 59.17kB for `Vite`.
+
+Now let's see what happens when we _don't_ import our large `Dialog` component.
+
+```plaintext {12}
+> next-project@0.1.0 build treeshaking-demo/next-project
+> next build
+
+- info Creating an optimized production build
+- info Compiled successfully
+- info Linting and checking validity of types
+- info Collecting page data
+- info Generating static pages (4/4)
+- info Finalizing page optimization
+
+Route (app)                                Size     First Load JS
+┌ ○ /                                      3.49 kB        81.9 kB
+└ ○ /favicon.ico                           0 B                0 B
++ First Load JS shared by all              78.4 kB
+  ├ chunks/442-60a07becc06e0d47.js         26.1 kB
+  ├ chunks/ad1c5502-5aa4d9472840edb6.js    50.5 kB
+  ├ chunks/main-app-3dcab946c3b1e0ba.js    216 B
+  └ chunks/webpack-ea62f276db27253b.js     1.64 kB
+
+Route (pages)                              Size     First Load JS
+─ ○ /404                                   182 B          76.5 kB
++ First Load JS shared by all              76.3 kB
+  ├ chunks/framework-16d02afa1e645564.js   45.1 kB
+  ├ chunks/main-d0362342523b905b.js        29.4 kB
+  ├ chunks/pages/_app-d289e2608d34b8bd.js  195 B
+  └ chunks/webpack-ea62f276db27253b.js     1.64 kB
+
+○  (Static)  automatically rendered as static HTML (uses no initial props)
+```
+
+```plaintext {8}
+> vite-project@0.0.0 build treeshaking-demo/vite-project
+> vite build
+
+vite v4.4.5 building for production...
+✓ 87 modules transformed.
+dist/index.html                   0.46 kB │ gzip:  0.30 kB
+dist/assets/index-04490b11.css    0.95 kB │ gzip:  0.52 kB
+dist/assets/index-2de9fe73.js   152.15 kB │ gzip: 48.90 kB
+✓ built in 667ms
+```
+
+We got 81.9kB and 48.9kB respectively. That's about a 10kB reduction in bundle size, which is very respectable. This is the true power of tree-shaking - only bundle what you need.
 
 ## The final config
 
@@ -325,6 +437,16 @@ And the `package.json`:
 
 Finding the right config has been a bit of trial and error for me, so if you have any suggestions or improvements, please let me know.
 
-<Message>No tree were harmed in the making of this post</Message>
+## Tips and Tricks
+
+Lastly, I've wanted to mention a few tools that helped me identify tree-shaking issues.
+
+The first is [Import Cost](https://marketplace.visualstudio.com/items?itemName=wix.vscode-import-cost). It's a VSCode extension that show the size of imported modules right in your editor. Very useful for quick checks.
+
+The second is [bundlephobia](https://bundlephobia.com/). If you publish your library to `npm`, you can use bundlephobia to check the size of your library. You can also check other libraries if you are concerned about bundle size.
+
+The third is [publint](https://publint.dev/). It's a very useful CLI that validates that your packages are configured properly to be published. It's not specific to tree-shaking, but it's an excellent tool to have in your toolbox.
+
+<Message>🌳 No tree were harmed in the making of this post 🌳</Message>
 
 <PostFooter {...meta} />
