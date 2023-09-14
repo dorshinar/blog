@@ -9,7 +9,7 @@ interface Props {
   priority: boolean;
 }
 
-export function PostPreview({ post, cover }: Props) {
+export function PostPreview({ post, cover, priority }: Props) {
   return (
     <Link
       href={post.url ?? `posts/${post.slug}`}
@@ -27,6 +27,7 @@ export function PostPreview({ post, cover }: Props) {
             fill
             className="object-cover"
             placeholder="blur"
+            priority={priority}
           />
         </span>
       )}
