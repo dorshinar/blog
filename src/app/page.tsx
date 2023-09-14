@@ -58,12 +58,12 @@ export default function Home() {
       </section>
 
       <section className="flex flex-col gap-12 px-4 sm:px-8 sm:max-w-3xl pb-8">
-        {posts.map((post, index, arr) => (
+        {posts.map((post, index) => (
           <PostPreview
             post={post}
             key={post.slug}
             cover={post.cover}
-            priority={index === arr.length - 1}
+            priority={index === 0}
           />
         ))}
       </section>
