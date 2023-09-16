@@ -24,17 +24,17 @@ export const metadata = getPostMetadata(meta);
 
 <PostHeader meta={meta} />
 
-At work, we started working on a component library distributed through NPM and consumed by several applications. We bundled our library with [tsup](https://tsup.egoist.dev/) which worked great.
+At work, I had a chance to work on a component library distributed through NPM and consumed by several applications. The library is bundled with [tsup](https://tsup.egoist.dev/) which worked great.
 
 Or so I thought.
 
 While the library was properly bundled, and build times were very quick thanks to [ESBuild](https://esbuild.github.io/), I noticed that our application bundles were too big to seem reasonable.
 
-Importing our `<Button />{:jsx}` component, [Import Cost](https://marketplace.visualstudio.com/items?itemName=wix.vscode-import-cost) reported 97Kb added to our bundle. Don't get me wrong, we have nice buttons, but not 97Kb worth. Importing `*.svg` icons resulted in a similar bundle size added to our application's bundle.
+When importing the `<Button />{:jsx}` component, [Import Cost](https://marketplace.visualstudio.com/items?itemName=wix.vscode-import-cost) reported 97Kb added to our bundle. Don't get me wrong, we have nice buttons, but not 97Kb worth of buttons. Importing `*.svg` icons resulted in a similar bundle size added to our application's bundle.
 
-I tested it in multiple environments. Both `webpack` and `vite` behaved similarly, so I figured out our library was not as tree-shakable as I thought it would be.
+I tested it in multiple environments. Both `webpack` (in a `Next.js` application) and `vite` behaved similarly, so I figured out our library was not as tree-shakable as I thought it would be.
 
-As it turns out, creating a tree-shakable library can be tricky. In this post I'll walk you through how I set our component library to be tree-shakable with `tsup`.
+As it turns out, creating a tree-shakable library can be tricky. In this post I'll walk you through how to use `tsup` to create a tree-shakable library.
 
 <Message>
   Only interested in the final config? [Skip to the end](#the-final-config).
@@ -89,11 +89,9 @@ export function Dialog() {
 
 Without any other external dependencies, our button component weighs about 99 bytes, and our dialog weighs about 50kB (minified, not gzipped).
 
-To consume our components in an application we bundle them together, produce an `index.js` file, publish to `npm` and we have a library.
+Different applications may import different components from the library. Some only need the button, others the dialog and some need both. The real library naturally has many more components. We want each application to produce a bundle that only contains the code that it imports.
 
-Different applications may import different components from our library. Some only need the button, others the dialog and some need both. Ideally, when we are building the consuming application we would like the bundle of each application to only contain the code it _actually_ uses.
-
-Without tree-shaking, each application that uses the `<Button>{:jsx}` component will have 51.9kB _it doesn't need_. As our library grows larger, this will become an issue. It is not unheard of to have component libraries that contain 100kB+, where each application only needs a sliver of.
+Without tree-shaking, each application that uses the `<Button>{:jsx}` component will have 51.9kB _it doesn't need_ added to its bundle size. As our library grows larger, this will become an issue. It is not unheard of to have component libraries that contain 100kB+, where each application only needs a sliver of.
 
 We definitely don't need 100kB extra in our landing page.
 
@@ -103,11 +101,9 @@ To address this issue, bundlers such as webpack and rollup perform an operation 
 
 ### ESM
 
-To get tree-shaking working reliably, distribute your code in ESM format. ESM uses statically analyzable `import/export` statements which bundlers can use when bundling our code.
+To get tree-shaking working reliably, distribute your code in ESM format. ESM uses statically analyzable `import/export` statements which bundlers can use when bundling your code. Webpack and rollup support it as well as [modern browsers](https://caniuse.com/?search=esm%20module), so it's a safe compilation target.
 
-Webpack and rollup support it as well as [modern browsers](https://caniuse.com/?search=esm%20module), so it's a safe compilation target.
-
-To output ESM when bundling with `tsup`, the default bundle format is `cjs`. Change that to `esm` either via the command line:
+When bundling with `tsup`, the default (and some-what outdated) format is `cjs`. Change that to `esm` either via the command line:
 
 ```sh
 tsup src/index.ts --format esm
@@ -123,7 +119,7 @@ export default defineConfig({
 });
 ```
 
-If you are bundling your library with typescript, set the `compilerOptions.module` to `ES2015/ES6/ES2020/ES2022/ESNext`.
+If you are bundling your library with typescript, set the `compilerOptions.module` to anything above `ES2015`, preferably `ESNext`.
 
 ### No side effects
 
@@ -144,6 +140,8 @@ In webpack the config is called `sideEffects` and in rollup it's called `moduleS
 ### Separate files as entry points
 
 For the most part, bundlers can exclude the entire file from your build. Rollup and webpack may tree-shake unused functions and variables written in the same file. This behavior is not very predictable so it's best to stick to the lowest common denominator.
+
+Tree-shaking works best when bundlers can exclude entires files from the bundle. While modern versions of webpack and rollup can remove unused parts withing the same file, it's best to stick to the lowest common denominator to produce the most predictable results.
 
 What this means for you in practice is that you should either configure your library to have multiple entry points, or have a single entry point that imports and exports your code from separate files. In my experience, both methods yield similar results, so it's up to you to decide which one you prefer.
 
@@ -204,9 +202,9 @@ yarn add tsup --dev
 pnpm add tsup -D
 ```
 
-The [`tsup`](https://tsup.egoist.dev/#bundle-files) docs will tell you to specify an entry point such as `src/index.js`, and `tsup` will crawl all files imported from that entry point and bundle them together. This is not what we want, as we want to bundle each file separately.
+The [`tsup`](https://tsup.egoist.dev/#bundle-files) docs will tell you to specify an entry point such as `src/index.js`, and `tsup` will crawl all files imported from that entry point and bundle them into a single `index.mjs` file. This is not what we want, as we want to bundle each file separately.
 
-To get `tsup` to bundle each file separately, we need to specify the `entry` option. This option accepts a glob pattern, so we can specify all `.ts` files in the `src/` folder:
+To get `tsup` to bundle each file separately, we need to change the `entry` option. This option accepts a glob pattern, so we can specify all `.ts` files in the `src/` folder:
 
 ```ts
 import { defineConfig } from "tsup";
@@ -257,7 +255,7 @@ Update your `package.json` and add the following lines:
 }
 ```
 
-The `exports` field tells bundlers where to import files from. The `"."` identifier means that imports from the root of the package (`import * from "package-name"`) will be imported from the `default` field.
+The `exports` field specifies where to import files from. The `exports["."]` identifier means that imports from the root of the package (`import * from "package-name"`) will be imported from the file in the `default` field.
 
 If we wanted to allow importing from a sub-module, we would specify it as well. For example, to allow importing a CSS file named `style.css`, we would add the following line to the `exports` object:
 
@@ -267,7 +265,7 @@ If we wanted to allow importing from a sub-module, we would specify it as well. 
 }
 ```
 
-The `import` field is for ESM bundlers, and the `require` field is for CJS bundlers. The `default` field is for the default import, and the `types` field is for telling typescript where to find the types for our files.
+The `exports["."].import` field is for ESM bundlers, and the `exports["."].require` field is for CJS bundlers. The `exports["."].import.default` field is for the default import, and the `exports["."].import.types` field is for telling typescript where to find the types for our files.
 
 Other than that we also specify our `main` file, which is used by older bundlers that are not aware of the `exports` syntax, as well as `types` which is used by typescript, and last we specify that our code has no side effects.
 
@@ -275,9 +273,7 @@ This should be everything you need to bundle a tree-shakable library with `tsup`
 
 ## Comparing the numbers
 
-Let's make sure our library is tree-shakable by looking at some numbers. I've created a repository with an example package, and a couple of brand new applications - `Next.js` and `Vite` with a react template.
-
-To do that, I've created a [repository](https://github.com/dorshinar/treeshaking-demo) with an example library and 2 applications using different bundlers - a `Next.js` application and a `Vite` application.
+Let's make sure our library is tree-shakable by looking at some numbers. I've created a [repository](https://github.com/dorshinar/treeshaking-demo) with an example package, and a couple of brand new applications - `Next.js` and `Vite` with a react template.
 
 The library contains 2 components - a `Button` and a `Dialog` component. The `Button` component is a simple component that renders a button, and the `Dialog` component is a wrapper around `@radix-ui/react-dialog`.
 
@@ -446,6 +442,8 @@ The first is [Import Cost](https://marketplace.visualstudio.com/items?itemName=w
 The second is [bundlephobia](https://bundlephobia.com/). If you publish your library to `npm`, you can use bundlephobia to check the size of your library. You can also check other libraries if you are concerned about bundle size.
 
 The third is [publint](https://publint.dev/). It's a very useful CLI that validates that your packages are configured properly to be published. It's not specific to tree-shaking, but it's an excellent tool to have in your toolbox.
+
+Thanks you for reading!
 
 <Message>🌳 No tree were harmed in the making of this post 🌳</Message>
 

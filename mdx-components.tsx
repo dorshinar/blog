@@ -21,7 +21,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         {...props}
         className={clsx(
           props.className,
-          "text-emerald-500 underline shadow-[0_2px_0_0_theme(colors.emerald.500)] hover:shadow-[0_3px_0_0_theme(colors.emerald.500)] transition-shadow",
+          "text-emerald-500 underline underline-offset-4 shadow-[0_2px_0_0_theme(colors.emerald.500)] hover:shadow-[0_3px_0_0_theme(colors.emerald.500)] transition-shadow",
         )}
       >
         {props.children}
