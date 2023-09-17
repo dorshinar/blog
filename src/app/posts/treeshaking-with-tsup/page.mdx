@@ -24,15 +24,13 @@ export const metadata = getPostMetadata(meta);
 
 <PostHeader meta={meta} />
 
-At work, I had a chance to work on a component library distributed through NPM and consumed by several applications. The library is bundled with [tsup](https://tsup.egoist.dev/) which worked great.
-
-Or so I thought.
+I recently had a chance to work on a component library distributed through NPM and consumed by several applications. The library is bundled with [tsup](https://tsup.egoist.dev/) and it seemed to work great, until I took a look at our bundle sizes and saw that we have a problem.
 
 While the library was properly bundled, and build times were very quick thanks to [ESBuild](https://esbuild.github.io/), I noticed that our application bundles were too big to seem reasonable.
 
 When importing the `<Button />{:jsx}` component, [Import Cost](https://marketplace.visualstudio.com/items?itemName=wix.vscode-import-cost) reported 97Kb added to our bundle. Don't get me wrong, we have nice buttons, but not 97Kb worth of buttons. Importing `*.svg` icons resulted in a similar bundle size added to our application's bundle.
 
-I tested it in multiple environments. Both `webpack` (in a `Next.js` application) and `vite` behaved similarly, so I figured out our library was not as tree-shakable as I thought it would be.
+I tested it in multiple environments. Both `webpack` (in a `Next.js` application) and `vite` behaved similarly, so I figured out our library was not as tree-shakable as I thought it was.
 
 As it turns out, creating a tree-shakable library can be tricky. In this post I'll walk you through how to use `tsup` to create a tree-shakable library.
 
@@ -56,7 +54,7 @@ export function Button(props: HTMLAttributes<HTMLButtonProps>) {
 }
 ```
 
-But for the `Dialog` component we'll use the excellent `@radix-ui/react-dialog`. I pulled the example from their [docs](https://www.radix-ui.com/primitives/docs/components/dialog).
+But for the `Dialog` component we'll use the excellent [`@radix-ui/react-dialog`](https://www.radix-ui.com/primitives/docs/components/dialog). I pulled the example from their [docs](https://www.radix-ui.com/primitives/docs/components/dialog).
 
 ```tsx
 import * as RadixDialog from "@radix-ui/react-dialog";
@@ -103,7 +101,7 @@ To address this issue, bundlers such as webpack and rollup perform an operation 
 
 To get tree-shaking working reliably, distribute your code in ESM format. ESM uses statically analyzable `import/export` statements which bundlers can use when bundling your code. Webpack and rollup support it as well as [modern browsers](https://caniuse.com/?search=esm%20module), so it's a safe compilation target.
 
-When bundling with `tsup`, the default (and some-what outdated) format is `cjs`. Change that to `esm` either via the command line:
+When bundling with `tsup`, the default (and somewhat outdated) format is `cjs`. Change that to `esm` either via the command line:
 
 ```sh
 tsup src/index.ts --format esm
@@ -129,7 +127,7 @@ The second thing you should do is make sure that your code has no side effects. 
 
 Basically, any code that performs an action, alters the global state or does anything else when imported is considered to have side effects.
 
-This is critical because while side effects are rare, if you do have code that is not pure, like polyfills or otherwise, you might not want it excluded from your bundle when the imported module is not referenced. This can include CSS files imported but not referenced.
+This is critical because while side effects are rare, if you do have code that is not pure, like polyfills or otherwise, you might not want it excluded from your bundle when the imported module is not referenced. This can include CSS files that were imported but not referenced.
 
 ```tsx
 import "normalize.css";
@@ -138,8 +136,6 @@ import "normalize.css";
 In webpack the config is called `sideEffects` and in rollup it's called `moduleSideEffects`. Both can receive the value `false` to indicate that there are no side effects in the code, or a list of files that _do_ contain side effects.
 
 ### Separate files as entry points
-
-For the most part, bundlers can exclude the entire file from your build. Rollup and webpack may tree-shake unused functions and variables written in the same file. This behavior is not very predictable so it's best to stick to the lowest common denominator.
 
 Tree-shaking works best when bundlers can exclude entires files from the bundle. While modern versions of webpack and rollup can remove unused parts withing the same file, it's best to stick to the lowest common denominator to produce the most predictable results.
 
@@ -166,7 +162,7 @@ import { Button } from "component-library/button";
 import { Dialog } from "component-library/dialog";
 ```
 
-To solve that you can bundle your library so that you still have a single entry point, but it points to separate files that can be excluded individually. Notice that in reality your `dist` folder will probably be messier than that, but the idea is the same.
+To solve that you can bundle your library so that you still have a single entry point, but it points to separate files that can be excluded individually. It should look similar to this, although it may be messier due to the way bundler split files when they bundle.
 
 ```
 dist/
@@ -202,7 +198,15 @@ yarn add tsup --dev
 pnpm add tsup -D
 ```
 
-The [`tsup`](https://tsup.egoist.dev/#bundle-files) docs will tell you to specify an entry point such as `src/index.js`, and `tsup` will crawl all files imported from that entry point and bundle them into a single `index.mjs` file. This is not what we want, as we want to bundle each file separately.
+Next, create a `tsup.config.ts` file at the root of your project, and add the following code:
+
+```ts
+import { defineConfig } from "tsup";
+
+export default defineConfig({});
+```
+
+The [`tsup`](https://tsup.egoist.dev/#bundle-files) docs will tell you to specify an entry point such as `src/index.js`, and `tsup` will crawl all files imported from that entry point and bundle them into a single `index.mjs` file. While this can work, as explained earlier, we prefer to bundle each file separately.
 
 To get `tsup` to bundle each file separately, we need to change the `entry` option. This option accepts a glob pattern, so we can specify all `.ts` files in the `src/` folder:
 
@@ -215,7 +219,7 @@ export default defineConfig({
 });
 ```
 
-Don't forget to include `format: ["esm"]`. This will tell `tsup` to output ESM files, which is the only format that supports tree-shaking. You can choose to output `cjs` as well if you want to support older bundlers, but it's not necessary.
+Don't forget to include `format: ["esm"]{:json}`. This will tell `tsup` to output ESM files, which is the only format that supports tree-shaking. You can choose to output `cjs` as well if you want to support older bundlers, but it's not necessary.
 
 If you are working with other file types such as `.tsx`, `.js` or `.jsx` you can add them to the glob pattern, like so:
 
@@ -259,9 +263,11 @@ The `exports` field specifies where to import files from. The `exports["."]` ide
 
 If we wanted to allow importing from a sub-module, we would specify it as well. For example, to allow importing a CSS file named `style.css`, we would add the following line to the `exports` object:
 
-```json
+```json {3}
 {
-  "style.css": "./dist/style.css"
+  "exports": {
+    "style.css": "./dist/style.css"
+  }
 }
 ```
 
@@ -427,7 +433,10 @@ And the `package.json`:
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "sideEffects": false
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsup"
+  }
 }
 ```
 
