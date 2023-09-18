@@ -36,13 +36,13 @@ jobs:
         run: bun install
 
       - name: 👷‍♂️ Build
-        run: bun build
+        run: bun run build
 
       - name: 🔬 Lint
-        run: bun lint
+        run: bun run lint
 
       - name: 🔎 Type check
-        run: bun typecheck
+        run: bun run typecheck
 
       - name: 💅 Prettier
-        run: bun format
+        run: bun run format
