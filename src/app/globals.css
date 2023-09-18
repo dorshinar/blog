@@ -24,6 +24,6 @@ code[data-language="bash"] span[data-line]::before {
   @apply -ml-4 pl-2 border-l-8 border-l-zinc-400 bg-zinc-700;
 }
 
-[data-rehype-pretty-code-fragment] {
+div[data-rehype-pretty-code-fragment] {
   @apply -mx-4 sm:mx-0;
 }
