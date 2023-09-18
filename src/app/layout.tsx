@@ -6,6 +6,7 @@ import { ServiceWorkerRegister } from "@/components/sw-register";
 import { Analytics } from "@vercel/analytics/react";
 
 import "./globals.css";
+import { Metadata } from "next";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -47,3 +48,7 @@ export default function RootLayout({
     </html>
   );
 }
+
+export const metadata: Metadata = {
+  metadataBase: new URL("https://dorshinar.me/"),
+};
