@@ -27,12 +27,11 @@ export function getMetadata(params: Params): Metadata {
 
     twitter: {
       card: "summary_large_image",
-      creator: "@DorShinar",
+      creator: "DorShinar",
       title: params.title,
       description: params.description,
       images: params.images.filter(Boolean).map((image) => ({
         url: image.src,
-        ...image,
       })),
     },
 
