@@ -21,7 +21,6 @@ export function getMetadata(params: Params): Metadata {
       type: "website",
       images: params.images.filter(Boolean).map((image) => ({
         url: image.src,
-        ...image,
       })),
     },
 
