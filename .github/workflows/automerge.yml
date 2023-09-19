@@ -10,6 +10,21 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.actor == 'dependabot[bot]' }}
     steps:
+      - uses: actions/checkout@v3
+
+      - name: Install bun
+        uses: oven-sh/setup-bun@v1
+
+      - name: Update lock file
+        run: bun install
+
+      - name: Commit report
+        run: |
+          git config --global user.name 'dependabot[bot]'
+          git config --global user.email 'support@github.com'
+          git commit -a --amend --no-edit
+          git push --force
+
       - name: Dependabot metadata
         id: metadata
         uses: dependabot/fetch-metadata@v1
