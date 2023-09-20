@@ -72,12 +72,15 @@ export default function Home() {
 }
 
 export const metadata: Metadata = {
-  ...getMetadata({
-    title: "Dor Shinar",
-    description: "My Personal blog for thoughts.",
-    slug: "",
-    images: [profilePic],
-  }),
+  ...getMetadata(
+    {
+      title: "Dor Shinar",
+      description: "My Personal blog for thoughts.",
+      slug: "",
+      images: [profilePic],
+    },
+    false,
+  ),
   metadataBase: new URL("https://dorshinar.me"),
   manifest: "/manifest.json",
   themeColor: [

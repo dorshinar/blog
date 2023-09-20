@@ -9,7 +9,7 @@ interface Params {
   images: StaticImageData[];
 }
 
-export function getMetadata(params: Params): Metadata {
+export function getMetadata(params: Params, post: boolean): Metadata {
   return {
     title: params.title,
     description: params.description,
@@ -17,8 +17,8 @@ export function getMetadata(params: Params): Metadata {
     openGraph: {
       title: params.title,
       description: params.description,
-      url: `/${params.slug}`,
-      type: "website",
+      url: post ? `/posts/${params.slug}` : ``,
+      type: post ? "article" : "website",
       images: params.images.filter(Boolean).map((image) => ({
         url: image.src,
       })),
@@ -43,5 +43,5 @@ export function getMetadata(params: Params): Metadata {
 export function getPostMetadata(metaParam: Record<string, unknown>) {
   const meta = PostSchema.parse(metaParam);
 
-  return getMetadata({ ...meta, images: [meta.cover] });
+  return getMetadata({ ...meta, images: [meta.cover] }, true);
 }
