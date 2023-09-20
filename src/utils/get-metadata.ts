@@ -7,21 +7,25 @@ interface Params {
   description: string;
   slug: string;
   images: StaticImageData[];
+  date?: Date;
 }
 
-export function getMetadata(params: Params): Metadata {
+export function getMetadata(params: Params, post: boolean): Metadata {
   return {
     title: params.title,
     description: params.description,
+    authors: [{ name: "Dor Shinar" }],
 
     openGraph: {
       title: params.title,
       description: params.description,
-      url: `/${params.slug}`,
-      type: "website",
+      url: post ? `/posts/${params.slug}` : ``,
+      type: post ? "article" : "website",
       images: params.images.filter(Boolean).map((image) => ({
         url: image.src,
       })),
+      authors: ["Dor Shinar"],
+      publishedTime: params.date?.toISOString(),
     },
 
     twitter: {
@@ -43,5 +47,5 @@ export function getMetadata(params: Params): Metadata {
 export function getPostMetadata(metaParam: Record<string, unknown>) {
   const meta = PostSchema.parse(metaParam);
 
-  return getMetadata({ ...meta, images: [meta.cover] });
+  return getMetadata({ ...meta, images: [meta.cover] }, true);
 }
