@@ -7,12 +7,14 @@ interface Params {
   description: string;
   slug: string;
   images: StaticImageData[];
+  date?: Date;
 }
 
 export function getMetadata(params: Params, post: boolean): Metadata {
   return {
     title: params.title,
     description: params.description,
+    authors: [{ name: "Dor Shinar" }],
 
     openGraph: {
       title: params.title,
@@ -22,6 +24,8 @@ export function getMetadata(params: Params, post: boolean): Metadata {
       images: params.images.filter(Boolean).map((image) => ({
         url: image.src,
       })),
+      authors: ["Dor Shinar"],
+      publishedTime: params.date?.toISOString(),
     },
 
     twitter: {
