@@ -232,7 +232,7 @@ export default defineConfig({
 });
 ```
 
-You can also have `tsup` generate `.dts` files as well.
+You can also have `tsup` generate `.d.ts` files as well.
 
 The last part we need is to let the bundlers that will consume our library know where to import files from. We also need to let them know we don't plan on performing any side effects that may make them bail out of tree-shaking.
 
