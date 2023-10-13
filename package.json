@@ -17,7 +17,7 @@
     "@mdx-js/react": "^2.3.0",
     "@next/mdx": "^13.4.19",
     "@radix-ui/react-checkbox": "^1.0.4",
-    "@types/node": "20.6.2",
+    "@types/node": "20.8.5",
     "@types/react": "18.2.22",
     "@types/react-dom": "18.2.7",
     "@vercel/analytics": "^1.0.2",
