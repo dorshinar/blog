@@ -9,7 +9,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     ...getPosts().map((post) => {
       return {
-        url: new URL(post.slug, "https://dorshinar.me/posts").toString(),
+        url: new URL(`posts/${post.slug}`, "https://dorshinar.me").toString(),
         lastModified: post.modified ?? post.date,
       };
     }),
