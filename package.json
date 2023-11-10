@@ -15,7 +15,7 @@
   "dependencies": {
     "@mdx-js/loader": "^3.0.0",
     "@mdx-js/react": "^3.0.0",
-    "@next/mdx": "^14.0.0",
+    "@next/mdx": "^14.0.2",
     "@radix-ui/react-checkbox": "^1.0.4",
     "@types/node": "20.8.9",
     "@types/react": "18.2.33",
