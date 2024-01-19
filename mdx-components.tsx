@@ -32,7 +32,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         {...props}
         className={clsx(
           props.className,
-          "text-lg font-bold group flex gap-2 items-center",
+          "text-xl font-bold group flex gap-2 items-center",
         )}
       >
         {props.children}
@@ -50,7 +50,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         {...props}
         className={clsx(
           props.className,
-          "text-base font-medium group flex gap-2 items-center",
+          "text-lg font-semibold group flex gap-2 items-center",
         )}
       >
         {props.children}
