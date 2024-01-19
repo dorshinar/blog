@@ -3,7 +3,7 @@ import Link from "next/link";
 import profilePic from "./profile-pic.jpg";
 import { GithubIcon, LinkedinIcon, TwitterIcon } from "lucide-react";
 import { PostPreview } from "../components/post-preview";
-import { Metadata } from "next";
+import { Metadata, Viewport } from "next";
 import { getMetadata } from "@/utils/get-metadata";
 import { getPosts } from "../utils/get-posts";
 
@@ -83,6 +83,9 @@ export const metadata: Metadata = {
   ),
   metadataBase: new URL("https://dorshinar.me"),
   manifest: "/manifest.json",
+};
+
+export const viewport: Viewport = {
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#18181b" },
     { media: "(prefers-color-scheme: dark)", color: "#18181b" },
