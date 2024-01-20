@@ -48,15 +48,15 @@ On the other hand, when you have multiple repos, you need to onboard each one of
 
 Let's say we split a single repo into 4 different "micro-services" (Don't get me started on the abuse this term has gone through!). We now must clone 4 different repos. In the best case scenario, they are built similarly so we just need to run the same commands 4 times. Thats already an easy thing to miss, but still not so bad.
 
-Now, instead of 1 service talking to a DB we potentially have 4, so it really doesn't make sense to put the `docker-compose.yml` file in any of the repos. So we need _another_ repo to hold the local environment. This repo will have to be cloned as well, and the `README` file will instruct us to clone it.
+Now, instead of 1 service talking to a DB we potentially have 4, so it really doesn't make sense to put the `docker-compose.yml` file in any of the repos. We need _another_ repo to hold the local environment. This repo will have to be cloned as well, and that would have to be documented in the services' `README`s as well.
 
 This is yet another repo to keep up-to-date with every change we want to make. Yet another repo each engineer in our team must remember to `git pull` periodically so they're not using an outdated local environment.
 
 "Ok, so the initial onboarding is tough, but once you're up and running it's not so bad, right?"
 
-Well, yeah, but not really. Onboarding can have a big impact on the first impression new employees have of the company. Remember - this is the first thing they'll do as new employees. Second, this means moving between projects is harder.
+Well, yeah, but not really. Onboarding can have a big impact on the first impression new employees have of the company. Remember - this is the first thing they'll do as new employees. Second, this means moving between projects is harder. Other occasions where this is relevant is when upgrading a computer or reformatting it.
 
-So it's really a ripple effect that starts with onboarding, but doesn't end there.
+There's a ripple effect that starts with onboarding, but doesn't end there.
 
 ### Discoverability and Documentation
 
@@ -66,13 +66,13 @@ When you have multiple repos, you need to remember where to look for each file. 
 
 With the number of repos in a given system constantly increasing, it's hard to know what repos exist, and which repos are your team's responsibility. You lose the natural discoverability that comes with code colocation in a single repo. You must put extra effort into documenting things.
 
-All of a sudden you can't `Cmd+Shift+F` to find something in the codebase. You need to remember which repo it's in, and then search for it in that repo. This is a lot of overhead that is easy to overlook.
+All of a sudden you can't `Cmd+Shift+F` to find something in the codebase, and it's impossible to find where a function is used. You need to remember which repo it's in, and then search for it in that repo. This is a lot of overhead that is easy to overlook. This means we must document much more aggressively.
 
 _But where does this documentation live?_
 
 You can put it in the "main" repo - usually that is the one acting as a gateway to the system. But then you have to remember to update it every time you make a change in a different repo. The other option is external documentation - whether in a separate repo, a wiki page (like Confluence) or a Google Doc.
 
-Either way, the documentation lives elsewhere than the code. This means that it's harder to find things because you wouldn't even know where to look. Do I look in the repo's README? Do I search the company-wide Confluence?
+Either way, the documentation lives elsewhere than the code. It's harder to find things because you wouldn't even know where to look. Do I look in the repo's README? Do I search the company-wide Confluence?
 
 It makes it harder to keep documentation up-to-date. It's easy to forget to update the documentation when you change something.
 
@@ -144,11 +144,17 @@ In FE applications, this is even more noticeable. Think of a user who has to go 
 
 I think that the root of the notion that splitting a repo is the holy grail of refactors is a misunderstanding of what a service is.
 
-A service is not a repo. A service is not a deployment. A service is a logical unit of work. It's a unit of work independent of other units of work. A service may contain other services (or functionalities) within it, without making it a macro-service (the opposite of a micro-service). This unit of work may be deployed independently, but it doesn't have to be. This unit of work may be in its own repo, but it doesn't have to be.
+A service is not a repo. A service is not a deployment.
+
+> _A service is a logical unit of work_
+
+It's a unit of work independent of other units of work. A service may contain other services (or functionalities) within it, without making it a macro-service (the opposite of a micro-service). This unit of work may be deployed independently, but it doesn't have to be. This unit of work may be in its own repo, but it doesn't have to be.
 
 The most basic "service" is a file or folder. Services may rely on other services via direct function calls or network requests.
 
 A repo can contain multiple services, separated by folder structure. Those "folders" may be deployed independently in a monorepo fashion, or together in a single repo fashion.
+
+What this means for our spaghetti bowl of code is that the same process used when splitting a repo - untangling the code, decoupling dependencies etc, can be done _in the same repo_. Move the code to a dedicated folder, untangle it, decouple it and you're done.
 
 There's no need to bind services, repos and deployments together. They are separate concepts that can have a 1:1 relationship, but don't have to.
 
@@ -158,7 +164,7 @@ Maintaining a codebase is an ongoing process that never ends. Code gets messy, g
 
 There are definitely instances where splitting a repo is the right thing to do. For example, some reasons could be related to organizational restructures, where one team is split into multiple teams and you want to keep each independent. Another reason might be a transition to a new tech stack, where it's impossible to convert the entire codebase at once. There are other reasons as well.
 
-Personally, I'm a fan of monorepos. They strike a great balance between flexibility and team independence while keeping the code in a single place that's easy to find. However, I know that a good monorepo can be difficult to set up and not everyone is a fan of this concept. None of what I wrote in this post is exclusive to monorepos though. This means that whatever setup you have, the reasons to think twice and thrice before splitting a repo still stand.
+Personally, I'm a fan of monorepos. They strike a great balance between flexibility and team independence while keeping the code in a single place that's easy to find. However, I know that a good monorepo can be difficult to set up and not everyone is a fan of this concept. None of what I wrote in this post is exclusive to monorepos though. Whatever setup you have, the reasons to think twice and thrice before splitting a repo still stand.
 
 If there's one thing I'd like you to take from this post, it is that there are no hacks to keep code clean. Splitting our code into smaller and smaller pieces is not a zero-cost abstraction, and it comes with its own costs.
 
