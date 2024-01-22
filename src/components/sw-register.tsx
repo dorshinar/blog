@@ -4,8 +4,8 @@ import { useEffect } from "react";
 
 export function ServiceWorkerRegister() {
   useEffect(() => {
-    navigator.serviceWorker
-      .register("/sw.js")
+    navigator?.serviceWorker
+      ?.register("/sw.js")
       .then((registration) =>
         console.log(
           "Service Worker registration successful with scope: ",
