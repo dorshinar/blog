@@ -10,9 +10,9 @@ export default function GlobalError({ error }: { error: Error }) {
   }, [error]);
 
   return (
-    <html>
+    <html lang="en">
       <body>
-        <Error />
+        <Error statusCode={404} />
       </body>
     </html>
   );
