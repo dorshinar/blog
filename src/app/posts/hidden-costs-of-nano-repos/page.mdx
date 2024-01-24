@@ -156,8 +156,6 @@ I think that the root of the notion that splitting a repo is the holy grail of r
 
 A service is not a repo. A service is not a deployment. A service is a logical unit of work.
 
-It's a unit of work independent of other units of work. A service may contain other services (or functionalities) within it, without making it a macro-service (the opposite of a micro-service). This unit of work may be deployed independently, but it doesn't have to be. This unit of work may be in its own repo, but it doesn't have to be.
-
 A repo can contain multiple services, separated by folder structure. Those "folders" may be deployed independently in a monorepo fashion, or together in a single repo fashion.
 
 What this means for our spaghetti bowl of code is that the same process used when splitting a repo - untangling the code, decoupling dependencies etc, can be done _in the same repo_. Move the code to a dedicated folder, untangle it, decouple it and you're done.
