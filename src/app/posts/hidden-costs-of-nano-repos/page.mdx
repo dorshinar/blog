@@ -1,0 +1,176 @@
+import Cover from "./Cover.webp";
+
+export const meta = {
+  title: "The Hidden Costs of Nano Repos",
+  date: "2024-01-21",
+  description:
+    "It's very easy to overlook the costs associated dealing dealing with multiple repos. I'd like to highlight some of them.",
+  slug: "hidden-costs-of-nano-repos",
+  cover: Cover,
+  published: false,
+};
+
+import { getPostMetadata } from "@/utils/get-metadata";
+import { Tweet } from "react-tweet";
+
+export const metadata = getPostMetadata(meta);
+
+<PostHeader meta={meta} />
+
+_"This repo is a big spaghetti bowl of code. there's no way we can continue working on it like that. We must split it into several repos."_
+
+Be honest, how many times have you heard something like that? How many times have you said something like that?
+
+Most people at this point feel this way almost instinctively. When a codebase gets too big, too tangled, too messy, the first thing that comes to mind is to split it into multiple repos. This happens in every codebase. Code slowly decays into disorder due to natural entropy.
+
+I call those small repos "nano-repos". It's a play on the term "monorepo", which I believe is the polar opposite of nano-repos. Nano repos are usually services with a very small surface area, limited in the amount of functionality they provide and focused on a single task.
+
+As a result, they can rarely function on their own. They rely on other services to provide functionality they need. This is not necessarily an undesirable thing, but it's something to know.
+
+Splitting a single big, tangled repo is often the holy grail for refactors. A chance to start fresh, without past mistakes. You take the feature (or features) you want to separate, untangle them (and only them), create a new repo from scratch (or from a template if you have one) and bingo bango you're up and running.
+
+I believe that this is a naive approach to refactoring and code hygiene. While there are definitely instances where we want separate codebases, this is not always the case.
+
+There are serious costs associated with splitting a repo that are too often overlooked, and I'd like to highlight some of them.
+
+## The Multi-Repo Wormhole
+
+Whether you are working on a Backend or Frontend application, the costs are similar. Let's start with the one we have all experienced - onboarding.
+
+### Onboarding and Local Environment
+
+<Tweet id="1748029040198287744" />
+
+Single repos are easy to onboard to. You clone the repo, run a single command and you're up and running. You can start working on the codebase immediately.
+
+Or at least in theory. In practice, and in particular for backend applications, you may need a local DB instance, a Redis instance or other resources. For the most part those will be declared as Docker images in a `docker-compose.yml` file. This file will be part of the repo, usually at the root. It's easy to find and run.
+
+The `README` file at the root of the project will instruct you what tools you need installed, what commands to run and other things you need to know to get started.
+
+On the other hand, when you have multiple repos, you need to onboard each one of them separately. You need to clone each one, install the dependencies, run the local environment etc. This is a lot of overhead, and it's easy to overlook.
+
+Let's say we split a single repo into 4 different "micro-services" (Don't get me started on the abuse this term has gone through!). We now must clone 4 different repos. In the best case scenario, they are built similarly so we just need to run the same commands 4 times. That's already an easy thing to miss, but still not so bad.
+
+Now, instead of 1 service talking to a DB we potentially have 4, so it really doesn't make sense to put the `docker-compose.yml` file in any of the repos. We need _another_ repo to hold the local environment. This repo will have to be cloned as well, and that would have to be documented in the services' `README`s as well.
+
+This is yet another repo to keep up-to-date with every change we want to make. Yet another repo each engineer in our team must remember to `git pull` periodically so they're not using an outdated local environment.
+
+"Ok, so the initial onboarding is tough, but once you're up and running it's not so bad, right?"
+
+Well, yeah, but not really. Onboarding can have a big impact on the first impression new employees have of the company. Remember - this is the first thing they'll do as new employees. Second, this means moving between projects is harder. Other occasions where this is relevant can be when upgrading a computer or reformatting it.
+
+There's a ripple effect that starts with onboarding, but doesn't end there.
+
+### Discoverability and Documentation
+
+Discoverability is another easy thing to overlook. When you have a single repo, it's easy to find things. You know where to search for the `README` file, you know where to search for the `package.json` file, you know where to search for the `docker-compose.yml` file and so on.
+
+When you have multiple repos, you need to remember where to look for each file. This can create a mental overhead finding your way around the codebase. Over time, these things add up and cause frustration.
+
+With the number of repos in a given system constantly increasing, it's hard to know what repos exist, and which repos are your team's responsibility. You lose the natural discoverability that comes with code colocation in a single repo. You must put extra effort into documenting things.
+
+All of a sudden you can't `Cmd+Shift+F` to find something in the codebase, and it's impossible to find where a function is used. You need to remember which repo it's in, and then search for it in that repo, assuming you've cloned and set it up already. This is a lot of overhead that is easy to overlook. This means we must document much more aggressively.
+
+_But where does this documentation live?_
+
+You can put it in the "main" repo - usually that is the one acting as a gateway to the system. But then you have to remember to update it every time you make a change in a different repo. The other option is external documentation - whether in a separate repo, a wiki page (like Notion) or a Google Doc.
+
+Either way, the documentation lives elsewhere than the code. It's harder to find things because you wouldn't even know where to look. Do I look in the repo's README? Do I search the company-wide Notion?
+
+It makes it harder to keep documentation up-to-date. It's easy to forget to update the documentation when you change something.
+
+In Hebrew we say:
+
+> "Far from the eye, far from the heart"
+
+Which means that if you don't see something, you forget about it. This is true for documentation. If the documentation is not in the same place as the code, it's easy to forget about it.
+
+In the same vein we can talk about E2E tests - where do they live? Do they live in the UI repository? Do they live in the API repository? Do they live in a separate repo?
+
+When do they run? Only when deploying the UI? Only when deploying the API? Both?
+
+What about other BE services? Do the tests run when deploying them as well?
+
+Who is responsible for them? The UI team? The API team? Both?
+
+### Deployment
+
+Deploying a single repo is easy. Whether you use a managed Kubernetes cluster, a serverless solution or simple VMs spun up in the cloud, it's easy to deploy a single repo.
+
+You have a single CI/CD pipeline that does everything - it builds your repo, runs the tests, builds the Docker image, pushes it to the registry and deploys it to the cloud. This comes with caveats, but it's straight forward with no unneeded complications.
+
+When you have multiple repos, you need to deploy each separately. Each repo has its own CI/CD pipeline, build and deployment step. This means that you need to orchestrate the deployment of multiple repos when pushing features that span more than one repo.
+
+Multiple repos allow you to be more granular with your deployments, deploying only services that have changed and not the entire system. In a single repo (or a monorepo) you would need more advanced tooling to achieve the same result.
+
+I believe that the cons outweigh the pros in this case. When granular deployment is needed, embrace the monorepo setup and you'll be better off. Tools like [Turborepo](https://turbo.build/repo) and [Nx](https://nx.dev/) make it easy to create granular deployments in monorepo.
+
+### The Inevitable Drift Between Repos
+
+A codebase is like a living creature. It grows and changes over time. It's never static. It's never "done". It's always evolving.
+
+We add new libraries, adopt and adapt conventions, learn from past mistakes to avoid them in new features. We tweak the ESLint settings because we found an avoidable bug, we update the React version, we replace the Context API with Zustand and so on.
+
+A single repo forces us to keep changes in one place. It's impossible to miss or forget an area, or not know a change happened in the codebase. It's all in here. For example, updating a library with breaking changes can happen in a single PR. That PR might be bigger than we'd like, but it's still a single PR.
+
+We won't have lingering traces of the old version.
+
+That's not the case with multiple repos. Because each repo is separate, it's easier to update just one of the repos, or just a few of them, and leave the rest as is.
+
+Each change skipped in a repo slowly erodes the repo. Over time, these changes will accumulate and we'll have a noticeable difference between the repos.
+
+Guess which repos will be skipped most often? The ones not used as often. The ones that are not as "sexy" as the others. The ones that are not as "important" as the others. This, in turn, is the perfect recipe for a repo no one wants to touch.
+
+And what would be the logical conclusion when we have a repo that is using outdated practices and hasn't been touched in a while?
+
+You got it - **_we'll split it into new repos._**
+
+So yes, making changes in a big repo is harder and requires more careful planning. However, I believe this is a healthier way to maintain a codebase.
+
+### Code Sharing
+
+When you have a single repo, sharing code is easy. You can import it. You can even import it from a different folder in the same repo. You can import it from a different repo in the same monorepo.
+
+When you have multiple repos, sharing code becomes harder. You can't just import it. You need to publish it to a registry, install it in another repo, and then import it. The whole process becomes more complicated with many more steps.
+
+Later on you have multiple repos that rely on this package. Orchestrating breaking changes is suddenly much harder because of the aforementioned drift between repos. What happens is usually one of 2 things - you either never break the API, only build on top of it which makes the library code very complicated because you must support all the different "branches" in your code, or you just don't upgrade the repos that use the old version.
+
+Eventually, you _will_ have to upgrade. Be it a security vulnerability, a bug fix or a new feature that you need. This will be a painful process, and it will be even more painful if you have multiple repos that use the library. Imagine going over dozens of repos to update your python version. Not fun.
+
+### Runtime Performance
+
+While less of an issue _most of the time_, I think it's still worth mentioning. Deploying multiple service means communication occurs via network calls instead of memory access. This adds a few milliseconds to each operation, which could add up, especially for performance-oriented applications.
+
+In FE applications, this is even more noticeable. Think of a user who has to go through several screens each being a separate application. Each screen will have to load the entire application, which will take time. For some applications that's not a big deal, but for others it can be a deal breaker. Either way it results in a poor user experience.
+
+## Change of Mindset
+
+Code does not suddenly become clean and readable just because there is a repo boundary between it and other code. It's still the same code, just in a different place. When we have a hard time figuring out how areas of our code interact with one another, it doesn't really matter if they interact via function calls or network requests. It's still hard to understand.
+
+Separation of concerns is important. Setting clear boundaries between code areas with different domains and responsibilities is important. _This is relevant whether our code is in the same repo or not_.
+
+There's no need to bind code cleanliness with repo boundaries. We can have a clean codebase in a single repo, and we can have a messy codebase in multiple repos. The opposite is also true. If you wish to arrange your code in services that's absolutely fine. Those services can be files or folders in the same repo, or they can be separate repos.
+
+I think that the root of the notion that splitting a repo is the holy grail of refactors is a misunderstanding of what a service is.
+
+A service is not a repo. A service is not a deployment. A service is a logical unit of work.
+
+A repo can contain multiple services, separated by folder structure. Those "folders" may be deployed independently in a monorepo fashion, or together in a single repo fashion.
+
+What this means for our spaghetti bowl of code is that the same process used when splitting a repo - untangling the code, decoupling dependencies etc, can be done _in the same repo_. Move the code to a dedicated folder, untangle it, decouple it and you're done.
+
+There's no need to bind services, repos and deployments together. They are separate concepts that can have a 1:1 relationship, but don't have to.
+
+## Conclusion
+
+Maintaining a codebase is an ongoing process that never ends. Code gets messy, gets cleaned up, gets messy again and so on. It's a constant battle. Splitting a repo into multiple smaller repos is not a silver bullet solution. It comes with its own set of costs that are often overlooked.
+
+There are definitely instances where splitting a repo is the right thing to do. For example, some reasons could be related to organizational restructures, where one team is split into multiple teams and you want to keep each independent. Another reason might be a transition to a new tech stack, where it's impossible to convert the entire codebase at once. There are other reasons as well.
+
+Personally, I'm a fan of monorepos. They strike a great balance between flexibility and team independence while keeping the code in a single place that's easy to find. However, I know that a good monorepo can be difficult to set up and not everyone is a fan of this concept. None of what I wrote in this post is exclusive to monorepos though. Whatever setup you have, the reasons to think twice and thrice before splitting a repo still stand.
+
+If there's one thing I'd like you to take from this post, it is that there are no hacks to keep code clean. Splitting our code into smaller and smaller pieces is not a zero-cost abstraction, and it comes with its own costs.
+
+Thank you for reading!
+
+<PostFooter {...meta} />

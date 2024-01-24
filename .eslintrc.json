@@ -16,7 +16,8 @@
       "files": ["*.mdx"],
       "extends": "plugin:mdx/recommended",
       "rules": {
-        "react/jsx-no-undef": "off"
+        "react/jsx-no-undef": "off",
+        "import/namespace": "off"
       }
     }
   ]
