@@ -10,9 +10,9 @@ export function PostHeader({ meta: metaProp }: Props) {
 
   return (
     <>
-      <header className="flex flex-col">
-        <h1 className="text-2xl text-emerald-500 font-medium">{meta.title}</h1>
-        <small className="text-zinc-400 text-sm">
+      <header className="flex flex-col gap-2">
+        <h1 className="text-5xl text-emerald-500 font-medium">{meta.title}</h1>
+        <small className="text-zinc-400 text-base">
           {new Intl.DateTimeFormat("en-US", { dateStyle: "long" }).format(
             meta.date,
           )}

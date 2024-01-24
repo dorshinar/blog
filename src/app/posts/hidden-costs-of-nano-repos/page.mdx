@@ -32,7 +32,7 @@ Splitting a single big, tangled repo is often the holy grail for refactors. A ch
 
 I believe that this is a naive approach to refactoring and code hygiene. While there are definitely instances where we want separate codebases, this is not always the case.
 
-I believe there are serious costs associated with splitting a repo that are too often overlooked, and I'd like to highlight some of them.
+There are serious costs associated with splitting a repo that are too often overlooked, and I'd like to highlight some of them.
 
 ## The Multi-Repo Wormhole
 
@@ -58,7 +58,7 @@ This is yet another repo to keep up-to-date with every change we want to make. Y
 
 "Ok, so the initial onboarding is tough, but once you're up and running it's not so bad, right?"
 
-Well, yeah, but not really. Onboarding can have a big impact on the first impression new employees have of the company. Remember - this is the first thing they'll do as new employees. Second, this means moving between projects is harder. Other occasions where this is relevant is when upgrading a computer or reformatting it.
+Well, yeah, but not really. Onboarding can have a big impact on the first impression new employees have of the company. Remember - this is the first thing they'll do as new employees. Second, this means moving between projects is harder. Other occasions where this is relevant can be when upgrading a computer or reformatting it.
 
 There's a ripple effect that starts with onboarding, but doesn't end there.
 
@@ -74,9 +74,9 @@ All of a sudden you can't `Cmd+Shift+F` to find something in the codebase, and i
 
 _But where does this documentation live?_
 
-You can put it in the "main" repo - usually that is the one acting as a gateway to the system. But then you have to remember to update it every time you make a change in a different repo. The other option is external documentation - whether in a separate repo, a wiki page (like Confluence) or a Google Doc.
+You can put it in the "main" repo - usually that is the one acting as a gateway to the system. But then you have to remember to update it every time you make a change in a different repo. The other option is external documentation - whether in a separate repo, a wiki page (like Notion) or a Google Doc.
 
-Either way, the documentation lives elsewhere than the code. It's harder to find things because you wouldn't even know where to look. Do I look in the repo's README? Do I search the company-wide Confluence?
+Either way, the documentation lives elsewhere than the code. It's harder to find things because you wouldn't even know where to look. Do I look in the repo's README? Do I search the company-wide Notion?
 
 It makes it harder to keep documentation up-to-date. It's easy to forget to update the documentation when you change something.
 
@@ -98,7 +98,7 @@ Who is responsible for them? The UI team? The API team? Both?
 
 Deploying a single repo is easy. Whether you use a managed Kubernetes cluster, a serverless solution or simple VMs spun up in the cloud, it's easy to deploy a single repo.
 
-You have a single CI/CD pipeline that does everything - it builds your repo, runs the tests, builds the Docker image, pushes it to the registry and deploys it to the cloud. This comes with caveats, but it's still easier than deploying multiple repos.
+You have a single CI/CD pipeline that does everything - it builds your repo, runs the tests, builds the Docker image, pushes it to the registry and deploys it to the cloud. This comes with caveats, but it's straight forward with no unneeded complications.
 
 When you have multiple repos, you need to deploy each separately. Each repo has its own CI/CD pipeline, build and deployment step. This means that you need to orchestrate the deployment of multiple repos when pushing features that span more than one repo.
 
@@ -110,7 +110,7 @@ I believe that the cons outweigh the pros in this case. When granular deployment
 
 A codebase is like a living creature. It grows and changes over time. It's never static. It's never "done". It's always evolving.
 
-We add new libraries, change how we do things, learn from past mistakes to avoid them in new features. We tweak the ESLint settings because we found an avoidable bug, we update the React version, we replace the Context API with Zustand and so on.
+We add new libraries, adopt and adapt conventions, learn from past mistakes to avoid them in new features. We tweak the ESLint settings because we found an avoidable bug, we update the React version, we replace the Context API with Zustand and so on.
 
 A single repo forces us to keep changes in one place. It's impossible to miss or forget an area, or not know a change happened in the codebase. It's all in here. For example, updating a library with breaking changes can happen in a single PR. That PR might be bigger than we'd like, but it's still a single PR.
 
@@ -132,9 +132,9 @@ So yes, making changes in a big repo is harder and requires more careful plannin
 
 When you have a single repo, sharing code is easy. You can import it. You can even import it from a different folder in the same repo. You can import it from a different repo in the same monorepo.
 
-When you have multiple repos, sharing code becomes harder. You can't just import it. You need to publish it to a registry, install it in a service that requires that functionality, and then import it. The whole process becomes more complicated.
+When you have multiple repos, sharing code becomes harder. You can't just import it. You need to publish it to a registry, install it in another repo, and then import it. The whole process becomes more complicated with many more steps.
 
-Later on you have multiple repos that rely on this package. Orchestrating breaking changes is suddenly much harder because of the aforementioned drift between repos. What happens is usually one of 2 things - you either never break the API, only build on top of it which makes the library code very complicated, or you just don't upgrade the repos that use the old version.
+Later on you have multiple repos that rely on this package. Orchestrating breaking changes is suddenly much harder because of the aforementioned drift between repos. What happens is usually one of 2 things - you either never break the API, only build on top of it which makes the library code very complicated because you must support all the different "branches" in your code, or you just don't upgrade the repos that use the old version.
 
 Eventually, you _will_ have to upgrade. Be it a security vulnerability, a bug fix or a new feature that you need. This will be a painful process, and it will be even more painful if you have multiple repos that use the library. Imagine going over dozens of repos to update your python version. Not fun.
 
@@ -146,15 +146,17 @@ In FE applications, this is even more noticeable. Think of a user who has to go 
 
 ## Change of Mindset
 
+Code does not suddenly become clean and readable just because there is a repo boundary between it and other code. It's still the same code, just in a different place. When we have a hard time figuring out how areas of our code interact with one another, it doesn't really matter if they interact via function calls or network requests. It's still hard to understand.
+
+Separation of concerns is important. Setting clear boundaries between code areas with different domains and responsibilities is important. _This is relevant whether our code is in the same repo or not_.
+
+There's no need to bind code cleanliness with repo boundaries. We can have a clean codebase in a single repo, and we can have a messy codebase in multiple repos. The opposite is also true. If you wish to arrange your code in services that's absolutely fine. Those services can be files or folders in the same repo, or they can be separate repos.
+
 I think that the root of the notion that splitting a repo is the holy grail of refactors is a misunderstanding of what a service is.
 
-A service is not a repo. A service is not a deployment.
-
-<Message>_A service is a logical unit of work_</Message>
+A service is not a repo. A service is not a deployment. A service is a logical unit of work.
 
 It's a unit of work independent of other units of work. A service may contain other services (or functionalities) within it, without making it a macro-service (the opposite of a micro-service). This unit of work may be deployed independently, but it doesn't have to be. This unit of work may be in its own repo, but it doesn't have to be.
-
-The most basic "service" is a file or folder. Services may rely on other services via direct function calls or network requests.
 
 A repo can contain multiple services, separated by folder structure. Those "folders" may be deployed independently in a monorepo fashion, or together in a single repo fashion.
 
