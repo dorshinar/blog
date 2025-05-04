@@ -11,7 +11,7 @@ import { meta as infiniteScroll } from "../app/posts/infinite-scroll-hook/page.m
 import { meta as treeShaking } from "../app/posts/treeshaking-with-tsup/page.mdx";
 import { meta as nanoReposCost } from "../app/posts/hidden-costs-of-nano-repos/page.mdx";
 import { meta as flakyPipeline } from "../external-posts/the-perils-of-a-flaky-pipeline";
-import { meta as interviewQuestions } from "../app/posts/interview-questions/page.mdx";
+import { meta as interviewQuestions } from "../app/posts/interview-your-future-employer/page.mdx";
 import { PostMeta, PostSchema } from "../types/Post";
 import { z } from "zod";
 
