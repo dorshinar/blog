@@ -10,7 +10,7 @@ interface Props {
 }
 
 export function ColorShiftingBox({ root, threshold }: Props) {
-  const observer = useRef<IntersectionObserver>();
+  const observer = useRef<IntersectionObserver>(null);
   const [observedNode, setObservedNode] = useState<HTMLElement>();
   const [rootNode, setRootNode] = useState<HTMLElement>();
   const [isIntersecting, setIsIntersecting] = useState(false);
