@@ -1,0 +1,114 @@
+import Cover from "./Cover.webp";
+
+export const meta = {
+  title: "Interview Your Future Employer",
+  date: "2025-05-04",
+  description:
+    "Interviewing your future employer before accepting a job offer is a great way to understand how well you fit the company, and just as importantly, how well the company fits you.",
+  slug: "interview-questions",
+  published: true,
+  cover: Cover,
+};
+
+import { getPostMetadata } from "@/utils/get-metadata";
+
+export const metadata = getPostMetadata(meta);
+
+<PostHeader meta={meta} />
+
+Professional interviews are often viewed as a one-way street, where the interviewer asks questions and the candidate answers them. Many people miss the opportunity to ask their own questions.
+
+Over the years, I've maintained a list of questions I ask interviewers as a candidate. These questions have helped me better understand the company, the team, and whether we would be a good mutual fit.
+
+As I'm entering another round of interviews as a candidate, I decided to share these questions formally.
+
+Most questions are relevant to anyone interviewing for a job, but there are some caveats:
+
+- Since I live and work in Israel, some questions may only be relevant to those in similar situations
+- As a Senior Full Stack Engineer with a frontend focus, some questions may be more relevant to frontend engineers
+
+## Professional
+
+### Expectations
+
+What are your expectations of me? What will I be responsible for?
+
+Will I be responsible only for frontend work, or will I also work on the backend?
+
+Will I be expected or encouraged to handle infrastructure and deployment?
+
+Will I be evaluated based on my ability to mentor other engineers?
+
+### Development Lifecycle
+
+What does the feature development lifecycle look like? How do you handle breaking changes? Do you write specifications for features?
+
+How are deployments handled? Do you use a CI/CD pipeline?
+
+How do you handle testing? Are tests mandatory for every feature? Do engineers write tests before or after implementing features? Do engineers write their own tests, or is there a dedicated testing team?
+
+What types of tests do you write?
+
+How do you enforce code quality? How do you handle code reviews? Do you use standard tools like ESLint and Prettier? (If using loose types) Do you perform type checking?
+
+### Processes
+
+How are decisions made? Do you use a data-driven approach, market research, or intuition?
+
+What is the team structure? Do you use squads? How do you handle cross-team dependencies? How independent are the teams?
+
+### Miscellaneous
+
+What does your legacy codebase look like? Do you have abandoned projects? How often do you need to work with legacy code?
+
+How likely are you to refactor old code to meet current company standards?
+
+How is on-call handled? How often do you receive alerts outside working hours and on weekends? How long does it typically take to resolve an alert?
+
+How likely are you to adopt new technologies? How do you handle the risks of adopting new technology? What is the process for adopting new technologies?
+
+## AI
+
+What is your stance on AI? Do you use it? How is it integrated into your development process?
+
+Do you expect engineers to use AI tools? Do you provide licenses for popular AI tools (Cursor, Copilot, ChatGPT, etc.)?
+
+Is your business threatened by AI? If so, how do you plan to respond? If not, how do you plan to leverage AI to your advantage?
+
+## Business
+
+What is the company's business model?
+
+What are the company's revenue and growth metrics?
+
+How much funding has the company raised? How many funding rounds has it completed? Do you anticipate an IPO? Is the company likely to be acquired? How much runway does it have?
+
+Is the company publicly traded? Is it profitable? How are the financial reports?
+
+## Personal
+
+Who are my potential teammates? What are their backgrounds and experience levels? How long have they been with the company?
+
+How do you support engineer growth? Do you sponsor conferences, courses, or workshops?
+
+Do you support remote or hybrid work? How many days per week would I be expected to work in the office?
+
+Am I replacing someone who left the company? If so, why did they leave? If not, why is the position open? Is the team expanding?
+
+### Compensation
+
+Do you provide stock options, RSUs, or ESOP?
+
+How many PTO and sick days do I get?
+
+Do you provide health insurance?
+
+Do you provide a study fund (קרן השתלמות)?
+
+Do you pay pensions for 100% of the salary?
+
+Do you pay for sick days from the first day?
+
+Do you provide meal allowances (סיבוס)?
+
+<PostFooter {...meta} />
