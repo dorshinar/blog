@@ -6,7 +6,7 @@ interface Params {
 }
 
 function useInfiniteScroll({ callback: callbackParam, isActive }: Params) {
-  const observer = useRef<IntersectionObserver>();
+  const observer = useRef<IntersectionObserver>(null);
 
   const callback = useCallback(
     (entries: IntersectionObserverEntry[]) => {
