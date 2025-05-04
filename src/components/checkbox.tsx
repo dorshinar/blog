@@ -3,9 +3,9 @@ import clsx from "clsx";
 import { CheckIcon } from "lucide-react";
 import { ComponentPropsWithRef, useId } from "react";
 
-interface Props extends ComponentPropsWithRef<typeof CheckboxPrimitive.Root> {}
-
-export function Checkbox(props: Props) {
+export function Checkbox(
+  props: ComponentPropsWithRef<typeof CheckboxPrimitive.Root>,
+) {
   const id = useId();
 
   return (
