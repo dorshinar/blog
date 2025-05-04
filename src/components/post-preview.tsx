@@ -14,7 +14,7 @@ export function PostPreview({ post, cover, priority }: Props) {
     <Link
       href={post.url ?? `posts/${post.slug}`}
       className={clsx(
-        "group rounded-2xl overflow-hidden w-full transition-[transform,shadow]",
+        "group rounded-2xl overflow-hidden w-full transition",
         "hover:ring-2 focus-within:ring-2 focus:ring-2 ring-offset-zinc-900 ring-emerald-500 p-2",
         "hover:-translate-y-2 focus-within:-translate-y-2 focus:-translate-y-2",
       )}
