@@ -50,7 +50,25 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         {...props}
         className={clsx(
           props.className,
-          "text-3xl font-semibold group flex gap-2 items-center",
+          "text-2xl font-semibold group flex gap-2 items-center",
+        )}
+      >
+        {props.children}
+        <a
+          href={`#${props.id}`}
+          aria-hidden
+          className="sr-only group-hover:not-sr-only group-focus-within:no-sr-only"
+        >
+          <LinkIcon size={18} />
+        </a>
+      </h3>
+    ),
+    h4: (props) => (
+      <h3
+        {...props}
+        className={clsx(
+          props.className,
+          "text-xl font-semibold group flex gap-2 items-center",
         )}
       >
         {props.children}
