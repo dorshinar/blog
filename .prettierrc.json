@@ -1,1 +1,5 @@
-{}
+{
+  "tailwindConfig": "./tailwind.config.ts",
+  "tailwindFunctions": ["clsx"],
+  "plugins": ["@prettier/plugin-oxc", "prettier-plugin-tailwindcss"]
+}

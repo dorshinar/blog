@@ -1,4 +1,5 @@
 import { globalIgnores } from "eslint/config";
+import globals from "globals";
 import js from "@eslint/js";
 import jsxA11y from "eslint-plugin-jsx-a11y";
 import importPlugin from "eslint-plugin-import";
@@ -19,9 +20,22 @@ export default tseslint.config([
           alwaysTryTypes: true,
         },
       },
+      react: {
+        version: "detect",
+      },
+    },
+    languageOptions: {
+      globals: {
+        self: true,
+        ...globals.browser,
+        ...globals.node,
+      },
     },
   },
-  importPlugin.flatConfigs.recommended,
+  {
+    ...importPlugin.flatConfigs.recommended,
+    rules: { "import/no-named-as-default-member": "off" },
+  },
   importPlugin.flatConfigs.typescript,
   js.configs.recommended,
   next.flatConfig.recommended,
@@ -31,18 +45,26 @@ export default tseslint.config([
     processor: mdx.createRemarkProcessor({
       lintCodeBlocks: true,
     }),
+    rules: {
+      "@typescript-eslint/no-unused-vars": "off",
+    },
   },
   {
     ...mdx.flatCodeBlocks,
-  },
-  {
-    settings: {
-      react: {
-        version: "detect",
-      },
+    rules: {
+      "@typescript-eslint/no-explicit-any": "off",
+      "@typescript-eslint/no-unused-vars": "off",
+      "@typescript-eslint/no-require-imports": "off",
+      "no-undef": "off",
+      "import/no-unresolved": "off",
     },
   },
-  react.configs.flat.recommended,
+  {
+    ...react.configs.flat.recommended,
+    rules: {
+      "react/prop-types": "off",
+    },
+  },
   react.configs.flat["jsx-runtime"],
   reactHooks.configs["recommended-latest"],
   eslintConfigPrettier,

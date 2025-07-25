@@ -1,6 +1,6 @@
 "use client";
 
-import React, { ComponentPropsWithRef } from "react";
+import { ComponentPropsWithRef } from "react";
 
 import ListContainer from "./ListContainer";
 import SimpleList from "./SimpleList";

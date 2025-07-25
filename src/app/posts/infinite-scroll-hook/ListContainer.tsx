@@ -68,7 +68,7 @@ const ListContainer = ({
             <AnimatePresence>
               {loading && (
                 <motion.div
-                  className="w-32 h-12 bg-emerald-500 grid place-items-center rounded"
+                  className="grid h-12 w-32 place-items-center rounded bg-emerald-500"
                   initial={initial}
                   animate={animate}
                   exit={initial}

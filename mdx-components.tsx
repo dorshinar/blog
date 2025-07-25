@@ -21,7 +21,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         {...props}
         className={clsx(
           props.className,
-          "text-emerald-500 underline underline-offset-4 shadow-[0_2px_0_0_theme(colors.emerald.500)] hover:shadow-[0_3px_0_0_theme(colors.emerald.500)] transition-shadow",
+          "text-emerald-500 underline underline-offset-4 shadow-[0_2px_0_0_var(--color-emerald-500)] transition-shadow hover:shadow-[0_3px_0_0_var(--color-emerald-500)]",
         )}
       >
         {props.children}
@@ -32,14 +32,14 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         {...props}
         className={clsx(
           props.className,
-          "text-4xl font-bold group flex gap-2 items-center",
+          "group flex items-center gap-2 text-4xl font-bold",
         )}
       >
         {props.children}
         <a
           href={`#${props.id}`}
           aria-hidden
-          className="sr-only group-hover:not-sr-only group-focus-within:no-sr-only"
+          className="group-focus-within:no-sr-only sr-only group-hover:not-sr-only"
         >
           <LinkIcon size={18} />
         </a>
@@ -50,14 +50,14 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         {...props}
         className={clsx(
           props.className,
-          "text-2xl font-semibold group flex gap-2 items-center",
+          "group flex items-center gap-2 text-2xl font-semibold",
         )}
       >
         {props.children}
         <a
           href={`#${props.id}`}
           aria-hidden
-          className="sr-only group-hover:not-sr-only group-focus-within:no-sr-only"
+          className="group-focus-within:no-sr-only sr-only group-hover:not-sr-only"
         >
           <LinkIcon size={18} />
         </a>
@@ -68,14 +68,14 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         {...props}
         className={clsx(
           props.className,
-          "text-xl font-semibold group flex gap-2 items-center",
+          "group flex items-center gap-2 text-xl font-semibold",
         )}
       >
         {props.children}
         <a
           href={`#${props.id}`}
           aria-hidden
-          className="sr-only group-hover:not-sr-only group-focus-within:no-sr-only"
+          className="group-focus-within:no-sr-only sr-only group-hover:not-sr-only"
         >
           <LinkIcon size={18} />
         </a>
@@ -86,8 +86,8 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         {...props}
         className={clsx(
           props.className,
-          "bg-sky-900 border-l-8 border-sky-500 sm:rounded p-4 -mx-4",
-          "[&_a]:text-zinc-200 [&_a]:font-medium [&_a]:shadow-[0_2px_0_0_theme(colors.sky.300)] [&_a]:hover:shadow-[0_3px_0_0_theme(colors.sky.300)]",
+          "-mx-4 border-l-8 border-sky-500 bg-sky-900 p-4 sm:rounded",
+          "[&_a]:font-medium [&_a]:text-zinc-200 [&_a]:shadow-[0_2px_0_0_var(--color-sky-300)] [&_a]:hover:shadow-[0_3px_0_0_var(--color-sky-300)]",
         )}
       />
     ),
@@ -96,14 +96,14 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         {...props}
         className={clsx(
           props.className,
-          "list-decimal px-4 flex flex-col gap-2",
+          "flex list-decimal flex-col gap-2 px-4",
         )}
       />
     ),
     ul: (props) => (
       <ul
         {...props}
-        className={clsx(props.className, "list-disc px-4 flex flex-col gap-2")}
+        className={clsx(props.className, "flex list-disc flex-col gap-2 px-4")}
       />
     ),
     Message,

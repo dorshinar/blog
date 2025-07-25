@@ -26,7 +26,7 @@ export function PostFooter({ slug }: Props) {
   });
 
   return (
-    <footer className="w-full flex flex-col gap-4">
+    <footer className="flex w-full flex-col gap-4">
       <hr className="bg-zinc-200" />
       <p>
         If you have any question or you want to reach out, find me on{" "}
@@ -35,7 +35,7 @@ export function PostFooter({ slug }: Props) {
         </Link>
         !
       </p>
-      <ul className="flex items-center gap-4 flex-wrap w-full justify-between">
+      <ul className="flex w-full flex-wrap items-center justify-between gap-4">
         {before && (
           <li>
             <NextLink
