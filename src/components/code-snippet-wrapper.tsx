@@ -1,4 +1,4 @@
-import clsx from "clsx";
+import { clsx } from "clsx";
 import { HTMLAttributes } from "react";
 
 export function CodeSnippetWrapper(props: HTMLAttributes<HTMLDivElement>) {
@@ -7,7 +7,7 @@ export function CodeSnippetWrapper(props: HTMLAttributes<HTMLDivElement>) {
       {...props}
       className={clsx(
         props.className,
-        "w-full bg-zinc-200 rounded overflow-auto relative",
+        "relative w-full overflow-auto rounded bg-zinc-200",
       )}
     />
   );

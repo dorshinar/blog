@@ -1,4 +1,4 @@
-import clsx from "clsx";
+import { clsx } from "clsx";
 import { Inter } from "next/font/google";
 import { Link } from "@/components/Link";
 import NextLink from "next/link";
@@ -20,11 +20,11 @@ export default function RootLayout({
       <body
         className={clsx(
           inter.className,
-          "min-h-screen flex flex-col gap-12 items-center bg-zinc-900 text-zinc-200 pb-2",
+          "flex min-h-screen flex-col items-center gap-12 bg-zinc-900 pb-2 text-zinc-200",
         )}
       >
-        <header className="flex justify-center items-center w-full py-6 border-b border-zinc-200">
-          <h1 className="grow sm:max-w-3xl px-4 sm:px-8 text-3xl font-medium">
+        <header className="flex w-full items-center justify-center border-b border-zinc-200 py-6">
+          <h1 className="grow px-4 text-3xl font-medium sm:max-w-3xl sm:px-8">
             <NextLink
               href="/"
               className="hover:text-emerald-500 focus-visible:text-emerald-500"
@@ -33,12 +33,12 @@ export default function RootLayout({
             </NextLink>
           </h1>
         </header>
-        <main className="flex flex-1 w-full flex-col items-center overflow-hidden">
+        <main className="flex w-full flex-1 flex-col items-center overflow-hidden">
           {children}
           <Analytics />
         </main>
-        <footer className="flex items-center justify-center w-full">
-          <span className="flex-1 sm:max-w-3xl px-4 sm:px-8">
+        <footer className="flex w-full items-center justify-center">
+          <span className="flex-1 px-4 sm:max-w-3xl sm:px-8">
             © {new Date().getFullYear()} Dor Shinar, built with{" "}
             <Link href="https://nextjs.org/">Next.js</Link>
           </span>

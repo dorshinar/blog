@@ -19,7 +19,7 @@ code[data-language="bash"] span[data-line]::before {
 }
 
 [data-highlighted-line] {
-  @apply -ml-4 pl-2 border-l-8 border-l-zinc-400 bg-zinc-700;
+  @apply -ml-4 border-l-8 border-l-zinc-400 bg-zinc-700 pl-2;
 }
 
 div[data-rehype-pretty-code-fragment] {

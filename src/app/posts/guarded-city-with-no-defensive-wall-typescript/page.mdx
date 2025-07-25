@@ -218,7 +218,9 @@ function sumOrThrowIfLowerThan(arr: number[], threshold: number) {
 
   const isValid = await resultSchema.isValid(arr);
 
-  isValid && console.log(sumOrThrowIfLowerThan(arr, 10)); // output is guaranteed again and the QA is happy again 👌
+  if (isValid) {
+    console.log(sumOrThrowIfLowerThan(arr, 10)); // output is guaranteed again and the QA is happy again 👌
+  }
 })();
 ```
 

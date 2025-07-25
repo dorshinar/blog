@@ -1,5 +1,5 @@
 import * as CheckboxPrimitive from "@radix-ui/react-checkbox";
-import clsx from "clsx";
+import { clsx } from "clsx";
 import { CheckIcon } from "lucide-react";
 import { ComponentPropsWithRef, useId } from "react";
 
@@ -15,7 +15,7 @@ export function Checkbox(
         id={id}
         className={clsx(
           props.className,
-          "h-6 w-6 border border-zinc-600 rounded inline-grid place-items-center data-[state=checked]:bg-emerald-700 data-[state=checked]:border-none",
+          "inline-grid h-6 w-6 place-items-center rounded border border-zinc-600 data-[state=checked]:border-none data-[state=checked]:bg-emerald-700",
         )}
       >
         <CheckboxPrimitive.Indicator>

@@ -7,7 +7,7 @@ interface Props {
 
 export function Post({ children }: PropsWithChildren<Props>) {
   return (
-    <article className="flex flex-col gap-6 w-full overflow-hidden px-4 sm:px-8 sm:max-w-3xl">
+    <article className="flex w-full flex-col gap-6 overflow-hidden px-4 sm:max-w-3xl sm:px-8">
       {children}
     </article>
   );

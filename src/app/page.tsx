@@ -12,7 +12,7 @@ export default function Home() {
 
   return (
     <>
-      <section className="flex flex-col sm:flex-row items-center w-full gap-8 pb-12 px-4 sm:px-8 sm:max-w-3xl">
+      <section className="flex w-full flex-col items-center gap-8 px-4 pb-12 sm:max-w-3xl sm:flex-row sm:px-8">
         <Image
           src={profilePic}
           alt="The author"
@@ -57,7 +57,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="flex flex-col gap-12 px-4 sm:px-8 sm:max-w-3xl pb-8">
+      <section className="flex flex-col gap-12 px-4 pb-8 sm:max-w-3xl sm:px-8">
         {posts.map((post, index) => (
           <PostPreview
             post={post}
