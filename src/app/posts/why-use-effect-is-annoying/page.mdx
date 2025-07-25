@@ -1,0 +1,77 @@
+import { getPostMetadata } from "@/utils/get-metadata";
+
+export const meta = {
+  title: "Why useEffect is so annoying",
+  date: "2025-07-25",
+  description:
+    "useEffect comes with a lot of rules. Let's see why we need them.",
+  slug: "why-use-effect-is-annoying",
+  published: false,
+};
+
+export const metadata = getPostMetadata(meta);
+
+<PostHeader meta={meta} />
+
+`useEffect` is one of the most fundamental hooks in React, but it has picked up quite a lot of hate over the years.
+I can safely assume that 100% of React developers have experienced bugs related to it.
+Whether it's an effect that runs way too many times, an infinite loop or state that goes out of sync, it's a common occurrence.
+
+It comes with a literal grocery list of rules that dictate what we can and can't do,
+and there's an entire page in the react docs dedicated to [discouraging people from using it](https://react.dev/learn/you-might-not-need-an-effect).
+It's a page so long that it's almost a book.
+
+Over the years I've spoken with many developers, more or less experienced, that failed to understand why we need all these rules. I mean, the code _works_, right?
+
+Even if we ignore a dependency here, or send a network request in an effect, it's not a big deal, right?
+
+When I tried to explain why we need all these rules, I found that even I myself didn't fully understand it. I knew it had something to do with async rendering. Or was it concurrent rendering? I'm pretty sure at some point it was called async react.
+
+But what even is async rendering? Since when can we render async components? Is that even what async rendering is? Today we have server components that can be async, but they can't run `useEffect`s, so that's not it.
+
+I feel that over the years there was very little communication about why we need all these rules.
+It was always about some future React features that would break if we broke the rules.
+
+It took a long time, but with React 18 and especially 19, we're starting to see why those rules are necessary.
+
+## How it started
+
+When it was first introduced in React 16.8 it was described as a way to perform side effects in function components. Specifically, from the [original react docs](https://legacy.reactjs.org/docs/hooks-effect.html):
+
+> Data fetching, setting up a subscription, and manually changing the DOM in React components are all examples of side effects.
+
+With no other native way to fetch data, developers understood the docs to mean that `useEffect` is the way to go. This has led to a lot of code that looks like this:
+
+```tsx
+function Profile({ userId }) {
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    fetchUser(userId).then(setUser);
+  }, [userId]);
+
+  return <div>{user?.name}</div>;
+}
+```
+
+This code probably looks familiar to you. It was a common pattern to fetch data in a component and update the state with the data.
+
+Other patterns that became popular were reacting to state changes and performing actions as a side effect.
+
+```tsx
+function ProductPage({ product }) {
+  // ...
+  useEffect(() => {
+    if (product.isInCart) {
+      showNotification(`Added ${product.name} to the shopping cart!`);
+    }
+  }, [product]);
+  // ...
+}
+```
+
+(Example taken from the [react docs](https://react.dev/learn/you-might-not-need-an-effect#sharing-logic-between-event-handlers))
+
+I know I've used this pattern many times. Logging user actions, such as page visits, for example. It's just so easy to do.
+
+<PostFooter {...meta} />

@@ -2,7 +2,7 @@
 
 code {
   padding: 1px;
-  background-color: #22272e;
+  background-color: var(--color-zinc-800);
   @apply rounded;
 }
 

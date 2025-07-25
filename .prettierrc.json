@@ -1,5 +1,13 @@
 {
   "tailwindConfig": "./tailwind.config.ts",
   "tailwindFunctions": ["clsx"],
-  "plugins": ["@prettier/plugin-oxc", "prettier-plugin-tailwindcss"]
+  "plugins": ["@prettier/plugin-oxc", "prettier-plugin-tailwindcss"],
+  "overrides": [
+    {
+      "files": "*.mdx",
+      "options": {
+        "parser": "mdx"
+      }
+    }
+  ]
 }
