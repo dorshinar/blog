@@ -11,7 +11,7 @@ import react from "eslint-plugin-react";
 import * as reactHooks from "eslint-plugin-react-hooks";
 
 export default tseslint.config([
-  globalIgnores(["**/pnpm-lock.yaml", "**/node_modules"]),
+  globalIgnores(["**/pnpm-lock.yaml", "**/node_modules", "**/.next"]),
   jsxA11y.flatConfigs.recommended,
   {
     settings: {
