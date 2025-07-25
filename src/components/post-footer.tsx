@@ -39,7 +39,7 @@ export function PostFooter({ slug }: Props) {
         {before && (
           <li>
             <NextLink
-              href={before.slug}
+              href={before.url ?? before.slug}
               rel="prev"
               className="flex items-center gap-2"
             >
@@ -50,7 +50,7 @@ export function PostFooter({ slug }: Props) {
         {after && (
           <li>
             <NextLink
-              href={after.slug}
+              href={after.url ?? after.slug}
               rel="next"
               className="flex items-center gap-2"
             >
