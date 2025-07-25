@@ -3,7 +3,7 @@ import { PostFooter } from "@/components/post-footer";
 
 import { PostHeader } from "@/components/post-header";
 
-import clsx from "clsx";
+import { clsx } from "clsx";
 import { LinkIcon } from "lucide-react";
 import type { MDXComponents } from "mdx/types";
 
