@@ -1,4 +1,7 @@
 import { getPostMetadata } from "@/utils/get-metadata";
+import oldRenderingModel from "./old-render-model.svg";
+import newRenderingModel from "./new-render-model.svg";
+import Image from "next/image";
 
 export const meta = {
   title: "Why useEffect is so annoying",
@@ -36,7 +39,7 @@ It took a long time, but with React 18 and especially 19, we're starting to see 
 
 ## How it started
 
-When it was first introduced in React 16.8 it was described as a way to perform side effects in function components. Specifically, from the [original react docs](https://legacy.reactjs.org/docs/hooks-effect.html):
+When `useEffect` was first introduced in React 16.8 it was described as a way to perform side effects in function components. Specifically, from the [legacy react docs](https://legacy.reactjs.org/docs/hooks-effect.html):
 
 > Data fetching, setting up a subscription, and manually changing the DOM in React components are all examples of side effects.
 
@@ -73,5 +76,57 @@ function ProductPage({ product }) {
 (Example taken from the [react docs](https://react.dev/learn/you-might-not-need-an-effect#sharing-logic-between-event-handlers))
 
 I know I've used this pattern many times. Logging user actions, such as page visits, for example. It's just so easy to do.
+
+## Bad useEffect!
+
+Over time, the React team and the community started to realize that `useEffect` is a pretty poor abstraction to perform the kind of side effects developers were using it for, and thus, a massive shift in the way we use it started to happen.
+
+While in the beginning, using `useEffect` the way demonstrated above was considered fine, around 2020-2021 we started to see a push to replace `useEffect`s with other patterns.
+
+For example, the React team's recommendation to fetch data was to use mechanisms provided by third-party frameworks, such as [Next.js](https://nextjs.org/) or [Remix](https://remix.run/) (now React Router v6.4+). Both of these frameworks provide mechanisms to fetch data on the server and send it to the client.
+
+Initially, Next.js had `getServerSideProps` and `getStaticProps` to fetch data on the server, but these were then replaced by [server components](https://react.dev/reference/rsc/server-components). Remix has the concept of [loaders](https://remix.run/docs/en/main/route/loader), but is working on adding support for [server components](https://reactrouter.com/how-to/react-server-components) as well.
+
+For those of us who don't use a framework, we moved to libraries like [SWR](https://swr.vercel.app/) and [React Query](https://tanstack.com/query).
+
+For non-data fetching effect, such as logging page visits, the general recommendation is to use callback refs, server-side logging, and rely on callbacks to run the effect. Though, I'd still wager that using `useEffect` for this is still the a common pattern, mostly because it's so easy to use.
+
+If I had to summarize what a "good effect" is, it would probably be:
+
+> If the setup+cleanup functions of the effect can run multiple times without causing any issues, it's a good effect.
+
+Now we know what to do instead of calling `useEffect`, but we still don't know why.
+
+## React Rendering Model
+
+Prior to React 18, React's rendering model was synchronous and blocking. This means that the browser would block the main thread while React was rendering the UI. If we were to profile the code, we would see that we essentially have a recursive function call to the `render` function of our components in case of class components, or a call to the component itself in case of function components.
+
+This means that once React starts rendering, it will continue until it's done. And if the render is long, the main thread will be blocked for a while.
+
+<Image src={oldRenderingModel} alt="The old React Rendering Model" />
+
+Usually in web development we aim for 60fps, which means that we want to render the UI at least 60 times per second. This gives us about 16ms to render the UI in order to keep things smooth. We can of course aim for a higher frame rate (as video games often do), but for most applications, 60fps is more than enough.
+
+But what happens if we takes a long time to render the UI? This could be due to a lot of different reasons, from a very complex component tree, to expensive calculations done in the render function, or various other reasons.
+
+Well, in this case the browser is simply unresponsive. The user can't interact with the UI until we are done rendering. This is a pretty bad experience, and it's something we want to avoid.
+
+The most obvious way to handle a long render is to memoize expensive calculations. Either via `useMemo` or other means of caching. But sometimes we need to rerun the calculations.
+
+Most often this could be filtering a list of items based on a search query that the user types into an input field. There's no way around this - we _need_ to filter the list to show the correct items.
+
+But we know that users can type pretty fast, and filtering long lists can get pretty slow, especially on mobile or on old devices. So we use debounce - we wait for the user to stop typing for a bit before running the filter.
+
+But this is not optimal as well. If the user has a strong device that can handle the filtering, we're still forcing them to wait for a bit before running the filter. This is a waste of time. You can think of this as the opposite of progressive enhancement - instead of making the experience better for users that can benefit from it, we're making it worse for everyone.
+
+## Time Slicing
+
+So the React team has come up with a plan. What if we could render the UI in chunks?
+
+This is called time slicing. Starting with React 18, React now renders the UI in small bits, and then yields control back to the browser every 5ms until the render is complete.
+
+<Image src={newRenderingModel} alt="The new React Rendering Model" />
+
+This means that at most, our browser's main thread is blocked for 5ms. This is a huge improvement, and we can easily see that buttons and inputs can stay responsive, even when the render is long.
 
 <PostFooter {...meta} />
