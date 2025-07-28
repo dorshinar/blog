@@ -27,8 +27,8 @@ importers:
         specifier: ^4.0.3
         version: 4.0.3
       lucide-react:
-        specifier: ^0.525.0
-        version: 0.525.0(react@19.1.0)
+        specifier: ^0.526.0
+        version: 0.526.0(react@19.1.0)
       next:
         specifier: 15.4.4
         version: 15.4.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -68,7 +68,7 @@ importers:
     devDependencies:
       '@eslint/js':
         specifier: ^9.31.0
-        version: 9.31.0
+        version: 9.32.0
       '@mdx-js/loader':
         specifier: ^3.1.0
         version: 3.1.0(acorn@8.15.0)
@@ -200,6 +200,10 @@ packages:
 
   '@eslint/js@9.31.0':
     resolution: {integrity: sha512-LOm5OVt7D4qiKCqoiPbA7LWmI+tbw1VbTUowBcUMgQSuM6poJufkFkYDcQpo5KfgD39TnNySV26QjOh7VFpSyw==}
+    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+
+  '@eslint/js@9.32.0':
+    resolution: {integrity: sha512-BBpRFZK3eX6uMLKz8WxFOBIFFcGFJ/g8XuwjTHCqHROSIsopI+ddn/d5Cfh36+7+e5edVS8dbSHnBNhrLEX0zg==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
   '@eslint/object-schema@2.1.6':
@@ -2144,8 +2148,8 @@ packages:
   lru-cache@10.4.3:
     resolution: {integrity: sha512-JNAzZcXrCt42VGLuYz0zfAzDfAvJWW6AfYlDBQyDV5DClI2m5sAmK+OIO7s59XfsRsWHp02jAJrRadPRGTt6SQ==}
 
-  lucide-react@0.525.0:
-    resolution: {integrity: sha512-Tm1txJ2OkymCGkvwoHt33Y2JpN5xucVq1slHcgE6Lk0WjDfjgKWor5CdVER8U6DvcfMwh4M8XxmpTiyzfmfDYQ==}
+  lucide-react@0.526.0:
+    resolution: {integrity: sha512-uGWG/2RKuDLeQHCodn5cmJ9Zij80EstOdcBP+j//B2sr78w7woiEL4aMu6CRlRkyOyJ8sZry8QLhQTmZjynLdA==}
     peerDependencies:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
@@ -3229,6 +3233,8 @@ snapshots:
       - supports-color
 
   '@eslint/js@9.31.0': {}
+
+  '@eslint/js@9.32.0': {}
 
   '@eslint/object-schema@2.1.6': {}
 
@@ -5291,7 +5297,7 @@ snapshots:
 
   lru-cache@10.4.3: {}
 
-  lucide-react@0.525.0(react@19.1.0):
+  lucide-react@0.526.0(react@19.1.0):
     dependencies:
       react: 19.1.0
 
