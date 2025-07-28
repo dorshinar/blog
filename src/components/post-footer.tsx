@@ -28,6 +28,7 @@ export function PostFooter({ slug }: Props) {
   return (
     <footer className="flex w-full flex-col gap-4">
       <hr className="bg-zinc-200" />
+      <p>Thank you for reading!</p>
       <p>
         If you have any question or you want to reach out, find me on{" "}
         <Link href="https://twitter.com/DorShinar" target="_blank">

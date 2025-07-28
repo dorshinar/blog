@@ -1,7 +1,10 @@
 import { getPostMetadata } from "@/utils/get-metadata";
 import oldRenderingModel from "./old-render-model.svg";
 import newRenderingModel from "./new-render-model.svg";
+import oldRenderModelDemo from "./old-render-model-demo.gif";
+import newRenderModelDemo from "./new-render-model-demo.gif";
 import Image from "next/image";
+import cover from "./cover.png";
 
 export const meta = {
   title: "Why useEffect is so annoying",
@@ -9,6 +12,8 @@ export const meta = {
   description:
     "useEffect comes with a lot of rules. Let's see why we need them.",
   slug: "why-use-effect-is-annoying",
+  cover: cover,
+  coverAlt: "A playful illustration of knife cutting a clock.",
   published: false,
 };
 
@@ -18,32 +23,32 @@ export const metadata = getPostMetadata(meta);
 
 `useEffect` is one of the most fundamental hooks in React, but it has picked up quite a lot of hate over the years.
 I can safely assume that 100% of React developers have experienced bugs related to it.
-Whether it's an effect that runs way too many times, an infinite loop or state that goes out of sync, it's a common occurrence.
+Whether it's an effect that runs way too many times, an infinite loop, or state that goes out of sync, it's a common occurrence.
 
-It comes with a literal grocery list of rules that dictate what we can and can't do,
-and there's an entire page in the react docs dedicated to [discouraging people from using it](https://react.dev/learn/you-might-not-need-an-effect).
+It comes with a laundry list of rules that dictate what we can and can't do,
+and there's an entire page in the React docs dedicated to [discouraging people from using it](https://react.dev/learn/you-might-not-need-an-effect).
 It's a page so long that it's almost a book.
 
-Over the years I've spoken with many developers, more or less experienced, that failed to understand why we need all these rules. I mean, the code _works_, right?
+Over the years I've spoken with many developers of varying experience levels who failed to understand why we need all these rules. I mean, the code _works_, right?
 
 Even if we ignore a dependency here, or send a network request in an effect, it's not a big deal, right?
 
-When I tried to explain why we need all these rules, I found that even I myself didn't fully understand it. I knew it had something to do with async rendering. Or was it concurrent rendering? I'm pretty sure at some point it was called async react.
+When I tried to explain why we need all these rules, I found that even I didn't fully understand it. I knew it had something to do with concurrent rendering - or was it async rendering? At some point it was called Async React.
 
-But what even is async rendering? Since when can we render async components? Is that even what async rendering is? Today we have server components that can be async, but they can't run `useEffect`s, so that's not it.
+But what even is concurrent rendering? How can we render async components? Is that even what async rendering is? Today we have server components that can be async, but they can't run `useEffect`s, so that's not it.
 
-I feel that over the years there was very little communication about why we need all these rules.
-It was always about some future React features that would break if we broke the rules.
+Over the years there was very little communication about why we need all these rules.
+It was always about some future React features that would break if we violated the rules.
 
-It took a long time, but with React 18 and especially 19, we're starting to see why those rules are necessary.
+Now, with React 18 and especially 19, we're finally starting to see why those rules are necessary.
 
 ## How it started
 
-When `useEffect` was first introduced in React 16.8 it was described as a way to perform side effects in function components. Specifically, from the [legacy react docs](https://legacy.reactjs.org/docs/hooks-effect.html):
+When `useEffect` was first introduced in React 16.8, it was described as a way to perform side effects in function components. Specifically, from the [legacy react docs](https://legacy.reactjs.org/docs/hooks-effect.html):
 
 > Data fetching, setting up a subscription, and manually changing the DOM in React components are all examples of side effects.
 
-With no other native way to fetch data, developers understood the docs to mean that `useEffect` is the way to go. This has led to a lot of code that looks like this:
+With no other native way to fetch data, developers understood the docs to mean that `useEffect` is the way to go. This led to a lot of code that looks like this:
 
 ```tsx
 function Profile({ userId }) {
@@ -57,9 +62,9 @@ function Profile({ userId }) {
 }
 ```
 
-This code probably looks familiar to you. It was a common pattern to fetch data in a component and update the state with the data.
+This code probably looks familiar. It was a common pattern to fetch data in a component and update the state with the result.
 
-Other patterns that became popular were reacting to state changes and performing actions as a side effect.
+Other popular patterns involved reacting to state changes and performing actions as a side effect:
 
 ```tsx
 function ProductPage({ product }) {
@@ -73,62 +78,145 @@ function ProductPage({ product }) {
 }
 ```
 
-(Example taken from the [react docs](https://react.dev/learn/you-might-not-need-an-effect#sharing-logic-between-event-handlers))
+(Example taken from the [React docs](https://react.dev/learn/you-might-not-need-an-effect#sharing-logic-between-event-handlers))
 
-I know I've used this pattern many times. Logging user actions, such as page visits, for example. It's just so easy to do.
+This pattern was widely used for things like logging user actions or page visits. It's just so easy to do.
 
 ## Bad useEffect!
 
-Over time, the React team and the community started to realize that `useEffect` is a pretty poor abstraction to perform the kind of side effects developers were using it for, and thus, a massive shift in the way we use it started to happen.
+Over time, the React team and the community started to realize that `useEffect` is an inadequate abstraction for the kind of side effects developers were using it for. Thus, a massive shift in how we use it began.
 
-While in the beginning, using `useEffect` the way demonstrated above was considered fine, around 2020-2021 we started to see a push to replace `useEffect`s with other patterns.
+While using `useEffect` the way demonstrated above was initially considered fine, around 2020-2021 we started to see a push to replace `useEffect`s with other patterns.
 
-For example, the React team's recommendation to fetch data was to use mechanisms provided by third-party frameworks, such as [Next.js](https://nextjs.org/) or [Remix](https://remix.run/) (now React Router v6.4+). Both of these frameworks provide mechanisms to fetch data on the server and send it to the client.
+For example, the React team's recommendation for data fetching is to use mechanisms provided by third-party frameworks, such as [Next.js](https://nextjs.org/) or [Remix](https://remix.run/) (now React Router v6.4+). Both frameworks provide mechanisms to fetch data on the server and send it to the client.
 
 Initially, Next.js had `getServerSideProps` and `getStaticProps` to fetch data on the server, but these were then replaced by [server components](https://react.dev/reference/rsc/server-components). Remix has the concept of [loaders](https://remix.run/docs/en/main/route/loader), but is working on adding support for [server components](https://reactrouter.com/how-to/react-server-components) as well.
 
-For those of us who don't use a framework, we moved to libraries like [SWR](https://swr.vercel.app/) and [React Query](https://tanstack.com/query).
+For developers who don't use a framework, the community moved to libraries like [SWR](https://swr.vercel.app/) and [React Query](https://tanstack.com/query).
 
-For non-data fetching effect, such as logging page visits, the general recommendation is to use callback refs, server-side logging, and rely on callbacks to run the effect. Though, I'd still wager that using `useEffect` for this is still the a common pattern, mostly because it's so easy to use.
+For non-data fetching effects, such as logging page visits, the general recommendation is to use callback refs, server-side logging, and rely on callbacks to run the effect. Though, using `useEffect` for this is still a common pattern, mostly because it's so easy to use and abuse.
 
 If I had to summarize what a "good effect" is, it would probably be:
 
 > If the setup+cleanup functions of the effect can run multiple times without causing any issues, it's a good effect.
 
-Now we know what to do instead of calling `useEffect`, but we still don't know why.
+Now we know what to do instead of using `useEffect`, but we still don't know why.
 
 ## React Rendering Model
 
-Prior to React 18, React's rendering model was synchronous and blocking. This means that the browser would block the main thread while React was rendering the UI. If we were to profile the code, we would see that we essentially have a recursive function call to the `render` function of our components in case of class components, or a call to the component itself in case of function components.
+Prior to React 18, React's rendering model was synchronous and blocking, meaning the browser would block the main thread while React was rendering the UI. If we were to profile the code, we would see a recursive function call to the `render` method for class components, or a direct call to the function component itself.
 
-This means that once React starts rendering, it will continue until it's done. And if the render is long, the main thread will be blocked for a while.
+This means that once React starts rendering, it continues until completion. If the render takes a long time, the main thread will be blocked throughout.
 
 <Image src={oldRenderingModel} alt="The old React Rendering Model" />
 
-Usually in web development we aim for 60fps, which means that we want to render the UI at least 60 times per second. This gives us about 16ms to render the UI in order to keep things smooth. We can of course aim for a higher frame rate (as video games often do), but for most applications, 60fps is more than enough.
+In web development, we typically aim for 60fps, which means refreshing the UI 60 times per second. This gives us about 16ms to render the UI to keep things smooth. We can aim for higher frame rates (as video games often do), but for most applications, 60fps is more than enough.
 
-But what happens if we takes a long time to render the UI? This could be due to a lot of different reasons, from a very complex component tree, to expensive calculations done in the render function, or various other reasons.
+But what happens when rendering takes a long time? This could be due to many factors: complex component trees, expensive calculations in render functions, or other performance bottlenecks.
 
-Well, in this case the browser is simply unresponsive. The user can't interact with the UI until we are done rendering. This is a pretty bad experience, and it's something we want to avoid.
+In this case, the browser becomes unresponsive. Users can't interact with the UI until rendering completes - a poor experience we want to avoid.
 
-The most obvious way to handle a long render is to memoize expensive calculations. Either via `useMemo` or other means of caching. But sometimes we need to rerun the calculations.
+The most obvious solution is to memoize expensive calculations using `useMemo` or other caching mechanisms. But sometimes we need to rerun calculations.
 
-Most often this could be filtering a list of items based on a search query that the user types into an input field. There's no way around this - we _need_ to filter the list to show the correct items.
+Consider filtering a list of items based on a user's search query. There's no way around this - we _need_ to filter the list to show the correct items.
 
-But we know that users can type pretty fast, and filtering long lists can get pretty slow, especially on mobile or on old devices. So we use debounce - we wait for the user to stop typing for a bit before running the filter.
+Users can type quickly, and filtering long lists can be slow, especially on mobile or older devices. So we use debouncing - waiting for the user to stop typing before running the filter.
 
-But this is not optimal as well. If the user has a strong device that can handle the filtering, we're still forcing them to wait for a bit before running the filter. This is a waste of time. You can think of this as the opposite of progressive enhancement - instead of making the experience better for users that can benefit from it, we're making it worse for everyone.
+However, this approach isn't optimal either. If the user has a powerful device that can handle the filtering, we're still forcing them to wait. This wastes time. You can think of this as the opposite of progressive enhancement - instead of improving the experience for capable users, we're degrading it for everyone.
 
 ## Time Slicing
 
-So the React team has come up with a plan. What if we could render the UI in chunks?
+The React team came up with a solution: What if we could render the UI in chunks?
 
-This is called time slicing. Starting with React 18, React now renders the UI in small bits, and then yields control back to the browser every 5ms until the render is complete.
+This approach is called ✨time slicing✨.
+
+Starting with React 18, React renders the UI in small bits, yielding control back to the browser every 5ms until the render completes.
 
 <Image src={newRenderingModel} alt="The new React Rendering Model" />
 
-This means that at most, our browser's main thread is blocked for 5ms. This is a huge improvement, and we can easily see that buttons and inputs can stay responsive, even when the render is long.
+This means our browser's main thread is blocked for at most 5ms. This is a huge improvement - buttons and inputs can stay responsive even during long renders.
 
-But the mad lads of the React team have not stopped there.
+But the React team didn't stop there. Just because the UI stays responsive during rendering doesn't mean the render itself is fast.
+
+Let's illustrate this with an example. We fetch a list of Pokémon from the [PokéAPI](https://pokeapi.co/). To simulate a slow render, we added a 100ms delay to the render function of each list item component.
+
+First, let's see how the old rendering model behaves. This demo uses React 17 and function components:
+
+<Image
+  src={oldRenderModelDemo}
+  alt="A web page showing a list of Pokemon and a button, alongside the dev tools open. The button is pressed multiple times and the UI is responsive, but the render is slow."
+/>
+
+Here's what's happening: The button is pressed multiple times in quick succession. Each button press logs `refreshing key` to the console, and when each render completes, we log `useEffect $number` in a `useEffect` with a running index counting the renders. Even though some renders weren't committed (i.e., rendered to the DOM), the renders still happened.
+
+This is inefficient. We're spending CPU cycles to render the UI, build a virtual DOM, and diff it, only to throw it away because we know it's already outdated. Not to mention that the UI is completely unresponsive during the renders.
+
+What if there was a better way?
+
+Enter React 18, transitions, and time slicing.
+
+## Throw that render away!
+
+Now that rendering happens in chunks, we're not committed to completing every render. One of the biggest benefits is that React can cancel a render mid-process, discard it, and start a new render with updated state.
+
+React 18 began classifying state updates by priority. Simply put, we have urgent updates (like user typing) and non-urgent updates (like filtering a list based on that input).
+
+We tell React that an update is non-urgent using the `startTransition` function:
+
+```tsx
+startTransition(() => {
+  setSearchQuery(query);
+});
+```
+
+If a render that was triggered by a non-urgent update is interrupted, React will throw it away and start a new render with the updated state. React will literally stop it in its tracks, ignore all the work it has done so far and start over.
+
+Let's see another demo, this time using React 19, transitions, and time slicing:
+
+<Image
+  src={newRenderModelDemo}
+  alt="A web page showing a list of Pokemon and a button, alongside the dev tools open. The button is pressed multiple times and the UI is responsive."
+/>
+
+Here's what's happening: The button is pressed multiple times, evidenced by the `refreshing key` logs. But notice that the `useEffect $number` logs are significantly fewer, missing most intermediate renders.
+
+Button clicks continuously interrupted renders, which I marked with transitions, essentially telling React these updates aren't urgent and can be interrupted.
+
+When I press the button and update state, React starts rendering the Pokémon list with updated data in 5ms chunks. As I continue pressing the button, multiple clicks register before renders complete. React processes each press, executes the `onClick` callback, and sees the state was updated in a transition.
+
+This tells React the in-flight render is outdated, and since it was initiated by a non-urgent update, React discards it and starts fresh with the latest state.
+
+## Tying it all together
+
+`useEffect`s run after a render completes. For aborted renders, `useEffect`s won't run. We can assume they'll run _eventually_, but React doesn't guarantee effects will run as many times as our state changed or as many times as React started rendering.
+
+> If React had to ensure `useEffect`s run after every render, it wouldn't be able to abort renders.
+
+This doesn't mean React treats `useEffect`s as optional. React will run your effects, but only for completed renders.
+
+For us, this means that to improve rendering performance in our applications, we must follow the rules of `useEffect`. We should only use it for its intended purpose - syncing with other systems.
+
+## The rules finally make sense
+
+Looking back, it's fascinating how the React team was essentially future-proofing our code. Those seemingly arbitrary rules about dependencies, avoiding side effects in render, and being careful about what we put in `useEffect` weren't just best practices - they were laying the groundwork for a fundamentally different rendering model.
+
+The frustration many of us felt wasn't baseless. We were being asked to follow rules for features that didn't exist yet, with explanations that felt vague and theoretical. "Some future React features might break" isn't exactly a compelling reason when you're trying to ship a product.
+
+But now that concurrent features are here, those rules reveal their true purpose. They ensure our components can work in a world where:
+
+- Renders can be interrupted and restarted
+- Effects only run for committed renders
+- State updates can be prioritized
+- The UI stays responsive during expensive operations
+
+## Moving forward
+
+Does this mean `useEffect` is no longer annoying? Well, not exactly. It's still a sharp tool that requires careful handling. But at least now we understand _why_ it's sharp.
+
+The rules aren't arbitrary constraints - they're the contract that allows React to deliver better performance and user experience. When we follow them, we're not just writing "correct" React code, we're writing code that can take advantage of React's most powerful optimizations.
+
+So the next time you're wrestling with a dependency array or debating whether something belongs in a `useEffect`, remember: you're not just following arbitrary rules. You're helping React keep your app fast and responsive, even when there's a lot going on.
+
+And honestly? That's pretty cool.
 
 <PostFooter {...meta} />

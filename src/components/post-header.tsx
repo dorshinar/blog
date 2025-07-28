@@ -21,7 +21,7 @@ export function PostHeader({ meta: metaProp }: Props) {
       {meta.cover && (
         <Image
           src={meta.cover}
-          alt="cover image"
+          alt={meta.coverAlt ?? "cover image"}
           priority
           placeholder="blur"
           className="rounded-lg"
