@@ -86,7 +86,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         {...props}
         className={clsx(
           props.className,
-          "border-l-8 border-sky-500 px-4 py-2 text-zinc-400",
+          "border-l-8 border-sky-500 px-4 py-2 font-medium text-zinc-400",
           "[&_a]:font-medium [&_a]:text-zinc-200 [&_a]:shadow-[0_2px_0_0_var(--color-sky-300)] [&_a]:hover:shadow-[0_3px_0_0_var(--color-sky-300)]",
         )}
       />

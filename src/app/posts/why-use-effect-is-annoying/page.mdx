@@ -1,6 +1,8 @@
 import { getPostMetadata } from "@/utils/get-metadata";
-import oldRenderingModel from "./old-render-model.svg";
-import newRenderingModel from "./new-render-model.svg";
+import oldRenderingModelLight from "./old-render-model-light.svg";
+import oldRenderingModelDark from "./old-render-model-dark.svg";
+import newRenderingModelLight from "./new-render-model-light.svg";
+import newRenderingModelDark from "./new-render-model-dark.svg";
 import oldRenderModelDemo from "./old-render-model-demo.gif";
 import newRenderModelDemo from "./new-render-model-demo.gif";
 import Image from "next/image";
@@ -32,6 +34,37 @@ It's a page so long that it's almost a book.
 Over the years I've spoken with many developers of varying experience levels who failed to understand why we need all these rules. I mean, the code _works_, right?
 
 Even if we ignore a dependency here, or send a network request in an effect, it's not a big deal, right?
+
+You know the drill: missing dependencies in the dependency array, effects that cause infinite loops, state updates that don't happen when you expect them to. We've all been there.
+
+```tsx
+// This looks innocent enough...
+function Counter() {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    setCount(count + 1);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // But whoops! Missing `count` dependency = stale closure
+
+  return <div>{count}</div>;
+}
+
+// Or this classic:
+function UserProfile({ id, shouldRefresh }) {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    fetchData().then(data => {
+      setData(data);
+      setLoading(false); // Wait, what if the component unmounted?
+    });
+  }, [id, shouldRefresh]); // And what about `fetchData`?
+
+  return loading ? <div>Loading...</div> : <div>{data?.name}</div>;
+}
+```
 
 When I tried to explain why we need all these rules, I found that even I didn't fully understand it. I knew it had something to do with concurrent rendering - or was it async rendering? At some point it was called Async React.
 
@@ -108,7 +141,16 @@ Prior to React 18, React's rendering model was synchronous and blocking, meaning
 
 This means that once React starts rendering, it continues until completion. If the render takes a long time, the main thread will be blocked throughout.
 
-<Image src={oldRenderingModel} alt="The old React Rendering Model" />
+<Image
+  src={oldRenderingModelLight}
+  className="dark:hidden"
+  alt="The old React Rendering Model"
+/>
+<Image
+  src={oldRenderingModelDark}
+  className="hidden dark:block"
+  alt="The old React Rendering Model"
+/>
 
 In web development, we typically aim for 60fps, which means refreshing the UI 60 times per second. This gives us about 16ms to render the UI to keep things smooth. We can aim for higher frame rates (as video games often do), but for most applications, 60fps is more than enough.
 
@@ -132,11 +174,20 @@ This approach is called ✨time slicing✨.
 
 Starting with React 18, React renders the UI in small bits, yielding control back to the browser every 5ms until the render completes.
 
-<Image src={newRenderingModel} alt="The new React Rendering Model" />
+<Image
+  src={newRenderingModelLight}
+  className="dark:hidden"
+  alt="The new React Rendering Model"
+/>
+<Image
+  src={newRenderingModelDark}
+  className="hidden dark:block"
+  alt="The new React Rendering Model"
+/>
 
-This means our browser's main thread is blocked for at most 5ms. This is a huge improvement - buttons and inputs can stay responsive even during long renders.
+This means our browser's main thread is blocked for at most 5ms (technically it can take longer, but it's very rare). This is a huge improvement - buttons and inputs can stay responsive even during long renders.
 
-But the React team didn't stop there. Just because the UI stays responsive during rendering doesn't mean the render itself is fast.
+But the mad lads at the React team didn't stop there. Just because the UI stays responsive during rendering doesn't mean the render itself is fast.
 
 Let's illustrate this with an example. We fetch a list of Pokémon from the [PokéAPI](https://pokeapi.co/). To simulate a slow render, we added a 100ms delay to the render function of each list item component.
 
@@ -148,6 +199,8 @@ First, let's see how the old rendering model behaves. This demo uses React 17 an
 />
 
 Here's what's happening: The button is pressed multiple times in quick succession. Each button press logs `refreshing key` to the console, and when each render completes, we log `useEffect $number` in a `useEffect` with a running index counting the renders. Even though some renders weren't committed (i.e., rendered to the DOM), the renders still happened.
+
+Since each render takes a second, it takes us around 13s to see the last render output.
 
 This is inefficient. We're spending CPU cycles to render the UI, build a virtual DOM, and diff it, only to throw it away because we know it's already outdated. Not to mention that the UI is completely unresponsive during the renders.
 
@@ -178,7 +231,7 @@ Let's see another demo, this time using React 19, transitions, and time slicing:
   alt="A web page showing a list of Pokemon and a button, alongside the dev tools open. The button is pressed multiple times and the UI is responsive."
 />
 
-Here's what's happening: The button is pressed multiple times, evidenced by the `refreshing key` logs. But notice that the `useEffect $number` logs are significantly fewer, missing most intermediate renders.
+Here's what's happening: The button is pressed multiple times, evidenced by the `refreshing key` logs. But notice that the `useEffect $number` logs are significantly fewer, missing most intermediate renders, and we get the final result significantly faster than before.
 
 Button clicks continuously interrupted renders, which I marked with transitions, essentially telling React these updates aren't urgent and can be interrupted.
 
@@ -194,7 +247,70 @@ This tells React the in-flight render is outdated, and since it was initiated by
 
 This doesn't mean React treats `useEffect`s as optional. React will run your effects, but only for completed renders.
 
-For us, this means that to improve rendering performance in our applications, we must follow the rules of `useEffect`. We should only use it for its intended purpose - syncing with other systems.
+For us, this means that to improve rendering performance in our applications, we must follow the rules of `useEffect`. We should only use it for its intended purpose - syncing with other systems, and even then - as a last resort.
+
+## What makes a good effect?
+
+Now that we understand _why_ the rules exist, let's get practical. A "good effect" in the concurrent world is one that can handle being called multiple times without breaking your app.
+
+Here are some examples:
+
+**Good effects:**
+
+```tsx
+// Setting up/cleaning up event listeners
+function WindowSizeTracker() {
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  return <div>Width: {windowWidth}px</div>;
+}
+
+// Syncing with external systems
+function ExternalSubscription() {
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    const subscription = someExternalLibrary.subscribe(setData);
+    return () => subscription.unsubscribe();
+  }, []);
+
+  return <div>{data}</div>;
+}
+```
+
+**Bad effects:**
+
+```tsx
+// Data fetching (use a library instead)
+function UserProfile({ id }) {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    fetchUser(id).then(setUser);
+  }, [id]);
+
+  return <div>{user?.name}</div>;
+}
+
+// Transforming data (do this during render)
+function ItemList({ items, selectedCategory }) {
+  const [filteredItems, setFilteredItems] = useState([]);
+
+  useEffect(() => {
+    setFilteredItems(items.filter(item => item.category === selectedCategory));
+  }, [items, selectedCategory]);
+
+  return <div>{filteredItems.map(item => <div key={item.id}>{item.name}</div>)}</div>;
+}
+```
+
+The key difference? Good effects are about syncing with the outside world. Bad effects are about managing state or data that React could handle better through other means.
 
 ## The rules finally make sense
 
