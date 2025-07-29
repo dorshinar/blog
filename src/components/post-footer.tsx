@@ -53,7 +53,7 @@ export function PostFooter({ slug }: Props) {
           </li>
         )}
         {after && (
-          <li>
+          <li className="ml-auto">
             <NextLink
               href={after.url ?? after.slug}
               rel="next"

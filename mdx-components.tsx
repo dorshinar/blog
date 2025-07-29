@@ -13,7 +13,10 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     pre: (props) => (
       <pre
         {...props}
-        className={clsx(props.className, `w-full overflow-hidden sm:rounded`)}
+        className={clsx(
+          props.className,
+          `w-full overflow-hidden border border-gray-700 sm:rounded dark:border-none`,
+        )}
       />
     ),
     a: (props) => (
@@ -38,7 +41,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         {props.children}
         <a
           href={`#${props.id}`}
-          className="outline-primary-800 rounded-sm outline-offset-2 focus-visible:outline-2"
+          className="sr-only group-focus-within:not-sr-only group-hover:not-sr-only"
         >
           <LinkIcon size={18} />
         </a>

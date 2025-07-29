@@ -16,7 +16,9 @@ export function PostPreview({ post, cover, priority }: Props) {
       className={clsx(
         "group w-full overflow-hidden rounded-2xl transition",
         "outline-primary-800 p-2 focus-within:outline-2 hover:outline-2 focus:outline-2 focus-visible:outline-2",
+        "focus-within:border-none hover:border-none focus:border-none focus-visible:border-none",
         "hover:-translate-y-2",
+        "border border-gray-800 dark:border-none",
       )}
     >
       {cover && (

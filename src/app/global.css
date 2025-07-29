@@ -62,7 +62,7 @@
 
 code {
   padding: 1px;
-  background-color: var(--color-zinc-800);
+  background-color: var(--color-gray-500);
   border-radius: var(--radius-sm);
 }
 
@@ -73,7 +73,8 @@ pre > code {
   padding-right: 0 !important;
 }
 
-code[data-language="bash"] span[data-line]::before {
+:is(code[data-language="bash"], code[data-language="sh"])
+  span[data-line]::before {
   content: "$";
   padding-right: 12px;
 }
@@ -81,8 +82,8 @@ code[data-language="bash"] span[data-line]::before {
 [data-highlighted-line] {
   margin-left: calc(-4 * var(--spacing));
   border-left-width: calc(2 * var(--spacing));
-  border-left-color: var(--color-zinc-400);
-  background-color: var(--color-zinc-700);
+  border-left-color: var(--color-gray-800);
+  background-color: var(--color-gray-500);
   padding-left: calc(2 * var(--spacing));
 }
 
@@ -95,5 +96,24 @@ div[data-rehype-pretty-code-fragment] {
   div[data-rehype-pretty-code-fragment] {
     margin-left: 0;
     margin-right: 0;
+  }
+}
+
+code[data-theme*=" "],
+code[data-theme*=" "] span {
+  color: var(--shiki-light);
+  background-color: var(--shiki-light-bg);
+
+  [data-highlighted-line],
+  [data-highlighted-line] span {
+    background-color: var(--color-gray-500);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  code[data-theme*=" "],
+  code[data-theme*=" "] span {
+    color: var(--shiki-dark);
+    background-color: var(--shiki-dark-bg);
   }
 }

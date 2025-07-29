@@ -7,7 +7,7 @@ export function CodeSnippetWrapper(props: HTMLAttributes<HTMLDivElement>) {
       {...props}
       className={clsx(
         props.className,
-        "relative w-full overflow-auto rounded bg-gray-300",
+        "relative w-full overflow-auto rounded bg-gray-200",
       )}
     />
   );
