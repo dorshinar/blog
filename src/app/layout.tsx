@@ -29,7 +29,7 @@ export default function RootLayout({
             <h1 className="grow px-4 text-3xl font-medium sm:max-w-3xl sm:px-8">
               <NextLink
                 href="/"
-                className="hover:text-primary-1100 focus-visible:text-primary-1100 focus-visible:outline"
+                className="hover:text-primary-1100 focus-visible:text-primary-1100"
               >
                 Dor Shinar
               </NextLink>

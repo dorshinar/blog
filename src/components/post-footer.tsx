@@ -40,7 +40,7 @@ export function PostFooter({ slug }: Props) {
         !
       </p>
       <span>More posts:</span>
-      <ul className="flex w-full flex-wrap items-center justify-between gap-4 py-2">
+      <ul className="text-primary-1100 flex w-full flex-wrap items-center justify-between gap-4 py-2">
         {before && (
           <li>
             <NextLink

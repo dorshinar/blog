@@ -24,7 +24,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         {...props}
         className={clsx(
           props.className,
-          `text-primary-1100 outline-primary-800 underline focus-visible:outline`,
+          `text-primary-1100 outline-primary-800 underline`,
         )}
       >
         {props.children}

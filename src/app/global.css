@@ -58,6 +58,7 @@
 
 * {
   outline-color: var(--color-primary-800);
+  outline-width: 2px;
 }
 
 code {
