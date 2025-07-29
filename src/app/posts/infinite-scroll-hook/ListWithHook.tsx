@@ -25,7 +25,7 @@ const ListWithHook = ({ list, loading, loadMore, hookVersion }: Props) => {
       <ul className="flex flex-col gap-2">
         {list.map((item, index, array) => (
           <li
-            className="min-h-16 w-fit rounded border-3 border-emerald-500 p-4 text-zinc-800"
+            className="border-primary-600 text-primary-1100 min-h-16 w-fit rounded border-3 p-4"
             key={item}
             ref={
               index === array.length - 1

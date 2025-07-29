@@ -15,7 +15,7 @@ export function Checkbox(
         id={id}
         className={clsx(
           props.className,
-          "inline-grid h-6 w-6 place-items-center rounded border border-zinc-600 data-[state=checked]:border-none data-[state=checked]:bg-emerald-700",
+          `data-[state=checked]:bg-primary-500 inline-grid h-6 w-6 place-items-center rounded border border-gray-700 data-[state=checked]:border-none`,
         )}
       >
         <CheckboxPrimitive.Indicator>

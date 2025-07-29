@@ -8,7 +8,7 @@ const nextConfig = {
 
 /** @type {import('rehype-pretty-code').Options} */
 const prettyCodeOptions = {
-  theme: "night-owl",
+  theme: { dark: "night-owl", light: "github-light" },
 };
 
 const withMDX = mdx({

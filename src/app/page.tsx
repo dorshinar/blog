@@ -35,21 +35,21 @@ export default function Home() {
             <Link
               href="https://github.com/dorshinar"
               aria-label="Github"
-              className="focus-within:text-emerald-500 hover:text-emerald-500"
+              className="focus-within:text-primary-1100 hover:text-primary-1100 outline-none"
             >
               <GithubIcon />
             </Link>
             <Link
               href="https://twitter.com/DorShinar"
               aria-label="Twitter"
-              className="focus-within:text-emerald-500 hover:text-emerald-500"
+              className="focus-within:text-primary-1100 hover:text-primary-1100 outline-none"
             >
               <TwitterIcon />
             </Link>
             <Link
               href="https://www.linkedin.com/in/dorshinar/"
               aria-label="Linkedin"
-              className="focus-within:text-emerald-500 hover:text-emerald-500"
+              className="focus-within:text-primary-1100 hover:text-primary-1100 outline-none"
             >
               <LinkedinIcon />
             </Link>

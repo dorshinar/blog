@@ -1,15 +1,36 @@
 import { clsx } from "clsx";
-import { PropsWithChildren } from "react";
+import { CSSProperties, JSX, PropsWithChildren } from "react";
 
-export function Message({ children }: PropsWithChildren) {
+export function Message({
+  children,
+  as = "aside",
+  variant = "info",
+}: PropsWithChildren & {
+  as?: keyof JSX.IntrinsicElements;
+  variant?: "info" | "success";
+}) {
+  const Component = as;
+
   return (
-    <aside
+    <Component
+      style={
+        {
+          "--border-color":
+            variant === "info"
+              ? "var(--color-info-800)"
+              : "var(--color-primary-800)",
+          "--text-color":
+            variant === "info"
+              ? "var(--color-info-1100)"
+              : "var(--color-primary-1100)",
+        } as CSSProperties
+      }
       className={clsx(
-        "border-l-8 border-emerald-500 px-4 py-2 text-zinc-400",
-        "[&_a]:font-medium [&_a]:text-zinc-200 [&_a]:decoration-emerald-300 [&_a]:shadow-[0_2px_0_0_var(--color-emerald-300)] [&_a]:hover:shadow-[0_3px_0_0_var(--color-emerald-300)]",
+        "text-gray-1100 border-l-8 border-[var(--border-color)] px-4 py-2",
+        `[&_a]:font-medium [&_a]:text-[var(--text-color)] [&_a]:decoration-[var(--text-color)]`,
       )}
     >
       {children}
-    </aside>
+    </Component>
   );
 }
