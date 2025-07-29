@@ -13,7 +13,10 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     pre: (props) => (
       <pre
         {...props}
-        className={clsx(props.className, "w-full overflow-hidden sm:rounded")}
+        className={clsx(
+          props.className,
+          `w-full overflow-hidden border border-gray-700 sm:rounded dark:border-none`,
+        )}
       />
     ),
     a: (props) => (
@@ -21,7 +24,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         {...props}
         className={clsx(
           props.className,
-          "text-emerald-500 underline underline-offset-4 shadow-[0_2px_0_0_var(--color-emerald-500)] transition-shadow hover:shadow-[0_3px_0_0_var(--color-emerald-500)]",
+          `text-primary-1100 outline-primary-800 underline`,
         )}
       >
         {props.children}
@@ -38,8 +41,8 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         {props.children}
         <a
           href={`#${props.id}`}
-          aria-hidden
-          className="group-focus-within:no-sr-only sr-only group-hover:not-sr-only"
+          className="sr-only group-focus-within:not-sr-only group-hover:not-sr-only"
+          aria-label={props.children}
         >
           <LinkIcon size={18} />
         </a>
@@ -56,8 +59,8 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         {props.children}
         <a
           href={`#${props.id}`}
-          aria-hidden
-          className="group-focus-within:no-sr-only sr-only group-hover:not-sr-only"
+          className="sr-only group-focus-within:not-sr-only group-hover:not-sr-only"
+          aria-label={props.children}
         >
           <LinkIcon size={18} />
         </a>
@@ -75,22 +78,13 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         <a
           href={`#${props.id}`}
           aria-hidden
-          className="group-focus-within:no-sr-only sr-only group-hover:not-sr-only"
+          className="sr-only group-focus-within:not-sr-only group-hover:not-sr-only"
         >
           <LinkIcon size={18} />
         </a>
       </h3>
     ),
-    blockquote: (props) => (
-      <blockquote
-        {...props}
-        className={clsx(
-          props.className,
-          "-mx-4 border-l-8 border-sky-500 bg-sky-900 p-4 sm:rounded",
-          "[&_a]:font-medium [&_a]:text-zinc-200 [&_a]:shadow-[0_2px_0_0_var(--color-sky-300)] [&_a]:hover:shadow-[0_3px_0_0_var(--color-sky-300)]",
-        )}
-      />
-    ),
+    blockquote: (props) => <Message as="blockquote" {...props} />,
     ol: (props) => (
       <ol
         {...props}

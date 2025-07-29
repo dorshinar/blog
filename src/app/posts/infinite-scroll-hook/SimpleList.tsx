@@ -13,7 +13,7 @@ const SimpleList = ({ list, loadMore, loading }: Props) => {
       <ul className="flex flex-col gap-2">
         {list.map((item) => (
           <li
-            className="min-h-16 w-fit rounded border-3 border-emerald-500 p-4 text-zinc-800"
+            className="border-primary-600 text-primary-1100 min-h-16 w-fit rounded border-3 p-4"
             key={item}
           >
             Item {item}
@@ -21,7 +21,7 @@ const SimpleList = ({ list, loadMore, loading }: Props) => {
         ))}
       </ul>
       <button
-        className="w-fit rounded bg-emerald-500 p-4 text-base text-zinc-200 hover:bg-emerald-700 focus-visible:bg-emerald-700 active:bg-emerald-800"
+        className="text-gray-1100 w-fit cursor-pointer rounded bg-gray-300 p-4 text-base hover:bg-gray-400 focus-visible:bg-gray-400 active:bg-gray-500"
         onClick={loadMore}
         title={loading ? "loading..." : "Load More!"}
       >

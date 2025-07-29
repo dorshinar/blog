@@ -3,7 +3,6 @@ import { getPosts } from "@/utils/get-posts";
 import { MoveLeft, MoveRight } from "lucide-react";
 import { Route } from "next";
 import NextLink from "next/link";
-import { Link } from "@/components/Link";
 
 interface Props {
   slug: Route;
@@ -27,32 +26,38 @@ export function PostFooter({ slug }: Props) {
 
   return (
     <footer className="flex w-full flex-col gap-4">
-      <hr className="bg-zinc-200" />
+      <hr className="border-gray-600" />
+      <p>Thank you for reading!</p>
       <p>
         If you have any question or you want to reach out, find me on{" "}
-        <Link href="https://twitter.com/DorShinar" target="_blank">
+        <a
+          href="https://twitter.com/DorShinar"
+          target="_blank"
+          className="text-primary-1100 underline focus-visible:outline"
+        >
           Twitter
-        </Link>
+        </a>
         !
       </p>
-      <ul className="flex w-full flex-wrap items-center justify-between gap-4">
+      <span>More posts:</span>
+      <ul className="text-primary-1100 flex w-full flex-wrap items-center justify-between gap-4 py-2">
         {before && (
           <li>
             <NextLink
               href={before.url ?? before.slug}
               rel="prev"
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 underline focus-visible:outline"
             >
               <MoveLeft /> {before.title}
             </NextLink>
           </li>
         )}
         {after && (
-          <li>
+          <li className="ml-auto">
             <NextLink
               href={after.url ?? after.slug}
               rel="next"
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 underline focus-visible:outline"
             >
               {after.title} <MoveRight />
             </NextLink>

@@ -1,15 +1,53 @@
 import { clsx } from "clsx";
-import { PropsWithChildren } from "react";
+import { CSSProperties, JSX, PropsWithChildren } from "react";
 
-export function Message({ children }: PropsWithChildren) {
+type Variant = "neutral" | "info" | "success";
+
+const variants: Record<
+  Variant,
+  {
+    borderColor: string;
+    textColor: string;
+  }
+> = {
+  neutral: {
+    borderColor: "var(--color-gray-800)",
+    textColor: "var(--color-gray-1100)",
+  },
+  info: {
+    borderColor: "var(--color-info-800)",
+    textColor: "var(--color-info-1100)",
+  },
+  success: {
+    borderColor: "var(--color-primary-800)",
+    textColor: "var(--color-primary-1100)",
+  },
+};
+
+export function Message({
+  children,
+  as = "aside",
+  variant = "neutral",
+}: PropsWithChildren & {
+  as?: keyof JSX.IntrinsicElements;
+  variant?: Variant;
+}) {
+  const Component = as;
+
   return (
-    <aside
+    <Component
+      style={
+        {
+          "--border-color": variants[variant].borderColor,
+          "--text-color": variants[variant].textColor,
+        } as CSSProperties
+      }
       className={clsx(
-        "-mx-4 border-l-8 border-emerald-500 bg-emerald-900 p-4 sm:rounded",
-        "[&_a]:font-medium [&_a]:text-zinc-200 [&_a]:decoration-emerald-300 [&_a]:shadow-[0_2px_0_0_var(--color-emerald-300)] [&_a]:hover:shadow-[0_3px_0_0_var(--color-emerald-300)]",
+        "text-gray-1100 border-l-8 border-[var(--border-color)] px-4 py-2 italic",
+        `[&_a]:font-medium [&_a]:text-[var(--text-color)] [&_a]:decoration-[var(--text-color)]`,
       )}
     >
       {children}
-    </aside>
+    </Component>
   );
 }

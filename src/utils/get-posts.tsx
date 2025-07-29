@@ -12,6 +12,7 @@ import { meta as treeShaking } from "../app/posts/treeshaking-with-tsup/page.mdx
 import { meta as nanoReposCost } from "../app/posts/hidden-costs-of-nano-repos/page.mdx";
 import { meta as flakyPipeline } from "../external-posts/the-perils-of-a-flaky-pipeline";
 import { meta as interviewQuestions } from "../app/posts/interview-your-future-employer/page.mdx";
+import { meta as whyUseEffectIsAnnoying } from "../app/posts/why-use-effect-is-annoying/page.mdx";
 import { PostMeta, PostSchema } from "../types/Post";
 import { z } from "zod";
 
@@ -34,6 +35,7 @@ export function getPosts(): PostMeta[] {
       flakyPipeline,
       nanoReposCost,
       interviewQuestions,
+      whyUseEffectIsAnnoying,
     ]),
   ].sort((first, second) => (first.date > second.date ? -1 : 1));
 }

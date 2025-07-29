@@ -7,7 +7,9 @@ const nextConfig = {
 };
 
 /** @type {import('rehype-pretty-code').Options} */
-const prettyCodeOptions = {};
+const prettyCodeOptions = {
+  theme: { dark: "night-owl", light: "github-light" },
+};
 
 const withMDX = mdx({
   extension: /\.mdx?$/,

@@ -111,7 +111,10 @@ function GetData() {
 
 What we have here is an **impossible state**!
 
-> An **impossible state** is a certain combination of fields and values, that should never co-exist simultaneously.
+<Message variant="info">
+  An **impossible state** is a certain combination of fields and values, that
+  should never co-exist simultaneously.
+</Message>
 
 In other words - an "impossible state" might be a _possible state_ in that if we disregard our company guidelines/lint rules/compiler, the state may occur, but we should never accept it, and therefore must make sure it never occurs (whether intentionally or unintentionally).
 
@@ -310,8 +313,6 @@ Notice that we used `?`, so we don't force anyone to pass empty functions.
 ## Summary
 
 Obviously, this is a contrived example, but I hope it makes it clear how we can leverage Typescript's union types and type narrowing, ensuring as much type safety as possible, while still leveraging some of Javascript's dynamic nature.
-
-Thank you for reading!
 
 (cover photo by [Matt Atherton](https://unsplash.com/@mattatherton) on [Unsplash](https://unsplash.com/))
 

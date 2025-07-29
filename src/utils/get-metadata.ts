@@ -19,13 +19,16 @@ export function getMetadata(params: Params, post: boolean): Metadata {
     openGraph: {
       title: params.title,
       description: params.description,
-      url: post ? `/posts/${params.slug}` : ``,
       type: post ? "article" : "website",
       images: params.images.filter(Boolean).map((image) => ({
         url: image.src,
       })),
       authors: ["Dor Shinar"],
       publishedTime: params.date?.toISOString(),
+      siteName: "Dor Shinar's Blog",
+      url: post
+        ? `https://dorshinar.me/posts/${params.slug}`
+        : `https://dorshinar.me`,
     },
 
     twitter: {

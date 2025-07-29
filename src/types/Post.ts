@@ -12,6 +12,7 @@ export const PostSchema = z.object({
   published: z.boolean(),
   slug: z.string(),
   cover: Cover,
+  coverAlt: z.string().optional(),
   url: z.string().optional(),
 });
 
