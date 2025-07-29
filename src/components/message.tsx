@@ -26,7 +26,7 @@ export function Message({
         } as CSSProperties
       }
       className={clsx(
-        "text-gray-1100 border-l-8 border-[var(--border-color)] px-4 py-2",
+        "text-gray-1100 border-l-8 border-[var(--border-color)] px-4 py-2 italic",
         `[&_a]:font-medium [&_a]:text-[var(--text-color)] [&_a]:decoration-[var(--text-color)]`,
       )}
     >
