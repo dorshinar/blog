@@ -12,11 +12,17 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Install bun
-        uses: oven-sh/setup-bun@v1
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 10
 
-      - name: Update lock file
-        run: bun install
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 22
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install
 
       - name: Commit report
         run: |
