@@ -84,9 +84,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         </a>
       </h3>
     ),
-    blockquote: (props) => (
-      <Message as="blockquote" {...props} variant="info" />
-    ),
+    blockquote: (props) => <Message as="blockquote" {...props} />,
     ol: (props) => (
       <ol
         {...props}

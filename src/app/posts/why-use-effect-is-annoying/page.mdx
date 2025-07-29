@@ -131,7 +131,10 @@ For non-data fetching effects, such as logging page visits, the general recommen
 
 If I had to summarize what a "good effect" is, it would probably be:
 
-> If the setup+cleanup functions of the effect can run multiple times without causing any issues, it's a good effect.
+<Message variant="info">
+  If the setup+cleanup functions of the effect can run multiple times without
+  causing any issues, it's a good effect.
+</Message>
 
 Now we know what to do instead of using `useEffect`, but we still don't know why.
 
@@ -243,7 +246,10 @@ This tells React the in-flight render is outdated, and since it was initiated by
 
 `useEffect`s run after a render completes. For aborted renders, `useEffect`s won't run. We can assume they'll run _eventually_, but React doesn't guarantee effects will run as many times as our state changed or as many times as React started rendering.
 
-> If React had to ensure `useEffect`s run after every render, it wouldn't be able to abort renders.
+<Message variant="info">
+  If React had to ensure `useEffect`s run after every render, it wouldn't be
+  able to abort renders.
+</Message>
 
 This doesn't mean React treats `useEffect`s as optional. React will run your effects, but only for completed renders.
 

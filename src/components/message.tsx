@@ -1,13 +1,36 @@
 import { clsx } from "clsx";
 import { CSSProperties, JSX, PropsWithChildren } from "react";
 
+type Variant = "neutral" | "info" | "success";
+
+const variants: Record<
+  Variant,
+  {
+    borderColor: string;
+    textColor: string;
+  }
+> = {
+  neutral: {
+    borderColor: "var(--color-gray-800)",
+    textColor: "var(--color-gray-1100)",
+  },
+  info: {
+    borderColor: "var(--color-info-800)",
+    textColor: "var(--color-info-1100)",
+  },
+  success: {
+    borderColor: "var(--color-primary-800)",
+    textColor: "var(--color-primary-1100)",
+  },
+};
+
 export function Message({
   children,
   as = "aside",
-  variant = "info",
+  variant = "neutral",
 }: PropsWithChildren & {
   as?: keyof JSX.IntrinsicElements;
-  variant?: "info" | "success";
+  variant?: Variant;
 }) {
   const Component = as;
 
@@ -15,14 +38,8 @@ export function Message({
     <Component
       style={
         {
-          "--border-color":
-            variant === "info"
-              ? "var(--color-info-800)"
-              : "var(--color-primary-800)",
-          "--text-color":
-            variant === "info"
-              ? "var(--color-info-1100)"
-              : "var(--color-primary-1100)",
+          "--border-color": variants[variant].borderColor,
+          "--text-color": variants[variant].textColor,
         } as CSSProperties
       }
       className={clsx(
