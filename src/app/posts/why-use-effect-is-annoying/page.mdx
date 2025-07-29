@@ -249,69 +249,6 @@ This doesn't mean React treats `useEffect`s as optional. React will run your eff
 
 For us, this means that to improve rendering performance in our applications, we must follow the rules of `useEffect`. We should only use it for its intended purpose - syncing with other systems, and even then - as a last resort.
 
-## What makes a good effect?
-
-Now that we understand _why_ the rules exist, let's get practical. A "good effect" in the concurrent world is one that can handle being called multiple times without breaking your app.
-
-Here are some examples:
-
-**Good effects:**
-
-```tsx
-// Setting up/cleaning up event listeners
-function WindowSizeTracker() {
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-
-  useEffect(() => {
-    const handleResize = () => setWindowWidth(window.innerWidth);
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  return <div>Width: {windowWidth}px</div>;
-}
-
-// Syncing with external systems
-function ExternalSubscription() {
-  const [data, setData] = useState(null);
-
-  useEffect(() => {
-    const subscription = someExternalLibrary.subscribe(setData);
-    return () => subscription.unsubscribe();
-  }, []);
-
-  return <div>{data}</div>;
-}
-```
-
-**Bad effects:**
-
-```tsx
-// Data fetching (use a library instead)
-function UserProfile({ id }) {
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    fetchUser(id).then(setUser);
-  }, [id]);
-
-  return <div>{user?.name}</div>;
-}
-
-// Transforming data (do this during render)
-function ItemList({ items, selectedCategory }) {
-  const [filteredItems, setFilteredItems] = useState([]);
-
-  useEffect(() => {
-    setFilteredItems(items.filter(item => item.category === selectedCategory));
-  }, [items, selectedCategory]);
-
-  return <div>{filteredItems.map(item => <div key={item.id}>{item.name}</div>)}</div>;
-}
-```
-
-The key difference? Good effects are about syncing with the outside world. Bad effects are about managing state or data that React could handle better through other means.
-
 ## The rules finally make sense
 
 Looking back, it's fascinating how the React team was essentially future-proofing our code. Those seemingly arbitrary rules about dependencies, avoiding side effects in render, and being careful about what we put in `useEffect` weren't just best practices - they were laying the groundwork for a fundamentally different rendering model.
