@@ -44,7 +44,7 @@ function Counter() {
 
   useEffect(() => {
     setCount(count + 1);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // But whoops! Missing `count` dependency = stale closure
 
   return <div>{count}</div>;
@@ -56,7 +56,7 @@ function UserProfile({ id, shouldRefresh }) {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    fetchData().then(data => {
+    fetchData().then((data) => {
       setData(data);
       setLoading(false); // Wait, what if the component unmounted?
     });

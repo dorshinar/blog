@@ -13,7 +13,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     pre: (props) => (
       <pre
         {...props}
-        className={clsx(props.className, "w-full overflow-hidden sm:rounded")}
+        className={clsx(props.className, `w-full overflow-hidden sm:rounded`)}
       />
     ),
     a: (props) => (
@@ -21,7 +21,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         {...props}
         className={clsx(
           props.className,
-          "text-emerald-500 underline underline-offset-4 shadow-[0_2px_0_0_var(--color-emerald-500)] transition-shadow hover:shadow-[0_3px_0_0_var(--color-emerald-500)]",
+          `text-primary-1100 outline-primary-800 underline focus-visible:outline`,
         )}
       >
         {props.children}
@@ -38,8 +38,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         {props.children}
         <a
           href={`#${props.id}`}
-          aria-hidden
-          className="group-focus-within:no-sr-only sr-only group-hover:not-sr-only"
+          className="outline-primary-800 rounded-sm outline-offset-2 focus-visible:outline-2"
         >
           <LinkIcon size={18} />
         </a>
@@ -57,7 +56,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         <a
           href={`#${props.id}`}
           aria-hidden
-          className="group-focus-within:no-sr-only sr-only group-hover:not-sr-only"
+          className="sr-only group-focus-within:not-sr-only group-hover:not-sr-only"
         >
           <LinkIcon size={18} />
         </a>
@@ -75,21 +74,14 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         <a
           href={`#${props.id}`}
           aria-hidden
-          className="group-focus-within:no-sr-only sr-only group-hover:not-sr-only"
+          className="sr-only group-focus-within:not-sr-only group-hover:not-sr-only"
         >
           <LinkIcon size={18} />
         </a>
       </h3>
     ),
     blockquote: (props) => (
-      <blockquote
-        {...props}
-        className={clsx(
-          props.className,
-          "border-l-8 border-sky-500 px-4 py-2 font-medium text-zinc-400",
-          "[&_a]:font-medium [&_a]:text-zinc-200 [&_a]:shadow-[0_2px_0_0_var(--color-sky-300)] [&_a]:hover:shadow-[0_3px_0_0_var(--color-sky-300)]",
-        )}
-      />
+      <Message as="blockquote" {...props} variant="info" />
     ),
     ol: (props) => (
       <ol

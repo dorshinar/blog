@@ -52,7 +52,7 @@ export function ColorShiftingBox({ root, threshold }: Props) {
   return (
     <CodeSnippetWrapper>
       {root && (
-        <div className="absolute inset-[100px] grid h-[calc(100%-200px)] min-h-32 w-[calc(100%-200px)] place-items-center rounded bg-zinc-300 text-zinc-700">
+        <div className="text-gray-1100 absolute inset-[100px] grid h-[calc(100%-200px)] min-h-32 w-[calc(100%-200px)] place-items-center rounded bg-gray-300">
           The box will change color when it enters the gray rectangle!
         </div>
       )}
@@ -60,19 +60,19 @@ export function ColorShiftingBox({ root, threshold }: Props) {
         className="relative flex h-80 w-full flex-col items-center overflow-auto p-4"
         ref={rootRef}
       >
-        <div className="text-5xl text-orange-500">Scroll Me!</div>
+        <div className="text-orange-1100 text-5xl">Scroll Me!</div>
         <div className="flex min-h-240 w-fit items-center pb-20">
           {((root && rootNode) || !root) && (
             <div
               className={clsx(
                 "h-20 w-20 rounded border transition-colors duration-[3s]",
-                isIntersecting ? "bg-orange-500" : "bg-violet-700",
+                isIntersecting ? "bg-orange-1100" : "bg-violet-300",
               )}
               ref={boxRef}
             />
           )}
         </div>
-        <div className="text-xl text-orange-500">
+        <div className="text-orange-1100 text-xl">
           You&apos;ve reached the bottom! Scroll up to view the box
         </div>
       </div>

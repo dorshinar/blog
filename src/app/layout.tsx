@@ -5,7 +5,7 @@ import NextLink from "next/link";
 import { ServiceWorkerRegister } from "@/components/sw-register";
 import { Analytics } from "@vercel/analytics/react";
 
-import "./globals.css";
+import "./global.css";
 import { Metadata } from "next";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -16,18 +16,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className="dark">
       <body
         className={clsx(
           inter.className,
-          "flex min-h-screen flex-col items-center gap-12 bg-zinc-900 pb-2 text-zinc-200",
+          `bg-primary-100 text-gray-1200 flex min-h-screen flex-col items-center gap-12 pb-2`,
         )}
       >
-        <header className="flex w-full items-center justify-center border-b border-zinc-200/50 py-6">
+        <header className="flex w-full items-center justify-center border-b border-gray-600 py-6">
           <h1 className="grow px-4 text-3xl font-medium sm:max-w-3xl sm:px-8">
             <NextLink
               href="/"
-              className="hover:text-emerald-500 focus-visible:text-emerald-500"
+              className="hover:text-primary-1100 focus-visible:text-primary-1100 focus-visible:outline"
             >
               Dor Shinar
             </NextLink>
