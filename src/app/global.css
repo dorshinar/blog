@@ -10,6 +10,8 @@
 @import "@radix-ui/colors/violet.css";
 @import "@radix-ui/colors/violet-dark.css";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --color-*: initial;
 
