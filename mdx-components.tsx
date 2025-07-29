@@ -42,6 +42,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         <a
           href={`#${props.id}`}
           className="sr-only group-focus-within:not-sr-only group-hover:not-sr-only"
+          aria-label={props.children}
         >
           <LinkIcon size={18} />
         </a>
@@ -58,8 +59,8 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         {props.children}
         <a
           href={`#${props.id}`}
-          aria-hidden
           className="sr-only group-focus-within:not-sr-only group-hover:not-sr-only"
+          aria-label={props.children}
         >
           <LinkIcon size={18} />
         </a>
