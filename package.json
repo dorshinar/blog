@@ -36,7 +36,7 @@
     "zod": "^4.0.10"
   },
   "devDependencies": {
-    "@eslint/js": "^9.31.0",
+    "@eslint/js": "^9.32.0",
     "@mdx-js/loader": "^3.1.0",
     "@mdx-js/react": "^3.1.0",
     "@next/eslint-plugin-next": "^15.4.4",
