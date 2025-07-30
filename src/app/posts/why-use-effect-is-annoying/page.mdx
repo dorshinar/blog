@@ -234,6 +234,8 @@ Let's see another demo, this time using React 19, transitions, and time slicing:
   alt="A web page showing a list of Pokemon and a button, alongside the dev tools open. The button is pressed multiple times and the UI is responsive."
 />
 
+(Code for both demos is available [on my github](https://github.com/dorshinar/use-effect-demo))
+
 Here's what's happening: The button is pressed multiple times, evidenced by the `refreshing key` logs. But notice that the `useEffect $number` logs are significantly fewer, missing most intermediate renders, and we get the final result significantly faster than before.
 
 Button clicks continuously interrupted renders, which I marked with transitions, essentially telling React these updates aren't urgent and can be interrupted.
